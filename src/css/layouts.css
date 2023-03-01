@@ -1,0 +1,104 @@
+.cols {
+    --cols-gap: var(--gap);
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: var(--cols-gap);
+}
+
+.cols>* {
+    flex: auto;
+}
+
+.cols.col-2>* {
+    flex: 0 calc(50% - var(--gap) / 2);
+}
+
+.cols.col-3>* {
+    flex: 0 calc(100% / 3 - var(--gap) / 1.5);
+}
+
+.cols.col-4>* {
+    flex: 0 calc(100% / 4 - var(--gap) / 1.25);
+}
+
+.cols.col-fit>* {
+    flex: 0 fit-content;
+}
+
+.cols.col-min>* {
+    flex: 0 min-content;
+}
+
+.cols.column {
+    flex-direction: column;
+}
+
+.cols.nowrap {
+    flex-wrap: nowrap;
+}
+
+.cols.justify-start {
+    justify-content: start;
+}
+
+.cols.justify-center {
+    justify-content: center;
+}
+
+.cols.justify-end {
+    justify-content: end;
+}
+
+.cols.align-start {
+    align-items: start;
+}
+
+.cols.align-center {
+    align-items: center;
+}
+
+.cols.align-end {
+    align-items: end;
+}
+
+.surface {
+    background-color: var(--surface);
+}
+
+.container {
+    margin-inline: calc(max(0%, 50% - var(--viewport) / 2) + var(--gap));
+}
+
+@media screen and (max-width: 600px) {
+    .cols:is(.col-2, .col-3, .col-4)>* {
+        flex: auto;
+    }
+}
+
+.grid {
+    --col-width: 25em;
+    --col-gap: var(--gap);
+    display: grid;
+    grid-gap: var(--col-gap);
+}
+
+@supports (width: min(var(--col-width), 100%)) {
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(var(--col-width), 100%), 1fr));
+    }
+}
+
+.columns {
+    --col-width: 20em;
+    --col-gap: var(--gap);
+    columns: var(--col-width);
+    gap: var(--col-gap);
+    margin: auto;
+}
+
+.columns>* {
+    break-inside: avoid;
+    margin-bottom: var(--col-gap);
+}

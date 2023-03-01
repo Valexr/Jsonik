@@ -1,0 +1,36 @@
+:root {
+    --color: hsl(225, 15%, 10%);
+    --surface: hsl(225, 15%, 90%);
+    --hover: hsl(225, 15%, 85%);
+    --active: hsl(225, 15%, 80%);
+    --back: hsl(225, 15%, 75%);
+
+    --success: hsl(120, 50%, 50%);
+    --warning: hsl(40, 90%, 50%);
+    --error: hsl(20, 90%, 50%);
+
+    --border-radius-lg: 0.75rem;
+    --border-radius: 0.5rem;
+    --border-radius-sm: 0.25rem;
+
+    --gap-lg: 1em;
+    --gap: 0.75em;
+    --gap-sm: 0.5em;
+
+    --tmp: hsl(225, 15%, 75%);
+
+    --icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='hsl(225, 15%, 10%)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+        --color: hsl(225, 15%, 90%);
+        --surface: hsl(225, 15%, 25%);
+        --hover: hsl(225, 15%, 20%);
+        --active: hsl(225, 15%, 15%);
+        --back: hsl(225, 15%, 10%);
+
+        --icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='hsl(225, 15%, 90%)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    }
+}

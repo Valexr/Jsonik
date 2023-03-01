@@ -1,0 +1,145 @@
+.loading {
+    color: transparent;
+    width: 1.5em;
+    height: 1.5em;
+    flex: none !important;
+    pointer-events: none;
+    position: relative;
+    margin: auto;
+    display: flex;
+}
+
+.loading.inline {
+    display: inline-flex;
+    vertical-align: bottom;
+    margin: 0;
+}
+
+.loading.lg {
+    width: 2.5em;
+    height: 2.5em;
+    flex: 0 2.5em;
+}
+
+.loading::after {
+    animation: loading 750ms infinite linear;
+    background: var(--border-brand);
+    border: 0.125em solid;
+    border-radius: 50%;
+    content: "";
+    width: 100%;
+    height: 100%;
+}
+
+.complete::before {
+    content: "✅  ";
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+@keyframes loading {
+    0% {
+        rotate: 0;
+        scale: 0.5;
+    }
+
+    50% {
+        scale: 1
+    }
+
+    100% {
+        rotate: 360deg;
+        scale: 0.5;
+    }
+}
+
+.scroll-x {
+    max-width: 100%;
+    overflow-x: auto;
+    vertical-align: bottom;
+}
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    display: block;
+    position: absolute;
+    text-align: left;
+    pointer-events: none;
+    bottom: 100%;
+    right: 0%;
+    opacity: 0;
+    background: var(--dark);
+    padding: 0.5em 1em;
+    border-radius: 1em;
+    font-size: small;
+    transition: opacity 250ms;
+    color: inherit;
+}
+
+[data-tooltip].tooltip-left::after {
+    bottom: auto;
+    right: 100%;
+}
+
+[data-tooltip].tooltip-right::after {
+    bottom: auto;
+    right: auto;
+    left: 100%;
+}
+
+[data-tooltip].tooltip-bottom::after {
+    bottom: auto;
+    top: 100%;
+}
+
+[data-tooltip]:hover::after {
+    opacity: 1;
+}
+
+[data-note] {
+    position: relative;
+}
+
+[data-note]::after {
+    content: attr(data-note);
+    font-weight: 200;
+    font-size: small;
+    display: block;
+    color: var(--gray);
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+.hidden {
+    visibility: hidden;
+    display: none;
+}
+
+.overlay {
+    inset: 0;
+    display: grid;
+    position: fixed;
+    place-content: center;
+    z-index: 200;
+    text-align: center;
+    backdrop-filter: blur(0.25em);
+}
+
+.overlay::after {
+    content: "";
+    inset: 0;
+    position: absolute;
+    background: var(--dark);
+    opacity: 0.75;
+    z-index: -1;
+}
+
+/* Global */
+html:has(.overlay) {
+    overflow: hidden;
+}

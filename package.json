@@ -1,0 +1,24 @@
+{
+    "name": "jsonik",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "node esbuild",
+        "dev": "node esbuild --dev --spa"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Valexr/esbuild-svelte-ts.git"
+    },
+    "devDependencies": {
+        "@tsconfig/svelte": "^3.0.0",
+        "esbuild": "^0.17.10",
+        "esbuild-svelte": "^0.7.3",
+        "svelte": "^3.55.1",
+        "svelte-pathfinder": "^4.1.2",
+        "svelte-preprocess": "^5.0.1",
+        "tslib": "^2.5.0",
+        "typescript": "^4.9.5"
+    }
+}

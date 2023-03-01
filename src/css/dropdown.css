@@ -1,0 +1,79 @@
+details[role=list] {
+    position: relative;
+    display: inline-block;
+    line-height: initial;
+}
+
+details[role=list]>summary {
+    padding: 0.45rem 0 0.45rem 1rem;
+    background-color: var(--back);
+    border: 0.1rem solid var(--surface);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+}
+
+details[role=list]>summary[role="button"] {
+    background-color: var(--surface);
+}
+
+details[role=list]>summary::marker {
+    display: none;
+    content: '';
+}
+
+details[role=list]>summary::-webkit-details-marker {
+    display: none;
+    content: '';
+}
+
+details[role=list][open]>summary {
+    border-color: var(--color);
+}
+
+details[role=list][open]>summary::before {
+    display: block;
+    z-index: 1;
+    position: fixed;
+    inset: 0;
+    background: 0 0;
+    content: "";
+    cursor: default;
+}
+
+details[role=list]>summary::after {
+    content: '';
+    background-image: var(--icon-chevron);
+    background-position: center right 0.5rem;
+    background-size: 1rem auto;
+    background-repeat: no-repeat;
+    padding-right: 2.5rem;
+}
+
+details[role=list] ul[role=listbox] {
+    margin: 0;
+    padding: 0.5rem 0;
+    list-style: none;
+    position: absolute;
+    min-inline-size: 100%;
+    text-align: left;
+    line-height: 2;
+    overflow: hidden;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--hover);
+    z-index: 1;
+}
+
+details[role=list] ul[role=listbox] li {
+    padding: 0;
+    cursor: pointer;
+}
+
+details[role=list] ul[role=listbox] li:hover {
+    background-color: var(--active);
+}
+
+details[role=list] ul[role=listbox] li a {
+    text-decoration: none;
+    display: block;
+    padding: 0 1rem;
+}

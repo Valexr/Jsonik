@@ -1,0 +1,52 @@
+button,
+[role="button"] {
+    text-align: inherit;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.45rem 1rem;
+    margin: 0;
+    border: 0;
+    background-color: var(--surface);
+    border-radius: var(--border-radius-sm);
+    font-size: inherit;
+    font-weight: inherit;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+    display: inline-block;
+    line-height: initial;
+}
+
+:is(button, [role=button]).action {
+    border-radius: 50%;
+    height: auto;
+    width: auto;
+    padding: 0.5em;
+    display: flex;
+}
+
+:is(button, [role=button]).success {
+    background-color: var(--success);
+}
+
+:is(button, [role=button]).warning {
+    background-color: var(--warning);
+}
+
+:is(button, [role=button]).error {
+    background-color: var(--error);
+}
+
+:is(button, [role=button]):hover {
+    background-color: var(--hover);
+}
+
+:is(button, [role=button]):hover:active {
+    background-color: var(--active);
+}
+
+:is(button, [role=button]):disabled {
+    background-color: var(--hover);
+    color: var(--back);
+    cursor: not-allowed;
+}
