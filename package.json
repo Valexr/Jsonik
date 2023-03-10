@@ -4,19 +4,56 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "node esbuild",
-        "dev": "node esbuild --dev --spa"
+        "build": "node esbuild.mjs",
+        "dev": "NODE_ENV=dev node esbuild.mjs",
+        "start": "cd app && node app.js",
+        "check": "svelte-check --tsconfig ./tsconfig.json",
+        "lint": "eslint './src/**/*.{js,ts}'"
+    },
+    "engines": {
+        "node": "^16.0.0"
+    },
+    "eslintConfig": {
+        "extends": [
+            "plugin:@typescript-eslint/recommended"
+        ],
+        "plugins": [
+            "@typescript-eslint"
+        ],
+        "parser": "@typescript-eslint/parser",
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "rules": {
+            "semi": 0,
+            "no-underscore-dangle": 0,
+            "import/prefer-default-export": 0,
+            "@typescript-eslint/no-explicit-any": "off"
+        }
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Valexr/esbuild-svelte-ts.git"
+        "url": "https://github.com/Valexr/jsonik.git"
     },
     "devDependencies": {
         "@tsconfig/svelte": "^3.0.0",
-        "esbuild": "^0.17.10",
+        "@types/cookie": "^0.5.1",
+        "@types/eslint": "^8.21.1",
+        "@types/jsonwebtoken": "^9.0.1",
+        "@types/node": "^18.15.0",
+        "@typescript-eslint/eslint-plugin": "^5.54.1",
+        "@typescript-eslint/parser": "^5.54.1",
+        "codejar": "^3.7.0",
+        "cookie": "^0.5.0",
+        "esbuild": "^0.17.11",
         "esbuild-svelte": "^0.7.3",
-        "svelte": "^3.55.1",
-        "svelte-pathfinder": "^4.1.2",
+        "eslint": "^8.35.0",
+        "jsonwebtoken": "^9.0.0",
+        "lowdb": "^5.1.0",
+        "svelte": "^3.56.0",
+        "svelte-check": "^3.1.2",
+        "svelte-pathfinder": "^4.5.0",
         "svelte-preprocess": "^5.0.1",
         "tslib": "^2.5.0",
         "typescript": "^4.9.5"

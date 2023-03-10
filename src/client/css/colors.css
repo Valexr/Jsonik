@@ -1,0 +1,15 @@
+.text-success {
+    color: var(--success);
+}
+
+.text-warning {
+    color: var(--warning);
+}
+
+.text-error {
+    color: var(--error);
+}
+
+.text-gray {
+    color: var(--gray)
+}

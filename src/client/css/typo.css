@@ -1,0 +1,80 @@
+h1 {
+    text-align: center;
+}
+
+p {
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+strong {
+    font-size: larger;
+    font-weight: bold;
+    border-radius: 0.5em;
+}
+
+small {
+    color: var(--gray);
+}
+
+samp {
+    color: var(--error);
+    word-break: break-word;
+    font-size: medium;
+}
+
+ul {
+    padding-left: 1em;
+    line-height: 1.5;
+}
+
+ul[role=listbox] {
+    list-style: none;
+}
+
+pre {
+    background-color: var(--back);
+    border-radius: var(--border-radius-sm);
+    line-height: 1.5;
+    tab-size: 1rem;
+    overflow-x: auto;
+}
+
+pre code {
+    display: block;
+    border: 0.1rem solid transparent;
+    padding: var(--padding);
+}
+
+code {
+    background-color: var(--back);
+    border-radius: var(--border-radius-sm);
+    padding: 0.25rem 0.5rem;
+    white-space: inherit !important;
+    color: var(--gray);
+}
+
+code span {
+    opacity: 0.5;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-break {
+    word-break: break-all;
+    white-space: initial;
+    min-width: fit-content;
+}
+
+.text-bold {
+    font-weight: bold;
+}

@@ -2,15 +2,15 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "$lib/*": [
-                "src/lib/*"
+            "$server/*": [
+                "src/server/*"
             ],
-            "$svg/*": [
-                "src/svg/*"
+            "$client/*": [
+                "src/client/*"
             ],
-            "$types": [
-                "src/types.ts"
-            ],
+            "$types/*": [
+                "src/types/*"
+            ]
         },
         "strict": true,
         "sourceMap": true,
@@ -29,7 +29,8 @@
         "module": "ESNext",
         "target": "ESNext",
         "types": [
-            "svelte"
+            "svelte",
+            "Node"
         ]
     },
     "include": [

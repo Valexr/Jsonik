@@ -1,0 +1,31 @@
+table {
+    overflow: auto;
+    white-space: nowrap;
+    min-inline-size: 100%;
+    line-height: 2;
+    border: 0;
+    border-collapse: collapse;
+}
+
+table th {
+    color: var(--gray);
+    text-align: inherit;
+    font-weight: inherit;
+    font-size: medium;
+}
+
+table :is(th, td) {
+    padding: 0.25em 0.5em;
+}
+
+
+table td:nth-child(2) {
+    word-break: break-all;
+    white-space: initial;
+    min-width: fit-content;
+}
+
+table tr:hover {
+    cursor: pointer;
+    background-color: var(--hover);
+}

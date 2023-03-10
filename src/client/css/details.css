@@ -1,0 +1,125 @@
+details {
+    position: relative;
+    line-height: initial;
+    /* display: block; */
+    min-inline-size: fit-content;
+}
+
+details[open]:not([role=list]) {
+    max-inline-size: min-content;
+}
+
+details summary {
+    padding: 0.45rem 0;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+details summary>* {
+    display: inline;
+    margin: 0;
+}
+
+details summary:hover {
+    background-color: var(--hover);
+}
+
+details[role=list] summary {
+    /* border: 0.1rem solid currentColor; */
+    padding: 0.45rem 0 0.45rem 1rem;
+    background-color: var(--back);
+}
+
+details summary::marker {
+    display: none;
+    content: '';
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+    content: '';
+}
+
+details summary::after {
+    content: '';
+    background-image: var(--icon-chevron);
+    background-position: center;
+    background-size: 1rem;
+    background-repeat: no-repeat;
+    padding: 0 0.45rem;
+    width: 1rem;
+    height: 1rem;
+    rotate: 0.75turn;
+    float: right;
+}
+
+details:is([role=list], [open]) summary::after {
+    background-position: center 0.1rem;
+    rotate: 0turn;
+}
+
+details summary[role="button"] {
+    background-color: var(--surface);
+    padding-right: 0;
+    border: 0;
+}
+
+details summary[role="button"].link {
+    background-color: transparent;
+}
+
+details[role=list][open] summary {
+    border-color: var(--surface);
+}
+
+details[role=list][open] summary::before {
+    display: block;
+    z-index: 1;
+    position: fixed;
+    inset: 0;
+    background: 0 0;
+    content: "";
+    cursor: default;
+}
+
+details[role=list].top summary::after {
+    background-position: center -0.1rem;
+    rotate: 0.5turn;
+}
+
+details[role=list] ul[role=listbox] {
+    margin: 0;
+    padding: 0.5rem 0;
+    list-style: none;
+    position: absolute;
+    min-inline-size: fit-content;
+    text-align: left;
+    line-height: 2;
+    overflow: hidden;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--hover);
+    z-index: 1;
+    width: 100%;
+}
+
+details[role=list].top ul[role=listbox] {
+    bottom: 100%;
+}
+
+details[role=list] ul[role=listbox] li {
+    padding: 0;
+    cursor: pointer;
+}
+
+details[role=list] ul[role=listbox] li:is(:hover, .active) {
+    background-color: var(--active);
+}
+
+details[role=list] ul[role=listbox] li a {
+    text-decoration: none;
+    display: block;
+    padding: 0 1rem;
+}

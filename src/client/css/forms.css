@@ -1,0 +1,165 @@
+fieldset {
+    padding: var(--padding);
+    border: 0;
+    margin: 0;
+    border-radius: var(--border-radius-sm);
+}
+
+legend {
+    text-align: center;
+    font-size: 1.25rem;
+    color: var(--gray);
+    margin: auto;
+}
+
+label {
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+input,
+select,
+textarea {
+    padding: 0.45rem 1rem;
+    border: 0.075rem solid transparent;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--back);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    line-height: 1.25;
+    min-inline-size: 100%;
+    max-inline-size: 100%;
+}
+
+:is(input,
+    select,
+    textarea).contrast {
+    border-color: currentColor;
+}
+
+:is(input,
+    select,
+    textarea)::placeholder {
+    color: var(--gray);
+    opacity: 0.5;
+}
+
+input:is([type=checkbox], [type=radio]) {
+    appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0;
+    margin-top: 0;
+    vertical-align: top;
+    line-height: inherit;
+    min-inline-size: auto;
+}
+
+input:is([type=checkbox], [type=radio]):checked {
+    background-color: currentColor;
+}
+
+input[type=radio] {
+    border-radius: 50%;
+}
+
+input[type=search] {
+    appearance: none;
+    border-radius: var(--gap-lg);
+    background-image: var(--icon-search);
+    background-repeat: no-repeat;
+    background-position: 0.5rem;
+    background-size: 1rem;
+    padding-left: 2rem;
+}
+
+input[type=checkbox]:checked:not([role=switch]) {
+    background-image: var(--icon-checkbox);
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+input[type=radio]:checked {
+    border-width: 0.35em;
+    border-color: currentColor;
+    background-color: var(--back);
+}
+
+input[type=checkbox][role=switch] {
+    width: 2.2rem;
+    border-radius: 1rem;
+}
+
+input[type=checkbox][role=switch]:checked::before {
+    margin-left: 1rem;
+    background-color: var(--back);
+}
+
+input[type=checkbox][role=switch]::before {
+    content: "";
+    width: 0.9rem;
+    height: 0.9rem;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: var(--color);
+    margin: 0.09rem;
+    transition: margin .1s ease-in-out;
+}
+
+select {
+    appearance: none;
+    font-family: inherit;
+    background-image: var(--icon-chevron);
+    background-position: center right 0.5rem;
+    background-size: 1rem auto;
+    background-repeat: no-repeat;
+    padding-right: 2.5rem;
+}
+
+select::after {
+    content: 'after';
+}
+
+textarea {
+    max-width: 100%;
+    min-block-size: 5em;
+}
+
+/* States */
+:not([type=checkbox], [type=radio]):focus {
+    outline: none;
+    border-color: currentColor;
+}
+
+.valid,
+:not(button, select, :empty):valid {
+    border-color: var(--success);
+}
+
+.invalid,
+:not(button, select):invalid,
+:out-of-range {
+    border-color: var(--error);
+}
+
+:is(textarea, input).secret {
+    text-shadow: 0 0 0.5rem var(--light);
+    color: transparent;
+}
+
+:is(textarea, input).secret:focus {
+    color: inherit;
+    text-shadow: none;
+}
+
+:disabled {
+    border-color: var(--gray);
+    color: var(--gray);
+}
+
+:disabled~label {
+    color: var(--gray);
+}

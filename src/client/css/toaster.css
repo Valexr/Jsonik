@@ -1,0 +1,117 @@
+.toaster .toast-list {
+    position: fixed;
+    max-width: 100vw;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 10000;
+    line-height: 1;
+}
+
+.toaster .toast-list>li {
+    margin: 1em;
+}
+
+.toaster .toast-list.pos-top_center {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.toaster .toast-list.pos-top_right {
+    top: 0;
+    right: 0;
+}
+
+.toaster .toast-list.pos-center_right {
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+}
+
+.toaster .toast-list.pos-bottom_right {
+    bottom: 0;
+    right: 0;
+}
+
+.toaster .toast-list.pos-bottom_center {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.toaster .toast-list.pos-bottom_left {
+    bottom: 0;
+    left: 0;
+}
+
+.toaster .toast-list.pos-center_left {
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+}
+
+.toaster .toast-list.pos-top_left {
+    top: 0;
+    left: 0;
+}
+
+.toaster .toast-list.pos-center_center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.toast {
+    --toast-color: var(--gray);
+    position: relative;
+    overflow: hidden;
+    /* padding: var(--padding); */
+    word-wrap: break-word;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.1em solid var(--toast-color);
+    border-radius: var(--border-radius-sm);
+    /* background: var(--surface); */
+    min-inline-size: max-content;
+    z-index: 0;
+    gap: 0.5em;
+}
+
+.toast::before {
+    content: "";
+    position: absolute;
+    background: var(--toast-color);
+    width: calc(100% * var(--progress));
+    height: 100%;
+    left: 0;
+    z-index: -1;
+}
+
+.toast samp {
+    color: inherit;
+    line-height: 1.5;
+    min-inline-size: fit-content;
+}
+
+.toast.success {
+    --toast-color: var(--success);
+}
+
+.toast.error {
+    --toast-color: var(--error);
+}
+
+.toast.warning {
+    --toast-color: var(--warning);
+}
+
+.toast button#close {
+    color: var(--toast-color);
+    margin-right: -0.5em;
+    background: none;
+    flex: 1 0 auto;
+    max-width: 1em;
+    padding: 0;
+}

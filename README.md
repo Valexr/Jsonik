@@ -1,1 +1,3 @@
-# esbuild-svelte-ts
+# jsonik
+
+Tiny JSON backend
