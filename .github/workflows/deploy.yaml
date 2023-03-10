@@ -14,10 +14,11 @@ jobs:
 
             - name: Install and Build 🔧
               run: |
+                  mkdir app
                   npm i
                   npm run build
 
             - name: Deploy 🚀
               uses: JamesIves/github-pages-deploy-action@v4
               with:
-                  folder: public
+                  folder: app
