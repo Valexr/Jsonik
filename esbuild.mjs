@@ -32,7 +32,7 @@ const serverOptions = {
     format: 'esm',
     treeShaking: true,
     entryPoints: ['src/server/app.ts'],
-    outdir: 'app',
+    outfile: 'app/index.js',
     legalComments: 'none',
     metafile: !DEV,
     plugins: DEV ? [restart] : [],

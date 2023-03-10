@@ -11,7 +11,7 @@ export default {
             };
 
             const start = () => {
-                child = fork('app.js', [], { cwd: 'app' });
+                child = fork('index.js', [], { cwd: 'app' });
             };
 
             process.on('SIGTERM', kill);

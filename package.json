@@ -6,7 +6,7 @@
     "scripts": {
         "build": "node esbuild.mjs",
         "dev": "NODE_ENV=dev node esbuild.mjs",
-        "start": "cd app && node app.js",
+        "start": "cd app && node index.js",
         "check": "svelte-check --tsconfig ./tsconfig.json",
         "lint": "eslint './src/**/*.{js,ts}'"
     },
