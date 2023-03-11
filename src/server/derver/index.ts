@@ -1,5 +1,5 @@
 import { startHTTPServer, createMiddlwaresList } from './http';
-import { startWatch } from './watch';
+import { clientWatch } from './watch';
 import type { Options } from './types';
 
 const defaultOptions: Partial<Options> = {
@@ -18,7 +18,7 @@ export function derver(options: Partial<Options>) {
     const opts = Object.assign(defaultOptions, options, { middlewares });
 
     startHTTPServer(opts as Options)
-    opts.livereload && startWatch(opts.serve)
+    opts.livereload && clientWatch(opts.serve)
 
     return opts.middlewares;
 }

@@ -6,7 +6,7 @@ import log from './env/log.mjs';
 import meta from './env/meta.mjs';
 import copy from './env/copy.mjs';
 import eslint from './env/eslint.mjs';
-import restart from './env/restart.mjs';
+import nodemon from './env/nodemon.mjs';
 
 const DEV = process.env.NODE_ENV === 'dev';
 
@@ -35,7 +35,7 @@ const serverOptions = {
     outdir: 'app',
     legalComments: 'none',
     metafile: !DEV,
-    plugins: DEV ? [restart] : [],
+    plugins: [],
 };
 
 const clientOptions = {
@@ -73,6 +73,8 @@ if (DEV) {
 
     await server.watch();
     await server.rebuild();
+
+    nodemon('app/app.js');
 
     const cleanup = () => {
         client.dispose();

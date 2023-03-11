@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import Code from "$client/components/Code.svelte";
     import * as db from "$client/api/methods";
+    import { expand } from "$client/utils/actions";
 </script>
 
 <script lang="ts">
@@ -91,7 +92,7 @@
         </label>
         <label><input type="search" placeholder="Search" /></label>
         <label><input placeholder="input" /></label>
-        <label><textarea placeholder="textarea" /></label>
+        <label><textarea use:expand placeholder="textarea" /></label>
         <label><input type="number" placeholder="number" /></label>
         <label><input type="checkbox" /> Checkbox</label>
         <label><input type="checkbox" role="switch" /> Switch</label>

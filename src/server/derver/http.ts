@@ -28,12 +28,10 @@ export function startHTTPServer(options: Options) {
         console.error('Server starting error:', e);
     })
 
-    const close = () => server.close()
-
-    process.on('SIGTERM', close);
-    process.on('exit', close);
-
     server.listen(options.port, options.host);
+
+    process.on('SIGTERM', () => server.close());
+    process.on('exit', () => server.close());
 }
 
 function runMiddlewares(mws: Mw[], req: Req, res: Res) {

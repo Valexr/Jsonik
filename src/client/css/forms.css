@@ -20,8 +20,9 @@ label {
 input,
 select,
 textarea {
+    margin: 0;
     padding: 0.45rem 1rem;
-    border: 0.075rem solid transparent;
+    border: 0.085rem solid var(--surface);
     border-radius: var(--border-radius-sm);
     background-color: var(--back);
     font-family: inherit;
@@ -51,7 +52,6 @@ input:is([type=checkbox], [type=radio]) {
     width: 1.25rem;
     height: 1.25rem;
     padding: 0;
-    margin-top: 0;
     vertical-align: top;
     line-height: inherit;
     min-inline-size: auto;
@@ -70,9 +70,9 @@ input[type=search] {
     border-radius: var(--gap-lg);
     background-image: var(--icon-search);
     background-repeat: no-repeat;
-    background-position: 0.5rem;
+    background-position: 0.65rem;
     background-size: 1rem;
-    padding-left: 2rem;
+    padding-left: 2.15rem;
 }
 
 input[type=checkbox]:checked:not([role=switch]) {
@@ -89,7 +89,7 @@ input[type=radio]:checked {
 }
 
 input[type=checkbox][role=switch] {
-    width: 2.2rem;
+    width: 2.1rem;
     border-radius: 1rem;
 }
 
@@ -105,7 +105,7 @@ input[type=checkbox][role=switch]::before {
     display: inline-block;
     border-radius: 50%;
     background-color: var(--color);
-    margin: 0.09rem;
+    margin: 0.1rem;
     transition: margin .1s ease-in-out;
 }
 
@@ -124,12 +124,15 @@ select::after {
 }
 
 textarea {
+    resize: none;
     max-width: 100%;
-    min-block-size: 5em;
+    overflow: hidden;
+    min-block-size: 4em;
+    line-height: 1.5;
 }
 
 /* States */
-:not([type=checkbox], [type=radio]):focus {
+:is(:focus, :focus-visible, :focus-within) {
     outline: none;
     border-color: currentColor;
 }

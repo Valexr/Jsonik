@@ -96,4 +96,11 @@ function sticked(node: HTMLElement, cb?: (sticked: boolean) => void) {
     };
 }
 
-export { clickout, validation, sticked, clickOutside }
+function expand(node: HTMLTextAreaElement) {
+    node.oninput = (e: Event) => {
+        node.style.height = 'auto'
+        node.style.height = `${node.scrollHeight}px`
+    }
+}
+
+export { clickout, validation, sticked, clickOutside, expand }

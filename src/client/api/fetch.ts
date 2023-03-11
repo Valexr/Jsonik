@@ -5,7 +5,6 @@ const base = '/api/v1';
 // const access = get(session).access
 
 export default async function (url: RequestInfo, { ...options }: RequestInit, body?: BodyInit) {
-    console.log(body)
     function req() {
         return fetch(base + url, {
             ...options,

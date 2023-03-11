@@ -30,12 +30,7 @@
 <h1>Logs</h1>
 <fieldset class="cols">
     <label>
-        <input
-            type="search"
-            class="contrast"
-            placeholder="search"
-            on:change={search}
-        />
+        <input type="search" placeholder="search" on:change={search} />
     </label>
 </fieldset>
 <Await {promise} success="Data loaded" let:result notify>

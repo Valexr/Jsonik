@@ -31,5 +31,3 @@ app.sub('/api', (app: App) => {
         app.sub('/files', files);
     });
 });
-
-
