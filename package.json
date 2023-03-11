@@ -6,12 +6,9 @@
     "scripts": {
         "build": "node esbuild.mjs",
         "dev": "NODE_ENV=dev node esbuild.mjs",
-        "start": "cd app && node index.js",
+        "start": "cd app && node app.js",
         "check": "svelte-check --tsconfig ./tsconfig.json",
         "lint": "eslint './src/**/*.{js,ts}'"
-    },
-    "engines": {
-        "node": "18.x"
     },
     "eslintConfig": {
         "extends": [
@@ -48,7 +45,7 @@
         "cookie": "^0.5.0",
         "esbuild": "^0.17.11",
         "esbuild-svelte": "^0.7.3",
-        "eslint": "^8.35.0",
+        "eslint": "^8.36.0",
         "jsonwebtoken": "^9.0.0",
         "lowdb": "^5.1.0",
         "svelte": "^3.56.0",
