@@ -18,7 +18,9 @@
     --gap: 1em;
     --gap-sm: 0.5em;
 
+    --padding-lg: var(--gap-lg);
     --padding: var(--gap-sm) var(--gap-lg);
+    --padding-sm: var(--gap-sm);
 
     --viewport: 75rem;
 

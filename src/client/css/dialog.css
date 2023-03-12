@@ -82,39 +82,40 @@ dialog::backdrop {
 }
 
 /* Template */
-dialog>form {
+dialog form {
     display: grid;
     grid-template-rows: auto 1fr auto;
     align-items: start;
 }
 
-dialog>form>:is(header, footer) {
+dialog form :is(header, footer) {
     /* background-color: var(--surface); */
+    padding: var(--padding-lg);
     position: sticky;
 }
 
-dialog>form>:is(header, footer)>* {
+dialog form :is(header, footer)>* {
     margin: 0;
 }
 
-dialog>form>header {
+dialog form header {
     top: 0;
 }
 
-dialog>form>footer {
+dialog form footer {
     bottom: 0;
 }
 
-dialog>form>header>#close {
+dialog form header #close {
     font-size: small;
     flex: none;
 }
 
-dialog>form>header>#close:hover {
+dialog form header #close:hover {
     color: var(--error);
 }
 
-dialog>form>article {
+dialog form article {
     /* --cols-gap: var(--gap-sm); */
     /* margin: var(--gap); */
     overflow: scroll;

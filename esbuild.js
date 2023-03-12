@@ -1,14 +1,14 @@
 import { build, context } from 'esbuild';
 import svelte from 'esbuild-svelte';
 import preprocess from 'svelte-preprocess';
-import rm from './env/rm.mjs';
-import log from './env/log.mjs';
-import meta from './env/meta.mjs';
-import copy from './env/copy.mjs';
-import eslint from './env/eslint.mjs';
-import nodemon from './env/nodemon.mjs';
+import rm from './env/rm.js';
+import log from './env/log.js';
+import meta from './env/meta.js';
+import copy from './env/copy.js';
+import eslint from './env/eslint.js';
+import nodemon from './env/nodemon.js';
 
-const DEV = process.env.NODE_ENV === 'dev';
+const DEV = process.argv.includes('--dev');
 
 const svelteOptions = {
     compileOptions: {
@@ -36,6 +36,9 @@ const serverOptions = {
     legalComments: 'none',
     metafile: !DEV,
     plugins: [],
+    define: {
+        'process.env.NODE_ENV': DEV ? '"dev"' : '"prod"'
+    }
 };
 
 const clientOptions = {
@@ -57,10 +60,8 @@ const clientOptions = {
         ]),
         log
     ],
-    inject: DEV ? ['./env/lr.mjs'] : []
+    inject: DEV ? ['./env/lr.js'] : []
 };
-
-
 
 await rm(['app']);
 
@@ -76,10 +77,10 @@ if (DEV) {
 
     nodemon('app/app.js');
 
-    const cleanup = () => {
+    function cleanup() {
         client.dispose();
         server.dispose();
-    };
+    }
 
     process.on('SIGTERM', cleanup);
     process.on("exit", cleanup);

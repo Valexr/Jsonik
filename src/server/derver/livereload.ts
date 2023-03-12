@@ -5,7 +5,6 @@ type Listener = (event: string) => boolean
 const listeners = new Set<Listener>();
 
 export function livereload(event: string) {
-    console.log('event:', event)
     listeners.forEach(listener => listener(event));
 }
 

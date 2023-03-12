@@ -1,7 +1,10 @@
 body,
 html {
-    height: 100%;
     -webkit-text-size-adjust: 100%;
+}
+
+html {
+    height: 100%;
 }
 
 body {
@@ -13,7 +16,7 @@ body {
     color: var(--color);
     background-color: var(--back);
     text-rendering: optimizeLegibility;
-    min-block-size: fit-content;
+    min-block-size: 100%;
 }
 
 * {

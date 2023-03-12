@@ -10,6 +10,8 @@
     let files: FileList;
     let promise: Promise<void> = download();
 
+    async function addFolder() {}
+
     async function upload(e: SubmitEvent) {
         console.log(e);
         for await (const file of files) {
@@ -24,15 +26,30 @@
 
 <!-- <h1>Files</h1> -->
 
-<nav class="text-center">
-    <a href="#upload-files" role="button" target="_self">
-        <i class="icon icon-upload" /> Upload
+<nav class="text-center cols nowrap col-fit scroll-x">
+    <a href="#add-folder" role="button" target="_self" class="action">
+        <i class="icon icon-plus" />
     </a>
+    <a href="/files/folder1" role="button"> Folder 1 </a>
+    <a href="/files/folder2" role="button"> Folder 2 </a>
+    <a href="/files/folder3" role="button"> Folder 3 </a>
+    <a href="/files/folder4" role="button"> Folder 4 </a>
+    <a href="/files/folder5" role="button"> Folder 5 </a>
+    <a href="/files/folder6" role="button"> Folder 6 </a>
+    <a href="/files/folder7" role="button"> Folder 7 </a>
+    <a href="/files/folder8" role="button"> Folder 8 </a>
+    <a href="/files/folder9" role="button"> Folder 9 </a>
 </nav>
 
 <article>
+    <a href="#upload-files" role="button" target="_self" class="block">
+        <i class="icon icon-plus" /> Upload
+    </a>
     <Await {promise} let:result>
-        <ul role="listbox" class="cols col-2">
+        <ul role="listbox" class="cols col-3">
+            <li>
+                <h3>Upload files</h3>
+            </li>
             {#each result as name}
                 <li>
                     {#if /\.jpeg|\.jpg|\.png/.test(name)}
@@ -45,6 +62,7 @@
                         <Dialog
                             open={$fragment === `file-${name}`}
                             from="center"
+                            size="md"
                             info
                         >
                             <figure>
@@ -71,11 +89,20 @@
     </Await>
 </article>
 
+<Dialog open={$fragment === `add-folder`} on:submit={addFolder}>
+    <h2 slot="header">Add folder</h2>
+    <fieldset>
+        <label>
+            <input placeholder="Folder name" />
+        </label>
+    </fieldset>
+</Dialog>
+
 <Dialog open={$fragment === `upload-files`} on:submit={upload}>
     <h2 slot="header">Upload files</h2>
     <fieldset>
         <label>
-            <input type="file" multiple class="contrast" bind:files />
+            <input type="file" multiple bind:files />
         </label>
         {#if files}
             <p>Selected</p>
@@ -91,9 +118,10 @@
 <style>
     ul {
         --cols-gap: var(--gap);
+        padding: 0;
     }
     nav {
-        margin-bottom: var(--gap);
+        padding-bottom: var(--gap);
     }
     .empty {
         flex: auto;

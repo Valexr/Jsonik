@@ -37,7 +37,7 @@ export function startHTTPServer(options: Options) {
 function runMiddlewares(mws: Mw[], req: Req, res: Res) {
     mws.push((_req, res) => res.end(res.body || ''));
     const next = (): void => {
-        let mw;
+        let mw: Mw | undefined;
         while (!mw && mws.length > 0) {
             mw = mws.shift();
         }

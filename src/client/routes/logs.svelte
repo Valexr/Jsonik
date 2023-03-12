@@ -27,12 +27,14 @@
     // $: date = $fragment.split("-")[1];
 </script>
 
-<h1>Logs</h1>
+<!-- <h1>Logs</h1> -->
+
 <fieldset class="cols">
     <label>
         <input type="search" placeholder="search" on:change={search} />
     </label>
 </fieldset>
+
 <Await {promise} success="Data loaded" let:result notify>
     <section>
         <article>
@@ -52,14 +54,20 @@
                                 {#each Object.entries(item) as [k, v]}
                                     {#if k === "date"}
                                         <td>
-                                            {new Date(v).toLocaleString("ru")}
+                                            <small
+                                                >{new Date(v).toLocaleString(
+                                                    "ru"
+                                                )}</small
+                                            >
                                         </td>
                                     {:else}
                                         <td
                                             class:text-success={k ===
                                                 "status" && v === 200}
-                                            class:text-bold={k === "method"}
-                                            >{v}</td
+                                            class:text-bold={[
+                                                "method",
+                                                "status",
+                                            ].includes(k)}>{v}</td
                                         >
                                     {/if}
                                 {/each}

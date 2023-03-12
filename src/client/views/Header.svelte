@@ -25,6 +25,7 @@
         <!-- svelte-ignore a11y-no-redundant-roles -->
         <summary aria-haspopup="listbox" role="button" class="link">
             <!-- <i class="icon icon-apps" /> -->
+            <i class="icon icon-{$page.props.icon}" />
             {$page.props.title}
         </summary>
         <ul role="listbox">
@@ -35,7 +36,7 @@
             {/each}
         </ul>
     </details>
-    <a href="#aside" role="button" class="link box">
+    <a href="#aside" role="button" class="link action">
         <i class="icon icon-shutdown" />
     </a>
 </header>

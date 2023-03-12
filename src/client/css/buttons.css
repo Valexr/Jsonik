@@ -16,6 +16,7 @@ button,
     cursor: pointer;
     display: inline-block;
     line-height: initial;
+    min-inline-size: max-content;
     /* max-inline-size: fit-content; */
 }
 

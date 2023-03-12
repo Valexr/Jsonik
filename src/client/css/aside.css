@@ -4,7 +4,7 @@ aside {
     inset: 0;
     z-index: 100;
     overflow-y: auto;
-    background: var(--active);
+    background: var(--hover);
     min-inline-size: 35em;
     max-inline-size: 35em;
 }
@@ -20,6 +20,10 @@ aside.open::after {
     pointer-events: auto;
     background-color: var(--back);
     opacity: 0.5;
+}
+
+aside :is(header, footer) {
+    padding: var(--padding-lg);
 }
 
 aside header {

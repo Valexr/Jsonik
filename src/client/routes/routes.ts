@@ -6,6 +6,7 @@ export interface Page {
     component: () => Promise<typeof import("./data.svelte")>,
     props: {
         title: string,
+        icon?: string,
         menu?: string
     }
 }
@@ -14,27 +15,27 @@ export const routes: Page[] = [
     {
         match: '/',
         component: () => import('./data.svelte'),
-        props: { title: 'Data', menu: '/' },
+        props: { title: 'Data', icon: 'menu', menu: '/' },
     },
     {
         match: '/files/:folder?',
         component: () => import('./files.svelte'),
-        props: { title: 'Files', menu: '/files' },
+        props: { title: 'Files', icon: 'apps', menu: '/files' },
     },
     {
         match: '/users',
         component: () => import('./users.svelte'),
-        props: { title: 'Users', menu: '/users' },
+        props: { title: 'Users', icon: 'person', menu: '/users' },
     },
     {
         match: '/logs',
         component: () => import('./logs.svelte'),
-        props: { title: 'Logs', menu: '/logs' },
+        props: { title: 'Logs', icon: 'time', menu: '/logs' },
     },
     {
         match: '/settings',
         component: () => import('./settings.svelte'),
-        props: { title: 'Settings', menu: '/settings' },
+        props: { title: 'Settings', icon: 'location', menu: '/settings' },
     },
     {
         match: '*',

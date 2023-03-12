@@ -8,7 +8,7 @@ export default function nodemon(path) {
     let child;
 
     const kill = () => {
-        child && child.kill();
+        if (child) child.kill();
     };
 
     const start = () => {
@@ -18,8 +18,11 @@ export default function nodemon(path) {
     process.on('SIGTERM', kill);
     process.on('exit', kill);
 
-    watch(path, () => {
-        kill();
-        start();
+    watch(path, (e) => {
+        console.log(e);
+        if (e === 'change') {
+            kill();
+            start();
+        }
     });
 }
