@@ -105,9 +105,7 @@
     <Await {promise} bind:result={repo} notify on:error={backToRoot}>
         <ul
             role="listbox"
-            class={repo.files.length
-                ? "cols col-3"
-                : "cols col-fit justify-center"}
+            class={repo.files.length ? "cols col-3" : "cols justify-center"}
         >
             <li>
                 <Form on:reset={clearFiles} on:submit={upload}>
@@ -133,7 +131,7 @@
                         {:else}
                             <label
                                 role="button"
-                                class:box={!files}
+                                class:box={repo.files.length}
                                 class="block link"
                             >
                                 <i
