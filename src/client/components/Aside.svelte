@@ -37,8 +37,8 @@
     >
         <header>
             <slot name="header" />
-            <button id="close" on:click={close} class="action">
-                <i class="icon icon-close" />
+            <button id="close" class="action" on:click={close}>
+                <i class="icon icon-svg icon-x icon-1x" />
             </button>
         </header>
         <article>

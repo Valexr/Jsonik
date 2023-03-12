@@ -29,7 +29,7 @@ export type Req = {
 
 export type Res = {
     body: InputType
-    send: <T>(message: string | string[] | Body) => void
+    send: <T>(message: T | string | string[] | Body) => void
     error: (code: number | undefined, message: string, headers?: OutgoingHttpHeaders) => void
 } & ServerResponse
 

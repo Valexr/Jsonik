@@ -7,6 +7,12 @@
     export let repository: Repository;
 </script>
 
-<a href={repository.url} target="_blank" rel="noreferrer" id="gh">
-    {@html gh}
+<a
+    href={repository.url}
+    target="_blank"
+    rel="noreferrer"
+    role="button"
+    class="action link"
+>
+    <i class="icon icon-svg icon-gh icon-15x" />
 </a>

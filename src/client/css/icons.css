@@ -6,23 +6,24 @@
     font-style: normal;
     height: 1em;
     position: relative;
-    text-indent: -9999px;
-    vertical-align: sub;
     width: 1em;
-    flex: 1 0 auto;
 }
 
-.icon::before,
-.icon::after {
+:not(.icon-svg).icon::before,
+:not(.icon-svg).icon::after {
     content: "";
     display: block;
-    left: 50%;
     position: absolute;
+    left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    translate: -50%, -50%;
 }
 
-.icon.icon-1x {
+.icon.icon-125x {
+    font-size: 1.25em;
+}
+
+.icon.icon-15x {
     font-size: 1.5em;
 }
 
@@ -661,20 +662,63 @@
 }
 
 /* https://ionic.io/ionicons */
-.icon.svg {
-    background-size: cover;
-    background-repeat: no-repeat;
+.icon-svg {
+    -webkit-mask-size: 100% 100%;
+    -webkit-mask-clip: border-box;
+    mask-size: 100% 100%;
+    mask-clip: border-box;
+    background: currentColor;
 }
 
-#logo,
-#logo:hover {
-    background: url("../svg/gh.svg") center no-repeat;
-    background-clip: border-box;
-    -webkit-background-clip: border-box;
-    -webkit-text-fill-color: transparent;
-    background-size: contain;
-    display: flex;
-    min-width: 32px;
-    min-height: 32px;
-    color: transparent;
+.icon-gh {
+    mask-image: url(../svg/gh.svg);
+    /* clip-path: url(../svg/gh.svg#clip); */
+}
+
+.icon-database {
+    mask-image: url(../svg/feather/database.svg);
+}
+
+.icon-hard-drive {
+    mask-image: url(../svg/feather/hard-drive.svg);
+}
+
+.icon-users {
+    mask-image: url(../svg/feather/users.svg);
+}
+
+.icon-clock {
+    mask-image: url(../svg/feather/clock.svg);
+}
+
+.icon-settings {
+    mask-image: url(../svg/feather/settings.svg);
+}
+
+.icon-power {
+    mask-image: url(../svg/feather/power.svg);
+}
+
+.icon-x {
+    mask-image: url(../svg/feather/x.svg);
+}
+
+.icon-plus {
+    mask-image: url(../svg/feather/plus.svg);
+}
+
+.icon-file-plus {
+    mask-image: url(../svg/feather/file-plus.svg);
+}
+
+.icon-plus-square {
+    mask-image: url(../svg/feather/plus-square.svg);
+}
+
+.icon-folder-plus {
+    mask-image: url(../svg/feather/folder-plus.svg);
+}
+
+.icon-trash {
+    mask-image: url(../svg/feather/trash.svg);
 }

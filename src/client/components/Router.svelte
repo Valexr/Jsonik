@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
-    import { click, prefs, redirect, goto } from "svelte-pathfinder";
-    import { page } from "$client/routes/routes";
-    import type { Name, Repository } from "$types/client";
+    import { click, prefs } from "svelte-pathfinder";
+    import { page } from "$client/routes";
+    import type { Name } from "$types/client";
 
-    Object.assign(prefs, { scroll: true });
+    Object.assign(prefs);
 </script>
 
 <script lang="ts">

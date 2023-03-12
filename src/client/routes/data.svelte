@@ -16,27 +16,31 @@
 </script>
 
 <section class="cols">
-    <!-- <article>
-        {#await db.get("/data/logs/") then code}
-            <Code code={JSON.stringify(code, null, 2)} />
-        {/await}
-    </article> -->
+    <nav class="text-center cols nowrap scroll-x">
+        <a href="#add-folder" role="button" target="_self" class="box link">
+            <i class="icon icon-svg icon-125x icon-plus-square" />
+        </a>
+        {#each Array.from(Array(10).keys()) as key}
+            <a href="/files/folder{key}" role="button"> Data {key} </a>
+        {/each}
+    </nav>
     <article>
         <h2>Buttons</h2>
         <p>
-            <a aria-busy="true" href="#_" role="button">role="button"</a>
-            <a href="#_" role="button" class="disabled">role="button"</a>
+            <a href="#_" role="button">a role="button"</a>
+            <a aria-busy="true" href="#_" role="button">aria-busy="true""</a>
+            <a href="#_" role="button" class="disabled">disabled</a>
         </p>
         <p>
             <button>button</button>
             <button disabled>disabled</button>
         </p>
-        <p class="cols">
+        <nav class="cols">
             <button class="primary">primary</button>
             <button class="success">success</button>
             <button class="warning">warning</button>
             <button class="error">error</button>
-        </p>
+        </nav>
         <p class="cols column">
             <details role="list">
                 <summary aria-haspopup="listbox">Dropdown</summary>

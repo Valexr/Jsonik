@@ -35,7 +35,7 @@ const serverOptions = {
     outdir: 'app',
     legalComments: 'none',
     metafile: !DEV,
-    plugins: [],
+    plugins: [eslint()],
     define: {
         'process.env.NODE_ENV': DEV ? '"dev"' : '"prod"'
     }
@@ -47,7 +47,7 @@ const clientOptions = {
     sourcemap: DEV,
     entryPoints: ['src/client/app.ts'],
     outdir: 'app/client/build',
-    loader: { '.svg': 'text' },
+    loader: { '.svg': 'file' },
     legalComments: "none",
     metafile: !DEV,
     mainFields: ['svelte', 'module', 'main'],

@@ -22,7 +22,7 @@ select,
 textarea {
     margin: 0;
     padding: 0.45rem 1rem;
-    border: 0.085rem solid var(--surface);
+    border: 0.1rem solid var(--surface);
     border-radius: var(--border-radius-sm);
     background-color: var(--back);
     font-family: inherit;

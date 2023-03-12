@@ -1,10 +1,11 @@
 button,
 [role="button"],
-[type="file"]::file-selector-button {
+[type="file"]::file-selector-button,
+summary {
     text-align: center;
     text-decoration: none;
     color: inherit;
-    padding: 0.45rem 1rem;
+    padding: 0 var(--gap);
     margin: 0;
     border: 0;
     background-color: var(--surface);
@@ -14,26 +15,29 @@ button,
     user-select: none;
     -webkit-user-select: none;
     cursor: pointer;
-    display: inline-block;
-    line-height: initial;
+    display: inline-flex;
+    line-height: 2.25;
     min-inline-size: max-content;
-    /* max-inline-size: fit-content; */
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-sm);
+}
+
+:is(button, [role=button]):is(.action, .box) {
+    padding: var(--gap-sm);
+    aspect-ratio: 1/1;
 }
 
 :is(button, [role=button]).action {
     border-radius: 50%;
-    height: auto;
-    width: auto;
-    padding: 0.5em;
-    display: flex;
-}
-
-:is(button, [role=button]).box {
-    padding: 0.45rem;
 }
 
 :is(button, [role=button]).block {
-    display: block;
+    display: flex;
+}
+
+summary.block {
+    justify-content: space-between;
 }
 
 :is(button, [role=button]).primary {
@@ -73,7 +77,6 @@ button,
 
 [type="file"]::file-selector-button {
     margin-right: var(--gap);
-    line-height: 0.3rem;
     font-size: small;
 }
 

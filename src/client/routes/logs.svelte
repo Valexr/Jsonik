@@ -4,9 +4,8 @@
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Code from "$client/components/Code.svelte";
+    import type { InputEvent } from "$types/client";
     // import type { ChangeEventHandler } from "svelte/elements";
-
-    type InputEvent = Event & { currentTarget: EventTarget & HTMLInputElement };
 </script>
 
 <script lang="ts">
@@ -16,7 +15,7 @@
     console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
 
     function getRecord(date: number) {
-        $fragment = `logs-${date}`;
+        $fragment = `log-${date}`;
         fragmentDate = date;
     }
 
@@ -80,7 +79,7 @@
     </section>
 </Await>
 
-<Aside open={$fragment === `logs-${fragmentDate}`} right>
+<Aside open={$fragment === `log-${fragmentDate}`} right>
     <h2 slot="header">Record {fragmentDate}</h2>
     <Await promise={get(`/data/logs/items?date=${fragmentDate}`)} let:result>
         <Code code={JSON.stringify(result, null, 2)} />

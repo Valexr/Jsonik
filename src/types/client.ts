@@ -23,3 +23,5 @@ export type Session = {
     refresh: string,
     maxAge: string
 }
+
+export type InputEvent = Event & { currentTarget: EventTarget & HTMLInputElement };

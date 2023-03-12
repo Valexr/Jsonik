@@ -74,6 +74,16 @@
     max-width: 100%;
     overflow-x: auto;
     vertical-align: bottom;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.scroll-x::-webkit-scrollbar {
+    display: none;
+}
+
+.pos-sticky {
+    position: sticky;
 }
 
 [data-tooltip] {
@@ -159,4 +169,41 @@
 /* Global */
 html:has(.overlay) {
     overflow: hidden;
+}
+
+::selection {
+    background-color: var(--surface);
+}
+
+[aria-busy=true] {
+    vertical-align: top;
+}
+
+[aria-busy=true]::before {
+    display: inline-block;
+    color: inherit;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: .2rem solid currentColor;
+    border-right-color: transparent;
+    border-radius: 1rem;
+    content: "";
+    vertical-align: text-bottom;
+    animation: spinner .75s linear infinite;
+    opacity: 0.45;
+}
+
+[aria-busy=true]:empty {
+    text-align: center;
+}
+
+[aria-busy=true]:not(:empty, button, [role=button])::before {
+    text-align: inherit;
+    margin-right: var(--gap-sm);
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
 }

@@ -10,7 +10,8 @@ details[open]:not([role=list]) {
 }
 
 details summary {
-    padding: 0.45rem 0;
+    /* border: 0.1rem solid var(--surface); */
+    background-color: transparent;
     border-radius: var(--border-radius-sm);
     cursor: pointer;
     display: flex;
@@ -27,9 +28,8 @@ details summary:hover {
     background-color: var(--hover);
 }
 
-details[role=list] summary {
-    /* border: 0.1rem solid currentColor; */
-    padding: 0.45rem 0 0.45rem 1rem;
+details[role=list] summary:not([role=button]) {
+    border: 0.1rem solid var(--surface);
     background-color: var(--back);
 }
 
@@ -49,7 +49,7 @@ details summary::after {
     background-position: center;
     background-size: 1rem;
     background-repeat: no-repeat;
-    padding: 0 0.45rem;
+    /* padding: 0 0.45rem; */
     width: 1rem;
     height: 1rem;
     rotate: 0.75turn;
@@ -57,22 +57,12 @@ details summary::after {
 }
 
 details:is([role=list], [open]) summary::after {
-    background-position: center 0.1rem;
     rotate: 0turn;
 }
 
-details summary[role="button"] {
-    background-color: var(--surface);
-    padding-right: 0;
-    border: 0;
-}
-
-details summary[role="button"].link {
-    background-color: transparent;
-}
 
 details[role=list][open] summary {
-    border-color: var(--surface);
+    border-color: currentColor;
 }
 
 details[role=list][open] summary::before {
@@ -97,7 +87,7 @@ details[role=list] ul[role=listbox] {
     position: absolute;
     min-inline-size: max-content;
     text-align: left;
-    line-height: 2;
+    line-height: 2.25;
     overflow: hidden;
     border-radius: var(--border-radius-sm);
     background-color: var(--hover);
@@ -120,6 +110,8 @@ details[role=list] ul[role=listbox] li:is(:hover, .active) {
 
 details[role=list] ul[role=listbox] li a {
     text-decoration: none;
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
     padding: 0 1rem;
 }

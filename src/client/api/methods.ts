@@ -4,7 +4,7 @@ async function get(url: string) {
     return fetch(url, { method: 'GET' });
 }
 
-async function post(url: string, payload: BodyInit, options?: RequestInit) {
+async function post(url: string, payload?: BodyInit, options?: RequestInit) {
     return fetch(url, { method: 'POST', ...options }, payload);
 }
 

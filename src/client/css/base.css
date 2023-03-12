@@ -10,13 +10,15 @@ html {
 body {
     margin: 0;
     display: grid;
+    min-block-size: 100%;
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr;
     font-family: system-ui;
     color: var(--color);
     background-color: var(--back);
     text-rendering: optimizeLegibility;
-    min-block-size: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -32,7 +34,7 @@ footer {
     padding: var(--padding);
     gap: var(--gap-sm);
     background-color: var(--active);
-    position: sticky;
+    /* position: sticky; */
     z-index: 1;
 }
 
@@ -55,7 +57,13 @@ article {
     border-radius: var(--border-radius-lg);
 }
 
+nav {
+    --cols-gap: var(--gap-sm) !important;
+    padding: 0;
+}
+
 menu {
+    --cols-gap: var(--gap-sm) !important;
     padding: 0;
 }
 
@@ -68,37 +76,4 @@ figure {
 img {
     max-width: 100%;
     height: auto;
-}
-
-::selection {
-    background-color: var(--surface);
-}
-
-[aria-busy=true]::before {
-    display: inline-block;
-    color: inherit;
-    width: 0.75rem;
-    height: 0.75rem;
-    border: .2rem solid currentColor;
-    border-right-color: transparent;
-    border-radius: 1rem;
-    content: "";
-    vertical-align: text-bottom;
-    animation: spinner .75s linear infinite;
-    opacity: 0.45;
-}
-
-[aria-busy=true]:empty {
-    text-align: center;
-}
-
-[aria-busy=true]:not(:empty)::before {
-    margin-right: var(--gap-sm);
-    text-align: inherit;
-}
-
-@keyframes spinner {
-    to {
-        transform: rotate(360deg);
-    }
 }

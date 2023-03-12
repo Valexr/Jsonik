@@ -15,27 +15,27 @@ export const routes: Page[] = [
     {
         match: '/',
         component: () => import('./data.svelte'),
-        props: { title: 'Data', icon: 'menu', menu: '/' },
+        props: { title: 'Data', icon: 'database', menu: '/' },
     },
     {
         match: '/files/:folder?',
         component: () => import('./files.svelte'),
-        props: { title: 'Files', icon: 'apps', menu: '/files' },
+        props: { title: 'Files', icon: 'hard-drive', menu: '/files' },
     },
     {
         match: '/users',
         component: () => import('./users.svelte'),
-        props: { title: 'Users', icon: 'person', menu: '/users' },
+        props: { title: 'Users', icon: 'users', menu: '/users' },
     },
     {
         match: '/logs',
         component: () => import('./logs.svelte'),
-        props: { title: 'Logs', icon: 'time', menu: '/logs' },
+        props: { title: 'Logs', icon: 'clock', menu: '/logs' },
     },
     {
         match: '/settings',
         component: () => import('./settings.svelte'),
-        props: { title: 'Settings', icon: 'location', menu: '/settings' },
+        props: { title: 'Settings', icon: 'settings', menu: '/settings' },
     },
     {
         match: '*',

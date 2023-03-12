@@ -1,61 +1,108 @@
 <script lang="ts" context="module">
-    import { fragment } from "svelte-pathfinder";
-    import { get, post } from "$client/api/methods";
-    import Form from "$client/components/Form.svelte";
+    import { fragment, path, paramable, back, goto } from "svelte-pathfinder";
+    import { del, get, post } from "$client/api/methods";
+    // import Form from "$client/components/Form.svelte";
     import Await from "$client/components/Await.svelte";
     import Dialog from "$client/components/Dialog.svelte";
+
+    type Repo = { files: string[]; folders: string[]; folder: string };
 </script>
 
 <script lang="ts">
     let files: FileList;
+    // let folders: string[] = [];
     let promise: Promise<void> = download();
+    let repo: Repo = { files: [], folders: [], folder: "" };
 
-    async function addFolder() {}
+    const accept = ".svg, .jpg, .jpeg, .png, .gif, .doc, .docx, .pdf, .txt";
+
+    $: console.log($path[1]);
+    async function addFolder(e: SubmitEvent) {
+        const data = new FormData(e.target as HTMLFormElement);
+        const folder = data.get("folder");
+        console.log(e.target, data);
+        await post(`/files/${folder}/`);
+        promise = download();
+        goto(`/files/${folder}/`);
+    }
+
+    async function deleteFolder() {
+        await del(`/files/${repo.folder}/`);
+        promise = download();
+    }
 
     async function upload(e: SubmitEvent) {
         console.log(e);
         for await (const file of files) {
-            post(`/files//${file.name}`, file);
+            post(`/files/${$path[1] || ""}/${file.name}`, file);
         }
         promise = download();
     }
     async function download() {
-        return await get("/files//");
+        return await get(`/files/${$path[1] || ""}/`);
+    }
+
+    function backToRoot() {
+        back("/files");
     }
 </script>
 
 <!-- <h1>Files</h1> -->
 
-<nav class="text-center cols nowrap col-fit scroll-x">
-    <a href="#add-folder" role="button" target="_self" class="action">
-        <i class="icon icon-plus" />
+<nav class="text-center cols nowrap col-fit justify-start scroll-x">
+    <a href="#add-folder" role="button" target="_self" class="box link">
+        <i class="icon icon-svg icon-125x icon-folder-plus" />
     </a>
-    <a href="/files/folder1" role="button"> Folder 1 </a>
-    <a href="/files/folder2" role="button"> Folder 2 </a>
-    <a href="/files/folder3" role="button"> Folder 3 </a>
-    <a href="/files/folder4" role="button"> Folder 4 </a>
-    <a href="/files/folder5" role="button"> Folder 5 </a>
-    <a href="/files/folder6" role="button"> Folder 6 </a>
-    <a href="/files/folder7" role="button"> Folder 7 </a>
-    <a href="/files/folder8" role="button"> Folder 8 </a>
-    <a href="/files/folder9" role="button"> Folder 9 </a>
+    <a href="/files" role="button" class:disabled={!$path[1]}>/</a>
+    {#each repo?.folders as folder}
+        <a
+            href="/files/{folder}"
+            role="button"
+            class:disabled={$path[1] === folder}
+        >
+            {folder}
+            <!-- <button class="action link">
+                <i class="icon icon-svg icon-x" />
+            </button> -->
+        </a>
+    {/each}
 </nav>
 
 <article>
-    <a href="#upload-files" role="button" target="_self" class="block">
-        <i class="icon icon-plus" /> Upload
-    </a>
-    <Await {promise} let:result>
-        <ul role="listbox" class="cols col-3">
-            <li>
+    <header class="cols col-fit">
+        <h3>
+            {repo.folder || "/"}
+        </h3>
+        <button class="action link text-error" on:click={deleteFolder}>
+            <i class="icon icon-svg icon-trash" />
+        </button>
+    </header>
+    <Await {promise} bind:result={repo} notify on:error={backToRoot}>
+        <ul
+            role="listbox"
+            class={repo.files.length ? "cols col-3" : "text-center"}
+        >
+            <li class="text-center">
                 <h3>Upload files</h3>
+                <!-- <i class="icon icon-svg icon-file-plus icon-2x" /> -->
+                <a
+                    href="#upload-files"
+                    role="button"
+                    target="_self"
+                    class="box"
+                >
+                    <i class="icon icon-svg icon-file-plus icon-2x" />
+                </a>
             </li>
-            {#each result as name}
+            {#each repo.files as name}
                 <li>
                     {#if /\.jpeg|\.jpg|\.png/.test(name)}
                         <figure>
                             <a href="#file-{name}" target="_self">
-                                <img src="/api/v1/files//{name}" alt={name} />
+                                <img
+                                    src="/api/v1/files/{repo.folder}/{name}"
+                                    alt={name}
+                                />
                             </a>
                             <figcaption>{name}</figcaption>
                         </figure>
@@ -66,15 +113,18 @@
                             info
                         >
                             <figure>
-                                <img src="/api/v1/files//{name}" alt={name} />
+                                <img
+                                    src="/api/v1/files/{repo.folder}/{name}"
+                                    alt={name}
+                                />
                                 <figcaption>{name}</figcaption>
                             </figure>
                         </Dialog>
                     {:else if !name.includes(".")}
-                        <a href="/files//{name}">{name}</a>
+                        <a href="/files/{repo.folder}/{name}">{name}</a>
                     {:else}
                         <a
-                            href="/api/v1/files//{name}"
+                            href="/api/v1/files/{repo.folder}/{name}"
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -82,8 +132,6 @@
                         </a>
                     {/if}
                 </li>
-            {:else}
-                <li class="text-cente empty">You haven't files</li>
             {/each}
         </ul>
     </Await>
@@ -93,7 +141,7 @@
     <h2 slot="header">Add folder</h2>
     <fieldset>
         <label>
-            <input placeholder="Folder name" />
+            <input placeholder="Folder name" name="folder" />
         </label>
     </fieldset>
 </Dialog>
@@ -102,7 +150,7 @@
     <h2 slot="header">Upload files</h2>
     <fieldset>
         <label>
-            <input type="file" multiple bind:files />
+            <input type="file" name="files" multiple bind:files {accept} />
         </label>
         {#if files}
             <p>Selected</p>
@@ -116,11 +164,12 @@
 </Dialog>
 
 <style>
-    ul {
+    ul[role="listbox"] {
         --cols-gap: var(--gap);
         padding: 0;
     }
     nav {
+        --cols-gap: var(--gap-sm);
         padding-bottom: var(--gap);
     }
     .empty {

@@ -106,6 +106,10 @@ dialog form footer {
     bottom: 0;
 }
 
+dialog form footer menu {
+    --cols-gap: var(--gap-sm);
+}
+
 dialog form header #close {
     font-size: small;
     flex: none;
