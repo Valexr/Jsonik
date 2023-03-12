@@ -7,7 +7,7 @@ summary {
     color: inherit;
     padding: 0 var(--gap);
     margin: 0;
-    border: 0;
+    border: 0.1rem solid transparent;
     background-color: var(--surface);
     border-radius: var(--border-radius-sm);
     font-size: inherit;
@@ -16,7 +16,7 @@ summary {
     -webkit-user-select: none;
     cursor: pointer;
     display: inline-flex;
-    line-height: 2.25;
+    line-height: 2;
     min-inline-size: max-content;
     align-items: center;
     justify-content: center;
@@ -70,7 +70,7 @@ summary.block {
 }
 
 :is(button, [role=button], [type="file"]::file-selector-button):is(:disabled, .disabled, [aria-busy=true]) {
-    background-color: var(--hover);
+    background-color: var(--active);
     color: var(--gray);
     cursor: auto;
 }

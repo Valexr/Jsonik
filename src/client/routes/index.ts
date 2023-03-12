@@ -40,7 +40,7 @@ export const routes: Page[] = [
     {
         match: '*',
         component: () => import('./404.svelte'),
-        props: { title: '404' },
+        props: { title: '404', icon: 'alert-triangle' },
     }
 ];
 

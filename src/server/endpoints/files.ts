@@ -1,5 +1,5 @@
-import { createReadStream, createWriteStream } from "node:fs";
-import { readdir, rm } from "node:fs/promises";
+import { createReadStream, createWriteStream } from "fs";
+import { readdir, rm, rename } from "fs/promises";
 import { checkdir } from "$server/lib/utils";
 import type { App } from "$server/derver/types";
 
@@ -37,8 +37,21 @@ export function files(app: App) {
         }
     });
 
-    app.delete(pattern, async (req, res) => {
+    app.patch(pattern, async (req, res, next) => {
         const { folder, file } = req.params
-        await rm(`files/${folder}`, { recursive: true })
+        try {
+            await rename(`files/${folder}`, `files/${file}`)
+        } catch (e) {
+            next()
+        }
+    })
+
+    app.delete(pattern, async (req, res, next) => {
+        const { folder, file } = req.params
+        try {
+            await rm(`files/${folder}/${file}`, { recursive: true })
+        } catch (e) {
+            next()
+        }
     })
 }

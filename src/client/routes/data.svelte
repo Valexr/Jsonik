@@ -21,7 +21,7 @@
             <i class="icon icon-svg icon-125x icon-plus-square" />
         </a>
         {#each Array.from(Array(10).keys()) as key}
-            <a href="/files/folder{key}" role="button"> Data {key} </a>
+            <a href="/Data{key}" role="button">Data {key}</a>
         {/each}
     </nav>
     <article>

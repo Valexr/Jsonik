@@ -1,5 +1,6 @@
-import type { OutgoingHttpHeaders, ServerResponse, IncomingMessage } from 'http';
+import type { PathLike } from 'fs';
 import type { InputType } from 'zlib';
+import type { OutgoingHttpHeaders, ServerResponse, IncomingMessage } from 'http';
 
 export type Options = {
     port: number
@@ -21,7 +22,7 @@ export type Req = {
     search: string
     query: { [key: string]: string }
     params: { [key: string]: string; }
-    body: Body
+    body: Body & PathLike
     file: string
     extname: string
     exists: boolean

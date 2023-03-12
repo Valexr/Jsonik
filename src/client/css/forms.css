@@ -13,7 +13,7 @@ legend {
 }
 
 label {
-    margin-bottom: 0.75rem;
+    margin: var(--gap) 0;
     display: block;
 }
 

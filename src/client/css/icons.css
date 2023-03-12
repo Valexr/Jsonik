@@ -722,3 +722,11 @@
 .icon-trash {
     mask-image: url(../svg/feather/trash.svg);
 }
+
+.icon-edit {
+    mask-image: url(../svg/feather/edit.svg);
+}
+
+.icon-alert-triangle {
+    mask-image: url(../svg/feather/alert-triangle.svg);
+}
