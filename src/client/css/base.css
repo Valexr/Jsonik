@@ -67,9 +67,19 @@ menu {
 }
 
 figure {
-    overflow-x: auto;
+    /* overflow-x: auto; */
     padding: 0;
     margin: 0;
+    min-block-size: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+}
+
+figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 img {

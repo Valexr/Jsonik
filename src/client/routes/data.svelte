@@ -26,12 +26,12 @@
     </nav>
     <article>
         <h2>Buttons</h2>
-        <p>
+        <p class="cols">
             <a href="#_" role="button">a role="button"</a>
             <a aria-busy="true" href="#_" role="button">aria-busy="true""</a>
             <a href="#_" role="button" class="disabled">disabled</a>
         </p>
-        <p>
+        <p class="cols">
             <button>button</button>
             <button disabled>disabled</button>
         </p>
@@ -86,22 +86,33 @@
 
     <article>
         <h2>Forms</h2>
-        <label>
-            <select>
-                <option value="" disabled selected>Select</option>
-                <option>Action</option>
-                <option>Another action</option>
-                <option>Something else here</option>
-            </select>
-        </label>
-        <label><input type="search" placeholder="Search" /></label>
-        <label><input placeholder="input" /></label>
-        <label><textarea use:expand placeholder="textarea" /></label>
-        <label><input type="number" placeholder="number" /></label>
-        <label><input type="checkbox" /> Checkbox</label>
-        <label><input type="checkbox" role="switch" /> Switch</label>
         <fieldset>
-            <legend>Size</legend>
+            <legend>Select</legend>
+            <label>
+                <select>
+                    <option value="" disabled selected>Select</option>
+                    <option>Action</option>
+                    <option>Another action</option>
+                    <option>Something else here</option>
+                </select>
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Input</legend>
+            <label><input type="search" placeholder="Search" /></label>
+            <label><input placeholder="input" /></label>
+            <label><textarea use:expand placeholder="textarea" /></label>
+            <label><input type="number" placeholder="number" /></label>
+            <label><input type="time" placeholder="time" /></label>
+            <label><input type="date" placeholder="date" /></label>
+        </fieldset>
+        <fieldset>
+            <legend>Checkbox</legend>
+            <label><input type="checkbox" /> Checkbox</label>
+            <label><input type="checkbox" role="switch" /> Switch</label>
+        </fieldset>
+        <fieldset>
+            <legend>Radio</legend>
             <label>
                 <input type="radio" name="size" value="small" checked /> Small
             </label>

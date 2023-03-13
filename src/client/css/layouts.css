@@ -67,6 +67,14 @@
     background-color: var(--surface);
 }
 
+.hover {
+    background-color: var(--hover);
+}
+
+.active {
+    background-color: var(--active);
+}
+
 .container {
     margin-inline: calc(max(0%, 50% - var(--viewport) / 2) + var(--gap-lg));
 }

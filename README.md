@@ -1,3 +1,3 @@
-# jsonik
+# 🏠 Jsonik
 
 Tiny JSON backend

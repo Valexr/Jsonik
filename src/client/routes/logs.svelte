@@ -38,38 +38,36 @@
 
 <Await {promise} success="Data loaded" let:result notify>
     <section>
-        <article>
-            <figure>
-                <table>
-                    <thead>
-                        {#each Object.keys(result.at(-1)) as head}
-                            <th>{head}</th>
-                        {/each}
-                    </thead>
-                    <tbody>
-                        {#each result.reverse() as item}
-                            <tr on:click={() => getRecord(item.date)}>
-                                {#each Object.entries(item) as [k, v]}
-                                    {#if k === "date"}
-                                        <td>
-                                            <small>{date(v)}</small>
-                                        </td>
-                                    {:else}
-                                        <td
-                                            class:text-success={k ===
-                                                "status" && v === 200}
-                                            class:text-bold={[
-                                                "method",
-                                                "status",
-                                            ].includes(k)}>{v}</td
-                                        >
-                                    {/if}
-                                {/each}
-                            </tr>
-                        {/each}
-                    </tbody>
-                </table>
-            </figure>
+        <article class="scroll-x">
+            <table>
+                <thead>
+                    {#each Object.keys(result.at(-1)) as head}
+                        <th>{head}</th>
+                    {/each}
+                </thead>
+                <tbody>
+                    {#each result.reverse() as item}
+                        <tr on:click={() => getRecord(item.date)}>
+                            {#each Object.entries(item) as [k, v]}
+                                {#if k === "date"}
+                                    <td>
+                                        <small>{date(v)}</small>
+                                    </td>
+                                {:else}
+                                    <td
+                                        class:text-success={k === "status" &&
+                                            v === 200}
+                                        class:text-bold={[
+                                            "method",
+                                            "status",
+                                        ].includes(k)}>{v}</td
+                                    >
+                                {/if}
+                            {/each}
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
         </article>
     </section>
 </Await>

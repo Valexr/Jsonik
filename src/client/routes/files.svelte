@@ -1,5 +1,12 @@
 <script lang="ts" context="module">
-    import { fragment, path, paramable, back, goto } from "svelte-pathfinder";
+    import {
+        fragment,
+        path,
+        paramable,
+        back,
+        goto,
+        redirect,
+    } from "svelte-pathfinder";
     import { del, get, patch, post } from "$client/api/methods";
     import Form from "$client/components/Form.svelte";
     import Await from "$client/components/Await.svelte";
@@ -34,6 +41,7 @@
 
     async function deleteFolder(file = "") {
         await del(`/files/${$path[1] || ""}/${file}`);
+        if (file) reload();
         backToRoot();
     }
 
@@ -63,7 +71,7 @@
     }
 
     function backToRoot() {
-        goto("/files");
+        redirect("/files");
     }
 
     const reload = () => (promise = download());
@@ -162,17 +170,17 @@
                     </fieldset>
                 </Form>
             </li>
-            {#each repo.files as file}
+            {#each repo.files.sort((a, b) => a.localeCompare(b)) as file (file)}
                 <li>
                     {#if /\.jpeg|\.jpg|\.png|\.dng/.test(file)}
-                        <figure>
-                            <a href="#file-{file}" target="_self">
-                                <img
-                                    src="/api/v1/files/{repo.folder}/{file}"
-                                    alt={file}
-                                />
-                            </a>
-                            <figcaption>
+                        <a
+                            href="#file-{file}"
+                            role="button"
+                            class="box"
+                            style="background-image: url('/api/v1/files/{repo.folder}/{file}')"
+                            target="_self"
+                        >
+                            <span>
                                 {file}
                                 <button
                                     id="delete"
@@ -181,20 +189,22 @@
                                 >
                                     <i class="icon icon-svg icon-trash" />
                                 </button>
-                            </figcaption>
-                        </figure>
+                            </span>
+                        </a>
                         <Dialog
                             open={$fragment === `file-${file}`}
                             from="center"
                             size=""
                             info
                         >
+                            <h3 slot="header">
+                                /api/v1/files/{repo.folder}/{file}
+                            </h3>
                             <figure>
                                 <img
                                     src="/api/v1/files/{repo.folder}/{file}"
                                     alt={file}
                                 />
-                                <figcaption>{file}</figcaption>
                             </figure>
                         </Dialog>
                     {:else}
@@ -260,9 +270,23 @@
     ul[role="listbox"] li {
         position: relative;
     }
-    ul[role="listbox"] li:hover {
-        background-color: var(--active);
+    ul[role="listbox"] li > a {
+        display: flex;
+        flex-flow: column;
+        justify-content: end;
+        background-size: 100% 80%;
+        background-repeat: no-repeat;
+        aspect-ratio: 1/1;
     }
+    ul[role="listbox"] li > a > span {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+    /* ul[role="listbox"] li:hover {
+        background-color: var(--hover);
+    } */
     nav {
         --cols-gap: var(--gap-sm);
         padding-bottom: var(--gap);
