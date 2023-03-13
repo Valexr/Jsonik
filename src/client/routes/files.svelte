@@ -23,46 +23,50 @@
     async function addFolder(e: SubmitEvent) {
         const data = new FormData(e.target as HTMLFormElement);
         const folder = data.get("folder");
-        console.log(e.target, data);
         await post(`/files/${folder}/`);
-        promise = download();
         goto(`/files/${folder}/`);
     }
 
     async function renameFolder() {
         await patch(`/files/${$path[1] || ""}/${newFolderName}`);
-        promise = download();
+        reload();
     }
 
     async function deleteFolder(file = "") {
         await del(`/files/${$path[1] || ""}/${file}`);
-        promise = download();
+        backToRoot();
     }
 
     function addFiles(e: InputEvent) {
         files = e.currentTarget.files;
+        console.log(files);
     }
 
     async function upload(e: SubmitEvent) {
-        console.log(e);
-        for await (const file of files) {
-            post(`/files/${$path[1] || ""}/${file.name}`, file);
-        }
-        files = "" as unknown as FileList;
-        promise = download();
+        const promises = Array.from(files || [])?.map((file) => {
+            console.log(typeof file);
+            return post(`/files/${$path[1] || ""}/${file.name}`, file);
+        });
+
+        await Promise.all(promises);
+
+        clearFiles();
+        reload();
     }
+
     async function download() {
         return await get(`/files/${$path[1] || ""}/`);
     }
 
     function clearFiles() {
         files = "" as unknown as FileList;
-        console.log(files);
     }
 
     function backToRoot() {
-        back("/files");
+        goto("/files");
     }
+
+    const reload = () => (promise = download());
 </script>
 
 <!-- <h1>Files</h1> -->
@@ -105,10 +109,17 @@
     <Await {promise} bind:result={repo} notify on:error={backToRoot}>
         <ul
             role="listbox"
-            class={repo.files.length ? "cols col-3" : "cols justify-center"}
+            class={repo.files.length
+                ? "grid justify-start"
+                : "grid justify-center"}
         >
             <li>
-                <Form on:reset={clearFiles} on:submit={upload}>
+                <Form
+                    method="post"
+                    enctype="multipart/form-data"
+                    on:reset={clearFiles}
+                    on:submit={upload}
+                >
                     <fieldset>
                         {#if files}
                             <h3>Selected</h3>
@@ -128,6 +139,7 @@
                                     Upload
                                 </button>
                             </label>
+                            <!-- {:else} -->
                         {:else}
                             <label
                                 role="button"
@@ -140,6 +152,7 @@
                                 <input
                                     type="file"
                                     class="hidden"
+                                    name="files"
                                     multiple
                                     {accept}
                                     on:change={addFiles}
@@ -148,53 +161,59 @@
                         {/if}
                     </fieldset>
                 </Form>
-                <!-- <h3>Upload files</h3> -->
-                <!-- <i class="icon icon-svg icon-file-plus icon-2x" /> -->
-                <!-- <a
-                    href="#upload-files"
-                    role="button"
-                    target="_self"
-                    class="box block link"
-                >
-                    <i class="icon icon-svg icon-file-plus icon-3x" />
-                </a> -->
             </li>
-            {#each repo.files as name}
+            {#each repo.files as file}
                 <li>
-                    {#if /\.jpeg|\.jpg|\.png|\.dng/.test(name)}
+                    {#if /\.jpeg|\.jpg|\.png|\.dng/.test(file)}
                         <figure>
-                            <a href="#file-{name}" target="_self">
+                            <a href="#file-{file}" target="_self">
                                 <img
-                                    src="/api/v1/files/{repo.folder}/{name}"
-                                    alt={name}
+                                    src="/api/v1/files/{repo.folder}/{file}"
+                                    alt={file}
                                 />
                             </a>
-                            <figcaption>{name}</figcaption>
+                            <figcaption>
+                                {file}
+                                <button
+                                    id="delete"
+                                    class="link box text-error"
+                                    on:click={() => deleteFolder(file)}
+                                >
+                                    <i class="icon icon-svg icon-trash" />
+                                </button>
+                            </figcaption>
                         </figure>
                         <Dialog
-                            open={$fragment === `file-${name}`}
+                            open={$fragment === `file-${file}`}
                             from="center"
                             size=""
                             info
                         >
                             <figure>
                                 <img
-                                    src="/api/v1/files/{repo.folder}/{name}"
-                                    alt={name}
+                                    src="/api/v1/files/{repo.folder}/{file}"
+                                    alt={file}
                                 />
-                                <figcaption>{name}</figcaption>
+                                <figcaption>{file}</figcaption>
                             </figure>
                         </Dialog>
-                    {:else if !name.includes(".")}
-                        <a href="/files/{repo.folder}/{name}">{name}</a>
                     {:else}
-                        <a
-                            href="/api/v1/files/{repo.folder}/{name}"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            {name}
-                        </a>
+                        <p>
+                            <a
+                                href="/api/v1/files/{repo.folder}/{file}"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {file}
+                            </a>
+                            <button
+                                id="delete"
+                                class="box link text-error"
+                                on:click={() => deleteFolder(file)}
+                            >
+                                <i class="icon icon-svg icon-trash" />
+                            </button>
+                        </p>
                     {/if}
                 </li>
             {/each}
@@ -229,15 +248,27 @@
 </Dialog>
 
 <style>
+    header {
+        line-height: 1.75;
+        padding: var(--gap-sm) 0;
+    }
     ul[role="listbox"] {
         --cols-gap: var(--gap);
+        --col-width: 10em;
         padding: 0;
+    }
+    ul[role="listbox"] li {
+        position: relative;
+    }
+    ul[role="listbox"] li:hover {
+        background-color: var(--active);
     }
     nav {
         --cols-gap: var(--gap-sm);
         padding-bottom: var(--gap);
     }
-    .empty {
-        flex: auto;
+    #delete {
+        /* position: absolute; */
+        right: 0;
     }
 </style>

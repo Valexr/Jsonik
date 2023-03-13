@@ -1,5 +1,5 @@
 import http from 'http';
-import { mwURLParse, mwJsonParse, mwSend, mwError, mwFile, mwStatic, mwCompress, mwCache } from './mws'
+import { mwURLParse, mwBodyParse, mwSend, mwError, mwFile, mwStatic, mwCompress, mwCache } from './mws'
 import { mwLivereload } from './livereload';
 import type { Options, Mw, App, Req, Res, Next } from './types';
 
@@ -7,7 +7,7 @@ export function startHTTPServer(options: Options) {
     const server = http.createServer(function (req, res) {
         const middlewares: Mw[] = [
             mwURLParse(),
-            mwJsonParse(),
+            mwBodyParse(),
             mwSend(),
             mwError(),
             ...options.middlewares.list(),

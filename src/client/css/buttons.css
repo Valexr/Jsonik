@@ -24,7 +24,7 @@ summary {
 }
 
 :is(button, [role=button]):is(.action, .box) {
-    padding: var(--gap-sm);
+    padding: 0 var(--gap-sm);
     aspect-ratio: 1/1;
 }
 
@@ -71,6 +71,7 @@ summary.block {
 
 :is(button, [role=button], [type="file"]::file-selector-button):is(:disabled, .disabled, [aria-busy=true]) {
     background-color: var(--active);
+    border-color: currentColor;
     color: var(--gray);
     cursor: auto;
 }

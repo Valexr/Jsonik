@@ -31,10 +31,9 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--padding);
+    padding: 0 var(--gap);
     gap: var(--gap-sm);
     background-color: var(--active);
-    /* position: sticky; */
     z-index: 1;
 }
 

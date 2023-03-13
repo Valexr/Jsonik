@@ -8,7 +8,7 @@ export default async function (url: RequestInfo, { ...options }: RequestInit, bo
     function req() {
         return fetch(base + url, {
             ...options,
-            // credentials: 'include',
+            credentials: 'include',
             // headers: {
             // ...(access && { Authorization: `Baerer ${access}` }),
             // 'Content-Type': 'application/json',

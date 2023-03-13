@@ -19,12 +19,12 @@ export function mwURLParse() {
     }
 }
 
-export function mwJsonParse() {
+export function mwBodyParse() {
     return function (req: Req, _res: Res, next: Next) {
-        // const isFile = req.headers['content-length']
-        const isJson = !req.headers['content-type']?.indexOf('application/json');
-
-        if (isJson) {
+        const isForm = req.headers['content-type'] === 'multipart/form-data'
+        const isJson = req.headers['content-type'] === 'application/json'
+        // if (isForm) req.setEncoding('latin1')
+        if (isJson || isForm) {
             let data = '';
             req.on('data', chunk => {
                 data += chunk;
@@ -32,9 +32,13 @@ export function mwJsonParse() {
             req.on('end', () => {
                 if (data) {
                     try {
-                        req.body = JSON.parse(data);
+                        if (isJson) {
+                            req.body = JSON.parse(data);
+                        } else {
+                            req.body = data;
+                        }
                     } catch (err: any & Error) {
-                        req.body = {} as Body;
+                        req.body = {} as Req['body'];
                         console.log(err.message);
                     }
                 }

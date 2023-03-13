@@ -23,6 +23,8 @@
         const { value } = e.currentTarget as HTMLInputElement;
         promise = get(`/data/logs/items?q=${value}`);
     }
+
+    const date = (time: number) => new Date(time).toLocaleString("ru");
     // $: date = $fragment.split("-")[1];
 </script>
 
@@ -46,18 +48,11 @@
                     </thead>
                     <tbody>
                         {#each result.reverse() as item}
-                            <tr
-                                on:click|stopPropagation={() =>
-                                    getRecord(item.date)}
-                            >
+                            <tr on:click={() => getRecord(item.date)}>
                                 {#each Object.entries(item) as [k, v]}
                                     {#if k === "date"}
                                         <td>
-                                            <small
-                                                >{new Date(v).toLocaleString(
-                                                    "ru"
-                                                )}</small
-                                            >
+                                            <small>{date(v)}</small>
                                         </td>
                                     {:else}
                                         <td

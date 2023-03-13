@@ -1,5 +1,6 @@
 <script lang="ts">
     export let method = "";
+    export let enctype = "";
     export let valid = false;
 
     export function validate(
@@ -15,6 +16,7 @@
 
 <form
     {method}
+    {enctype}
     on:submit|preventDefault
     on:reset|preventDefault
     on:change

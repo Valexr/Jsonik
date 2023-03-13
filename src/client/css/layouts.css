@@ -24,7 +24,7 @@
 }
 
 .cols.col-fit>* {
-    flex: 0 fit-content;
+    flex: 0 0 fit-content;
 }
 
 .cols.col-min>* {

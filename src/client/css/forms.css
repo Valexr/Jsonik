@@ -21,7 +21,7 @@ input,
 select,
 textarea {
     margin: 0;
-    padding: 0.45rem 1rem;
+    padding: 0 1rem;
     border: 0.1rem solid var(--surface);
     border-radius: var(--border-radius-sm);
     background-color: var(--back);
@@ -29,7 +29,7 @@ textarea {
     font-size: inherit;
     font-weight: inherit;
     color: inherit;
-    line-height: 1.25;
+    line-height: 2.25;
     min-inline-size: 100%;
     max-inline-size: 100%;
 }
@@ -129,6 +129,7 @@ textarea {
     overflow: hidden;
     min-block-size: 4em;
     line-height: 1.5;
+    padding: var(--padding);
 }
 
 /* States */
