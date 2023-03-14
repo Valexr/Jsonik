@@ -1,7 +1,7 @@
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
-import { omatch, osome, group, checkdir } from '$server/lib/utils';
-import type { Base } from '$types/server';
+import { omatch, osome, group, checkdir } from '$server/lib/utils.js';
+import type { Base } from '$types/server.js';
 
 export default { connect };
 

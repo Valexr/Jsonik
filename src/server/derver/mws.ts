@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import zlib from 'zlib';
 import mime from './mime.json';
-import type { Next, Options, Req, Res } from "./types";
+import type { Next, Options, Req, Res } from "./types.js";
 import type { OutgoingHttpHeaders } from 'http';
 
 export function mwURLParse() {

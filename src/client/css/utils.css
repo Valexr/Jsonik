@@ -75,7 +75,7 @@
     overflow-x: auto;
     vertical-align: bottom;
     scrollbar-width: none;
-    /* Firefox */
+    white-space: nowrap;
 }
 
 .scroll-x::-webkit-scrollbar {

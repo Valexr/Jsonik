@@ -83,3 +83,10 @@ code span {
 .text-small {
     font-size: small;
 }
+
+.text-ellepsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: inherit;
+}

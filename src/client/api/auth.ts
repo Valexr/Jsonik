@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import { redirect } from 'svelte-pathfinder';
-import type { Session } from '$types/client';
+import type { Session } from '$types/client.js';
 
 const base = '/api/v1/auth';
 

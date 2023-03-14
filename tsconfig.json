@@ -19,7 +19,7 @@
         "isolatedModules": true,
         "resolveJsonModule": true,
         "preserveValueImports": true,
-        "moduleResolution": "Node",
+        "moduleResolution": "NodeNext",
         "importsNotUsedAsValues": "error",
         "lib": [
             "DOM",

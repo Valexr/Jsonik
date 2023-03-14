@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import { click, prefs } from "svelte-pathfinder";
-    import { page } from "$client/routes";
-    import type { Name } from "$types/client";
+    import { page } from "$client/routes/index.js";
+    import type { Name } from "$types/client.js";
 
     Object.assign(prefs);
 </script>

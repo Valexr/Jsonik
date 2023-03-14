@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-import type { Pos } from './positions';
+import type { Pos } from './positions.js';
 
 interface ToastItem {
     id?: number;

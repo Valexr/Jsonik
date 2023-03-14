@@ -98,6 +98,10 @@
     }
 }
 
+.aspect-ration-1-1 {
+    aspect-ratio: 1/1;
+}
+
 .columns {
     --col-width: 20em;
     --col-gap: var(--gap);

@@ -1,4 +1,4 @@
-import { listen } from './';
+import { listen } from './index.js';
 import type { Action } from 'svelte/action';
 
 function clickout(node: EventTarget, cb: { (): (boolean | any) }) {

@@ -39,7 +39,7 @@
         "@types/cookie": "^0.5.1",
         "@types/eslint": "^8.21.2",
         "@types/jsonwebtoken": "^9.0.1",
-        "@types/node": "^18.15.2",
+        "@types/node": "^18.15.3",
         "@typescript-eslint/eslint-plugin": "^5.55.0",
         "@typescript-eslint/parser": "^5.55.0",
         "codejar": "^3.7.0",

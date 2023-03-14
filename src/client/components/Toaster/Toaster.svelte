@@ -2,9 +2,9 @@
     import { flip } from "svelte/animate";
     import { fly } from "svelte/transition";
 
-    import { positions } from "./positions";
-    import { toast, type ToastItem } from ".";
-    import Toast from ".";
+    import { positions } from "./positions.js";
+    import { toast, type ToastItem } from "./index.js";
+    import Toast from "./index.js";
 </script>
 
 <script lang="ts">

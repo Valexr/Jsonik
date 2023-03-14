@@ -1,4 +1,4 @@
-import type { Next, Req, Res } from './types';
+import type { Next, Req, Res } from './types.js';
 
 type Listener = (event: string) => boolean
 

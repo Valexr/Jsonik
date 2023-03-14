@@ -3,8 +3,8 @@
     import { linear } from "svelte/easing";
     import type { Tweened } from "svelte/motion";
 
-    import { toast } from "./toast";
-    import type { ToastItem } from "./toast";
+    import { toast } from "./toast.js";
+    import type { ToastItem } from "./toast.js";
 
     interface Options {
         delay?: number;

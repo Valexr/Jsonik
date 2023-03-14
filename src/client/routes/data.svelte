@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
     import Code from "$client/components/Code.svelte";
     import Form from "$client/components/Form.svelte";
-    import * as db from "$client/api/methods";
-    import { expand } from "$client/utils/actions";
-    import { current } from "$client/utils/time";
+    import * as db from "$client/api/methods.js";
+    import { expand } from "$client/utils/actions.js";
+    import { current } from "$client/utils/time.js";
 </script>
 
 <script lang="ts">

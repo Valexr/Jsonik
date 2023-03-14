@@ -1,8 +1,8 @@
 import { readdir, readFile } from 'node:fs/promises';
-import DB from '$server/lib/db';
-import type { App, Next, Req, Res } from '$server/derver/types';
-import type { Base } from '$types/server';
-import { checkdir } from '$server/lib/utils';
+import DB from '$server/lib/db.js';
+import type { App, Next, Req, Res } from '$server/derver/types.js';
+import type { Base } from '$types/server.js';
+import { checkdir } from '$server/lib/utils.js';
 
 let base: Base
 

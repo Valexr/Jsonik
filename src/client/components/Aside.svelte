@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { fly } from "svelte/transition";
-    import { clickout, clickOutside } from "$client/utils/actions";
+    import { clickout, clickOutside } from "$client/utils/actions.js";
 </script>
 
 <script lang="ts">

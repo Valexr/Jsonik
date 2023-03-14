@@ -1,4 +1,4 @@
-import type { Low } from "lowdb/node";
+import type { Low } from "lowdb";
 
 export type Base = {
     base: Low<object>;

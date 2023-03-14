@@ -1,6 +1,6 @@
-import { startHTTPServer, createMiddlwaresList } from './http';
-import { clientWatch } from './watch';
-import type { Options } from './types';
+import { startHTTPServer, createMiddlwaresList } from './http.js';
+import { clientWatch } from './watch.js';
+import type { Options } from './types.js';
 
 const defaultOptions: Partial<Options> = {
     host: 'localhost',

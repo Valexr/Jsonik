@@ -1,8 +1,8 @@
 import cookie from 'cookie';
-import DB from '$server/lib/db';
-import { btoa } from '$server/lib/utils';
-import { matchPassword, UUID } from '$server/lib/crypto';
-import type { Next, Req, Res } from '$server/derver/types';
+import DB from '$server/lib/db.js';
+import { btoa } from '$server/lib/utils.js';
+import { matchPassword, UUID } from '$server/lib/crypto.js';
+import type { Next, Req, Res } from '$server/derver/types.js';
 
 export async function login(req: Req, res: Res, next: Next) {
     try {

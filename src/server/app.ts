@@ -5,7 +5,7 @@ import { log } from '$server/middlewares/log';
 // import { auth } from '$server/endpoints/auth';
 // import { cookies } from '$server/endpoints/auth/cookies';
 // import { token } from '$server/endpoints/auth/token';
-import type { App, Options } from '$server/derver/types';
+import type { App, Options } from '$server/derver/types.js';
 
 const DEV = process.env.NODE_ENV === 'dev';
 

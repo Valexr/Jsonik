@@ -1,10 +1,10 @@
 <script lang="ts" context="module">
     import { fragment } from "svelte-pathfinder";
-    import { get, post } from "$client/api/methods";
+    import { get, post } from "$client/api/methods.js";
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Code from "$client/components/Code.svelte";
-    import type { InputEvent } from "$types/client";
+    import type { InputEvent } from "$types/client.js";
     // import type { ChangeEventHandler } from "svelte/elements";
 </script>
 

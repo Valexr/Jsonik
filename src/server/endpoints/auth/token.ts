@@ -1,6 +1,6 @@
 import jwt, { type GetPublicKeyOrSecret, type Secret } from 'jsonwebtoken';
 import cookie from 'cookie';
-import type { Next, Req, Res } from '$server/derver/types';
+import type { Next, Req, Res } from '$server/derver/types.js';
 
 export function token(req: Req, res: Res, next: Next) {
     if (req.headers.authorization) {

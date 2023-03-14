@@ -24,7 +24,7 @@ summary {
 }
 
 :is(button, [role=button]):is(.action, .box) {
-    padding: 0 var(--gap-sm);
+    padding: var(--gap-sm);
     aspect-ratio: 1/1;
 }
 

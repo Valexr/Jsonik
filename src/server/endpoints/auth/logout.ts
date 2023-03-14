@@ -1,6 +1,6 @@
 import cookie from 'cookie';
-import DB from '$server/lib/db';
-import { atob } from '$server/lib/utils';
+import DB from '$server/lib/db.js';
+import { atob } from '$server/lib/utils.js';
 
 export async function logout(req, res, next) {
     if (req.headers.cookie)

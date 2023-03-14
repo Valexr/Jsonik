@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
-    import Gh from "$client/components/Gh.svelte";
+    import Logo from "$client/components/Logo.svelte";
     import Menu from "$client/views/Menu.svelte";
-    import type { Repository } from "$types/client";
+    import type { Repository } from "$types/client.js";
 </script>
 
 <script lang="ts">
@@ -16,7 +16,7 @@
             <li><a href="/logs">en</a></li>
         </ul>
     </details> -->
-    <Gh {repository} />
+    <Logo {repository} />
     <Menu />
     <a href="#aside" role="button" class="link action">
         <i class="icon icon-svg icon-125x icon-power" />

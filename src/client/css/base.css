@@ -84,6 +84,7 @@ figcaption {
 }
 
 img {
+    border-radius: var(--border-radius-sm);
     max-width: 100%;
     height: auto;
 }

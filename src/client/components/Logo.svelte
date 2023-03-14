@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import gh from "$client/svg/gh.svg";
-    import type { Repository } from "$types/client";
+    import type { Repository } from "$types/client.js";
 </script>
 
 <script lang="ts">

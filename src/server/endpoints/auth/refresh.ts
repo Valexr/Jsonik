@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 // import cookie from "cookie";
-import DB from '$server/lib/db';
-import { hashPassword } from '$server/lib/crypto';
+import DB from '$server/lib/db.js';
+import { hashPassword } from '$server/lib/crypto.js';
 
 export async function refresh(req, res, next) {
     try {
