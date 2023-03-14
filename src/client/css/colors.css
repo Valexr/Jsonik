@@ -13,3 +13,15 @@
 .text-gray {
     color: var(--gray)
 }
+
+.back-surface {
+    background-color: var(--surface);
+}
+
+.back-hover {
+    background-color: var(--hover);
+}
+
+.back-active {
+    background-color: var(--active);
+}

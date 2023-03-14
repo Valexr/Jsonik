@@ -73,8 +73,13 @@ code span {
     word-break: break-all;
     white-space: initial;
     min-width: fit-content;
+    max-width: min-content;
 }
 
 .text-bold {
     font-weight: bold;
+}
+
+.text-small {
+    font-size: small;
 }

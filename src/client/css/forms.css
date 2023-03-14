@@ -30,8 +30,31 @@ textarea {
     font-weight: inherit;
     color: inherit;
     line-height: 2.25;
-    min-inline-size: 100%;
-    max-inline-size: 100%;
+    width: 100%;
+}
+
+input:is([type="date"], [type="time"]) {
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: center right 0.65rem;
+    background-size: 1rem;
+    padding-right: 0.5rem;
+}
+
+input[type="time"] {
+    background-image: var(--icon-time);
+}
+
+@supports not (-moz-appearance: none) {
+    input[type="date"] {
+        background-image: var(--icon-date);
+    }
+}
+
+input[type="file"] {
+    /* display: flex; */
+    padding: var(--padding-sm);
+    line-height: inherit;
 }
 
 :is(input,
@@ -127,9 +150,9 @@ textarea {
     resize: none;
     max-width: 100%;
     overflow: hidden;
-    min-block-size: 4em;
     line-height: 1.5;
     padding: var(--padding);
+    padding-bottom: var(--gap);
 }
 
 /* States */

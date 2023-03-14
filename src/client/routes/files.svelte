@@ -42,7 +42,7 @@
     async function deleteFolder(file = "") {
         await del(`/files/${$path[1] || ""}/${file}`);
         if (file) reload();
-        backToRoot();
+        else backToRoot();
     }
 
     function addFiles(e: InputEvent) {
@@ -88,15 +88,24 @@
         <a
             href="/files/{folder}"
             role="button"
+            class:chip={$path[1] === folder}
             class:disabled={$path[1] === folder}
         >
             {folder}
+            {#if $path[1] === folder}
+                <button
+                    class="box link text-error"
+                    on:click={() => deleteFolder()}
+                >
+                    <i class="icon icon-svg icon-trash" />
+                </button>
+            {/if}
         </a>
     {/each}
 </nav>
 
 <article>
-    <header class="cols col-fit">
+    <!-- <header class="cols col-fit">
         {#if !["/", $path[1]].includes(newFolderName)}
             <button class="action link" on:click={renameFolder}>
                 <i class="icon icon-svg icon-edit" />
@@ -113,7 +122,7 @@
                 <i class="icon icon-svg icon-trash" />
             </button>
         {/if}
-    </header>
+    </header> -->
     <Await {promise} bind:result={repo} notify on:error={backToRoot}>
         <ul role="listbox" class="grid">
             <li>
@@ -171,11 +180,11 @@
                         <a
                             href="#file-{file}"
                             role="button"
-                            class="box"
+                            class="box text-break"
                             style="background-image: url('/api/v1/files/{repo.folder}/{file}')"
                             target="_self"
                         >
-                            <span>
+                            <span class="text-break">
                                 {file}
                                 <button
                                     id="delete"
@@ -189,7 +198,7 @@
                         <Dialog
                             open={$fragment === `file-${file}`}
                             from="center"
-                            size=""
+                            size="md"
                             info
                         >
                             <h3 slot="header">
@@ -203,22 +212,23 @@
                             </figure>
                         </Dialog>
                     {:else}
-                        <p>
-                            <a
-                                href="/api/v1/files/{repo.folder}/{file}"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {file}
-                            </a>
+                        <!-- <p> -->
+                        <a
+                            href="/api/v1/files/{repo.folder}/{file}"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            {file}
                             <button
                                 id="delete"
-                                class="box link text-error"
+                                class="box link text-error inline"
                                 on:click={() => deleteFolder(file)}
                             >
                                 <i class="icon icon-svg icon-trash" />
                             </button>
-                        </p>
+                        </a>
+
+                        <!-- </p> -->
                     {/if}
                 </li>
             {/each}
@@ -259,32 +269,35 @@
     }
     ul[role="listbox"] {
         --cols-gap: var(--gap);
-        --col-width: 10em;
+        --col-width: 12.5em;
         padding: 0;
     }
     ul[role="listbox"] li {
         position: relative;
+        aspect-ratio: 1/1;
     }
     ul[role="listbox"] li > a {
-        display: flex;
         flex-flow: column;
         justify-content: end;
-        background-size: 100% 80%;
+        align-items: end;
+        background-size: auto 80%;
+        background-position: top center;
         background-repeat: no-repeat;
-        aspect-ratio: 1/1;
+        height: 100%;
+        width: 100%;
     }
     ul[role="listbox"] li > a > span {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        width: 100%;
+        max-width: var(--col-width);
+        line-height: 1;
     }
-    /* ul[role="listbox"] li:hover {
-        background-color: var(--hover);
-    } */
     nav {
         --cols-gap: var(--gap-sm);
         padding-bottom: var(--gap);
+    }
+    nav .chip {
+        padding-right: 0;
     }
     #delete {
         /* position: absolute; */

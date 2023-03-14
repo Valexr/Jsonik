@@ -21,7 +21,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-* {
+*,
+::after,
+::before {
     box-sizing: border-box;
     min-width: 0;
 }
@@ -51,7 +53,6 @@ main {
 }
 
 article {
-    background-color: var(--active);
     padding: var(--padding);
     border-radius: var(--border-radius-lg);
 }

@@ -3,6 +3,7 @@
     import Form from "$client/components/Form.svelte";
     import * as db from "$client/api/methods";
     import { expand } from "$client/utils/actions";
+    import { current } from "$client/utils/time";
 </script>
 
 <script lang="ts">
@@ -17,7 +18,7 @@
 </script>
 
 <section class="cols">
-    <nav class="text-center cols col-fit nowrap scroll-x">
+    <nav class="text-center cols col-fit justify-start nowrap scroll-x">
         <a href="#add-folder" role="button" target="_self" class="box link">
             <i class="icon icon-svg icon-125x icon-plus-square" />
         </a>
@@ -25,7 +26,7 @@
             <a href="/Data{key}" role="button">Data {key}</a>
         {/each}
     </nav>
-    <article>
+    <article class="back-active">
         <h2>Buttons</h2>
         <p class="cols">
             <a href="#_" role="button">a role="button"</a>
@@ -105,8 +106,14 @@
                 <label><input placeholder="input" /></label>
                 <label><textarea use:expand placeholder="textarea" /></label>
                 <label><input type="number" placeholder="number" /></label>
-                <label><input type="time" placeholder="time" /></label>
-                <label><input type="date" placeholder="date" /></label>
+                <label>
+                    <input type="time" value={current.time()} />
+                </label>
+                <label>
+                    <input type="date" value={current.date()} />
+                </label>
+                <label><input type="file" /></label>
+                <label><input type="hidden" /></label>
             </fieldset>
             <fieldset>
                 <legend>Checkbox</legend>

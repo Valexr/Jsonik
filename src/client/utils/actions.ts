@@ -99,7 +99,7 @@ function sticked(node: HTMLElement, cb?: (sticked: boolean) => void) {
 function expand(node: HTMLTextAreaElement) {
     node.oninput = (e: Event) => {
         node.style.height = 'auto'
-        node.style.height = `${node.scrollHeight}px`
+        node.style.height = `${node.scrollHeight + 3}px`
     }
 }
 
