@@ -29,7 +29,7 @@
         const data = new FormData(e.target as HTMLFormElement);
         const folder = data.get("folder");
         await post(`/files/${folder}/`);
-        goto(`/files/${folder}/`);
+        goto(`/files/${folder}`);
     }
 
     async function renameFolder() {
@@ -50,7 +50,6 @@
 
     async function upload(e: SubmitEvent) {
         const promises = Array.from(files || [])?.map((file) => {
-            console.log(typeof file);
             return post(`/files/${$path[1] || ""}/${file.name}`, file);
         });
 
@@ -160,9 +159,9 @@
                         style="--background-image: url('/api/v1/files/{repo.folder}/{file}')"
                     >
                         <span>
-                            <small class="text-ellepsis text-color"
-                                >{file}</small
-                            >
+                            <small class="text-ellepsis text-color">
+                                {file}
+                            </small>
                             <button
                                 id="delete"
                                 class="link box text-error"

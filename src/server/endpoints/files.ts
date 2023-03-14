@@ -1,12 +1,12 @@
 import { createReadStream, createWriteStream } from "fs";
 import { readdir, rm, rename } from "fs/promises";
 import { checkdir } from "$server/lib/utils.js";
-import type { App, Req } from "$server/derver/types.js";
+import type { App } from "$server/derver/types.js";
 
 export function files(app: App) {
     const pattern = '/:folder?/:file?'
 
-    app.get(pattern, async (req, res, next) => {
+    app.get(pattern, async (req, res) => {
         const { folder, file } = req.params
         await checkdir('files')
 
@@ -20,7 +20,7 @@ export function files(app: App) {
                 const folders = root.filter(i => !i.includes('.'))
                 res.send({ files, folders, folder })
             } catch (e) {
-                next()
+                res.error(404, `${folder} or ${file} not found`)
             }
         }
     });
@@ -28,6 +28,8 @@ export function files(app: App) {
     app.post(pattern, async (req, res) => {
         const { folder, file } = req.params
         await checkdir(`files/${folder}`)
+
+        console.dir(req.body)
 
         if (file && file.includes('.')) {
             const stream = createWriteStream(`files/${folder}/${file}`);
@@ -45,6 +47,7 @@ export function files(app: App) {
             await rename(`files/${folder}`, `files/${file}`)
             res.send(`files/${folder}/${file} renamed`)
         } catch (e) {
+            res.error(404, `${folder} or ${file} not found`)
             next()
         }
     })
@@ -55,20 +58,8 @@ export function files(app: App) {
             await rm(`files/${folder}/${file}`, { recursive: true })
             res.send(`files/${folder}/${file} deleted`)
         } catch (e) {
+            res.error(404, `${folder} or ${file} not found`)
             next()
         }
     })
-}
-
-function getBoundary(req: Req) {
-    console.log(req)
-    let contentType = req.headers['content-type']
-    const contentTypeArray = contentType?.split(';').map(item => item.trim())
-    console.log('contentTypeArray', contentTypeArray)
-    const boundaryPrefix = '---'
-    let boundary = contentTypeArray?.find(item => item.startsWith(boundaryPrefix))
-    if (!boundary) return null
-    boundary = boundary.slice(boundaryPrefix.length)
-    if (boundary) boundary = boundary.trim()
-    return boundary
 }

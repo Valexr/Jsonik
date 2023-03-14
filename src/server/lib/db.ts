@@ -42,7 +42,7 @@ async function connect(file: string, table = 'items'): Promise<Base | undefined>
                 await base.write();
                 return base.data[table];
             },
-            patch: async (query, meta) => {
+            patch: async (query) => {
                 base.data[table].forEach((i) => Object.assign(i, { [query]: i.languages.map((l) => l.name) }));
                 await base.write();
             },
