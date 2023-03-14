@@ -1,4 +1,4 @@
-<h1>Users</h1>
+<h1 aria-busy="true">Users</h1>
 
 <section>
     <article>

@@ -182,15 +182,15 @@ html:has(.overlay) {
 [aria-busy=true]::before {
     display: inline-block;
     color: inherit;
-    width: 0.75rem;
-    height: 0.75rem;
-    border: .2rem solid currentColor;
+    width: 1em;
+    height: 1em;
+    border: .15em solid currentColor;
     border-right-color: transparent;
-    border-radius: 1rem;
+    border-radius: 1em;
     content: "";
     vertical-align: text-bottom;
     animation: spinner .75s linear infinite;
-    opacity: 0.45;
+    opacity: 0.5;
 }
 
 [aria-busy=true]:empty {

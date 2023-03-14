@@ -12,8 +12,6 @@
     let promise = get("/data/logs/items");
     let fragmentDate: number;
 
-    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
-
     function getRecord(date: number) {
         $fragment = `log-${date}`;
         fragmentDate = date;
@@ -25,10 +23,7 @@
     }
 
     const date = (time: number) => new Date(time).toLocaleString("ru");
-    // $: date = $fragment.split("-")[1];
 </script>
-
-<!-- <h1>Logs</h1> -->
 
 <fieldset class="cols">
     <label>
