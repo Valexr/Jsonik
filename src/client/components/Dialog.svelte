@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+    import { focusTrap, keyEscape } from "$client/utils/actions";
     import { createEventDispatcher } from "svelte";
     import Form from "./Form.svelte";
     export type DialogSize = "sm" | "md" | "lg" | "fs" | "";
@@ -20,9 +21,11 @@
 
     const dispatch = createEventDispatcher();
 
-    function dialog(dialog: HTMLDialogElement, opened: boolean) {
+    function action(dialog: HTMLDialogElement, opened: boolean) {
         const form = dialog.firstChild as HTMLFormElement;
 
+        focusTrap(dialog);
+        // keyEscape(dialog, dialog.close);
         window.onkeydown = (e) => {
             if (e.key === "Escape") {
                 e.preventDefault();
@@ -66,7 +69,7 @@
 </script>
 
 {#if open}
-    <dialog use:dialog={open} on:close class={`${size} ${from}`}>
+    <dialog use:action={open} on:close class={`${size} ${from}`}>
         <Form method="dialog" bind:valid on:submit on:reset on:change on:input>
             <header>
                 <slot name="header" />

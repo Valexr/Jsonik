@@ -52,6 +52,7 @@ const clientOptions = {
     metafile: !DEV,
     mainFields: ['svelte', 'module', 'main'],
     target: "esnext",
+    format: 'esm',
     plugins: [
         svelte(svelteOptions),
         copy([

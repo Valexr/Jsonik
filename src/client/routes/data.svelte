@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
     import Code from "$client/components/Code.svelte";
+    import Form from "$client/components/Form.svelte";
     import * as db from "$client/api/methods";
     import { expand } from "$client/utils/actions";
 </script>
@@ -16,7 +17,7 @@
 </script>
 
 <section class="cols">
-    <nav class="text-center cols nowrap scroll-x">
+    <nav class="text-center cols col-fit nowrap scroll-x">
         <a href="#add-folder" role="button" target="_self" class="box link">
             <i class="icon icon-svg icon-125x icon-plus-square" />
         </a>
@@ -85,48 +86,54 @@
     </article>
 
     <article>
-        <h2>Forms</h2>
-        <fieldset>
-            <legend>Select</legend>
-            <label>
-                <select>
-                    <option value="" disabled selected>Select</option>
-                    <option>Action</option>
-                    <option>Another action</option>
-                    <option>Something else here</option>
-                </select>
-            </label>
-        </fieldset>
-        <fieldset>
-            <legend>Input</legend>
-            <label><input type="search" placeholder="Search" /></label>
-            <label><input placeholder="input" /></label>
-            <label><textarea use:expand placeholder="textarea" /></label>
-            <label><input type="number" placeholder="number" /></label>
-            <label><input type="time" placeholder="time" /></label>
-            <label><input type="date" placeholder="date" /></label>
-        </fieldset>
-        <fieldset>
-            <legend>Checkbox</legend>
-            <label><input type="checkbox" /> Checkbox</label>
-            <label><input type="checkbox" role="switch" /> Switch</label>
-        </fieldset>
-        <fieldset>
-            <legend>Radio</legend>
-            <label>
-                <input type="radio" name="size" value="small" checked /> Small
-            </label>
-            <label>
-                <input type="radio" name="size" value="medium" /> Medium
-            </label>
-            <label>
-                <input type="radio" name="size" value="large" /> Large
-            </label>
-            <label>
-                <input type="radio" name="size" value="extralarge" disabled /> Extra
-                Large
-            </label>
-        </fieldset>
+        <Form>
+            <h2>Form</h2>
+            <fieldset>
+                <legend>Select</legend>
+                <label>
+                    <select>
+                        <option value="" disabled selected>Select</option>
+                        <option>Action</option>
+                        <option>Another action</option>
+                        <option>Something else here</option>
+                    </select>
+                </label>
+            </fieldset>
+            <fieldset>
+                <legend>Input</legend>
+                <label><input type="search" placeholder="Search" /></label>
+                <label><input placeholder="input" /></label>
+                <label><textarea use:expand placeholder="textarea" /></label>
+                <label><input type="number" placeholder="number" /></label>
+                <label><input type="time" placeholder="time" /></label>
+                <label><input type="date" placeholder="date" /></label>
+            </fieldset>
+            <fieldset>
+                <legend>Checkbox</legend>
+                <label><input type="checkbox" /> Checkbox</label>
+                <label><input type="checkbox" role="switch" /> Switch</label>
+            </fieldset>
+            <fieldset>
+                <legend>Radio</legend>
+                <label>
+                    <input type="radio" name="size" value="small" checked /> Small
+                </label>
+                <label>
+                    <input type="radio" name="size" value="medium" /> Medium
+                </label>
+                <label>
+                    <input type="radio" name="size" value="large" /> Large
+                </label>
+                <label>
+                    <input
+                        type="radio"
+                        name="size"
+                        value="extralarge"
+                        disabled
+                    /> Extra Large
+                </label>
+            </fieldset>
+        </Form>
     </article>
 
     <article>

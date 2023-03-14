@@ -115,12 +115,7 @@
         {/if}
     </header>
     <Await {promise} bind:result={repo} notify on:error={backToRoot}>
-        <ul
-            role="listbox"
-            class={repo.files.length
-                ? "grid justify-start"
-                : "grid justify-center"}
-        >
+        <ul role="listbox" class="grid">
             <li>
                 <Form
                     method="post"
@@ -152,7 +147,7 @@
                             <label
                                 role="button"
                                 class:box={repo.files.length}
-                                class="block link"
+                                class="block link outline dashed"
                             >
                                 <i
                                     class="icon icon-svg icon-file-plus icon-3x"

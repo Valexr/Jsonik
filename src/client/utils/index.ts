@@ -40,4 +40,5 @@ function listen(
     return () => node.removeEventListener(event, handler, options);
 }
 
+
 export { deferred, switchTimeout, decimal, delay, s, listen }

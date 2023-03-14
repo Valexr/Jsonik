@@ -103,4 +103,33 @@ function expand(node: HTMLTextAreaElement) {
     }
 }
 
-export { clickout, validation, sticked, clickOutside, expand }
+function getFocusable(node: HTMLElement): Array<any> {
+    return Array.from(node.querySelectorAll(
+        `:is(a, button, input, textarea, select, details):not(:disabled),
+         [tabindex]:not([tabindex="-1"])`
+    ))
+}
+
+function focusTrap(node: HTMLElement) {
+    const focusable = getFocusable(node)
+    node.onkeydown = (e) => {
+        if (e.key === "Tab") {
+            e.preventDefault();
+            let index = focusable.indexOf(document.activeElement);
+            if (index === -1 && e.shiftKey) index = 0;
+            index += focusable.length + (e.shiftKey ? -1 : 1);
+            index %= focusable.length;
+            focusable[index].focus();
+        }
+    }
+}
+
+function keyEscape(node: HTMLElement, cb: () => void) {
+    node.onkeydown = (e) => {
+        if (e.key === "Escape") {
+            cb();
+        }
+    };
+}
+
+export { clickout, validation, sticked, clickOutside, expand, focusTrap, keyEscape }

@@ -36,6 +36,14 @@ summary {
     display: flex;
 }
 
+:is(button, [role=button]).outline {
+    border-color: var(--surface);
+}
+
+:is(button, [role=button]).dashed {
+    border-style: dashed;
+}
+
 summary.block {
     justify-content: space-between;
 }
@@ -65,7 +73,7 @@ summary.block {
     background-color: var(--hover);
 }
 
-:is(button, [role=button], [type="file"]::file-selector-button):hover:active {
+:is(button, [role=button], [type="file"]::file-selector-button):is(:hover:active) {
     background-color: var(--active);
 }
 
