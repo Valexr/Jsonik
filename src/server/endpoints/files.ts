@@ -29,8 +29,6 @@ export function files(app: App) {
         const { folder, file } = req.params
         await checkdir(`files/${folder}`)
 
-        console.dir(req.body)
-
         if (file && file.includes('.')) {
             const stream = createWriteStream(`files/${folder}/${file}`);
             stream.on("open", () => req.pipe(stream));
