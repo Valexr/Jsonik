@@ -12,7 +12,7 @@
 </script>
 
 <nav>
-    <Form on:submit={setQuery}>
+    <Form on:submit={submit}>
         <fieldset class="cols">
             <label>
                 <input type="search" name="q" placeholder="search" />
@@ -20,3 +20,9 @@
         </fieldset>
     </Form>
 </nav>
+
+<style>
+    label {
+        margin: var(--gap-lg) 0;
+    }
+</style>

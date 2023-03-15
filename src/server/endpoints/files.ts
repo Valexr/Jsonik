@@ -19,7 +19,7 @@ export function files(app: App) {
                 const folders = root.filter(i => !i.includes('.'))
                 const items = await readdir(`files/${folder}`)
                 const files = items.filter(i => i.includes('.'))
-                res.send({ files, folders, folder })
+                res.send({ files, folders })
             } catch (e) {
                 res.error(404, `${folder} or ${file} not found`)
             }

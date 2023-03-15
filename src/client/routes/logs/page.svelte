@@ -17,12 +17,7 @@
     const date = (time: number) => new Date(time).toLocaleString("ru");
 </script>
 
-<Await
-    promise={get(`/data/logs/items?q=${$query.q || ""}`)}
-    success="Data loaded"
-    let:result
-    notify
->
+<Await promise={get(`/data/logs/items?q=${$query.q || ""}`)} let:result notify>
     <section class="scroll-x">
         <table>
             <thead>

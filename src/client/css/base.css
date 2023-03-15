@@ -49,7 +49,7 @@ header {
 }
 
 main {
-    padding: var(--gap-lg) 0;
+    margin-bottom: var(--gap-lg);
 }
 
 article {

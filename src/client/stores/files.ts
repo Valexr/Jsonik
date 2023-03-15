@@ -1,5 +1,5 @@
-import { writable, derived, type Writable } from 'svelte/store'
-import { del, get, patch, post } from "$client/api/methods.js";
+import { writable } from 'svelte/store'
+import { del, get, post } from "$client/api/methods.js";
 
 export type Files = { files: string[], folders: string[], folder: string }
 

@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import Code from "$client/components/Code.svelte";
     import Form from "$client/components/Form.svelte";
-    import * as db from "$client/api/methods.js";
+    import DataNav from "./nav.svelte";
     import { expand } from "$client/utils/actions.js";
     import { current } from "$client/utils/time.js";
 </script>
@@ -17,15 +17,9 @@
 `;
 </script>
 
+<DataNav />
+
 <section class="cols">
-    <nav class="text-center cols col-fit justify-start nowrap scroll-x">
-        <a href="#add-folder" role="button" target="_self" class="box link">
-            <i class="icon icon-svg icon-125x icon-plus-square" />
-        </a>
-        {#each Array.from(Array(10).keys()) as key}
-            <a href="/Data{key}" role="button">Data {key}</a>
-        {/each}
-    </nav>
     <article class="back-active">
         <h2>Buttons</h2>
         <p class="cols">

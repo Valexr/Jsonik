@@ -57,7 +57,7 @@
 
 <style>
     nav {
-        padding-bottom: var(--gap-sm);
+        margin: var(--gap-lg) 0;
     }
     nav .chip {
         padding-right: 0;

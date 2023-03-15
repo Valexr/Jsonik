@@ -19,7 +19,7 @@
     {method}
     {enctype}
     {action}
-    on:submit|preventDefault
+    on:submit
     on:reset|preventDefault
     on:change
     on:input
