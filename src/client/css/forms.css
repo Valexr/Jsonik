@@ -187,6 +187,6 @@ textarea {
     color: var(--gray);
 }
 
-:disabled~label {
+label:where(:disabled) {
     color: var(--gray);
 }

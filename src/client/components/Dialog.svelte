@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
-    import { focusTrap, keyEscape } from "$client/utils/actions.js";
     import { createEventDispatcher } from "svelte";
+    import { fragment } from "svelte-pathfinder";
+    import { focusTrap, keyEscape } from "$client/utils/actions.js";
     import Form from "./Form.svelte";
     export type DialogSize = "sm" | "md" | "lg" | "fs" | "";
     export type DialogFrom =
@@ -45,7 +46,7 @@
 
         dialog.onclose = () => {
             document.documentElement.style.overflow = "";
-            history.back();
+            fragment.set("");
         };
 
         function update(opened: boolean) {

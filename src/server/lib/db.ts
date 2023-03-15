@@ -28,12 +28,13 @@ async function connect(file: string, table = 'items'): Promise<Base | undefined>
             find: (prop) => base.data[table].find((i) => Object.entries(prop).every(([k, v]) => i[k] === v)),
             search: (query) => base.data[table].filter((o) => osome(o, query)),
             match: (query) => base.data[table].filter((o) => omatch(o, query)),
-            insert: async (obj, meta) => {
+            prepend: async (obj, meta) => {
+                base.data[table].unshift({ ...obj, ...meta });
+                await base.write();
+                return base.data[table];
+            },
+            append: async (obj, meta) => {
                 base.data[table].push({ ...obj, ...meta });
-                for (const key in obj) {
-                    base.data.filters[key] ||= []
-                    base.data.filters[key].push(obj[key])
-                }
                 await base.write();
                 return base.data[table];
             },

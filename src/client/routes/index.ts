@@ -3,7 +3,7 @@ import { pattern } from 'svelte-pathfinder';
 
 export interface Page {
     match: string,
-    component: () => Promise<typeof import("./data.svelte")>,
+    component: () => Promise<typeof import("./data/page.svelte")>,
     props: {
         title: string,
         icon?: string,
@@ -14,27 +14,27 @@ export interface Page {
 export const routes: Page[] = [
     {
         match: '/',
-        component: () => import('./data.svelte'),
+        component: () => import('./data/page.svelte'),
         props: { title: 'Data', icon: 'database', menu: '/' },
     },
     {
         match: '/files/:folder?',
-        component: () => import('./files.svelte'),
+        component: () => import('./files/page.svelte'),
         props: { title: 'Files', icon: 'hard-drive', menu: '/files' },
     },
     {
         match: '/users',
-        component: () => import('./users.svelte'),
+        component: () => import('./users/page.svelte'),
         props: { title: 'Users', icon: 'users', menu: '/users' },
     },
     {
         match: '/logs',
-        component: () => import('./logs.svelte'),
+        component: () => import('./logs/page.svelte'),
         props: { title: 'Logs', icon: 'clock', menu: '/logs' },
     },
     {
         match: '/settings',
-        component: () => import('./settings.svelte'),
+        component: () => import('./settings/page.svelte'),
         props: { title: 'Settings', icon: 'settings', menu: '/settings' },
     },
     {

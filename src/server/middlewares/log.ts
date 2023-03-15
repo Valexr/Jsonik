@@ -23,6 +23,6 @@ export async function log(req: Req, res: Res, next: Next) {
     const date = Date.now()
     const { method, url, socket: { remoteAddress }, headers: { referer } } = req
     const { statusCode } = res
-    await LOGS?.insert({ date, method, status: statusCode, url, ip: remoteAddress, referer })
+    await LOGS?.prepend({ date, method, status: statusCode, url, ip: remoteAddress, referer })
     next();
 }

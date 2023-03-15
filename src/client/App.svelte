@@ -4,6 +4,7 @@
     import Dialog from "$client/components/Dialog.svelte";
     import Form from "$client/components/Form.svelte";
     import Header from "$client/views/Header.svelte";
+    import Main from "$client/views/Main.svelte";
     import Footer from "$client/views/Footer.svelte";
     import Router from "$client/components/Router.svelte";
     import Toaster from "$client/components/Toaster/Toaster.svelte";
@@ -18,7 +19,7 @@
 
 <Header {repository} />
 
-<main class="container">
+<Main>
     <Router {name} />
 
     <Aside open={$fragment === "aside"} right>
@@ -133,7 +134,7 @@
             culpa qui officia deserunt mollit anim id est laborum.
         </p>
     </Dialog>
-</main>
+</Main>
 
 <Footer />
 
