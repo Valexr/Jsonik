@@ -22,7 +22,7 @@ export type Req = {
     search: string
     query: { [key: string]: string }
     params: { [key: string]: string; }
-    body: Body & PathLike | string
+    body: Body & PathLike | string | string[]
     file: string
     extname: string
     exists: boolean

@@ -4,22 +4,25 @@ import type { App, Next, Req, Res } from '$server/derver/types.js';
 import type { Base } from '$types/server.js';
 import { checkdir } from '$server/lib/utils.js';
 
-let base: Base
+let base: Base | undefined
 
 async function connect(req: Req, res: Res, next: Next) {
     if (!req.params.file && !req.params.table) {
         await checkdir('data')
         const files = await readdir('data')
-        base = {} as Base
-        for (const file of files) {
-            const text = await readFile('data' + '/' + file, { encoding: 'utf-8' })
-            console.dir(file)
-            base[file.replace('.json', '')] = JSON.parse(text)
-        }
+        req.body = files.map(f => f.replace(/\..+$/, '')).filter(Boolean)
+        // base = {} as Base
+        // for (const file of files) {
+        //     const text = await readFile('data' + '/' + file, { encoding: 'utf-8' })
+        //     console.dir(file)
+        //     const key = file.replace('.json', '') as keyof typeof base
+        //     base[key] = JSON.parse(text)
+        // }
         next()
     } else {
         try {
             base = await DB.connect(req.params.file, req.params.table);
+            Object.assign(base?.data, { keys: Object.keys(base?.data.items[0]) })
             next();
         } catch (err) {
             console.log('dbERR: ', err);
@@ -29,12 +32,12 @@ async function connect(req: Req, res: Res, next: Next) {
 }
 
 export function data(app: App) {
-    const pattern = '/:file/:table?'
+    const pattern = '/:file?/:table?'
 
     app.use(pattern, connect);
 
     app.get(pattern, async (req, res, next) => {
-        console.log('data:', req.params)
+        // console.log('data:', req.params)
         try {
             if (Object.keys(req.query).length) {
                 // const filters = base?.filters(req.query);
@@ -42,8 +45,7 @@ export function data(app: App) {
                 // req.query.id ? res.send(base?.id(+req.query.id)) : res.send(items);
                 res.send(items);
             } else if (!req.params.file && !req.params.table) {
-                console.log(base)
-                res.send(base)
+                res.send(req.body)
             } else if (!req.params.table) {
                 res.send(base?.data);
             } else {
@@ -58,7 +60,7 @@ export function data(app: App) {
     app.post(pattern, async (req, res, next) => {
         const meta = { id: Date.now(), create: Date.now(), update: Date.now(), role: req.query.role };
         try {
-            await base?.insert({ ...req.body, ...meta });
+            await base?.append({ ...req.body, ...meta });
             delete req.query.id;
             const items = base?.match(req.query);
             res.send(items);

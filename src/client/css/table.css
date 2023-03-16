@@ -16,7 +16,7 @@ table :is(th, td) {
     padding: 0 var(--gap-sm);
 }
 
-table tr:hover {
+table :not(thead) tr:hover {
     cursor: pointer;
     background-color: var(--hover);
 }

@@ -9,6 +9,7 @@
     <details role="list" class="top">
         <!-- svelte-ignore a11y-no-redundant-roles -->
         <summary aria-haspopup="listbox" role="button">Menu</summary>
+        <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
         <ul role="listbox">
             <li><a href="/">Home</a></li>
             <li><a href="/logs">Logs</a></li>

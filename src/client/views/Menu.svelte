@@ -14,6 +14,7 @@
             <i class="icon icon-svg icon-{$page.props.icon}" />
             {$page.props.title}
         </summary>
+        <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
         <ul role="listbox">
             {#each routes.filter((r) => r.props.menu) as { match, props: { title, menu, icon } }}
                 <li class:active={$pattern(match)}>

@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+    import { path } from "svelte-pathfinder";
     import Logo from "$client/components/Logo.svelte";
     import Menu from "$client/views/Menu.svelte";
     import type { Repository } from "$types/client.js";
@@ -8,7 +9,10 @@
     export let repository: Repository;
 </script>
 
-<header class="cols col-fit align-center pos-sticky">
+<header
+    class="cols col-fit align-center pos-sticky"
+    class:back-active={$path[0]}
+>
     <!-- <details role="list">
         <summary aria-haspopup="listbox" role="button">Lang</summary>
         <ul role="listbox">
@@ -18,7 +22,7 @@
     </details> -->
     <Logo {repository} />
     <Menu />
-    <a href="#aside" role="button" class="link action">
+    <a href="/" role="button" class="link action">
         <i class="icon icon-svg icon-125x icon-power" />
     </a>
 </header>

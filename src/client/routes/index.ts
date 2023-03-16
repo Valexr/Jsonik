@@ -14,8 +14,13 @@ export interface Page {
 export const routes: Page[] = [
     {
         match: '/',
+        component: () => import('./auth/page.svelte'),
+        props: { title: 'Auth', icon: 'key' },
+    },
+    {
+        match: '/data/:file?',
         component: () => import('./data/page.svelte'),
-        props: { title: 'Data', icon: 'database', menu: '/' },
+        props: { title: 'Data', icon: 'database', menu: '/data' },
     },
     {
         match: '/files/:folder?',

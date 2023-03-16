@@ -102,6 +102,10 @@
     }
 }
 
+.grid.center {
+    place-content: center;
+}
+
 .aspect-ratio-1-1 {
     aspect-ratio: 1/1;
 }

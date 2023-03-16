@@ -46,8 +46,8 @@
                 {/each}
             </ol>
             <label>
-                <button class="link" type="reset"> Cancel </button>
-                <button class="success" type="submit"> Upload </button>
+                <button class="link" type="reset">Cancel</button>
+                <button class="success" type="submit">Upload</button>
             </label>
         {:else}
             <label

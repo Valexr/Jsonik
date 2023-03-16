@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
     import { fly } from "svelte/transition";
+    import { fragment } from "svelte-pathfinder";
     import { clickout, clickOutside } from "$client/utils/actions.js";
 </script>
 
@@ -16,7 +17,7 @@
     const X = left ? -1 : right ? 1 : 0;
     const Y = top ? -1 : bottom ? 1 : 0;
 
-    const close = () => history.back();
+    const close = () => ($fragment = "");
 </script>
 
 {#if open}

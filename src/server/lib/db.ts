@@ -17,13 +17,14 @@ async function connect(file: string, table = 'items'): Promise<Base | undefined>
     try {
         const base = await db(file);
         await base.read();
-        base.data ||= { filters: {}, items: [] };
+        base.data ||= { keys: [], items: [] };
 
         return {
             base,
-            write: async () => await base.write(),
             data: base.data,
             table: base.data[table],
+            keys: (keys: string[]) => base.data.keys = Object.keys(base.data[table][0]),
+            write: async () => await base.write(),
             id: (id) => base.data[table].find((i) => i.id === id),
             find: (prop) => base.data[table].find((i) => Object.entries(prop).every(([k, v]) => i[k] === v)),
             search: (query) => base.data[table].filter((o) => osome(o, query)),

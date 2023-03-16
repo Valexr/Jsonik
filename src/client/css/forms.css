@@ -1,7 +1,8 @@
 fieldset {
     padding: 0;
     border: 0;
-    margin: 0;
+    /* margin: 0; */
+    margin: 0 0 var(--gap);
     border-radius: var(--border-radius-sm);
 }
 

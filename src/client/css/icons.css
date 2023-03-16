@@ -730,3 +730,15 @@
 .icon-alert-triangle {
     mask-image: url(../svg/feather/alert-triangle.svg);
 }
+
+.icon-key {
+    mask-image: url(../svg/feather/key.svg);
+}
+
+.icon-lock {
+    mask-image: url(../svg/feather/lock.svg);
+}
+
+.icon-unlock {
+    mask-image: url(../svg/feather/unlock.svg);
+}

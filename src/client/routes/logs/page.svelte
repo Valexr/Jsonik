@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { fragment, query } from "svelte-pathfinder";
     import { get } from "$client/api/methods.js";
+    import { date } from "$client/utils/time.js";
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Code from "$client/components/Code.svelte";
@@ -13,16 +14,14 @@
         $fragment = `log-${date}`;
         fragmentDate = date;
     }
-
-    const date = (time: number) => new Date(time).toLocaleString("ru");
 </script>
 
 <Await promise={get(`/data/logs/items?q=${$query.q || ""}`)} let:result notify>
     <section class="scroll-x">
         <table>
             <thead>
-                {#each Object.keys(result.at(-1)) as head}
-                    <th>{head}</th>
+                {#each Object.keys(result.at(-1)) as key}
+                    <th>{key}</th>
                 {/each}
             </thead>
             <tbody>

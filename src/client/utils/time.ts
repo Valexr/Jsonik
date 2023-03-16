@@ -1,4 +1,4 @@
-var date = new Date(2017, 11, 31, 23, 59, 59);
+// var date = new Date(2017, 11, 31, 23, 59, 59);
 export const format = new Intl.DateTimeFormat(
     locale(),
     {
@@ -23,6 +23,10 @@ export const current = {
         const date = new Date().toLocaleDateString('ru', options)
         return date.split('.').reverse().join('-')
     }
+}
+
+export function date(time: number) {
+    return new Date(time).toLocaleString("ru");
 }
 
 function locale() {

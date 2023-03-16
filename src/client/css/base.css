@@ -35,7 +35,6 @@ footer {
     justify-content: space-between;
     padding: 0 var(--gap);
     gap: var(--gap-sm);
-    background-color: var(--active);
     z-index: 1;
 }
 
