@@ -43,7 +43,6 @@
         <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
         <label
             role="button"
-            tabindex="0"
             class:box={$files?.length}
             class="block outline link dashed"
             use:drag

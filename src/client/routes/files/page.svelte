@@ -45,7 +45,13 @@
 </section>
 
 {#if selected.length}
-    <Toast type="pos-sticky" on:close={() => (selected.length = 0)}>
+    <Toast
+        draggable
+        type="pos-sticky"
+        on:close={() => (selected.length = 0)}
+        on:dragstart={(e) => e.dataTransfer?.setData("files", String(selected))}
+        on:dragend={(e) => (selected.length = 0)}
+    >
         <span><b>{selected.length}</b> file{s(selected)} selected</span>
         <button class="box link text-error">
             <i class="icon icon-svg icon-trash" />

@@ -41,6 +41,33 @@ export function files(app: App) {
         }
     });
 
+    app.put(pattern, async (req, res, next) => {
+        const { folder, file } = req.params
+        const filename = req.body
+        console.log(req.params, req.body)
+
+        await checkdir(`files/${folder}`)
+
+        const source = createReadStream(`files/${folder}/${filename}`);
+        const dest = createWriteStream(`files/${file}/${filename}`);
+
+        source.pipe(dest);
+        source.on('end', async () => {
+            await rm(`files/${folder}/${filename}`)
+            res.send(filename)
+        });
+        source.on('error', (e) => res.error(422, e.message));
+
+        // if (file && file.includes('.')) {
+        //     const stream = createWriteStream(`files/${folder}/${file}`);
+        //     stream.on("open", () => req.pipe(stream));
+        //     stream.on('close', async () => res.send(file))
+        //     stream.on('error', (e) => res.error(422, e.message))
+        // } else {
+        //     res.send(folder)
+        // }
+    });
+
     app.delete(pattern, async (req, res, next) => {
         const { folder, file } = req.params
 

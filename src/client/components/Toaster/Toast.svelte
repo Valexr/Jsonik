@@ -27,6 +27,7 @@
     export let closable = toastItem.closable ?? true;
     export let reverse: boolean = toastItem.reverse || false;
     export let visible: boolean = true;
+    export let draggable: boolean = false;
 
     let init: number = reverse ? 1 : 0,
         next: number = reverse ? 0 : 1,
@@ -70,12 +71,20 @@
             },
         };
     }
+
+    function drag(node: HTMLElement) {
+        //     node.ondragstart = (e) =>
+        //         e.dataTransfer?.setData("Text", e.target?.innerHTML);
+    }
 </script>
 
 <article
     class="toast {type || ''}"
     use:pausable={timeout > 0}
+    on:dragstart
+    on:dragend
     style="--progress: {$progress}"
+    {draggable}
 >
     <slot>
         {#if toastItem.icon}<i class="icon icon-{toastItem.icon}" />{/if}

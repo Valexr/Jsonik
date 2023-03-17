@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { del, get, post } from "$client/api/methods.js";
+import { del, get, post, put } from "$client/api/methods.js";
 
 export type Files = { files: string[], folders: string[], folder: string }
 
@@ -15,10 +15,16 @@ function createFiles() {
             file = await post(`/files/${folder}/${file?.name}`, file);
             update(state => state.concat(String(file)))
         },
+        async move(from = '', file: string, to = '') {
+            file = await put(`/files/${from}/${to}`, JSON.stringify(file), {
+                headers: { 'Content-Type': 'application/json' }
+            });
+            console.log(file)
+            update(state => state.filter(f => f !== file))
+        },
         async delete(folder = '', file = '') {
             await del(`/files/${folder}/${file}`);
             update(state => state.filter(f => f !== file))
-
         }
     }
 }

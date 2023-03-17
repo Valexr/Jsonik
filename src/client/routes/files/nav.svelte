@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { fragment, path, goto, redirect } from "svelte-pathfinder";
-    import { folders } from "$client/stores/files.js";
+    import { folders, files } from "$client/stores/files.js";
     import Await from "$client/components/Await.svelte";
     import Dialog from "$client/components/Dialog.svelte";
     import Search from "$client/components/Search.svelte";
@@ -18,6 +18,24 @@
         await folders.delete(folder);
         redirect("/files");
     }
+
+    function drop(node: HTMLElement) {
+        node.ondragover = (e) => {
+            e.preventDefault();
+            node.setAttribute("aria-disabled", "true");
+        };
+        node.ondragleave = (e) => node.removeAttribute("aria-disabled");
+        node.ondrop = async (e) => {
+            node.removeAttribute("aria-disabled");
+            const fileList = e.dataTransfer?.getData("files").split(",");
+            const from = `${$path[1] || ""}`;
+            const to = e.target.id;
+            const promises = fileList?.map((file) => {
+                return files.move(from, file, to);
+            });
+            await Promise.all(promises);
+        };
+    }
 </script>
 
 <Await promise={folders.get()} notify>
@@ -25,13 +43,15 @@
         <a href="#add-folder" role="button" class="box link">
             <i class="icon icon-svg icon-125x icon-folder-plus" />
         </a>
-        <a href="/files" role="button" class:disabled={!$path[1]}>/</a>
+        <a href="/files" role="button" aria-disabled={!$path[1]} use:drop>/</a>
         {#each $folders as folder}
             <a
+                id={folder}
                 href="/files/{folder}"
                 role="button"
                 class:chip={$path[1] === folder}
-                class:disabled={$path[1] === folder}
+                aria-disabled={$path[1] === folder}
+                use:drop
             >
                 {folder}
                 {#if $path[1] === folder}

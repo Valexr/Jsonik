@@ -8,8 +8,8 @@ async function post(url: string, payload?: BodyInit, options?: RequestInit) {
     return fetch(url, { method: 'POST', ...options }, payload);
 }
 
-async function put(url: string, payload?: BodyInit) {
-    return fetch(url, { method: 'PUT' }, payload);
+async function put(url: string, payload?: BodyInit, options?: RequestInit) {
+    return fetch(url, { method: 'PUT', ...options }, payload);
 }
 
 async function patch(url: string, payload?: BodyInit) {

@@ -80,6 +80,10 @@
     gap: 0.5em;
 }
 
+.toast[draggable] {
+    cursor: move;
+}
+
 .toast::before {
     content: "";
     position: absolute;
