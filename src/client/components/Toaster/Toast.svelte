@@ -71,11 +71,6 @@
             },
         };
     }
-
-    function drag(node: HTMLElement) {
-        //     node.ondragstart = (e) =>
-        //         e.dataTransfer?.setData("Text", e.target?.innerHTML);
-    }
 </script>
 
 <article

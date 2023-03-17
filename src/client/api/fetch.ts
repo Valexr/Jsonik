@@ -27,11 +27,11 @@ export default async function (url: RequestInfo, { ...options }: RequestInit, bo
         //         // goto(`/${get(history).lang}/auth`);
         //     }
         // } else
-        if (res.status !== 200) return { status: res.status };
+        if (res.status !== 200) throw new Error(await res.text());
         const text = res.headers.get('content-type') === 'text/plain'
         return text ? res.text() : res.json();
-    } catch (err) {
-        console.log('err: ', err);
-        return { status: 400 };
+    } catch (e) {
+        console.log('fetchError: ', e);
+        throw e;
     }
 }

@@ -744,3 +744,7 @@
 .icon-unlock {
     mask-image: url(../svg/feather/unlock.svg);
 }
+
+.icon-move {
+    mask-image: url(../svg/feather/move.svg);
+}

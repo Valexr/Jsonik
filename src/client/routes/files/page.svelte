@@ -24,7 +24,7 @@
             <li>
                 <Upload />
             </li>
-            {#each $files.sort((a, b) => a.localeCompare(b)) as file (file)}
+            {#each $files?.sort((a, b) => a.localeCompare(b)) as file (file)}
                 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
                 <li role="button" class="box">
                     <!-- <input type="checkbox" value={file} bind:group={selected} /> -->
@@ -52,6 +52,7 @@
         on:dragstart={(e) => e.dataTransfer?.setData("files", String(selected))}
         on:dragend={(e) => (selected.length = 0)}
     >
+        <i class="icon icon-svg icon-move" />
         <span><b>{selected.length}</b> file{s(selected)} selected</span>
         <button class="box link text-error">
             <i class="icon icon-svg icon-trash" />
