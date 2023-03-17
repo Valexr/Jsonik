@@ -3,17 +3,6 @@
 </script>
 
 <footer>
-    <a href="#dialog" target="_self" role="button">Dialog</a>
-    <Details top summary="" />
-    <p>Footer</p>
-    <details role="list" class="top">
-        <!-- svelte-ignore a11y-no-redundant-roles -->
-        <summary aria-haspopup="listbox" role="button">Menu</summary>
-        <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
-        <ul role="listbox">
-            <li><a href="/">Home</a></li>
-            <li><a href="/logs">Logs</a></li>
-            <li><a href="/settings">Settings</a></li>
-        </ul>
-    </details>
+    <!-- <Details top summary="" /> -->
+    <p class="text-center">© {new Date().getFullYear()} Jsonik</p>
 </footer>

@@ -16,8 +16,8 @@ async function patch(url: string, payload?: BodyInit) {
     return fetch(url, { method: 'PATCH' }, payload);
 }
 
-async function del(url: string) {
-    return fetch(url, { method: 'DELETE' });
+async function del(url: string, payload?: BodyInit) {
+    return fetch(url, { method: 'DELETE' }, payload);
 }
 
 export { get, post, put, patch, del };

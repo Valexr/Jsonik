@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { click, prefs } from "svelte-pathfinder";
+    import { click, prefs, path } from "svelte-pathfinder";
     import { page } from "$client/routes/index.js";
     import type { Name } from "$types/client.js";
 
@@ -16,6 +16,9 @@
     <title>{name} - {$page.props.title}</title>
 </svelte:head>
 
-{#await $page.component() then { default: Route }}
-    <Route />
-{/await}
+<!-- hack for global $path -->
+{#key $path}
+    {#await $page.component() then { default: Route }}
+        <Route />
+    {/await}
+{/key}

@@ -74,7 +74,8 @@
     border: 0.1em solid var(--toast-color);
     border-radius: var(--border-radius-sm);
     background: var(--back);
-    min-inline-size: max-content;
+    /* min-inline-size: min-content; */
+    max-inline-size: fit-content;
     z-index: 0;
     gap: 0.5em;
 }

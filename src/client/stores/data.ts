@@ -1,25 +1,16 @@
 import { writable } from 'svelte/store'
 import { del, get, post } from "$client/api/methods.js";
 
-export type Files = { files: string[], folders: string[], folder: string }
+export type Data = { keys: string[], items: Array<Object & { date: number; }> }
 
 function createData() {
-    const { set, subscribe, update } = writable<{ keys: string[], items: Array<Object & { date: number; }> }>()
+    const { set, subscribe, update } = writable<Data>()
     return {
         subscribe,
         async get(file = '', table = '') {
             const collection = await get(`/data/${file}/${table}`)
             set(collection)
         },
-        // async add(folder = '', file?: File) {
-        //     file = await post(`/files/${folder}/${file?.name}`, file);
-        //     update(state => state.concat(String(file)))
-        // },
-        // async delete(folder = '', file = '') {
-        //     await del(`/files/${folder}/${file}`);
-        //     update(state => state.filter(f => f !== file))
-
-        // }
     }
 }
 
@@ -33,15 +24,6 @@ function createCollections() {
             const collections = await get(`/data//`)
             set(collections)
         },
-        async add(folder = '') {
-            folder = await post(`/files/${folder}/`);
-            update(state => state.concat(folder))
-        },
-        async delete(folder = '') {
-            await del(`/files/${folder}/`);
-            update(state => state.filter(f => f !== folder))
-
-        }
     }
 }
 

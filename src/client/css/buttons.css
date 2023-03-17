@@ -21,6 +21,7 @@ summary {
     align-items: center;
     justify-content: center;
     gap: var(--gap-sm);
+    overflow: hidden;
 }
 
 :is(button, [role=button]):is(.action, .box) {

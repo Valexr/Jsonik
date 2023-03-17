@@ -1,7 +1,7 @@
-import { derver } from '$server/derver';
-import { data } from '$server/endpoints/data';
-import { files } from '$server/endpoints/files';
-import { log } from '$server/middlewares/log';
+import { derver } from '$server/derver/index.js';
+import { data } from '$server/endpoints/data.js';
+import { files } from '$server/endpoints/files.js';
+import { log } from '$server/middlewares/log.js';
 // import { auth } from '$server/endpoints/auth';
 // import { cookies } from '$server/endpoints/auth/cookies';
 // import { token } from '$server/endpoints/auth/token';

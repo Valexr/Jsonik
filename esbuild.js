@@ -32,7 +32,7 @@ const serverOptions = {
     format: 'esm',
     treeShaking: true,
     entryPoints: ['src/server/app.ts'],
-    outdir: 'app',
+    outfile: 'app/app.mjs',
     legalComments: 'none',
     metafile: !DEV,
     plugins: [eslint()],
@@ -76,7 +76,7 @@ if (DEV) {
     await server.watch();
     await server.rebuild();
 
-    nodemon('app/app.js');
+    nodemon('app/app.mjs');
 
     function cleanup() {
         client.dispose();

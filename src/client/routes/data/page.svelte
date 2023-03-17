@@ -1,26 +1,38 @@
 <script lang="ts" context="module">
-    import { path, fragment, redirect } from "svelte-pathfinder";
+    import {
+        path,
+        state,
+        fragment,
+        redirect,
+        paramable,
+        type ConvertedParam,
+        type Parsable,
+    } from "svelte-pathfinder";
     import { data, collections } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Table from "$client/components/Table.svelte";
     import Tile from "$client/components/Tile.svelte";
     import Code from "$client/components/Code.svelte";
+    import { onDestroy, onMount } from "svelte";
 </script>
 
 <script lang="ts">
+    // export let result;
+
     let active: { date: number };
 
+    state.set({ some: "foo" });
     function getItem(item: Object & { date: number }) {
         $fragment = `data-${item.date}`;
         active = item;
     }
+    const route = paramable("/data/:file?");
 </script>
 
 <section class="cols col-fit scroll-x">
-    <Await promise={data.get(`${$path[1]}`)}>
-        {console.log($data)}
-        {#if $data}
+    <Await promise={data.get(String($route.file))}>
+        {#if $data.keys}
             <Table
                 data={{ thead: $data.keys, tbody: $data.items }}
                 active={getItem}

@@ -3,14 +3,12 @@
     import { collections } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Dialog from "$client/components/Dialog.svelte";
+    import Search from "$client/components/Search.svelte";
 </script>
 
-<Await
-    promise={collections.get()}
-    on:success={() => redirect(`/data/${$collections[0]}`)}
->
+<Await promise={collections.get()}>
     <nav class="text-center cols col-fit justify-start nowrap scroll-x">
-        <a href="#add-data" role="button" target="_self" class="box link">
+        <a href="#add-data" role="button" class="box link">
             <i class="icon icon-svg icon-125x icon-plus-square" />
         </a>
         {#each $collections as collection}
@@ -20,14 +18,8 @@
                 class:disabled={$path[1] === collection}>{collection}</a
             >
         {/each}
+        <Search collapsed />
     </nav>
-    <form on:submit={submit}>
-        <fieldset>
-            <label>
-                <input type="search" name="q" placeholder="search" />
-            </label>
-        </fieldset>
-    </form>
 </Await>
 
 <Dialog open={$fragment === `add-data`}>
