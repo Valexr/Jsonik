@@ -28,6 +28,14 @@
     function clearFiles() {
         fileList = "" as unknown as FileList;
     }
+
+    function drag(node: HTMLLabelElement) {
+        const { classList } = node;
+        node.ondragover = (e) => classList.remove("link");
+        node.ondragleave = (e) => classList.add("link");
+        // node.ondragend = (e) => classList.add("link");
+        node.ondrop = (e) => classList.add("link");
+    }
 </script>
 
 <Form>
@@ -35,16 +43,18 @@
         <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
         <label
             role="button"
+            tabindex="0"
             class:box={$files?.length}
-            class="block link outline dashed"
+            class="block outline link dashed"
+            use:drag
         >
             <i class="icon icon-svg icon-file-plus icon-3x" />
             <input
                 type="file"
-                class="hidden"
                 name="files"
                 multiple
                 {accept}
+                class:box={$files?.length}
                 on:change={addFiles}
             />
         </label>
@@ -74,5 +84,13 @@
 <style>
     fieldset {
         min-inline-size: fit-content;
+    }
+    [role="button"] {
+        mask-size: 50%;
+    }
+    [type="file"] {
+        position: absolute;
+        opacity: 0;
+        inset: 0;
     }
 </style>

@@ -70,7 +70,7 @@ summary.block {
     background-color: transparent;
 }
 
-:is(button, [role=button], [type="file"]::file-selector-button):hover {
+:is(button, [role=button], [type="file"]::file-selector-button):is(:hover, :focus) {
     background-color: var(--hover);
 }
 

@@ -667,6 +667,8 @@
     -webkit-mask-clip: border-box;
     mask-size: 100% 100%;
     mask-clip: border-box;
+    mask-repeat: no-repeat;
+    mask-position: center;
     background: currentColor;
 }
 
