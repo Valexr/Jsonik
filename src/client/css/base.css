@@ -48,7 +48,7 @@ header {
 }
 
 main {
-    margin-bottom: var(--gap-lg);
+    /* margin-bottom: var(--gap-lg); */
 }
 
 article {

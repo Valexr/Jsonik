@@ -26,9 +26,6 @@
             <i class="icon icon-svg icon-125x icon-folder-plus" />
         </a>
         <a href="/files" role="button" class:disabled={!$path[1]}>/</a>
-        {#if !$path[1]}
-            <Search collapsed />
-        {/if}
         {#each $folders as folder}
             <a
                 href="/files/{folder}"
@@ -46,9 +43,6 @@
                     </button>
                 {/if}
             </a>
-            {#if $path[1] === folder}
-                <Search collapsed />
-            {/if}
         {/each}
     </nav>
 </Await>

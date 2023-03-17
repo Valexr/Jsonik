@@ -1,7 +1,8 @@
 <script lang="ts" context="module">
-    import { path } from "svelte-pathfinder";
+    import { path, fragment } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
     import Form from "$client/components/Form.svelte";
+    import Dialog from "$client/components/Dialog.svelte";
     import type { InputEvent } from "$types/client.js";
 </script>
 
@@ -13,6 +14,7 @@
 
     function addFiles(e: InputEvent) {
         fileList = e.currentTarget.files;
+        $fragment = "upload-files";
     }
 
     async function uploadFiles(e: SubmitEvent) {
@@ -28,43 +30,49 @@
     }
 </script>
 
-<Form
-    method="POST"
-    enctype="multipart/form-data"
-    on:reset={clearFiles}
-    on:submit={uploadFiles}
->
+<Form>
     <fieldset>
-        {#if fileList}
-            <h3>Selected</h3>
-            <ol>
-                {#each fileList as file}
-                    <li>
-                        {file.name}
-                        {(file.size / 1000).toFixed(0)} Kb
-                    </li>
-                {/each}
-            </ol>
-            <label>
-                <button class="link" type="reset">Cancel</button>
-                <button class="success" type="submit">Upload</button>
-            </label>
-        {:else}
-            <label
-                role="button"
-                class:box={$files?.length}
-                class="block link outline dashed"
-            >
-                <i class="icon icon-svg icon-file-plus icon-3x" />
-                <input
-                    type="file"
-                    class="hidden"
-                    name="files"
-                    multiple
-                    {accept}
-                    on:change={addFiles}
-                />
-            </label>
-        {/if}
+        <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
+        <label
+            role="button"
+            class:box={$files?.length}
+            class="block link outline dashed"
+        >
+            <i class="icon icon-svg icon-file-plus icon-3x" />
+            <input
+                type="file"
+                class="hidden"
+                name="files"
+                multiple
+                {accept}
+                on:change={addFiles}
+            />
+        </label>
     </fieldset>
 </Form>
+
+<Dialog
+    open={$fragment === "upload-files" && fileList}
+    on:submit={uploadFiles}
+    on:reset={clearFiles}
+>
+    <h3 slot="header" class="scroll-x">
+        Upload {fileList?.length} files
+    </h3>
+    {#if fileList}
+        <ol>
+            {#each fileList as file}
+                <li>
+                    {file.name}
+                    {(file.size / 1000).toFixed(0)} Kb
+                </li>
+            {/each}
+        </ol>
+    {/if}
+</Dialog>
+
+<style>
+    fieldset {
+        min-inline-size: fit-content;
+    }
+</style>

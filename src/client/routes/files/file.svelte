@@ -6,7 +6,7 @@
 
 <script lang="ts">
     export let file: string;
-    // export let selected: string[] = [];
+    export let selected: string[] = [];
 
     async function editFile() {
         // await files.delete(`${$path[1] || ""}`, file);
@@ -15,7 +15,7 @@
         await files.delete(`${$path[1] || ""}`, file);
     }
 
-    // $: console.log(selected);
+    $: console.log(selected);
 </script>
 
 <!-- svelte-ignore a11y-missing-content -->
@@ -23,17 +23,22 @@
     href="#file-{encodeURI(file)}"
     style="background-image: url('/api/v1/files/{`${$path[1] || ''}`}/{file}')"
 />
-<span>
+<label class="text-ellepsis">
+    <slot>
+        {file}
+    </slot>
+</label>
+<!-- <span>
     <small class="text-ellepsis text-color">
         {file}&nbsp;
-    </small>
-    <!-- <button id="delete" class="link box" on:click={editFile}>
+    </small> -->
+<!-- <button id="delete" class="link box" on:click={editFile}>
         <i class="icon icon-svg icon-edit" />
     </button>
     <button id="delete" class="link box text-error" on:click={deleteFile}>
         <i class="icon icon-svg icon-trash" />
     </button> -->
-</span>
+<!-- </span> -->
 
 <Dialog open={$fragment === `file-${file}`} from="center" size="lg">
     <h3 slot="header" class="scroll-x">
@@ -58,11 +63,12 @@
         width: 100%;
         background-size: cover;
     }
-    span {
+    label {
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content: start;
         width: 100%;
-        max-width: calc(var(--col-width) + var(--gap-sm));
+        margin: 0 var(--gap-sm);
+        max-width: calc(var(--col-width) - var(--gap-sm));
     }
 </style>

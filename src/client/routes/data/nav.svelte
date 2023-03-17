@@ -3,7 +3,6 @@
     import { collections } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Dialog from "$client/components/Dialog.svelte";
-    import Search from "$client/components/Search.svelte";
 </script>
 
 <Await promise={collections.get()}>
@@ -18,7 +17,6 @@
                 class:disabled={$path[1] === collection}>{collection}</a
             >
         {/each}
-        <Search collapsed />
     </nav>
 </Await>
 

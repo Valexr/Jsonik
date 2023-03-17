@@ -9,6 +9,7 @@
 
 <script lang="ts">
     let selected: string[] = [];
+    const s = (arr: string[]) => (arr.length > 1 ? "s" : "");
     $: console.log(selected);
 </script>
 
@@ -16,7 +17,6 @@
     <Await
         promise={files.get($path[1])}
         on:error={() => redirect("/files")}
-        success="loaded loaded loadedloaded loaded loadeds"
         notify
     >
         <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
@@ -27,8 +27,17 @@
             {#each $files.sort((a, b) => a.localeCompare(b)) as file (file)}
                 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
                 <li role="button" class="box">
-                    <input type="checkbox" value={file} bind:group={selected} />
-                    <File {file} />
+                    <!-- <input type="checkbox" value={file} bind:group={selected} /> -->
+                    <File {file}>
+                        <input
+                            type="checkbox"
+                            value={file}
+                            bind:group={selected}
+                        />&nbsp
+                        <small class="text-ellepsis text-color">
+                            {file}
+                        </small>
+                    </File>
                 </li>
             {/each}
         </ul>
@@ -37,7 +46,7 @@
 
 {#if selected.length}
     <Toast type="pos-sticky" on:close={() => (selected.length = 0)}>
-        <span><b>{selected.length}</b> files selected</span>
+        <span><b>{selected.length}</b> file{s(selected)} selected</span>
         <button class="box link text-error">
             <i class="icon icon-svg icon-trash" />
         </button>
@@ -53,17 +62,16 @@
     ul[role="listbox"] li {
         position: relative;
         flex-flow: column nowrap;
-        align-items: end;
+        align-items: start;
         justify-content: space-between;
         padding: 0;
     }
     [type="checkbox"] {
-        position: absolute;
-        top: var(--gap-sm);
-        left: var(--gap-sm);
+        flex: 0 0 auto;
     }
     :global(.toast.pos-sticky) {
-        bottom: var(--gap);
+        bottom: calc(var(--gap-lg) * 2.75);
+        margin: auto;
         z-index: 1;
     }
 </style>

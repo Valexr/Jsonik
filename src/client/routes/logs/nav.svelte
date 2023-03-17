@@ -3,7 +3,7 @@
 </script>
 
 <nav>
-    <Search />
+    <!-- <Search /> -->
 </nav>
 
 <style>

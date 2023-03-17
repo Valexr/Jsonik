@@ -99,10 +99,12 @@ dialog form :is(header, footer)>* {
 }
 
 dialog form header {
+    text-align: start;
     top: 0;
 }
 
 dialog form footer {
+    text-align: end;
     bottom: 0;
 }
 

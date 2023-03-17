@@ -32,7 +32,7 @@ samp {
 
 ul,
 ol {
-    padding-left: 1.25em;
+    /* padding-left: 1.25em; */
     line-height: 1.5;
 }
 
