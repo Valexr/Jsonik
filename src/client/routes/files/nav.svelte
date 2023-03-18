@@ -71,7 +71,13 @@
         <a href="#add-folder" role="button" class="box outline pos-sticky">
             <i class="icon icon-svg icon-125x icon-folder-plus" />
         </a>
-        <a href="/files" role="button" aria-disabled={!$path[1]} use:drop>/</a>
+        <a
+            href="/files"
+            tabindex="0"
+            role="button"
+            aria-disabled={!$path[1]}
+            use:drop>/</a
+        >
         {#if $fragment === "add-folder"}
             <Form on:submit={addFolder}>
                 <fieldset>
@@ -81,6 +87,7 @@
                             name="folder"
                             autofocus={true}
                             placeholder="foldername"
+                            pattern="^[\w,-]+"
                             use:close
                         />
                     </label>
@@ -90,6 +97,7 @@
         {#each $folders as folder}
             <a
                 id={folder}
+                tabindex="0"
                 href="/files/{folder}"
                 role="button"
                 class:chip={$path[1] === folder}

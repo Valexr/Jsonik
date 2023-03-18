@@ -71,8 +71,12 @@ summary.block {
     background-color: var(--error);
 }
 
-:is(button, [role=button], [type="file"]::file-selector-button):is(:hover, :focus) {
+:is(button, [role=button], [type="file"]::file-selector-button):is(:hover) {
     background-color: var(--hover);
+}
+
+:is(button, [role=button], [type="file"]::file-selector-button):is(:focus, :focus-visible) {
+    border-color: currentColor;
 }
 
 :is(button, [role=button], [type="file"]::file-selector-button):is(:hover:active) {
