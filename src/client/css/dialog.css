@@ -121,13 +121,6 @@ dialog form header #close:hover {
     color: var(--error);
 }
 
-dialog form article {
-    /* --cols-gap: var(--gap-sm); */
-    /* margin: var(--gap); */
-    overflow: scroll;
-}
-
-
 /* Size */
 dialog.sm {
     max-inline-size: 25%;

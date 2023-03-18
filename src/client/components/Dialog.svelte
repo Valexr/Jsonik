@@ -78,7 +78,7 @@
                     <i class="icon icon-close" />
                 </button>
             </header>
-            <article>
+            <article class="scroll">
                 <slot />
             </article>
             {#if !info}

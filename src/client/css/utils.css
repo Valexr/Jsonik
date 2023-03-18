@@ -70,7 +70,7 @@
     }
 }
 
-.scroll-x {
+:is(.scroll-x, .scroll) {
     max-width: 100%;
     overflow-x: auto;
     vertical-align: bottom;
@@ -78,8 +78,12 @@
     white-space: nowrap;
 }
 
-.scroll-x::-webkit-scrollbar {
+:is(.scroll-x, .scroll)::-webkit-scrollbar {
     display: none;
+}
+
+.scroll {
+    overflow: auto;
 }
 
 .pos-sticky {

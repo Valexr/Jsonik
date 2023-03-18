@@ -104,7 +104,7 @@
                 aria-disabled={$path[1] === folder}
                 use:drop
             >
-                {folder}
+                <span contenteditable={$path[1] === folder}>{folder}</span>
                 {#if $path[1] === folder}
                     <button
                         class="box link text-error"

@@ -46,7 +46,7 @@
         <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
     </figure>
     <nav slot="footer">
-        <button id="delete" class="link" on:click={editFile}>
+        <button id="delete" class="" on:click={editFile}>
             <i class="icon icon-svg icon-edit" /> Rename
         </button>
         <button id="delete" class="text-error" on:click={deleteFile}>
