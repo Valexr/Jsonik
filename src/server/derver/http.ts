@@ -113,7 +113,7 @@ function getRouteMatch(pattern: string, path: string) {
         })
         .join('/');
 
-    console.log(path.match(/^(.*)\/([^\/]*)$/))
+    // console.log(path.match(/^(.*)\/([^\/]*)$/))
 
     let exact = true;
     let match = path.match(new RegExp(`^${rx}$`));

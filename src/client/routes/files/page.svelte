@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { path, redirect } from "svelte-pathfinder";
+    import { path, redirect, query } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
     import Await from "$client/components/Await.svelte";
     import File from "./file.svelte";
@@ -11,6 +11,14 @@
 
 <script lang="ts">
     let selected: string[] = [];
+
+    async function deleteFiles() {
+        const promises = selected.map((file) => {
+            return files.delete(`${$path[1] || ""}`, file);
+        });
+        await Promise.all(promises);
+        selected.length = 0;
+    }
 </script>
 
 <section>
@@ -27,7 +35,6 @@
             {#each $files?.sort((a, b) => a.localeCompare(b)) as file (file)}
                 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
                 <li role="button" class="box">
-                    <!-- <input type="checkbox" value={file} bind:group={selected} /> -->
                     <File {file}>
                         <input
                             type="checkbox"
@@ -54,7 +61,7 @@
     >
         <i class="icon icon-svg icon-move" />
         <span><b>{selected.length}</b> file{s(selected)} selected</span>
-        <button class="box link text-error">
+        <button class="box link text-error" on:click={deleteFiles}>
             <i class="icon icon-svg icon-trash" />
         </button>
     </Toast>

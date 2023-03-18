@@ -43,11 +43,12 @@ export function files(app: App) {
 
     app.put('/:from?/:to?', async (req, res) => {
         const { from, to } = req.params
-        const file = req.body
+        const file = req.query.file
 
         const source = createReadStream(`files/${from}/${file}`);
         const dest = createWriteStream(`files/${to}/${file}`);
 
+        console.log(from, to, file)
         source.pipe(dest);
         source.on('end', async () => {
             await rm(`files/${from}/${file}`)

@@ -73,7 +73,7 @@
             {#each fileList as file}
                 <li>
                     {file.name}
-                    {(file.size / 1000).toFixed(0)} Kb
+                    <b>{(file.size / 1000).toFixed(0)}</b> Kb
                 </li>
             {/each}
         </ol>

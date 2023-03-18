@@ -16,10 +16,7 @@ function createFiles() {
             update(state => state.concat(String(file)))
         },
         async move(from = '', file: string, to = '') {
-            file = await put(`/files/${from}/${to}`, JSON.stringify(file), {
-                headers: { 'Content-Type': 'application/json' }
-            });
-            console.log(file)
+            file = await put(`/files/${from}/${to}?file=${encodeURI(file)}`);
             update(state => state.filter(f => f !== file))
         },
         async delete(folder = '', file = '') {

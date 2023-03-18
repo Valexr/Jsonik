@@ -27,16 +27,16 @@
         node.ondragleave = (e: DragEvent) =>
             node.removeAttribute("aria-disabled");
         node.ondrop = async (e: DragEvent) => {
-            node.removeAttribute("aria-disabled");
-            const { target, dataTransfer } = e;
-            const { id } = target as HTMLElement;
+            const { target, dataTransfer, currentTarget } = e;
+            const { id: to } = currentTarget as HTMLElement;
             const fileList = dataTransfer?.getData("files").split(",") || [];
             const from = `${$path[1] || ""}`;
-            const to = id;
+            // const to = id;
             const promises = fileList.map((file) => {
                 return files.move(from, file, to);
             });
             await Promise.all(promises);
+            node.removeAttribute("aria-disabled");
         };
     }
     function close(node: HTMLInputElement) {
