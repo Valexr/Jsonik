@@ -6,7 +6,7 @@
 
 <script lang="ts">
     export let file: string;
-    export let selected: string[] = [];
+    // export let selected: string[] = [];
 
     async function editFile() {
         // await files.delete(`${$path[1] || ""}`, file);
@@ -14,8 +14,6 @@
     async function deleteFile() {
         await files.delete(`${$path[1] || ""}`, file);
     }
-
-    $: console.log(selected);
 </script>
 
 <!-- svelte-ignore a11y-missing-content -->

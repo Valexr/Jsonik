@@ -14,8 +14,10 @@
             <a
                 href="/data/{collection}"
                 role="button"
-                class:disabled={$path[1] === collection}>{collection}</a
+                aria-disabled={$path[1] === collection}
             >
+                {collection}
+            </a>
         {/each}
     </nav>
 </Await>

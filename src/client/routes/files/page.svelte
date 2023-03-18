@@ -5,12 +5,12 @@
     import File from "./file.svelte";
     import Upload from "./upload.svelte";
     import Toast from "$client/components/Toaster/Toast.svelte";
+
+    const s = (arr: string[]) => (arr.length > 1 ? "s" : "");
 </script>
 
 <script lang="ts">
     let selected: string[] = [];
-    const s = (arr: string[]) => (arr.length > 1 ? "s" : "");
-    $: console.log(selected);
 </script>
 
 <section>

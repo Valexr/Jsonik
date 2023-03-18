@@ -2,8 +2,8 @@
     import { fragment, path, goto, redirect } from "svelte-pathfinder";
     import { folders, files } from "$client/stores/files.js";
     import Await from "$client/components/Await.svelte";
+    import Form from "$client/components/Form.svelte";
     import Dialog from "$client/components/Dialog.svelte";
-    import Search from "$client/components/Search.svelte";
 </script>
 
 <script lang="ts">
@@ -20,30 +20,72 @@
     }
 
     function drop(node: HTMLElement) {
-        node.ondragover = (e) => {
+        node.ondragover = (e: DragEvent) => {
             e.preventDefault();
             node.setAttribute("aria-disabled", "true");
         };
-        node.ondragleave = (e) => node.removeAttribute("aria-disabled");
-        node.ondrop = async (e) => {
+        node.ondragleave = (e: DragEvent) =>
             node.removeAttribute("aria-disabled");
-            const fileList = e.dataTransfer?.getData("files").split(",");
+        node.ondrop = async (e: DragEvent) => {
+            node.removeAttribute("aria-disabled");
+            const { target, dataTransfer } = e;
+            const { id } = target as HTMLElement;
+            const fileList = dataTransfer?.getData("files").split(",") || [];
             const from = `${$path[1] || ""}`;
-            const to = e.target.id;
-            const promises = fileList?.map((file) => {
+            const to = id;
+            const promises = fileList.map((file) => {
                 return files.move(from, file, to);
             });
             await Promise.all(promises);
         };
     }
+    function close(node: HTMLInputElement) {
+        node.onblur = () => fragment.set("");
+        node.onkeydown = (e) => {
+            if (e.key === "Escape") {
+                e.preventDefault();
+                fragment.set("");
+            }
+        };
+    }
+
+    function scroll(node: HTMLElement, path: string) {
+        const update = (path: string) => {
+            const anchors = node.querySelectorAll('a[href^="/files"]');
+            const active = Array.from(anchors).find((a) => a.id.includes(path));
+            active?.scrollIntoView({ behavior: "smooth" });
+        };
+        update(path);
+        return {
+            update,
+        };
+    }
 </script>
 
 <Await promise={folders.get()} notify>
-    <nav class="text-center cols nowrap col-fit justify-start scroll-x">
+    <nav
+        class="text-center cols nowrap col-fit justify-start scroll-x"
+        use:scroll={$path[1]}
+    >
         <a href="#add-folder" role="button" class="box link">
             <i class="icon icon-svg icon-125x icon-folder-plus" />
         </a>
         <a href="/files" role="button" aria-disabled={!$path[1]} use:drop>/</a>
+        {#if $fragment === "add-folder"}
+            <Form on:submit={addFolder}>
+                <fieldset>
+                    <label>
+                        <!-- svelte-ignore a11y-autofocus -->
+                        <input
+                            name="folder"
+                            autofocus={true}
+                            placeholder="foldername"
+                            use:close
+                        />
+                    </label>
+                </fieldset>
+            </Form>
+        {/if}
         {#each $folders as folder}
             <a
                 id={folder}
@@ -67,20 +109,22 @@
     </nav>
 </Await>
 
-<Dialog open={$fragment === `add-folder`} on:submit={addFolder}>
+<!-- <Dialog open={$fragment === `add-folder`} on:submit={addFolder}>
     <h2 slot="header">Add folder</h2>
     <fieldset>
         <label>
             <input placeholder="Folder name" name="folder" />
         </label>
     </fieldset>
-</Dialog>
-
+</Dialog> -->
 <style>
     nav {
         margin: var(--gap-lg) 0;
     }
     nav .chip {
         padding-right: 0;
+    }
+    label {
+        margin: 0;
     }
 </style>
