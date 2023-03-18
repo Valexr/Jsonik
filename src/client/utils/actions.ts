@@ -132,4 +132,54 @@ function keyEscape(node: HTMLElement, cb: () => void) {
     };
 }
 
+function selectable(node: HTMLElement) {
+    let x1 = 0,
+        y1 = 0,
+        x2 = 0,
+        y2 = 0;
+
+    const div = document.createElement("div");
+    const items = node.childNodes;
+    items.forEach((child) => {
+        child.onpointerover = () => (child.style.borderColor = "red");
+        child.onpointerleave = () => (child.style.borderColor = "");
+    });
+    div.style.border = "1px solid red";
+    div.style.position = "absolute";
+    div.style.zIndex = "1";
+    node.insertAdjacentElement("beforebegin", div);
+    function reCalc() {
+        //This will restyle the div
+        var x3 = Math.min(x1, x2); //Smaller X
+        var x4 = Math.max(x1, x2); //Larger X
+        var y3 = Math.min(y1, y2); //Smaller Y
+        var y4 = Math.max(y1, y2); //Larger Y
+        div.style.left = x3 + "px";
+        div.style.top = y3 + "px";
+        div.style.width = x4 - x3 + "px";
+        div.style.height = y4 - y3 + "px";
+    }
+    node.onpointerdown = function (e) {
+        div.hidden = false; //Unhide the node
+        x1 = e.clientX; //Set the initial X
+        y1 = e.clientY; //Set the initial Y
+        node.onpointermove = move;
+    };
+    function move(e: PointerEvent) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        x2 = e.clientX;
+        y2 = e.clientY;
+        reCalc();
+    }
+    node.onpointerup = function (e) {
+        div.style.left = "";
+        div.style.top = "";
+        div.style.width = "";
+        div.style.height = "";
+        div.hidden = true;
+        node.onmousemove = null;
+    };
+}
+
 export { clickout, validation, sticked, clickOutside, expand, focusTrap, keyEscape }

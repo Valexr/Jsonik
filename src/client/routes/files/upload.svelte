@@ -29,11 +29,11 @@
         fileList = "" as unknown as FileList;
     }
 
-    function drag(node: HTMLLabelElement) {
+    function drop(node: HTMLLabelElement) {
         const { classList } = node;
         node.ondragover = (e) => classList.remove("link");
         node.ondragleave = (e) => classList.add("link");
-        // node.ondragend = (e) => classList.add("link");
+        node.ondragend = (e) => classList.add("link");
         node.ondrop = (e) => classList.add("link");
     }
 </script>
@@ -45,7 +45,7 @@
             role="button"
             class:box={$files?.length}
             class="block outline link dashed"
-            use:drag
+            use:drop
         >
             <i class="icon icon-svg icon-file-plus icon-3x" />
             <input

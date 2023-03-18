@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { path, redirect, query } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
+    import Selection from "$client/utils/selection.js";
     import Await from "$client/components/Await.svelte";
     import File from "./file.svelte";
     import Upload from "./upload.svelte";
@@ -20,6 +21,22 @@
         selected.length = 0;
     }
 </script>
+
+{#if selected.length}
+    <Toast
+        draggable
+        type="pos-sticky"
+        on:close={() => (selected.length = 0)}
+        on:dragstart={(e) => e.dataTransfer?.setData("files", String(selected))}
+        on:dragend={(e) => (selected.length = 0)}
+    >
+        <i class="icon icon-svg icon-move" />
+        <span><b>{selected.length}</b> file{s(selected)} selected</span>
+        <button class="box link text-error" on:click={deleteFiles}>
+            <i class="icon icon-svg icon-trash" />
+        </button>
+    </Toast>
+{/if}
 
 <section>
     <Await
@@ -51,26 +68,11 @@
     </Await>
 </section>
 
-{#if selected.length}
-    <Toast
-        draggable
-        type="pos-sticky"
-        on:close={() => (selected.length = 0)}
-        on:dragstart={(e) => e.dataTransfer?.setData("files", String(selected))}
-        on:dragend={(e) => (selected.length = 0)}
-    >
-        <i class="icon icon-svg icon-move" />
-        <span><b>{selected.length}</b> file{s(selected)} selected</span>
-        <button class="box link text-error" on:click={deleteFiles}>
-            <i class="icon icon-svg icon-trash" />
-        </button>
-    </Toast>
-{/if}
-
 <style>
     ul[role="listbox"] {
         --cols-gap: var(--gap-sm);
         --col-width: 9.5em;
+        position: relative;
         padding: 0;
     }
     ul[role="listbox"] li {
@@ -84,7 +86,8 @@
         flex: 0 0 auto;
     }
     :global(.toast.pos-sticky) {
-        bottom: calc(var(--gap-lg) * 2.75);
+        top: calc(var(--gap-lg) * 2.75);
+        padding: 0 var(--gap);
         margin: auto;
         z-index: 1;
     }

@@ -78,6 +78,7 @@
     use:pausable={timeout > 0}
     on:dragstart
     on:dragend
+    on:drop
     style="--progress: {$progress}"
     {draggable}
 >

@@ -27,11 +27,10 @@
         node.ondragleave = (e: DragEvent) =>
             node.removeAttribute("aria-disabled");
         node.ondrop = async (e: DragEvent) => {
-            const { target, dataTransfer, currentTarget } = e;
+            const { dataTransfer, currentTarget } = e;
             const { id: to } = currentTarget as HTMLElement;
             const fileList = dataTransfer?.getData("files").split(",") || [];
             const from = `${$path[1] || ""}`;
-            // const to = id;
             const promises = fileList.map((file) => {
                 return files.move(from, file, to);
             });

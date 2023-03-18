@@ -18,6 +18,7 @@
 
 <!-- svelte-ignore a11y-missing-content -->
 <a
+    draggable="false"
     href="#file-{encodeURI(file)}"
     style="background-image: url('/api/v1/files/{`${$path[1] || ''}`}/{file}')"
 />
