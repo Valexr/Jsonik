@@ -674,77 +674,95 @@
 
 .icon-gh {
     mask-image: url(../svg/gh.svg);
-    /* clip-path: url(../svg/gh.svg#clip); */
+    -webkit-mask-image: url(../svg/gh.svg);
 }
 
 .icon-database {
     mask-image: url(../svg/feather/database.svg);
+    -webkit-mask-image: url(../svg/feather/database.svg);
 }
 
 .icon-hard-drive {
     mask-image: url(../svg/feather/hard-drive.svg);
+    -webkit-mask-image: url(../svg/feather/hard-drive.svg);
 }
 
 .icon-users {
     mask-image: url(../svg/feather/users.svg);
+    -webkit-mask-image: url(../svg/feather/users.svg);
 }
 
 .icon-clock {
     mask-image: url(../svg/feather/clock.svg);
+    -webkit-mask-image: url(../svg/feather/clock.svg);
 }
 
 .icon-settings {
     mask-image: url(../svg/feather/settings.svg);
+    -webkit-mask-image: url(../svg/feather/settings.svg);
 }
 
 .icon-power {
     mask-image: url(../svg/feather/power.svg);
+    -webkit-mask-image: url(../svg/feather/power.svg);
 }
 
 .icon-x {
     mask-image: url(../svg/feather/x.svg);
+    -webkit-mask-image: url(../svg/feather/x.svg);
 }
 
 .icon-plus {
     mask-image: url(../svg/feather/plus.svg);
+    -webkit-mask-image: url(../svg/feather/plus.svg);
 }
 
 .icon-file-plus {
     mask-image: url(../svg/feather/file-plus.svg);
+    -webkit-mask-image: url(../svg/feather/file-plus.svg);
 }
 
 .icon-plus-square {
     mask-image: url(../svg/feather/plus-square.svg);
+    -webkit-mask-image: url(../svg/feather/plus-square.svg);
 }
 
 .icon-folder-plus {
     mask-image: url(../svg/feather/folder-plus.svg);
+    -webkit-mask-image: url(../svg/feather/folder-plus.svg);
 }
 
 .icon-trash {
     mask-image: url(../svg/feather/trash.svg);
+    -webkit-mask-image: url(../svg/feather/trash.svg);
 }
 
 .icon-edit {
     mask-image: url(../svg/feather/edit.svg);
+    -webkit-mask-image: url(../svg/feather/edit.svg);
 }
 
 .icon-alert-triangle {
     mask-image: url(../svg/feather/alert-triangle.svg);
+    -webkit-mask-image: url(../svg/feather/alert-triangle.svg);
 }
 
 .icon-key {
     mask-image: url(../svg/feather/key.svg);
+    -webkit-mask-image: url(../svg/feather/key.svg);
 }
 
 .icon-lock {
     mask-image: url(../svg/feather/lock.svg);
+    -webkit-mask-image: url(../svg/feather/lock.svg);
 }
 
 .icon-unlock {
     mask-image: url(../svg/feather/unlock.svg);
+    -webkit-mask-image: url(../svg/feather/unlock.svg);
 }
 
 .icon-move {
     mask-image: url(../svg/feather/move.svg);
+    -webkit-mask-image: url(../svg/feather/move.svg);
 }

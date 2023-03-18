@@ -39,10 +39,15 @@ summary {
 
 :is(button, [role=button]).outline {
     border-color: var(--surface);
+    background-color: var(--back);
 }
 
 :is(button, [role=button]).dashed {
     border-style: dashed;
+}
+
+:is(button, [role=button]).link {
+    background-color: transparent;
 }
 
 summary.block {
@@ -64,10 +69,6 @@ summary.block {
 
 :is(button, [role=button]).error {
     background-color: var(--error);
-}
-
-:is(button, [role=button]).link {
-    background-color: transparent;
 }
 
 :is(button, [role=button], [type="file"]::file-selector-button):is(:hover, :focus) {

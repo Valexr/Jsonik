@@ -61,7 +61,7 @@
 </Form>
 
 <Dialog
-    open={$fragment === "upload-files" && fileList}
+    open={$fragment === "upload-files" && Number(fileList?.length) > 0}
     on:submit={uploadFiles}
     on:reset={clearFiles}
 >

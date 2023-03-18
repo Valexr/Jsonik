@@ -53,7 +53,8 @@
         const update = (path: string) => {
             const anchors = node.querySelectorAll('a[href^="/files"]');
             const active = Array.from(anchors).find((a) => a.id.includes(path));
-            active?.scrollIntoView({ behavior: "smooth" });
+            console.log(document.querySelectorAll(":host"));
+            active?.scrollIntoView({ behavior: "auto", inline: "end" });
         };
         update(path);
         return {
@@ -67,7 +68,7 @@
         class="text-center cols nowrap col-fit justify-start scroll-x"
         use:scroll={$path[1]}
     >
-        <a href="#add-folder" role="button" class="box link">
+        <a href="#add-folder" role="button" class="box outline pos-sticky">
             <i class="icon icon-svg icon-125x icon-folder-plus" />
         </a>
         <a href="/files" role="button" aria-disabled={!$path[1]} use:drop>/</a>
@@ -126,5 +127,8 @@
     }
     label {
         margin: 0;
+    }
+    [role="button"][href="#add-folder"] {
+        left: 0;
     }
 </style>
