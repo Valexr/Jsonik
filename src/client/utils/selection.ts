@@ -1,39 +1,21 @@
-/**
- * Add the ability to select area via mouse elements from within
- * a given container.
- */
-export default function Selection(container: HTMLElement | null, {
-    targetSelectors,
-    options
+export default function selection(container: HTMLElement | null, {
+    target,
+    disabled,
+    match
 }: {
-    /** The container you'll allow selecting from. */
-    container?: HTMLElement | null;
-    /** Valid CSS Selector string for children within the selction area. */
-    targetSelectors: string;
-    /** Further `optional` options. */
-    options?: {
-        /** The id that will be placed on the selection area div. Defaults to `selectionRectangle` */
-        selectionDivId?: string;
-        /** Only left clicks will enable the selection area. */
-        leftClickOnly?: boolean;
-    };
+    target: string;
+    disabled?: boolean | string;
+    match: (el: Element[]) => void
 }) {
-    const initialOptions = {
-        selectionDivId: 'selectionRectangle',
-        leftClickOnly: true
-    };
-    const _options = { ...initialOptions, ...options };
-
     if (!container) throw new Error('The container element must be defined!');
 
     const rect = document.createElement('div') as HTMLDivElement;
     rect.style.cssText = `
-    border: 1px solid #4af;
-    background: rgba(68, 170, 255, 0.5);
+    background: var(--color);
+    opacity: 0.25;
     position: absolute;
   `;
     rect.hidden = true;
-    rect.id = _options.selectionDivId;
     const ctx = {
         x1: 0,
         y1: 0,
@@ -48,57 +30,45 @@ export default function Selection(container: HTMLElement | null, {
     };
 
     let selectedElements = [] as Element[];
-    const selectStartEvent = new Event('_selectstart');
 
     function onMouseDown(e: MouseEvent) {
         if (state.disabled) return;
-        const LEFT_CLICK = 1;
-        if (_options.leftClickOnly && e.which !== LEFT_CLICK) return;
         state.mouseDown = true;
         ctx.x1 = e.pageX;
         ctx.x2 = e.pageX;
         ctx.y1 = e.pageY;
         ctx.y2 = e.pageY;
+        if (!e.shiftKey) selectedElements = [];
         reCalc();
     };
 
     function onMouseMove(e: MouseEvent) {
         if (state.disabled || !state.mouseDown) return;
-        // Wait till a position is set to debounce non-selection drags.
         if (rect.hidden && !(ctx.x1 === 0 && ctx.x2 === 0 && ctx.y1 === 0 && ctx.y2 === 0)) {
             rect.hidden = false;
         }
         if (!state.mounted) {
             if (!container) throw new Error('The container element must be defined before mounting the selection rectanble!');
-            container.appendChild(rect);
+            container.append(rect);
         }
         ctx.x2 = e.pageX;
         ctx.y2 = e.pageY;
         reCalc();
 
         if (state.mouseDown && !state.moving) {
-            rect.dispatchEvent(selectStartEvent);
             state.moving = true;
         } else if (state.mouseDown && state.moving) {
-            document.querySelectorAll(targetSelectors).forEach(ele => {
+            document.querySelectorAll(target).forEach(ele => {
                 const alreadySelected = selectedElements.indexOf(ele) !== -1;
                 const eleRect = ele.getBoundingClientRect();
                 const isOverlapped = checkForOverlap(eleRect);
 
                 if (isOverlapped && !alreadySelected) {
                     selectedElements.push(ele);
-                    rect.dispatchEvent(
-                        new CustomEvent('_selected', {
-                            detail: { addedElement: ele }
-                        })
-                    );
-                } else if (!isOverlapped && alreadySelected) {
+                    match(selectedElements)
+                } else if (!isOverlapped && alreadySelected && !e.shiftKey) {
                     selectedElements = selectedElements.filter(v => v !== ele);
-                    rect.dispatchEvent(
-                        new CustomEvent('_removed', {
-                            detail: { removedElement: ele }
-                        })
-                    );
+                    match(selectedElements)
                 }
             });
         }
@@ -107,18 +77,16 @@ export default function Selection(container: HTMLElement | null, {
     function onMouseUp() {
         if (!rect.hidden) rect.hidden = true;
         if (state.moving) {
-            rect.dispatchEvent(
-                new CustomEvent('_selectend', {
-                    detail: { selectedElements }
-                })
-            );
+            match(selectedElements)
         }
         cleanUp();
     };
 
-    container.addEventListener('mousedown', onMouseDown);
-    container.addEventListener('mousemove', onMouseMove);
-    container.addEventListener('mouseup', onMouseUp);
+    if (!disabled) {
+        container.addEventListener('mousedown', onMouseDown);
+        container.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+    }
 
     function reCalc() {
         const dim = getDimensions();
@@ -145,8 +113,6 @@ export default function Selection(container: HTMLElement | null, {
             left: boundingRect.left + window.scrollX
         };
         const r = getDimensions();
-        // We are checking if the boundingRect position is
-        // within the current selection rectangle AND vice-versa.
         if (
             ((r.xleft >= iRect.left && r.xleft <= iRect.right) ||
                 (r.xright >= iRect.left && r.xright <= iRect.right) ||
@@ -164,7 +130,6 @@ export default function Selection(container: HTMLElement | null, {
     function cleanUp() {
         state.mouseDown = false;
         state.moving = false;
-        selectedElements = [];
         ctx.x1 = 0;
         ctx.y1 = 0;
         ctx.x2 = 0;
@@ -176,7 +141,7 @@ export default function Selection(container: HTMLElement | null, {
     function disable() {
         container?.removeEventListener('mousedown', onMouseDown);
         container?.removeEventListener('mousemove', onMouseMove);
-        container?.removeEventListener('mouseup', onMouseUp);
+        window?.removeEventListener('mouseup', onMouseUp);
     }
 
     function enable() {
@@ -184,23 +149,19 @@ export default function Selection(container: HTMLElement | null, {
             throw new Error('The container element must be defined before enabling listeners!');
         container?.addEventListener('mousedown', onMouseDown);
         container?.addEventListener('mousemove', onMouseMove);
-        container?.addEventListener('mouseup', onMouseUp);
+        window?.addEventListener('mouseup', onMouseUp);
+    }
+
+    function update({ disabled }: { disabled: boolean }) {
+        disabled ? disable() : enable()
+    }
+    function destroy() {
+        disable()
+        cleanUp()
     }
 
     return {
-        /** The selection rectangle that is mounted and unmounted from the DOM. */
-        rect,
-        /**
-         * Reset all elements/state, and unmount the selection div.
-         */
-        cleanUp,
-        /** 
-        * Disable the container event listeners.
-        */
-        disable,
-        /** 
-         * Re-add the container event listeners. Make sure to remove them first.
-         */
-        enable
+        update,
+        destroy
     };
 }

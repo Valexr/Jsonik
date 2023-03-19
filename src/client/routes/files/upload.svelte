@@ -15,6 +15,7 @@
     function addFiles(e: InputEvent) {
         fileList = e.currentTarget.files;
         $fragment = "upload-files";
+        e.currentTarget.value = "";
     }
 
     async function uploadFiles(e: SubmitEvent) {
@@ -26,7 +27,7 @@
     }
 
     function clearFiles() {
-        fileList = "" as unknown as FileList;
+        fileList = null;
     }
 
     function drop(node: HTMLLabelElement) {
@@ -53,8 +54,8 @@
                 name="files"
                 multiple
                 {accept}
-                class:box={$files?.length}
                 on:change={addFiles}
+                class:box={$files?.length}
             />
         </label>
     </fieldset>

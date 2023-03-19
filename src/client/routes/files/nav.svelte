@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
-    import { fragment, path, goto, redirect } from "svelte-pathfinder";
+    import { fragment, path, goto } from "svelte-pathfinder";
     import { folders, files } from "$client/stores/files.js";
     import Await from "$client/components/Await.svelte";
-    import Form from "$client/components/Form.svelte";
-    import Dialog from "$client/components/Dialog.svelte";
+    import Input from "./input.svelte";
+    import Folder from "./folder.svelte";
 </script>
 
 <script lang="ts">
@@ -14,46 +14,45 @@
         goto(`/files/${folder}`);
     }
 
-    async function deleteFolder(folder: string) {
-        await folders.delete(folder);
-        redirect("/files");
-    }
+    function drop(node: HTMLElement, path: string) {
+        const update = (path: string) => {
+            const selectors = 'a[href^="/files"]:not([aria-disabled="true"])';
+            const anchors: NodeListOf<HTMLElement> =
+                node.querySelectorAll(selectors);
 
-    function drop(node: HTMLElement) {
-        node.ondragover = (e: DragEvent) => {
-            e.preventDefault();
-            node.setAttribute("aria-disabled", "true");
-        };
-        node.ondragleave = (e: DragEvent) =>
-            node.removeAttribute("aria-disabled");
-        node.ondrop = async (e: DragEvent) => {
-            const { dataTransfer, currentTarget } = e;
-            const { id: to } = currentTarget as HTMLElement;
-            const fileList = dataTransfer?.getData("files").split(",") || [];
-            const from = `${$path[1] || ""}`;
-            const promises = fileList.map((file) => {
-                return files.move(from, file, to);
+            Array.from(anchors).forEach((a) => {
+                const disabled = (val: boolean) =>
+                    a.setAttribute("aria-disabled", String(val));
+                a.ondragover = (e: DragEvent) => {
+                    e.preventDefault();
+                    disabled(true);
+                };
+                a.ondragleave = (e: DragEvent) => disabled(false);
+                a.ondrop = async (e: DragEvent) => {
+                    const { dataTransfer, currentTarget } = e;
+                    const { id: to } = currentTarget as HTMLElement;
+                    const fileList =
+                        dataTransfer?.getData("files").split(",") || [];
+                    const from = `${path || ""}`;
+                    const promises = fileList.map((file) => {
+                        return files.move(from, file, to);
+                    });
+                    await Promise.all(promises);
+                    disabled(false);
+                };
             });
-            await Promise.all(promises);
-            node.removeAttribute("aria-disabled");
         };
-    }
-    function close(node: HTMLInputElement) {
-        node.onblur = () => fragment.set("");
-        node.onkeydown = (e) => {
-            if (e.key === "Escape") {
-                e.preventDefault();
-                fragment.set("");
-            }
+        update(path);
+        return {
+            update,
         };
     }
 
     function scroll(node: HTMLElement, path: string) {
         const update = (path: string) => {
-            const anchors = node.querySelectorAll('a[href^="/files"]');
-            const active = Array.from(anchors).find((a) => a.id.includes(path));
-            console.log(document.querySelectorAll(":host"));
-            active?.scrollIntoView({ behavior: "auto", inline: "end" });
+            const selectors = 'a[href^="/files"][aria-disabled="true"]';
+            const anchor = node.querySelector(selectors);
+            anchor?.scrollIntoView({ behavior: "auto", inline: "end" });
         };
         update(path);
         return {
@@ -66,8 +65,14 @@
     <nav
         class="text-center cols nowrap col-fit justify-start scroll-x"
         use:scroll={$path[1]}
+        use:drop={$path[1]}
     >
-        <a href="#add-folder" role="button" class="box outline pos-sticky">
+        <a
+            href="#add-folder"
+            role="button"
+            class="box outline pos-sticky"
+            draggable="false"
+        >
             <i class="icon icon-svg icon-125x icon-folder-plus" />
         </a>
         <a
@@ -75,65 +80,20 @@
             tabindex="0"
             role="button"
             aria-disabled={!$path[1]}
-            use:drop>/</a
+            draggable="false">/</a
         >
         {#if $fragment === "add-folder"}
-            <Form on:submit={addFolder}>
-                <fieldset>
-                    <label>
-                        <!-- svelte-ignore a11y-autofocus -->
-                        <input
-                            name="folder"
-                            autofocus={true}
-                            placeholder="foldername"
-                            pattern="^[\w,-]+"
-                            use:close
-                        />
-                    </label>
-                </fieldset>
-            </Form>
+            <Input on:submit={addFolder} />
         {/if}
         {#each $folders as folder}
-            <a
-                id={folder}
-                tabindex="0"
-                href="/files/{folder}"
-                role="button"
-                class:chip={$path[1] === folder}
-                aria-disabled={$path[1] === folder}
-                use:drop
-            >
-                <span contenteditable={$path[1] === folder}>{folder}</span>
-                {#if $path[1] === folder}
-                    <button
-                        class="box link text-error"
-                        on:click={() => deleteFolder(folder)}
-                    >
-                        <i class="icon icon-svg icon-trash" />
-                    </button>
-                {/if}
-            </a>
+            <Folder {folder} />
         {/each}
     </nav>
 </Await>
 
-<!-- <Dialog open={$fragment === `add-folder`} on:submit={addFolder}>
-    <h2 slot="header">Add folder</h2>
-    <fieldset>
-        <label>
-            <input placeholder="Folder name" name="folder" />
-        </label>
-    </fieldset>
-</Dialog> -->
 <style>
     nav {
         margin: var(--gap-lg) 0;
-    }
-    nav .chip {
-        padding-right: 0;
-    }
-    label {
-        margin: 0;
     }
     [role="button"][href="#add-folder"] {
         left: 0;

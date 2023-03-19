@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { del, get, post, put } from "$client/api/methods.js";
+import { del, get, patch, post, put } from "$client/api/methods.js";
 
 export type Files = { files: string[], folders: string[], folder: string }
 
@@ -39,6 +39,10 @@ function createFolders() {
         async add(folder = '') {
             folder = await post(`/files/${folder}/`);
             update(state => state.concat(folder))
+        },
+        async rename(folder = '', name = '') {
+            await patch(`/files/${folder}/${name}`);
+            update(state => state.map(f => (f === folder ? name : f)))
         },
         async delete(folder = '') {
             await del(`/files/${folder}/`);

@@ -1,7 +1,8 @@
 <script lang="ts" context="module">
-    import { path, redirect, query } from "svelte-pathfinder";
+    import { path, redirect, query, fragment } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
-    import Selection from "$client/utils/selection.js";
+    import { selectable } from "$client/utils/actions.js";
+    import selection from "$client/utils/selection.js";
     import Await from "$client/components/Await.svelte";
     import File from "./file.svelte";
     import Upload from "./upload.svelte";
@@ -18,7 +19,10 @@
             return files.delete(`${$path[1] || ""}`, file);
         });
         await Promise.all(promises);
-        selected.length = 0;
+        selected = [];
+    }
+    function match(els: Element[]) {
+        selected = Array.from(els, ({ id }) => id);
     }
 </script>
 
@@ -38,7 +42,13 @@
     </Toast>
 {/if}
 
-<section>
+<section
+    use:selection={{
+        target: "li[role=button]",
+        disabled: $fragment,
+        match,
+    }}
+>
     <Await
         promise={files.get($path[1])}
         on:error={() => redirect("/files")}
@@ -51,14 +61,14 @@
             </li>
             {#each $files?.sort((a, b) => a.localeCompare(b)) as file (file)}
                 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
-                <li role="button" class="box">
+                <li role="button" class="box" id={file}>
                     <File {file}>
                         <input
                             type="checkbox"
                             value={file}
                             bind:group={selected}
                         />&nbsp
-                        <small class="text-ellepsis text-color">
+                        <small class="text-ellepsis">
                             {file}
                         </small>
                     </File>

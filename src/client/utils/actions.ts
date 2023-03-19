@@ -139,47 +139,65 @@ function selectable(node: HTMLElement) {
         y2 = 0;
 
     const div = document.createElement("div");
-    const items = node.childNodes;
-    items.forEach((child) => {
-        child.onpointerover = () => (child.style.borderColor = "red");
-        child.onpointerleave = () => (child.style.borderColor = "");
-    });
-    div.style.border = "1px solid red";
-    div.style.position = "absolute";
-    div.style.zIndex = "1";
-    node.insertAdjacentElement("beforebegin", div);
+    // const items = node.childNodes;
+    // items.forEach((child) => {
+    //     child.onpointerover = () => (child.style.borderColor = "red");
+    //     child.onpointerleave = () => (child.style.borderColor = "");
+    // });
+    div.style.cssText = `
+    border: 1px solid red;
+    background: rgba(255, 0, 0, 0.25);
+    position: absolute;
+    z-index: 1;
+    `
     function reCalc() {
-        //This will restyle the div
-        var x3 = Math.min(x1, x2); //Smaller X
-        var x4 = Math.max(x1, x2); //Larger X
-        var y3 = Math.min(y1, y2); //Smaller Y
-        var y4 = Math.max(y1, y2); //Larger Y
+        const x3 = Math.min(x1, x2);
+        const x4 = Math.max(x1, x2);
+        const y3 = Math.min(y1, y2);
+        const y4 = Math.max(y1, y2);
         div.style.left = x3 + "px";
         div.style.top = y3 + "px";
         div.style.width = x4 - x3 + "px";
         div.style.height = y4 - y3 + "px";
     }
-    node.onpointerdown = function (e) {
-        div.hidden = false; //Unhide the node
-        x1 = e.clientX; //Set the initial X
-        y1 = e.clientY; //Set the initial Y
-        node.onpointermove = move;
-    };
-    function move(e: PointerEvent) {
+    node.onpointerdown = (e) => {
         e.preventDefault();
         e.stopImmediatePropagation();
-        x2 = e.clientX;
-        y2 = e.clientY;
+        x1 = e.pageX;
+        y1 = e.pageY
+        reCalc()
+        node.onpointermove = move;
+        div.hidden = false;
+        node.append(div);
+
+    };
+    let selected: EventTarget[] = []
+    function move(e: PointerEvent) {
+        const { target, currentTarget } = e
+        const matched = e.composedPath().find(t => t.id)
+        if (matched) {
+            if (selected.includes(matched)) {
+                selected = selected.filter(s => s !== matched)
+            } else selected.push(matched)
+        }
+        console.log(selected, { target, currentTarget })
+        e.preventDefault();
+        e.stopPropagation();
+        x2 = e.pageX;
+        y2 = e.pageY;
         reCalc();
     }
-    node.onpointerup = function (e) {
+    window.onpointerup = (e) => {
+        e.preventDefault();
         div.style.left = "";
         div.style.top = "";
         div.style.width = "";
         div.style.height = "";
         div.hidden = true;
-        node.onmousemove = null;
+        node.onpointermove = null;
+        div.remove()
     };
+    node.onpointerleave = (e) => e.preventDefault()
 }
 
-export { clickout, validation, sticked, clickOutside, expand, focusTrap, keyEscape }
+export { clickout, validation, sticked, clickOutside, expand, focusTrap, keyEscape, selectable }

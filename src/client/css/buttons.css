@@ -83,7 +83,7 @@ summary.block {
     background-color: var(--active);
 }
 
-:is(button, [role=button], [type="file"]::file-selector-button):is(:disabled, [aria-disabled=true], [aria-busy=true]) {
+:is(button, [role=button], [type="file"]::file-selector-button):is(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
     background-color: var(--active);
     border-color: currentColor;
     color: var(--gray);

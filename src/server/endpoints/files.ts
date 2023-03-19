@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from "fs";
-import { readdir, rm } from "fs/promises";
+import { readdir, rm, rename } from "fs/promises";
 import { checkdir } from "$server/lib/utils.js";
 import type { App } from "$server/derver/types.js";
 
@@ -41,20 +41,33 @@ export function files(app: App) {
         }
     });
 
+    app.patch('/:folder?/:name?', async (req, res) => {
+        const { folder, name } = req.params
+        try {
+            await rename(`files/${folder}`, `files/${name}`)
+            res.send(name)
+        } catch (e: any & Error) {
+            res.error(404, e.message)
+        }
+    })
+
     app.put('/:from?/:to?', async (req, res) => {
         const { from, to } = req.params
         const file = req.query.file
+        try {
+            const source = createReadStream(`files/${from}/${file}`);
+            const dest = createWriteStream(`files/${to}/${file}`);
 
-        const source = createReadStream(`files/${from}/${file}`);
-        const dest = createWriteStream(`files/${to}/${file}`);
-
-        console.log(from, to, file)
-        source.pipe(dest);
-        source.on('end', async () => {
-            await rm(`files/${from}/${file}`)
-            res.send(file)
-        });
-        source.on('error', (e) => res.error(422, e.message));
+            source.pipe(dest);
+            source.on('end', async () => {
+                await rm(`files/${from}/${file}`)
+                res.send(file)
+            });
+            source.on('error', (e) => res.error(422, e.message));
+            dest.on('error', (e) => res.error(422, e.message));
+        } catch (e: any & Error) {
+            res.error(404, e.message)
+        }
     });
 
     app.delete(pattern, async (req, res, next) => {

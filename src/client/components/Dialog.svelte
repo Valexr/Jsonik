@@ -90,6 +90,7 @@
                                 type="submit"
                                 class="success"
                                 disabled={!valid}
+                                autofocus={valid}
                             >
                                 Confirm
                             </button>
