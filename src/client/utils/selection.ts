@@ -1,27 +1,31 @@
-export default function selection(container: HTMLElement | null, {
+export default function selection(container: HTMLElement, {
     target,
     disabled,
-    match
+    match,
+    style
 }: {
     target: string;
     disabled?: boolean | string;
     match: (el: Element[]) => void
+    style: CSSStyleDeclaration["cssText"]
 }) {
-    if (!container) throw new Error('The container element must be defined!');
 
     const rect = document.createElement('div') as HTMLDivElement;
-    rect.style.cssText = `
-    background: var(--color);
+
+    rect.style.cssText = style || `
+    background: #fff;
     opacity: 0.25;
     position: absolute;
   `;
     rect.hidden = true;
+
     const ctx = {
         x1: 0,
         y1: 0,
         x2: 0,
         y2: 0
     };
+
     const state = {
         mouseDown: false,
         moving: false,
@@ -33,12 +37,12 @@ export default function selection(container: HTMLElement | null, {
 
     function onMouseDown(e: MouseEvent) {
         if (state.disabled) return;
+        if (!e.shiftKey) selectedElements = [];
         state.mouseDown = true;
         ctx.x1 = e.pageX;
         ctx.x2 = e.pageX;
         ctx.y1 = e.pageY;
         ctx.y2 = e.pageY;
-        if (!e.shiftKey) selectedElements = [];
         reCalc();
     };
 
@@ -48,7 +52,6 @@ export default function selection(container: HTMLElement | null, {
             rect.hidden = false;
         }
         if (!state.mounted) {
-            if (!container) throw new Error('The container element must be defined before mounting the selection rectanble!');
             container.append(rect);
         }
         ctx.x2 = e.pageX;
@@ -76,9 +79,7 @@ export default function selection(container: HTMLElement | null, {
 
     function onMouseUp() {
         if (!rect.hidden) rect.hidden = true;
-        if (state.moving) {
-            match(selectedElements)
-        }
+        if (state.moving) match(selectedElements)
         cleanUp();
     };
 
@@ -145,8 +146,6 @@ export default function selection(container: HTMLElement | null, {
     }
 
     function enable() {
-        if (!container)
-            throw new Error('The container element must be defined before enabling listeners!');
         container?.addEventListener('mousedown', onMouseDown);
         container?.addEventListener('mousemove', onMouseMove);
         window?.addEventListener('mouseup', onMouseUp);
