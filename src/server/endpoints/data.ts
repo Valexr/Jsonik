@@ -1,4 +1,4 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir } from 'fs/promises';
 import DB from '$server/lib/db.js';
 import type { App, Next, Req, Res } from '$server/derver/types.js';
 import type { Base } from '$types/server.js';

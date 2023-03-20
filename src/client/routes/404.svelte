@@ -40,6 +40,7 @@
         <p class="cols column">
             <details role="list">
                 <summary aria-haspopup="listbox">Dropdown</summary>
+                <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
                 <ul role="listbox">
                     <li><a href="/">Home</a></li>
                     <li><a href="/logs">Logs</a></li>

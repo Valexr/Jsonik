@@ -21,7 +21,7 @@ export function startHTTPServer(options: Options) {
     })
 
     server.on('listening', () => {
-        console.log(`Serve on http://${options.host}:${options.port}`)
+        console.log(`Started on http://${options.host}:${options.port}`)
     })
 
     server.on('error', (e) => {

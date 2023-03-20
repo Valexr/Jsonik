@@ -19,7 +19,6 @@ export default function nodemon(path) {
     process.on('exit', kill);
 
     watch(path, (e) => {
-        console.log(e);
         if (e === 'change') {
             kill();
             start();

@@ -5,7 +5,7 @@
 </script>
 
 <footer class="pos-sticky container">
-    <!-- <Details top summary="" /> -->
+    <Details top summary="" />
     {#if $path[0]}
         <Search />
     {:else}

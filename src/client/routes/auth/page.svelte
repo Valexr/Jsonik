@@ -38,9 +38,6 @@
 </section>
 
 <style>
-    /* :global(main) {
-        --viewport: 20em;
-    } */
     .cols {
         --cols-gap: var(--gap-sm);
     }

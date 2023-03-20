@@ -17,7 +17,7 @@ aside.open::after {
 }
 
 aside :is(header, footer) {
-    padding: var(--padding-lg);
+    padding: var(--padding);
 }
 
 aside header {
