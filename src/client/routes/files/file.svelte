@@ -24,6 +24,10 @@
     function onclose() {
         editable = false;
     }
+
+    function close() {
+        fragment.set("");
+    }
 </script>
 
 <!-- svelte-ignore a11y-missing-content -->
@@ -63,6 +67,9 @@
         <button id="delete" class="box text-error" on:click={deleteFile}>
             <i class="icon icon-svg icon-trash" />
         </button>
+        <!-- <button id="delete" class="box" on:click={close}>
+            <i class="icon icon-svg icon-x" />
+        </button> -->
     </nav>
 </Dialog>
 
@@ -72,6 +79,10 @@
         width: 100%;
         background-size: cover;
     }
+    /* .cols span {
+        text-align: left;
+        flex: auto;
+    } */
     label.text-ellepsis {
         display: flex;
         align-items: center;

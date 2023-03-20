@@ -39,7 +39,7 @@
         "@slidy/media": "^1.2.8",
         "@tsconfig/svelte": "^3.0.0",
         "@types/cookie": "^0.5.1",
-        "@types/eslint": "^8.21.2",
+        "@types/eslint": "^8.21.3",
         "@types/jsonwebtoken": "^9.0.1",
         "@types/node": "^18.15.3",
         "@typescript-eslint/eslint-plugin": "^5.55.0",

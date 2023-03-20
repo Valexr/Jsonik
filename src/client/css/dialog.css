@@ -88,9 +88,19 @@ dialog form {
     align-items: start;
 }
 
+dialog form header.img {
+    height: 0;
+    padding: 0;
+}
+
 dialog form article.img {
     padding: 0;
     border-radius: 0;
+}
+
+dialog form article.img #close {
+    position: fixed;
+    right: 0;
 }
 
 dialog form article.img img {
@@ -115,6 +125,7 @@ dialog form header {
 dialog form footer {
     text-align: end;
     bottom: 0;
+    top: auto;
 }
 
 dialog form[method=dialog] footer nav.cols form {

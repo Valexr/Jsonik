@@ -85,6 +85,9 @@
     fieldset {
         min-inline-size: fit-content;
     }
+    fieldset label {
+        margin: 0;
+    }
     [role="button"] {
         mask-size: 50%;
     }
