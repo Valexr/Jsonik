@@ -81,7 +81,7 @@
             aria-disabled={!$path[1]}
             draggable="false">/</a
         >
-        {#if $fragment === "add-folder"}
+        {#if $fragment === "#add-folder"}
             <Input on:submit={addFolder} required />
         {/if}
         {#each $folders as folder}

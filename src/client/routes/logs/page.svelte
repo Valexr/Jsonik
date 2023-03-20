@@ -11,7 +11,7 @@
     let fragmentDate: number;
 
     function getRecord(date: number) {
-        $fragment = `log-${date}`;
+        fragment.set(`#log-${date}`);
         fragmentDate = date;
     }
 </script>
@@ -50,7 +50,7 @@
     </section>
 </Await>
 
-<Aside open={$fragment === `log-${fragmentDate}`} right>
+<Aside open={$fragment === `#log-${fragmentDate}`} right>
     <h2 slot="header">Record {fragmentDate}</h2>
     <Await promise={get(`/data/logs/items?date=${fragmentDate}`)} let:result>
         <Code code={JSON.stringify(result, null, 2)} />

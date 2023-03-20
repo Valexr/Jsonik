@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-    console.log($path);
+    // console.log($path);
 </script>
 
 <menu>

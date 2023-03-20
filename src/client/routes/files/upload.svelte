@@ -14,8 +14,8 @@
 
     function addFiles(e: InputEvent) {
         fileList = e.currentTarget.files;
-        $fragment = "upload-files";
-        e.currentTarget.value = "";
+        $fragment = "#upload-files";
+        setTimeout(() => (e.currentTarget.value = ""));
     }
 
     async function uploadFiles(e: SubmitEvent) {
@@ -62,7 +62,7 @@
 </Form>
 
 <Dialog
-    open={$fragment === "upload-files" && Number(fileList?.length) > 0}
+    open={$fragment === "#upload-files" && Number(fileList?.length) > 0}
     on:submit={uploadFiles}
     on:reset={clearFiles}
 >

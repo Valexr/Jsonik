@@ -42,7 +42,7 @@
     </slot>
 </label>
 
-<Dialog open={$fragment === `file-${file}`} from="center" img>
+<Dialog open={$fragment === `#file-${file}`} from="center" size="lg" img>
     <figure>
         <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
     </figure>
@@ -78,6 +78,9 @@
         flex: auto;
         width: 100%;
         background-size: cover;
+    }
+    nav.cols {
+        --cols-gap: 0;
     }
     .cols span {
         flex: auto;

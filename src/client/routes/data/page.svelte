@@ -24,10 +24,10 @@
 
     state.set({ some: "foo" });
     function getItem(item: Object & { date: number }) {
-        $fragment = `data-${item.date}`;
+        fragment.set(`#data-${item.date}`);
         active = item;
     }
-    const route = paramable("/data/:file?");
+    const route = paramable<{ file: string }>("/data/:file?");
 </script>
 
 <section class="cols col-fit scroll-x">
@@ -52,7 +52,7 @@
     </Await>
 </section>
 
-<Aside open={$fragment === `data-${active?.date}`} right>
+<Aside open={$fragment === `#data-${active?.date}`} right>
     <h2 slot="header">Record {active?.date}</h2>
     <Code code={JSON.stringify(active, null, 2)} />
 </Aside>

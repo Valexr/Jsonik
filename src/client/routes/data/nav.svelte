@@ -22,7 +22,7 @@
     </nav>
 </Await>
 
-<Dialog open={$fragment === `add-data`}>
+<Dialog open={$fragment === `#add-data`}>
     <h2 slot="header">Add data {Date.now()}</h2>
     <!-- <Await promise={get(`/data/logs/items?date=${fragmentDate}`)} let:result> -->
     <!-- <Code code={JSON.stringify(active, null, 2)} /> -->

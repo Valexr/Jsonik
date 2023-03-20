@@ -17,7 +17,7 @@
     const X = left ? -1 : right ? 1 : 0;
     const Y = top ? -1 : bottom ? 1 : 0;
 
-    const close = () => ($fragment = "");
+    const close = () => fragment.set("");
 </script>
 
 {#if open}
@@ -39,7 +39,7 @@
         <header>
             <slot name="header" />
             <button id="close" class="action" on:click={close}>
-                <i class="icon icon-svg icon-x icon-1x" />
+                <i class="icon icon-svg icon-x" />
             </button>
         </header>
         <article>

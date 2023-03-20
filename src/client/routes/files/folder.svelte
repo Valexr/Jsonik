@@ -20,11 +20,11 @@
     }
 
     function edit() {
-        fragment.set(`rename-${$path[1]}`);
+        fragment.set(`#rename-${$path[1]}`);
     }
 </script>
 
-{#if $fragment === `rename-${folder}`}
+{#if $fragment === `#rename-${folder}`}
     <Input on:submit={renameFolder} value={folder} />
 {:else}
     <a
