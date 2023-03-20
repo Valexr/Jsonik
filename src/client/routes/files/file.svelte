@@ -43,7 +43,6 @@
         <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
     </figure>
     <nav slot="footer" class="cols col-fit nowrap scroll-x">
-        <!-- <h3 class="scroll-x"> -->
         <button
             id="rename"
             class="box"
@@ -61,10 +60,6 @@
         {:else}
             <span>{file}</span>
         {/if}
-        <!-- </h3> -->
-        <!-- <button id="delete" class="" on:click={editFile}>
-            <i class="icon icon-svg icon-edit" /> Rename
-        </button> -->
         <button id="delete" class="box text-error" on:click={deleteFile}>
             <i class="icon icon-svg icon-trash" />
         </button>
@@ -72,9 +67,6 @@
 </Dialog>
 
 <style>
-    h3 {
-        margin: 0;
-    }
     a {
         flex: auto;
         width: 100%;
