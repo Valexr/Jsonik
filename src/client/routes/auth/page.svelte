@@ -4,6 +4,7 @@
 </script>
 
 <script lang="ts">
+    let valid = false;
     function login() {
         redirect("/data");
     }
@@ -11,19 +12,27 @@
 
 <section>
     <article class="back-active">
-        <Form on:submit={login}>
+        <Form on:submit={login} bind:valid>
+            <h3>Auth</h3>
             <fieldset>
                 <label>
-                    <input placeholder="email" />
+                    <input type="email" placeholder="email" required />
                 </label>
                 <label>
-                    <input type="password" placeholder="password" />
+                    <input
+                        type="password"
+                        placeholder="password"
+                        minlength="8"
+                        required
+                    />
                 </label>
             </fieldset>
-            <fieldset class="cols">
-                <button type="reset">Cancel</button>
-                <button type="submit" class="success">Login</button>
-            </fieldset>
+            <nav class="cols">
+                <!-- <button type="reset">Signin</button> -->
+                <button type="submit" class="success" disabled={!valid}>
+                    Login
+                </button>
+            </nav>
         </Form>
     </article>
 </section>
@@ -34,5 +43,6 @@
     } */
     .cols {
         --cols-gap: var(--gap-sm);
+        padding: var(--gap-lg) 0;
     }
 </style>

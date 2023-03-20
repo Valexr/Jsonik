@@ -82,7 +82,7 @@
             draggable="false">/</a
         >
         {#if $fragment === "add-folder"}
-            <Input on:submit={addFolder} />
+            <Input on:submit={addFolder} required />
         {/if}
         {#each $folders as folder}
             <Folder {folder} />
