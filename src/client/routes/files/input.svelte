@@ -44,7 +44,7 @@
 </Form>
 
 <style>
-    label {
+    fieldset label {
         margin: 0;
     }
 </style>

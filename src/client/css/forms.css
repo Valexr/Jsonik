@@ -2,6 +2,10 @@ form {
     /* flex: auto !important; */
 }
 
+form nav {
+    margin: var(--gap-sm) 0 var(--gap)
+}
+
 fieldset {
     padding: 0;
     border: 0;
@@ -14,8 +18,8 @@ legend {
     color: var(--gray);
 }
 
-label {
-    margin: var(--gap) 0;
+label:not([data-note]) {
+    margin-bottom: var(--gap-lg);
     display: block;
 }
 

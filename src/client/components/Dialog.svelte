@@ -17,6 +17,7 @@
     export let open = false;
     export let valid = false;
     export let info = false;
+    export let img = false;
     export let size: DialogSize = "";
     export let from: DialogFrom = "";
 
@@ -78,7 +79,7 @@
                     <i class="icon icon-close" />
                 </button>
             </header>
-            <article class="scroll">
+            <article class="scroll" class:img>
                 <slot />
             </article>
             {#if !info}

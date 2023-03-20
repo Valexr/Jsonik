@@ -38,7 +38,7 @@
     </slot>
 </label>
 
-<Dialog open={$fragment === `file-${file}`} from="center" size="lg">
+<Dialog open={$fragment === `file-${file}`} from="center" size="lg" img>
     <figure>
         <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
     </figure>
@@ -72,7 +72,7 @@
         width: 100%;
         background-size: cover;
     }
-    label {
+    label.text-ellepsis {
         display: flex;
         align-items: center;
         justify-content: start;

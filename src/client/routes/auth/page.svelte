@@ -43,6 +43,5 @@
     } */
     .cols {
         --cols-gap: var(--gap-sm);
-        padding: var(--gap-lg) 0;
     }
 </style>

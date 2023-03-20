@@ -36,7 +36,7 @@
     [type="search"].collapsed:is(:focus, :focus-visible)::placeholder {
         color: var(--gray);
     }
-    label {
-        margin: 0;
+    form label {
+        margin-bottom: 0;
     }
 </style>

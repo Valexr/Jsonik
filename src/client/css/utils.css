@@ -137,11 +137,12 @@
 
 [data-note]::after {
     content: attr(data-note);
-    font-weight: 200;
+    font-weight: 300;
     font-size: small;
     display: block;
     color: var(--gray);
-    position: absolute;
+    /* position: absolute; */
+    padding: var(--gap-sm) 0 var(--gap);
     top: 100%;
     left: 0;
 }

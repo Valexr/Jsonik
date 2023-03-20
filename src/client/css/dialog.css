@@ -88,6 +88,15 @@ dialog form {
     align-items: start;
 }
 
+dialog form article.img {
+    padding: 0;
+    border-radius: 0;
+}
+
+dialog form article.img img {
+    border-radius: 0;
+}
+
 dialog form :is(header, footer) {
     background-color: var(--surface);
     padding: var(--padding);
