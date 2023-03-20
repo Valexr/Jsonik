@@ -31,16 +31,18 @@
 {#if $toast.length}
     <div class="toaster">
         {#each positions as pos}
-            <ul class="toast-list pos-{pos}">
-                {#each toasted(pos) as toastItem (toastItem.id)}
-                    <li
-                        in:fly={{ ...flying(toastItem.pos), opacity: 1 }}
-                        animate:flip={{ duration: 250 }}
-                    >
-                        <Toast {toastItem} />
-                    </li>
-                {/each}
-            </ul>
+            {#if toasted(pos).some((t) => t.pos === pos)}
+                <ul class="toast-list pos-{pos}">
+                    {#each toasted(pos) as toastItem (toastItem.id)}
+                        <li
+                            in:fly={{ ...flying(toastItem.pos), opacity: 1 }}
+                            animate:flip={{ duration: 250 }}
+                        >
+                            <Toast {toastItem} />
+                        </li>
+                    {/each}
+                </ul>
+            {/if}
         {/each}
     </div>
 {/if}
