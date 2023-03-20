@@ -108,6 +108,10 @@ dialog form footer {
     bottom: 0;
 }
 
+dialog form[method=dialog] footer nav.cols form {
+    flex: auto;
+}
+
 dialog form footer menu {
     --cols-gap: var(--gap-sm);
 }
@@ -131,7 +135,7 @@ dialog.md {
 }
 
 dialog.lg {
-    min-inline-size: 75%;
+    max-inline-size: 75%;
 }
 
 dialog.fs {
