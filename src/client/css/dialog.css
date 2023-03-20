@@ -10,6 +10,8 @@ dialog {
     animation-name: from-top;
     animation-duration: 450ms;
     will-change: transform;
+    display: flex;
+    overflow: hidden;
 }
 
 dialog.center {
@@ -83,9 +85,10 @@ dialog::backdrop {
 
 /* Template */
 dialog form {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    align-items: start;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    min-width: inherit;
 }
 
 dialog form header.img {
@@ -109,8 +112,7 @@ dialog form article.img img {
 
 dialog form :is(header, footer) {
     background-color: var(--surface);
-    padding: var(--padding);
-    position: sticky;
+    padding: var(--padding-sm);
 }
 
 dialog form :is(header, footer)>* {

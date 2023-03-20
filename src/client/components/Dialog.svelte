@@ -75,9 +75,11 @@
         <Form method="dialog" bind:valid on:submit on:reset on:change on:input>
             <header class="cols" class:img class:justify-end={!$$slots.header}>
                 <slot name="header" />
-                <button id="close" class="action" type="reset">
-                    <i class="icon icon-close" />
-                </button>
+                {#if !img}
+                    <button id="close" class="action" type="reset">
+                        <i class="icon icon-close" />
+                    </button>
+                {/if}
             </header>
             <article class="scroll" class:img>
                 <slot />

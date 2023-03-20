@@ -42,11 +42,11 @@
     </slot>
 </label>
 
-<Dialog open={$fragment === `file-${file}`} from="center" size="lg" img>
+<Dialog open={$fragment === `file-${file}`} from="center" img>
     <figure>
         <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
     </figure>
-    <nav slot="footer" class="cols col-fit nowrap scroll-x">
+    <nav slot="footer" class="cols col-fit nowrap">
         <button
             id="rename"
             class="box"
@@ -62,14 +62,14 @@
                 {onclose}
             />
         {:else}
-            <span>{file}</span>
+            <span class="scroll-x">{file}</span>
         {/if}
         <button id="delete" class="box text-error" on:click={deleteFile}>
             <i class="icon icon-svg icon-trash" />
         </button>
-        <!-- <button id="delete" class="box" on:click={close}>
+        <button id="delete" class="box" on:click={close}>
             <i class="icon icon-svg icon-x" />
-        </button> -->
+        </button>
     </nav>
 </Dialog>
 
@@ -79,10 +79,11 @@
         width: 100%;
         background-size: cover;
     }
-    /* .cols span {
-        text-align: left;
+    .cols span {
         flex: auto;
-    } */
+        text-align: left;
+        max-width: calc(100% - (var(--gap) * 8));
+    }
     label.text-ellepsis {
         display: flex;
         align-items: center;
@@ -90,15 +91,5 @@
         width: 100%;
         margin: 0 var(--gap-sm);
         max-width: calc(var(--col-width) - var(--gap-sm));
-    }
-    #rename,
-    #delete {
-        position: sticky;
-    }
-    #rename {
-        left: 0;
-    }
-    #delete {
-        right: 0;
     }
 </style>
