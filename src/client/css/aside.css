@@ -22,7 +22,7 @@ aside :is(header, footer) {
 
 aside header {
     position: relative;
-    /* background: var(--surface); */
+    background: var(--surface);
 }
 
 aside article {

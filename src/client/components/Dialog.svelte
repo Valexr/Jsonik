@@ -72,7 +72,7 @@
 {#if open}
     <dialog use:action={open} on:close class={`${size} ${from}`}>
         <Form method="dialog" bind:valid on:submit on:reset on:change on:input>
-            <header>
+            <header class="cols" class:justify-end={!$$slots.header}>
                 <slot name="header" />
                 <button id="close" class="action" type="reset">
                     <i class="icon icon-close" />
@@ -82,6 +82,7 @@
                 <slot />
             </article>
             {#if !info}
+                <!-- svelte-ignore a11y-autofocus -->
                 <footer>
                     <slot name="footer">
                         <menu class="cols col-fit justify-end">

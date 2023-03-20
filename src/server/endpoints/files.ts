@@ -41,10 +41,15 @@ export function files(app: App) {
         }
     });
 
-    app.patch('/:folder?/:name?', async (req, res) => {
-        const { folder, name } = req.params
+    app.patch(pattern, async (req, res) => {
+        const { folder, file } = req.params
+        const { name } = req.query
         try {
-            await rename(`files/${folder}`, `files/${name}`)
+            if (file) {
+                await rename(`files/${folder}/${file}`, `files/${folder}/${name}`)
+            } else {
+                await rename(`files/${folder}`, `files/${name}`)
+            }
             res.send(name)
         } catch (e: any & Error) {
             res.error(404, e.message)

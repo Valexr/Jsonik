@@ -19,6 +19,10 @@ function createFiles() {
             file = await put(`/files/${from}/${to}?file=${encodeURI(file)}`);
             update(state => state.filter(f => f !== file))
         },
+        async rename(folder = '', file: string, name = '') {
+            await patch(`/files/${folder}/${file}?name=${name}`);
+            update(state => state.map(f => (f === file ? name : f)))
+        },
         async delete(folder = '', file = '') {
             await del(`/files/${folder}/${file}`);
             update(state => state.filter(f => f !== file))
@@ -41,7 +45,7 @@ function createFolders() {
             update(state => state.concat(folder))
         },
         async rename(folder = '', name = '') {
-            await patch(`/files/${folder}/${name}`);
+            await patch(`/files/${folder}/?name=${name}`);
             update(state => state.map(f => (f === folder ? name : f)))
         },
         async delete(folder = '') {

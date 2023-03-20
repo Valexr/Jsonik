@@ -1,18 +1,28 @@
 <script lang="ts" context="module">
-    import { fragment, path } from "svelte-pathfinder";
+    import { fragment, path, redirect } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
     import Dialog from "$client/components/Dialog.svelte";
+    import Input from "./input.svelte";
 </script>
 
 <script lang="ts">
     export let file: string;
-    // export let selected: string[] = [];
 
-    async function editFile() {
-        // await files.delete(`${$path[1] || ""}`, file);
+    let editable = false;
+
+    async function renameFile(e: SubmitEvent) {
+        const data = new FormData(e.target as HTMLFormElement);
+        const name = data.get("value");
+        await files.rename(`${$path[1] || ""}`, file, String(name));
+        redirect(`/files/${$path[1] || ""}`);
     }
+
     async function deleteFile() {
         await files.delete(`${$path[1] || ""}`, file);
+    }
+
+    function onclose() {
+        editable = false;
     }
 </script>
 
@@ -27,36 +37,44 @@
         {file}
     </slot>
 </label>
-<!-- <span>
-    <small class="text-ellepsis text-color">
-        {file}&nbsp;
-    </small> -->
-<!-- <button id="delete" class="link box" on:click={editFile}>
-        <i class="icon icon-svg icon-edit" />
-    </button>
-    <button id="delete" class="link box text-error" on:click={deleteFile}>
-        <i class="icon icon-svg icon-trash" />
-    </button> -->
-<!-- </span> -->
 
 <Dialog open={$fragment === `file-${file}`} from="center" size="lg">
-    <h3 slot="header" class="scroll-x">
-        /api/v1/files/{`${$path[1] || ""}`}/{file}
-    </h3>
     <figure>
         <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
     </figure>
-    <nav slot="footer">
-        <button id="delete" class="" on:click={editFile}>
-            <i class="icon icon-svg icon-edit" /> Rename
+    <nav slot="footer" class="cols col-fit nowrap scroll-x">
+        <!-- <h3 class="scroll-x"> -->
+        <button
+            id="rename"
+            class="box"
+            on:click|preventDefault={() => (editable = true)}
+        >
+            <i class="icon icon-svg icon-edit" />
         </button>
-        <button id="delete" class="text-error" on:click={deleteFile}>
-            <i class="icon icon-svg icon-trash" /> Delete
+        {#if editable}
+            <Input
+                on:submit={renameFile}
+                value={file}
+                pattern="^[\w,\-,.,%]+"
+                {onclose}
+            />
+        {:else}
+            <span>{file}</span>
+        {/if}
+        <!-- </h3> -->
+        <!-- <button id="delete" class="" on:click={editFile}>
+            <i class="icon icon-svg icon-edit" /> Rename
+        </button> -->
+        <button id="delete" class="box text-error" on:click={deleteFile}>
+            <i class="icon icon-svg icon-trash" />
         </button>
     </nav>
 </Dialog>
 
 <style>
+    h3 {
+        margin: 0;
+    }
     a {
         flex: auto;
         width: 100%;
@@ -69,5 +87,15 @@
         width: 100%;
         margin: 0 var(--gap-sm);
         max-width: calc(var(--col-width) - var(--gap-sm));
+    }
+    #rename,
+    #delete {
+        position: sticky;
+    }
+    #rename {
+        left: 0;
+    }
+    #delete {
+        right: 0;
     }
 </style>

@@ -50,7 +50,7 @@
     }}
 >
     <Await
-        promise={files.get($path[1])}
+        promise={files.get(String($path[1] || ""))}
         on:error={() => redirect("/files")}
         notify
     >

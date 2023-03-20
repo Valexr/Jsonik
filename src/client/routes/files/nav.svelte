@@ -9,13 +9,13 @@
 <script lang="ts">
     async function addFolder(e: SubmitEvent) {
         const data = new FormData(e.target as HTMLFormElement);
-        const folder = data.get("folder");
+        const folder = data.get("value");
         await folders.add(String(folder));
         goto(`/files/${folder}`);
     }
 
-    function drop(node: HTMLElement, path: string) {
-        const update = (path: string) => {
+    function drop(node: HTMLElement, from: string) {
+        const update = (from: string) => {
             const selectors = 'a[href^="/files"]:not([aria-disabled="true"])';
             const anchors: NodeListOf<HTMLElement> =
                 node.querySelectorAll(selectors);
@@ -33,7 +33,6 @@
                     const { id: to } = currentTarget as HTMLElement;
                     const fileList =
                         dataTransfer?.getData("files").split(",") || [];
-                    const from = `${path || ""}`;
                     const promises = fileList.map((file) => {
                         return files.move(from, file, to);
                     });
@@ -42,7 +41,7 @@
                 };
             });
         };
-        update(path);
+        update(from);
         return {
             update,
         };
@@ -64,8 +63,8 @@
 <Await promise={folders.get()} notify>
     <nav
         class="text-center cols nowrap col-fit justify-start scroll-x"
-        use:scroll={$path[1]}
-        use:drop={$path[1]}
+        use:scroll={String($path[1] || "")}
+        use:drop={String($path[1] || "")}
     >
         <a
             href="#add-folder"
@@ -97,5 +96,6 @@
     }
     [role="button"][href="#add-folder"] {
         left: 0;
+        z-index: 1;
     }
 </style>

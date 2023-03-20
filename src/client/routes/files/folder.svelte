@@ -9,9 +9,9 @@
 
     async function renameFolder(e: SubmitEvent) {
         const data = new FormData(e.target as HTMLFormElement);
-        const folder = data.get("folder");
-        await folders.rename($path[1], String(folder));
-        redirect(`/files/${folder}`);
+        const name = data.get("value");
+        await folders.rename(String($path[1]), String(name));
+        redirect(`/files/${name}`);
     }
 
     async function deleteFolder(folder: string) {
@@ -25,7 +25,7 @@
 </script>
 
 {#if $fragment === `rename-${folder}`}
-    <Input on:submit={renameFolder} {folder} />
+    <Input on:submit={renameFolder} value={folder} />
 {:else}
     <a
         id={folder}

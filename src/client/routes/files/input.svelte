@@ -4,15 +4,23 @@
 </script>
 
 <script lang="ts">
-    export let folder = "";
+    export let value = "";
+    export let onclose: (() => void) | undefined = undefined;
 
-    function close(node: HTMLInputElement) {
-        node.onblur = () => fragment.set("");
-        node.onkeydown = (e) => {
-            if (e.key === "Escape") {
-                e.preventDefault();
-                fragment.set("");
-            }
+    function close(node: HTMLInputElement, onclose?: () => void) {
+        function update(onclose?: () => void) {
+            node.onblur = () => (onclose ? onclose() : fragment.set(""));
+            node.onkeydown = (e) => {
+                if (e.key === "Escape") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onclose ? onclose() : fragment.set("");
+                }
+            };
+        }
+        update(onclose);
+        return {
+            update,
         };
     }
 </script>
@@ -22,11 +30,12 @@
         <label>
             <!-- svelte-ignore a11y-autofocus -->
             <input
-                name="folder"
+                name="value"
                 autofocus={true}
-                value={folder}
-                pattern="^[\w,-]+"
-                use:close
+                {value}
+                pattern="^[\w,\-]+"
+                {...$$restProps}
+                use:close={onclose}
             />
         </label>
     </fieldset>
