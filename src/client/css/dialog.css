@@ -12,6 +12,7 @@ dialog {
     will-change: transform;
     display: flex;
     overflow: hidden;
+    box-shadow: none;
 }
 
 dialog.center {
