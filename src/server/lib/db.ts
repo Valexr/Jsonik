@@ -8,8 +8,9 @@ export default { connect };
 const dbs: { [file: string]: Low<any> } = {};
 
 export async function db(file: string) {
-    await checkdir('data')
-    dbs[file] ||= new Low(new JSONFile(`data/${file}.json`));
+    const [folder] = file.split('/')
+    await checkdir(folder)
+    dbs[file] ||= new Low(new JSONFile(file));
     return dbs[file];
 }
 

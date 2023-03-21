@@ -7,7 +7,7 @@ export default function selection(container: HTMLElement, {
     target: string;
     disabled?: boolean | string;
     match: (el: Element[]) => void
-    style: CSSStyleDeclaration["cssText"]
+    style?: CSSStyleDeclaration["cssText"]
 }) {
 
     const rect = document.createElement('div') as HTMLDivElement;

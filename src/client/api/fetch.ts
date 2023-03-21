@@ -30,6 +30,13 @@ export default async function (url: RequestInfo, { ...options }: RequestInit, bo
         if (res.status !== 200) throw new Error(await res.text());
         const text = res.headers.get('content-type') === 'text/plain'
         return text ? res.text() : res.json();
+        // const body = res
+        // try {
+        //     const json = await body.json()
+        //     return json
+        // } catch (e) {
+        //     return await body.text()
+        // }
     } catch (e) {
         console.log('fetchError: ', e);
         throw e;

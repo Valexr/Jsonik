@@ -8,12 +8,12 @@ let base: Base | undefined
 
 async function connect(req: Req, res: Res, next: Next) {
     if (!req.params.file && !req.params.table) {
-        await checkdir('data')
-        const files = await readdir('data')
+        await checkdir('logs')
+        const files = await readdir('logs')
         req.body = files.map(f => f.replace(/\..+$/, '')).filter(Boolean)
         // base = {} as Base
         // for (const file of files) {
-        //     const text = await readFile('data' + '/' + file, { encoding: 'utf-8' })
+        //     const text = await readFile('logs' + '/' + file, { encoding: 'utf-8' })
         //     console.dir(file)
         //     const key = file.replace('.json', '') as keyof typeof base
         //     base[key] = JSON.parse(text)
@@ -21,7 +21,7 @@ async function connect(req: Req, res: Res, next: Next) {
         next()
     } else {
         try {
-            base = await DB.connect(`data/${req.params.file}.json`, req.params.table);
+            base = await DB.connect(`logs/${req.params.file}.json`, req.params.table);
             Object.assign(base?.data, { keys: Object.keys(base?.data.items[0]) })
             next();
         } catch (err) {
@@ -31,7 +31,7 @@ async function connect(req: Req, res: Res, next: Next) {
     }
 }
 
-export function data(app: App) {
+export function logs(app: App) {
     const pattern = '/:file?/:table?'
 
     app.use(pattern, connect);

@@ -2,13 +2,12 @@
     import { path, redirect, query, fragment } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
     import { selectable } from "$client/utils/actions.js";
+    import { s } from "$client/utils/index.js";
     import selection from "$client/utils/selection.js";
     import Await from "$client/components/Await.svelte";
     import File from "./file.svelte";
     import Upload from "./upload.svelte";
     import Toast from "$client/components/Toaster/Toast.svelte";
-
-    const s = (arr: string[]) => (arr.length > 1 ? "s" : "");
 </script>
 
 <script lang="ts">
@@ -35,7 +34,7 @@
         on:dragend={(e) => (selected.length = 0)}
     >
         <i class="icon icon-svg icon-move" />
-        <span><b>{selected.length}</b> file{s(selected)} selected</span>
+        <span><b>{selected.length}</b> file{s(selected.length)} selected</span>
         <button class="box link text-error" on:click={deleteFiles}>
             <i class="icon icon-svg icon-trash" />
         </button>

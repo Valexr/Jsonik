@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { path, fragment } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
+    import { s } from "$client/utils/index.js";
     import Form from "$client/components/Form.svelte";
     import Dialog from "$client/components/Dialog.svelte";
     import type { InputEvent } from "$types/client.js";
@@ -67,14 +68,14 @@
     on:reset={clearFiles}
 >
     <h3 slot="header" class="scroll-x">
-        Upload {fileList?.length} files
+        Upload {fileList?.length} file{s(fileList?.length)}
     </h3>
     {#if fileList}
         <ol>
             {#each fileList as file}
                 <li>
                     {file.name}
-                    <b>{(file.size / 1000).toFixed(0)}</b> Kb
+                    <b>{(file.size / 1000).toFixed(0)}</b>Kb
                 </li>
             {/each}
         </ol>

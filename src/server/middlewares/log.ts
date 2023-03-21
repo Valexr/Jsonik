@@ -19,7 +19,7 @@ export async function log(req: Req, res: Res, next: Next) {
     //         date: res.sendDate
     //     }
     // });
-    const LOGS = await DB.connect('logs');
+    const LOGS = await DB.connect('logs/data.json');
     const date = Date.now()
     const { method, url, socket: { remoteAddress }, headers: { referer } } = req
     const { statusCode } = res

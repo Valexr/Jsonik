@@ -26,8 +26,8 @@ function decimal(value: number, digit = 4) {
     return parseFloat(value.toFixed(digit));
 }
 
-function s(count: number) {
-    return count > 1 ? "s" : "";
+function s(count?: number) {
+    return count && count > 1 ? "s" : "";
 }
 
 function listen(

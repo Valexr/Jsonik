@@ -1,6 +1,7 @@
 import { derver } from '$server/derver/index.js';
 import { data } from '$server/endpoints/data.js';
 import { files } from '$server/endpoints/files.js';
+import { logs } from '$server/endpoints/logs.js';
 import { log } from '$server/middlewares/log.js';
 // import { auth } from '$server/endpoints/auth';
 // import { cookies } from '$server/endpoints/auth/cookies';
@@ -29,5 +30,6 @@ app.sub('/api', (app: App) => {
         // app.use(token);
         app.sub('/data', data);
         app.sub('/files', files);
+        app.sub('/logs', logs);
     });
 });
