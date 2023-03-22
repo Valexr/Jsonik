@@ -97,5 +97,6 @@
     [role="button"][href="#add-folder"] {
         left: 0;
         z-index: 1;
+        background-color: var(--back);
     }
 </style>

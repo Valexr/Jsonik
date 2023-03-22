@@ -71,22 +71,22 @@
 </script>
 
 {#if open}
-    <dialog use:action={open} on:close class={`${size} ${from}`}>
+    <dialog use:action={open} on:close class={`${size} ${from}`} class:img>
         <Form method="dialog" bind:valid on:submit on:reset on:change on:input>
-            <header class="cols" class:img class:justify-end={!$$slots.header}>
+            <header class="cols" class:justify-end={!$$slots.header}>
                 <slot name="header" />
                 {#if !img}
                     <button id="close" class="action" type="reset">
-                        <i class="icon icon-close" />
+                        <i class="icon icon-svg icon-x" />
                     </button>
                 {/if}
             </header>
-            <article class="scroll" class:img>
+            <article class="scroll">
                 <slot />
             </article>
             {#if !info}
                 <!-- svelte-ignore a11y-autofocus -->
-                <footer class:img>
+                <footer>
                     <slot name="footer">
                         <menu class="cols col-fit justify-end">
                             <button type="reset" class="link">Cancel</button>

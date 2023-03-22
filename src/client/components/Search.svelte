@@ -11,9 +11,9 @@
     <fieldset>
         <label>
             <input
-                type="search"
                 name="q"
                 bind:value
+                type="search"
                 placeholder="search"
                 class:collapsed={collapsed && !value}
             />

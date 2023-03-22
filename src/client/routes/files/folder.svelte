@@ -32,7 +32,6 @@
         tabindex="0"
         href="/files/{folder}"
         role="button"
-        class:chip={$path[1] === folder}
         aria-disabled={$path[1] === folder}
         draggable="false"
     >
@@ -54,7 +53,7 @@
 {/if}
 
 <style>
-    [role="button"].chip {
+    [role="button"][aria-disabled="true"] {
         padding: 0;
     }
 </style>

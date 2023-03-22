@@ -30,7 +30,7 @@
             <nav class="cols">
                 <!-- <button type="reset">Signin</button> -->
                 <button type="submit" class="success" disabled={!valid}>
-                    Login
+                    <strong>Login</strong>
                 </button>
             </nav>
         </Form>
@@ -40,5 +40,6 @@
 <style>
     .cols {
         --cols-gap: var(--gap-sm);
+        padding: var(--gap-sm) 0 var(--gap);
     }
 </style>

@@ -70,20 +70,27 @@
     }
 }
 
-:is(.scroll-x, .scroll) {
+.scroll-x {
     max-width: 100%;
     overflow-x: auto;
     vertical-align: bottom;
-    scrollbar-width: none;
     white-space: nowrap;
 }
 
-:is(.scroll-x, .scroll)::-webkit-scrollbar {
-    display: none;
+.scroll-y {
+    overflow-y: auto;
 }
 
 .scroll {
     overflow: auto;
+}
+
+:is(.scroll-x, .scroll-y, .scroll) {
+    scrollbar-width: none;
+}
+
+:is(.scroll-x, .scroll-y, .scroll)::-webkit-scrollbar {
+    display: none;
 }
 
 .pos-sticky {

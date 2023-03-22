@@ -6,6 +6,7 @@
 <script lang="ts">
     export let value = "";
     export let required = false;
+    export let pattern = "^[\\w,\\-]+$";
     export let onclose: (() => void) | undefined = undefined;
 
     function close(node: HTMLInputElement, onclose?: () => void) {
@@ -35,8 +36,7 @@
                 autofocus={true}
                 {required}
                 {value}
-                pattern="^[\w,\-]+"
-                {...$$restProps}
+                {pattern}
                 use:close={onclose}
             />
         </label>

@@ -43,9 +43,11 @@
 </label>
 
 <Dialog open={$fragment === `#file-${file}`} from="center" size="lg" img>
-    <figure>
-        <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
-    </figure>
+    {#if [".svg", ".jpg", ".jpeg", ".png", ".gif"].some( (ext) => file.includes(ext) )}
+        <figure>
+            <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
+        </figure>
+    {/if}
     <nav slot="footer" class="cols col-fit nowrap">
         <button
             id="rename"
@@ -58,7 +60,7 @@
             <Input
                 on:submit={renameFile}
                 value={file}
-                pattern="^[\w,\-,.,%]+"
+                pattern="^[\\w,\\-,.,%]+"
                 {onclose}
             />
         {:else}

@@ -5,6 +5,8 @@ const base = '/api/v1';
 // const access = get(session).access
 
 export default async function (url: RequestInfo, { ...options }: RequestInit, body?: BodyInit) {
+    const isJson = options.headers?.['Content-Type' as keyof typeof options.headers] === 'application/json'
+    console.log(body, isJson)
     function req() {
         return fetch(base + url, {
             ...options,
@@ -13,7 +15,7 @@ export default async function (url: RequestInfo, { ...options }: RequestInit, bo
             // ...(access && { Authorization: `Baerer ${access}` }),
             // 'Content-Type': 'application/json',
             // },
-            ...(body && { body: body }),
+            body: body,
         });
     }
     try {
@@ -30,13 +32,6 @@ export default async function (url: RequestInfo, { ...options }: RequestInit, bo
         if (res.status !== 200) throw new Error(await res.text());
         const text = res.headers.get('content-type') === 'text/plain'
         return text ? res.text() : res.json();
-        // const body = res
-        // try {
-        //     const json = await body.json()
-        //     return json
-        // } catch (e) {
-        //     return await body.text()
-        // }
     } catch (e) {
         console.log('fetchError: ', e);
         throw e;

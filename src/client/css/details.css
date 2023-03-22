@@ -2,11 +2,12 @@ details {
     position: relative;
     line-height: initial;
     /* display: block; */
+    border-radius: var(--border-radius-sm);
     min-inline-size: fit-content;
 }
 
 details[open]:not([role=list]) {
-    max-inline-size: min-content;
+    /* max-inline-size: min-content; */
 }
 
 details summary {

@@ -18,6 +18,10 @@
     color: var(--color)
 }
 
+.back-back {
+    background-color: var(--back);
+}
+
 .back-surface {
     background-color: var(--surface);
 }

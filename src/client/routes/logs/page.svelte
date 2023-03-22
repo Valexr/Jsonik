@@ -52,7 +52,7 @@
 
 <Aside open={$fragment === `#log-${fragmentDate}`} right>
     <h2 slot="header">Record {fragmentDate}</h2>
-    <Await promise={get(`/data/logs/items?date=${fragmentDate}`)} let:result>
+    <Await promise={get(`/logs/data/items?date=${fragmentDate}`)} let:result>
         <Code code={JSON.stringify(result, null, 2)} />
     </Await>
 </Aside>

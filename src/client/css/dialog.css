@@ -92,33 +92,39 @@ dialog form {
     min-width: inherit;
 }
 
-dialog form header.img {
+dialog.img form header {
     height: 0;
     padding: 0;
 }
 
-dialog form article.img {
+dialog.img form article {
     padding: 0;
     border-radius: 0;
 }
 
-dialog form article.img #close {
+dialog.img form article #close {
     position: fixed;
     right: 0;
 }
 
-dialog form article.img img {
+dialog.img form article img {
     border-radius: 0;
+}
+
+dialog.img form footer {
+    padding: var(--padding-sm);
 }
 
 dialog form :is(header, footer) {
     background-color: var(--surface);
-    padding: var(--padding-sm);
+    padding: var(--padding);
 }
 
-dialog form :is(header, footer)>* {
+
+
+/* dialog form :is(header, footer)>* {
     margin: 0;
-}
+} */
 
 dialog form header {
     text-align: start;
@@ -155,6 +161,7 @@ dialog.sm {
 
 dialog.md {
     max-inline-size: 50%;
+    min-inline-size: 50%;
 }
 
 dialog.lg {

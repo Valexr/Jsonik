@@ -35,11 +35,11 @@ summary {
 
 :is(button, [role=button]).block {
     display: flex;
+    min-width: 100%;
 }
 
 :is(button, [role=button]).outline {
     border-color: var(--surface);
-    background-color: var(--back);
 }
 
 :is(button, [role=button]).dashed {
@@ -48,6 +48,10 @@ summary {
 
 :is(button, [role=button]).link {
     background-color: transparent;
+}
+
+:is(button, [role=button]).strong {
+    font-weight: bold;
 }
 
 summary.block {

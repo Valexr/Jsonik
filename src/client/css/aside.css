@@ -7,7 +7,7 @@ aside {
     background: var(--active);
     /* min-inline-size: 35em; */
     /* max-inline-size: 35em; */
-    min-width: inherit
+    min-width: 35em;
 }
 
 aside.open::before {

@@ -1,12 +1,12 @@
 <script lang="ts">
     export let data: Table;
-    export let active: (item: Object & { date: number }) => void;
+    export let active: (item: Record<string, unknown>) => void;
 
     const html = (value: string) => /<|>/g.test(value);
 
     type Table = {
         thead?: Array<string>;
-        tbody: Array<Object & { date: number }>;
+        tbody: Array<Record<string, any>>;
         tfoot?: Array<string[]>;
     };
 </script>

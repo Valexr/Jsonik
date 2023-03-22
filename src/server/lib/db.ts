@@ -18,12 +18,18 @@ async function connect(file: string, table = 'items'): Promise<Base | undefined>
     try {
         const base = await db(file);
         await base.read();
-        base.data ||= { keys: [], items: [] };
+        base.data ||= {};
+        base.data[table] ||= [];
 
         return {
             base,
             data: base.data,
-            table: base.data[table],
+            table: async (data: any[]) => {
+                console.log(data)
+                base.data[table] = data
+                await base.write();
+                return base.data[table]
+            },
             write: async () => await base.write(),
             id: (id) => base.data[table].find((i) => i.id === id),
             find: (prop) => base.data[table].find((i) => Object.entries(prop).every(([k, v]) => i[k] === v)),

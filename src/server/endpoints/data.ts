@@ -1,4 +1,4 @@
-import { readdir } from 'fs/promises';
+import { readdir, rm } from 'fs/promises';
 import DB from '$server/lib/db.js';
 import type { App, Next, Req, Res } from '$server/derver/types.js';
 import type { Base } from '$types/server.js';
@@ -22,7 +22,7 @@ async function connect(req: Req, res: Res, next: Next) {
     } else {
         try {
             base = await DB.connect(`data/${req.params.file}.json`, req.params.table);
-            Object.assign(base?.data, { keys: Object.keys(base?.data.items[0]) })
+            // Object.assign(base?.data, { keys: Object.keys(base?.data.items[0]) })
             next();
         } catch (err) {
             console.log('dbERR: ', err);
@@ -58,12 +58,13 @@ export function data(app: App) {
     });
 
     app.post(pattern, async (req, res, next) => {
-        const meta = { id: Date.now(), create: Date.now(), update: Date.now(), role: req.query.role };
+        // const meta = { id: Date.now(), create: Date.now(), update: Date.now(), role: req.query.role };
         try {
-            await base?.append({ ...req.body, ...meta });
-            delete req.query.id;
-            const items = base?.match(req.query);
-            res.send(items);
+            await base?.table(req.body)
+            // await base?.append({ ...req.body, ...meta });
+            // delete req.query.id;
+            // const items = base?.match(req.query);
+            res.send('ok');
         } catch (err) {
             console.log('dbERR: ', err);
             next();
@@ -95,14 +96,23 @@ export function data(app: App) {
     });
 
     app.delete(pattern, async (req, res, next) => {
-        try {
-            req.query.prop ? await base?.deleteprop(req.query.prop) : await base?.delete(req.query);
-            delete req.query.id;
-            const items = base?.match(req.query);
-            res.send(items);
-        } catch (err) {
-            console.log('dbERR: ', err);
-            next();
+        const { file, table } = req.params
+        if (!table) {
+            try {
+                await rm(`data/${file}.json`)
+                res.send(file)
+            } catch (e) {
+                console.log(e)
+            }
         }
+        // try {
+        //     req.query.prop ? await base?.deleteprop(req.query.prop) : await base?.delete(req.query);
+        //     delete req.query.id;
+        //     const items = base?.match(req.query);
+        //     res.send(items);
+        // } catch (err) {
+        //     console.log('dbERR: ', err);
+        //     next();
+        // }
     });
 }

@@ -3,7 +3,7 @@ form {
 }
 
 form nav {
-    margin: var(--gap-sm) 0 var(--gap)
+    /* margin: var(--gap-sm) 0 var(--gap) */
 }
 
 fieldset {
@@ -14,13 +14,20 @@ fieldset {
 }
 
 legend {
-    font-size: 1.25rem;
-    color: var(--gray);
+    /* font-size: 1.25rem; */
+    /* color: var(--gray); */
+    font-weight: bold;
+    margin-bottom: var(--gap-sm);
 }
 
 label:not([data-note]) {
     margin-bottom: var(--gap-lg);
     display: block;
+    /* color: var(--gray); */
+}
+
+label small+:is(input, select, textarea) {
+    margin-top: var(--gap-sm);
 }
 
 input,
@@ -28,13 +35,13 @@ select,
 textarea {
     margin: 0;
     padding: 0 1rem;
-    border: 0.1rem solid var(--surface);
+    border: 0.09em solid var(--surface);
     border-radius: var(--border-radius-sm);
     background-color: var(--back);
     font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
-    color: inherit;
+    color: var(--color);
     line-height: 2.25;
     width: 100%;
 }
@@ -168,7 +175,7 @@ textarea {
 }
 
 .valid,
-:not(button, select, [type=checkbox], [type=search]):valid {
+:not(button, select, [type=checkbox], [type=search]):focus:valid {
     border-color: var(--success);
 }
 
@@ -178,9 +185,9 @@ textarea {
     border-color: var(--error);
 }
 
-/* :is(:autofill, :-webkit-autofill) {
-    background: var(--warning);
-} */
+:is(:autofill, :-webkit-autofill) {
+    background: inherit;
+}
 
 :is(textarea, input).secret {
     text-shadow: 0 0 0.5rem var(--light);

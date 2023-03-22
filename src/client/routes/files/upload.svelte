@@ -4,6 +4,7 @@
     import { s } from "$client/utils/index.js";
     import Form from "$client/components/Form.svelte";
     import Dialog from "$client/components/Dialog.svelte";
+    import Table from "$client/components/Table.svelte";
     import type { InputEvent } from "$types/client.js";
 </script>
 
@@ -16,7 +17,7 @@
     function addFiles(e: InputEvent) {
         fileList = e.currentTarget.files;
         $fragment = "#upload-files";
-        setTimeout(() => (e.currentTarget.value = ""));
+        // setTimeout(() => (e.currentTarget.value = ""));
     }
 
     async function uploadFiles(e: SubmitEvent) {
@@ -71,14 +72,27 @@
         Upload {fileList?.length} file{s(fileList?.length)}
     </h3>
     {#if fileList}
-        <ol>
+        {@const list = Array.from(fileList).map(({ name, size, type }, id) => ({
+            id: id + 1,
+            name,
+            size,
+            type,
+        }))}
+        <Table
+            active={console.log}
+            data={{
+                thead: ["id", "name", "size", "type"],
+                tbody: list,
+            }}
+        />
+        <!-- <ol>
             {#each fileList as file}
                 <li>
                     {file.name}
                     <b>{(file.size / 1000).toFixed(0)}</b>Kb
                 </li>
             {/each}
-        </ol>
+        </ol> -->
     {/if}
 </Dialog>
 
