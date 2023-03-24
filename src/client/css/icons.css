@@ -767,3 +767,8 @@
     mask-image: url(../svg/feather/move.svg);
     -webkit-mask-image: url(../svg/feather/move.svg);
 }
+
+.icon-save {
+    mask-image: url(../svg/feather/save.svg);
+    -webkit-mask-image: url(../svg/feather/save.svg);
+}

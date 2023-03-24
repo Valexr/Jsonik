@@ -10,7 +10,7 @@
     async function renameFolder(e: SubmitEvent) {
         const data = new FormData(e.target as HTMLFormElement);
         const name = data.get("value");
-        await folders.rename(String($path[1]), String(name));
+        await folders.rename(String(folder), String(name));
         redirect(`/files/${name}`);
     }
 
@@ -19,8 +19,8 @@
         redirect("/files");
     }
 
-    function edit() {
-        fragment.set(`#rename-${$path[1]}`);
+    function editFolder() {
+        fragment.set(`#rename-${folder}`);
     }
 </script>
 
@@ -36,7 +36,7 @@
         draggable="false"
     >
         {#if $path[1] === folder}
-            <button class="box link" on:click|preventDefault={edit}>
+            <button class="box link" on:click|preventDefault={editFolder}>
                 <i class="icon icon-svg icon-edit" />
             </button>
         {/if}

@@ -32,7 +32,7 @@
 
 <section class="cols scroll-x">
     <Await promise={data.get(String($route.file))}>
-        {#if $data.keys}
+        {#if $data?.keys}
             <Table
                 data={{ thead: $data.keys, tbody: $data.items }}
                 active={getItem}
@@ -49,7 +49,7 @@
             {/each} -->
             <!-- <Code code={JSON.stringify(result, null, 2)} /> -->
         {:else}
-            <p class="text-center">You haven't any collections yet...</p>
+            <p class="text-center">You haven't any data yet...</p>
         {/if}
     </Await>
 </section>

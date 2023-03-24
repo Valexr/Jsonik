@@ -9,10 +9,13 @@
 <script lang="ts">
     export let collection: string;
 
-    async function editCollection(e: MouseEvent) {}
+    async function editCollection() {
+        fragment.set(`#edit-${collection}`);
+    }
     async function deleteCollection(e: MouseEvent) {
         const { id } = e.currentTarget as HTMLButtonElement;
         await collections.delete(id);
+        redirect(`/data/${$collections.at(-1) || ""}`);
     }
 </script>
 
@@ -23,7 +26,11 @@
     aria-disabled={$path[1] === collection}
 >
     {#if $path[1] === collection}
-        <button id={collection} class="box link" on:click={editCollection}>
+        <button
+            id={collection}
+            class="box link"
+            on:click|preventDefault={editCollection}
+        >
             <i class="icon icon-svg icon-edit" />
         </button>
     {/if}

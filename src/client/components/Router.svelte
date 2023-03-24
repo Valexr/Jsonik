@@ -3,7 +3,7 @@
     import { page } from "$client/routes/index.js";
     import type { Name } from "$types/client.js";
 
-    Object.assign(prefs);
+    // Object.assign(prefs);
 </script>
 
 <script lang="ts">
@@ -16,7 +16,7 @@
     <title>{name} - {$page.props.title}</title>
 </svelte:head>
 
-<!-- hack for global $path -->
+<!-- #key hack for global $path -->
 {#key $path}
     {#await $page.component() then { default: Route }}
         <Route />

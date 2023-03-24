@@ -120,14 +120,9 @@ dialog form :is(header, footer) {
     padding: var(--padding);
 }
 
-
-
-/* dialog form :is(header, footer)>* {
-    margin: 0;
-} */
-
 dialog form header {
     text-align: start;
+    line-height: 1.5;
     top: 0;
 }
 

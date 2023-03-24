@@ -13,9 +13,16 @@ fieldset {
     border-radius: var(--border-radius-sm);
 }
 
+fieldset.cols {
+    --cols-gap: var(--gap-sm);
+}
+
+fieldset.cols label {
+    margin: 0;
+}
+
 legend {
-    /* font-size: 1.25rem; */
-    /* color: var(--gray); */
+    font-size: large;
     font-weight: bold;
     margin-bottom: var(--gap-sm);
 }

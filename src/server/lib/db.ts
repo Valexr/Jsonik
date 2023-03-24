@@ -18,14 +18,15 @@ async function connect(file: string, table = 'items'): Promise<Base | undefined>
     try {
         const base = await db(file);
         await base.read();
+        console.log(base)
         base.data ||= {};
         base.data[table] ||= [];
 
         return {
             base,
             data: base.data,
-            table: async (data: any[]) => {
-                console.log(data)
+            table: base.data[table],
+            addTable: async (data: any[]) => {
                 base.data[table] = data
                 await base.write();
                 return base.data[table]

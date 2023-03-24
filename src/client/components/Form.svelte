@@ -1,4 +1,5 @@
 <script lang="ts">
+    export let id: string = "";
     export let method = "GET";
     export let action = "";
     export let enctype = "text/plain";
@@ -16,6 +17,7 @@
 </script>
 
 <form
+    {id}
     {method}
     {enctype}
     {action}

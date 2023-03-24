@@ -48,6 +48,7 @@
         dialog.onclose = () => {
             document.documentElement.style.overflow = "";
             fragment.set("");
+            dispatch("close");
         };
 
         function update(opened: boolean) {
@@ -71,7 +72,12 @@
 </script>
 
 {#if open}
-    <dialog use:action={open} on:close class={`${size} ${from}`} class:img>
+    <dialog
+        use:action={open}
+        on:close|preventDefault
+        class={`${size} ${from}`}
+        class:img
+    >
         <Form method="dialog" bind:valid on:submit on:reset on:change on:input>
             <header class="cols" class:justify-end={!$$slots.header}>
                 <slot name="header" />

@@ -15,6 +15,7 @@
     }
 
     function drop(node: HTMLElement, from: string) {
+        console.log($path[0], location.pathname);
         const update = (from: string) => {
             const selectors = 'a[href^="/files"]:not([aria-disabled="true"])';
             const anchors: NodeListOf<HTMLElement> =
@@ -94,7 +95,7 @@
     nav {
         margin: var(--gap-lg) 0;
     }
-    [role="button"][href="#add-folder"] {
+    [href="#add-folder"] {
         left: 0;
         z-index: 1;
         background-color: var(--back);

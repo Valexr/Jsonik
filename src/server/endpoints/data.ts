@@ -60,7 +60,7 @@ export function data(app: App) {
     app.post(pattern, async (req, res, next) => {
         // const meta = { id: Date.now(), create: Date.now(), update: Date.now(), role: req.query.role };
         try {
-            await base?.table(req.body)
+            await base?.addTable(req.body)
             // await base?.append({ ...req.body, ...meta });
             // delete req.query.id;
             // const items = base?.match(req.query);

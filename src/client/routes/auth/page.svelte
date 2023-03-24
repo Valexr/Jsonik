@@ -30,7 +30,7 @@
             <nav class="cols">
                 <!-- <button type="reset">Signin</button> -->
                 <button type="submit" class="success" disabled={!valid}>
-                    <strong>Login</strong>
+                    Login
                 </button>
             </nav>
         </Form>
