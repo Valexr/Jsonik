@@ -16,6 +16,7 @@
     import Dialog from "$client/components/Dialog.svelte";
     import Tile from "$client/components/Tile.svelte";
     import Code from "$client/components/Code.svelte";
+    import AddCollection from "./addCollection.svelte";
     import { onDestroy, onMount } from "svelte";
 </script>
 
@@ -53,6 +54,10 @@
         {/if}
     </Await>
 </section>
+
+<Await promise={data.get(String($route.file))} notify>
+    <AddCollection schema={$data.schemas} />
+</Await>
 
 <Aside open={$fragment === `#data-${active?.date}`} right>
     <h2 slot="header">Record {active?.date}</h2>

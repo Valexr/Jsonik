@@ -2,12 +2,14 @@
     import { click, prefs, path } from "svelte-pathfinder";
     import { page } from "$client/routes/index.js";
     import type { Name } from "$types/client.js";
+    import { get } from "$client/api/methods.js";
 
     // Object.assign(prefs);
 </script>
 
 <script lang="ts">
     export let name: Name;
+    console.log(String($path));
 </script>
 
 <svelte:window on:click={click} />

@@ -29,7 +29,7 @@ legend {
 
 label:not([data-note]) {
     margin-bottom: var(--gap-lg);
-    display: block;
+    /* display: block; */
     /* color: var(--gray); */
 }
 

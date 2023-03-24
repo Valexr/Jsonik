@@ -1,10 +1,7 @@
 <script lang="ts" context="module">
-    import { path, fragment, redirect, submit } from "svelte-pathfinder";
-    import { collections, schemas, data } from "$client/stores/data.js";
+    import { collections } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Collection from "./collection.svelte";
-    import AddCollection from "./addCollection.svelte";
-    import EditCollection from "./editCollection.svelte";
 </script>
 
 <script lang="ts">
@@ -32,8 +29,6 @@
         {/each}
     </nav>
 </Await>
-
-<AddCollection />
 
 <style>
     nav {

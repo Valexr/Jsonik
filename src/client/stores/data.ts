@@ -78,8 +78,9 @@ export const schemas = [
         type: 'text',
         name: 'text',
         opts: {
-            minlength: '0',
-            maxlength: '0'
+            minlength: 0,
+            maxlength: 0,
+            pattern: '^\\w+$',
         }
     },
     {

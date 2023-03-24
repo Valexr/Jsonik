@@ -1,15 +1,18 @@
 <script lang="ts" context="module">
     import { path, fragment, redirect, submit } from "svelte-pathfinder";
-    import { collections, schemas, data, schema } from "$client/stores/data.js";
+    import { collections, schemas } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Dialog from "$client/components/Dialog.svelte";
     import Field, { type Schema } from "./field.svelte";
 </script>
 
 <script lang="ts">
+    export let schema: Schema[];
+    console.log(schema);
     let openID: number;
     let fieldID: number;
-    let fields: Schema[] = [];
+    let fields: Schema[] = !$fragment.includes("add") ? schema : [];
+    let validCollection = false;
 
     function addField() {
         fieldID = Date.now();
@@ -17,17 +20,32 @@
         openID = fieldID;
     }
 
+    function invalidateField(e: Event) {
+        console.log(e.currentTarget);
+        const { id } = e.currentTarget as HTMLFormElement;
+        openID = Number(id);
+        fields = fields.map((f) => {
+            return f.id === Number(id) ? { ...f, valid: false } : f;
+        });
+        console.log(fields);
+    }
+
     function saveField(e: SubmitEvent) {
         const data = new FormData(e.target as HTMLFormElement);
-        const { type, name, ...opts } = Object.fromEntries(data);
-        const field = { id: fieldID, valid: true, ...{ type, name, opts } };
+        console.log(data);
+        const { type, name, required, ...opts } = Object.fromEntries(data);
+        const field = {
+            id: fieldID,
+            valid: true,
+            ...{ type, name, required, opts },
+        };
         fields = fields.map((f) => (field.id === f.id ? field : f));
-        openID = Date.now();
+        // openID = Date.now();
     }
 
     function deleteField(e: Event) {
         const { id } = e.currentTarget as HTMLFormElement;
-        fields = fields.filter((f) => f.id !== id);
+        fields = fields.filter((f) => f.id !== Number(id));
     }
 
     async function addCollection(e: SubmitEvent) {
@@ -38,13 +56,14 @@
         clearFields();
     }
 
-    const clearFields = () => (fields.length = 0);
+    const clearFields = () => (fields = []);
 </script>
 
 <Dialog
     open={[`#add-collection`, `#edit-${$path[1]}`].includes($fragment)}
     on:submit={addCollection}
     on:close={clearFields}
+    bind:valid={validCollection}
 >
     <h3 slot="header">
         {$fragment.includes("add") ? "New" : "Edit"} collection
@@ -69,40 +88,38 @@
     </fieldset>
     <fieldset class="cols column">
         <legend>Fields</legend>
-        {#if $fragment.includes("add")}
+        {#if fields?.length}
             {#each fields as field (field.id)}
                 <Field
                     {field}
                     id={field.id}
                     open={field.id === openID}
+                    on:input={invalidateField}
                     on:submit={saveField}
                     on:reset={deleteField}
                 />
             {/each}
-        {:else if $data?.schemas}
-            <!-- <Await promise={schema.get(String($path[1]), "schemas")}> -->
-            {#each [...fields, ...$data?.schemas] as field (field.id)}
-                <Field
-                    {field}
-                    id={field.id}
-                    open={field.id === openID}
-                    on:submit={saveField}
-                    on:reset={deleteField}
-                />
-            {/each}
-            <!-- </Await> -->
         {/if}
         <nav>
             <button
                 class="block link"
                 type="button"
                 on:click={addField}
-                disabled={fields.some((f) => !f.valid)}
+                disabled={fields?.some((f) => !f.valid)}
             >
                 <i class="icon icon-svg icon-plus" />New field
             </button>
         </nav>
     </fieldset>
+    <nav slot="footer">
+        <button type="reset">Cancel</button>
+        <button
+            type="submit"
+            class="success"
+            disabled={!validCollection || fields?.some((f) => !f.valid)}
+            >Add collection</button
+        >
+    </nav>
 </Dialog>
 
 <style>

@@ -10,9 +10,7 @@
         valid: (value: boolean) => void
     ) {
         setTimeout(() => valid(form.checkValidity()));
-        form.oninput = () => {
-            valid(form.checkValidity());
-        };
+        form.oninput = () => valid(form.checkValidity());
     }
 </script>
 
@@ -23,8 +21,8 @@
     {action}
     on:submit|preventDefault
     on:reset|preventDefault
-    on:change
-    on:input
+    on:change|preventDefault
+    on:input|preventDefault
     use:validate={(value) => (valid = value)}
 >
     <slot />

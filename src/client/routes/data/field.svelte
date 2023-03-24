@@ -16,10 +16,10 @@
     export let id: string;
     export let open: boolean;
     export let field: Schema | undefined;
+    export let valid = false;
 
     let type = field?.type;
     let name = field?.name;
-    let valid = false;
 
     function selectType(e: SelectEvent) {
         const { value } = e.currentTarget;
@@ -27,13 +27,17 @@
         type = field?.type;
         name = field?.name;
     }
+
+    function inputType(value: any) {
+        return !isNaN(value) ? "number" : "text";
+    }
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <details tabindex="0" bind:open>
     <summary id="field" tabindex="0">{name}</summary>
-    <Form {id} on:submit on:reset bind:valid>
-        <fieldset class="cols">
+    <Form {id} on:input on:submit on:reset bind:valid>
+        <fieldset class="cols col-2">
             <label>
                 <small>Type</small>
                 <select
@@ -58,27 +62,37 @@
             </label>
         </fieldset>
 
-        <fieldset class="cols" name="opts" id="opts">
+        <fieldset class="cols col-3" name="opts" id="opts">
             {#each Object.entries(field?.opts) as [name, value]}
                 <label>
                     <small>{name}</small>
-                    <input {name} type={typeof value} {value} />
+                    <input {name} type={inputType(value)} {value} />
                 </label>
             {/each}
         </fieldset>
 
-        <nav class="cols col-fit justify-center">
-            <button type="reset" class="link box text-error">
-                <i class="icon icon-svg icon-trash" />
-            </button>
-            <button
-                type="submit"
-                class="link box text-success"
-                disabled={!valid}
-            >
-                <i class="icon icon-svg icon-save" />
-            </button>
-        </nav>
+        <fieldset class="cols col-fit" name="custom" id="custom">
+            <label class="cols align-center justify-start">
+                <input
+                    name="required"
+                    type="checkbox"
+                    role="switch"
+                    checked={field?.required}
+                />Required
+            </label>
+            <nav class="cols col-fit">
+                <button type="reset" class="link box text-error">
+                    <i class="icon icon-svg icon-trash" />
+                </button>
+                <button
+                    type="submit"
+                    class="link box text-success"
+                    disabled={!valid || field?.valid}
+                >
+                    <i class="icon icon-svg icon-save" />
+                </button>
+            </nav>
+        </fieldset>
     </Form>
 </details>
 
@@ -92,5 +106,8 @@
     }
     details[open] summary#field {
         margin-bottom: var(--gap);
+    }
+    label.cols {
+        --cols-gap: var(--gap-sm);
     }
 </style>
