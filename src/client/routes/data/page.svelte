@@ -56,7 +56,7 @@
 </section>
 
 <Await promise={data.get(String($route.file))} notify>
-    <AddCollection schema={$data.schemas} />
+    <AddCollection schemas={$data.schemas} />
 </Await>
 
 <Aside open={$fragment === `#data-${active?.date}`} right>

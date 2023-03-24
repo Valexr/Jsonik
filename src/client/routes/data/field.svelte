@@ -1,12 +1,8 @@
 <script lang="ts" context="module">
-    import { path, fragment, redirect, submit } from "svelte-pathfinder";
-    import { collections, schemas, data } from "$client/stores/data.js";
-    import Await from "$client/components/Await.svelte";
-    import Dialog from "$client/components/Dialog.svelte";
+    import { SCHEMAS } from "$client/stores/data.js";
     import Form from "$client/components/Form.svelte";
 
     export type Schema = Record<string, any>;
-    export type Schemas = Array<Record<string, any>>;
     export type SelectEvent = Event & {
         currentTarget: EventTarget & HTMLSelectElement;
     };
@@ -23,7 +19,7 @@
 
     function selectType(e: SelectEvent) {
         const { value } = e.currentTarget;
-        field = schemas.find((s) => s.type === value);
+        field = SCHEMAS.find((s) => s.type === value);
         type = field?.type;
         name = field?.name;
     }
@@ -46,7 +42,7 @@
                     bind:value={type}
                     on:change={selectType}
                 >
-                    {#each schemas as { type }}
+                    {#each SCHEMAS as { type }}
                         <option>{type}</option>
                     {/each}
                 </select>

@@ -49,19 +49,19 @@ function createCollections() {
 
 export const collections = createCollections()
 
-function createSchema() {
+function createSchemas() {
     const { set, subscribe, update } = writable<Schema[]>()
     return {
         subscribe,
-        async get(file = '', table = '') {
-            const collections = await get(`/data/${file}/${table}`)
+        async get(file = '') {
+            const collections = await get(`/data/${file}/schemas`)
             set(collections)
         },
-        async add(file = '', table = 'items', body?: object[]) {
-            await post(`/data/${file}/${table}`, JSON.stringify(body), {
+        async add(file = '', body?: object[]) {
+            const schema = await post(`/data/${file}/schemas`, JSON.stringify(body), {
                 headers: { 'Content-Type': 'application/json' }
             })
-            update(state => state.concat(String(file)))
+            update(state => state.concat(schema))
         },
         async delete(file: string) {
             file = await del(`/data/${file}/`)
@@ -71,9 +71,9 @@ function createSchema() {
     }
 }
 
-export const schema = createSchema()
+export const schemas = createSchemas()
 
-export const schemas = [
+export const SCHEMAS = [
     {
         type: 'text',
         name: 'text',

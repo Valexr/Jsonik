@@ -1,46 +1,44 @@
 <script lang="ts" context="module">
     import { path, fragment, redirect, submit } from "svelte-pathfinder";
-    import { collections, schemas } from "$client/stores/data.js";
+    import { collections, SCHEMAS } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Dialog from "$client/components/Dialog.svelte";
     import Field, { type Schema } from "./field.svelte";
 </script>
 
 <script lang="ts">
-    export let schema: Schema[];
-    console.log(schema);
+    export let schemas: Schema[] | undefined;
+
     let openID: number;
     let fieldID: number;
-    let fields: Schema[] = !$fragment.includes("add") ? schema : [];
+    let fields: Schema[] = schemas || [];
     let validCollection = false;
 
     function addField() {
         fieldID = Date.now();
-        fields = [...fields, { id: fieldID, ...schemas[0] }];
+        fields = fields.concat([{ id: fieldID, ...SCHEMAS[0] }]);
         openID = fieldID;
     }
 
     function invalidateField(e: Event) {
-        console.log(e.currentTarget);
         const { id } = e.currentTarget as HTMLFormElement;
         openID = Number(id);
         fields = fields.map((f) => {
-            return f.id === Number(id) ? { ...f, valid: false } : f;
+            return f.id === openID ? { ...f, valid: false } : f;
         });
-        console.log(fields);
     }
 
     function saveField(e: SubmitEvent) {
-        const data = new FormData(e.target as HTMLFormElement);
-        console.log(data);
+        const data = new FormData(e.currentTarget as HTMLFormElement);
         const { type, name, required, ...opts } = Object.fromEntries(data);
+        const { id } = e.currentTarget as HTMLFormElement;
         const field = {
-            id: fieldID,
+            id: Number(id),
             valid: true,
             ...{ type, name, required, opts },
         };
         fields = fields.map((f) => (field.id === f.id ? field : f));
-        // openID = Date.now();
+        openID = Date.now();
     }
 
     function deleteField(e: Event) {
@@ -116,9 +114,12 @@
         <button
             type="submit"
             class="success"
-            disabled={!validCollection || fields?.some((f) => !f.valid)}
-            >Add collection</button
+            disabled={!validCollection ||
+                fields?.some((f) => !f.valid) ||
+                !fields.length}
         >
+            Submit
+        </button>
     </nav>
 </Dialog>
 

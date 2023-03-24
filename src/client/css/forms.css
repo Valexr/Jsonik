@@ -29,8 +29,8 @@ legend {
 
 label:not([data-note]) {
     margin-bottom: var(--gap-lg);
-    /* display: block; */
-    /* color: var(--gray); */
+    display: flex;
+    flex-wrap: inherit;
 }
 
 label small+:is(input, select, textarea) {
