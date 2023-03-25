@@ -9,7 +9,6 @@
 
 <script lang="ts">
     export let name: Name;
-    console.log(String($path));
 </script>
 
 <svelte:window on:click={click} />

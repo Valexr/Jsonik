@@ -99,6 +99,7 @@
 
 [data-tooltip] {
     position: relative;
+    overflow: visible;
 }
 
 [data-tooltip]::after {
@@ -110,12 +111,13 @@
     bottom: 100%;
     right: 0%;
     opacity: 0;
-    background: var(--dark);
+    background: var(--back);
     padding: 0.5em 1em;
     border-radius: 1em;
     font-size: small;
     transition: opacity 250ms;
     color: inherit;
+    min-width: max-content;
 }
 
 [data-tooltip].tooltip-left::after {
@@ -173,7 +175,7 @@
     content: "";
     inset: 0;
     position: absolute;
-    background: var(--dark);
+    background: var(--back);
     opacity: 0.75;
     z-index: -1;
 }

@@ -115,7 +115,7 @@ function focusTrap(node: HTMLElement) {
     const MO = new MutationObserver((ML) => {
         focusable = getFocusable(node)
     });
-    MO.observe(node, { childList: true, subtree: true });
+    MO.observe(node, { childList: true, subtree: true, attributes: true });
     node.onkeydown = (e) => {
         if (e.key === "Tab") {
             e.preventDefault();
@@ -124,7 +124,6 @@ function focusTrap(node: HTMLElement) {
             index += focusable.length + (e.shiftKey ? -1 : 1);
             index %= focusable.length;
             focusable[index].focus();
-            console.log(focusable[index])
         }
     }
     return {

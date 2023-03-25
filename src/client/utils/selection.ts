@@ -1,4 +1,4 @@
-export default function selection(container: HTMLElement, {
+export function selection(container: HTMLElement, {
     target,
     disabled,
     match,

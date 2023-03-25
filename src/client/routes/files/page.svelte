@@ -3,7 +3,7 @@
     import { files } from "$client/stores/files.js";
     import { selectable } from "$client/utils/actions.js";
     import { s } from "$client/utils/index.js";
-    import selection from "$client/utils/selection.js";
+    import { selection } from "$client/utils/selection.js";
     import Await from "$client/components/Await.svelte";
     import File from "./file.svelte";
     import Upload from "./upload.svelte";

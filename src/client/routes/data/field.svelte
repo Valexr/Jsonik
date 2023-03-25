@@ -1,8 +1,7 @@
 <script lang="ts" context="module">
-    import { SCHEMAS } from "$client/stores/data.js";
+    import { SCHEMAS, type Schema } from "$client/stores/data.js";
     import Form from "$client/components/Form.svelte";
 
-    export type Schema = Record<string, any>;
     export type SelectEvent = Event & {
         currentTarget: EventTarget & HTMLSelectElement;
     };
@@ -36,9 +35,11 @@
         <fieldset class="cols col-2">
             <label>
                 <small>Type</small>
+                <!-- svelte-ignore a11y-autofocus -->
                 <select
                     id="type"
                     name="type"
+                    autofocus={true}
                     bind:value={type}
                     on:change={selectType}
                 >

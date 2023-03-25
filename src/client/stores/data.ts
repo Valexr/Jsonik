@@ -1,76 +1,80 @@
 import { writable } from 'svelte/store'
-import { del, get, post } from "$client/api/methods.js";
-import type { Schema } from '$client/routes/data/field.svelte';
+import { del, get, post, put, patch } from "$client/api/methods.js";
+import { uniq } from '$client/utils/index.js';
 
+export type Schema = Record<string, any>;
+export type Collection = Record<string, Schema[]>
+export type Item = Record<string, unknown>
 export type Data = {
-    schemas: Schema[]; keys: string[], items: Array<Object & { date: number; }>
+    schemas: Schema[]; keys: string[], items: Array<Item>
 }
 
-function createData() {
+function createRecords() {
     const { set, subscribe, update } = writable<Data>()
     return {
         subscribe,
-        async get(file = '', table = '') {
-            const collection = await get(`/data/${file}/${table}`)
-            set(collection)
+        async get(file = '') {
+            const data = await get(`/data/${file}/records`)
+            set(data)
         },
-        async add(file = '', table = '', body: BodyInit) {
-            const collection = await post(`/data/${file}/${table}`, body, {
+        async add(file = '', body: BodyInit) {
+            const data = await post(`/data/${file}/records`, body, {
                 headers: { 'Content-Type': 'application/json' }
             })
-            set(collection)
+            set(data)
         },
     }
 }
+export const records = createRecords()
 
-export const data = createData()
-
-function createCollections() {
+function createFiles() {
     const { set, subscribe, update } = writable<string[]>()
     return {
+        update,
         subscribe,
         async get(file = '', table = '') {
-            const collections = await get(`/data/${file}/${table}`)
-            set(collections)
+            const files = await get(`/data/files/`)
+            set(files)
         },
-        async add(file = '', table = 'items', body?: object[]) {
-            await post(`/data/${file}/${table}`, JSON.stringify(body), {
+        async add(file = '', schemas?: Schema[]) {
+            await post(`/data/${file}/schemas`, JSON.stringify(schemas), {
                 headers: { 'Content-Type': 'application/json' }
             })
-            update(state => state.concat(String(file)))
+            update(state => uniq(state.concat(file)))
+        },
+        async rename(file = '', name = '') {
+            name = await patch(`/data/files/${file}?name=${name}`);
+            update(state => uniq(state.map(f => (f === file ? name : f))))
         },
         async delete(file: string) {
-            file = await del(`/data/${file}/`)
+            file = await del(`/data/files/${file}`)
             update(state => state.filter(s => s !== file))
-
         }
     }
 }
-
-export const collections = createCollections()
+export const files = createFiles()
 
 function createSchemas() {
-    const { set, subscribe, update } = writable<Schema[]>()
+    const { set, subscribe, update } = writable<Schema[] | undefined>()
     return {
+        set,
         subscribe,
         async get(file = '') {
-            const collections = await get(`/data/${file}/schemas`)
-            set(collections)
+            const schemas = await get(`/data/${file}/schemas`)
+            set(schemas)
         },
         async add(file = '', body?: object[]) {
-            const schema = await post(`/data/${file}/schemas`, JSON.stringify(body), {
+            await post(`/data/${file}/schemas`, JSON.stringify(body), {
                 headers: { 'Content-Type': 'application/json' }
             })
-            update(state => state.concat(schema))
+            files.update(state => !state.includes(file) ? state.concat(file) : state)
         },
-        async delete(file: string) {
-            file = await del(`/data/${file}/`)
-            update(state => state.filter(s => s !== file))
-
-        }
+        // async delete(file: string) {
+        //     file = await del(`/data/${file}/`)
+        //     update(state => state.filter(s => s !== file))
+        // }
     }
 }
-
 export const schemas = createSchemas()
 
 export const SCHEMAS = [

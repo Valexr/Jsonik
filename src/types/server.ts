@@ -4,7 +4,7 @@ export type Base = {
     base: Low<object>;
     data: any;
     table: Low<any>;
-    addTable: (data: any[]) => Promise<void>
+    assign: <T>(data: T | object | ArrayLike<object>) => Promise<void>
     write: () => Promise<void>;
     id: (id: number | string) => any;
     find: (prop: object) => any;

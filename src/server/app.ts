@@ -1,9 +1,9 @@
 import { derver } from '$server/derver/index.js';
-import { data } from '$server/endpoints/data.js';
+import { data } from '$server/endpoints/data/index.js';
 import { files } from '$server/endpoints/files.js';
 import { logs } from '$server/endpoints/logs.js';
 import { log } from '$server/middlewares/log.js';
-// import { auth } from '$server/endpoints/auth';
+// import { auth } from '$server/endpoints/auth/index.js';
 // import { cookies } from '$server/endpoints/auth/cookies';
 // import { token } from '$server/endpoints/auth/token';
 import type { App, Options } from '$server/derver/types.js';

@@ -7,8 +7,9 @@
         paramable,
         type Param,
         type Parsable,
+        goto,
     } from "svelte-pathfinder";
-    import { data, collections } from "$client/stores/data.js";
+    import { records, files, schemas, type Item } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Table from "$client/components/Table.svelte";
@@ -16,28 +17,38 @@
     import Dialog from "$client/components/Dialog.svelte";
     import Tile from "$client/components/Tile.svelte";
     import Code from "$client/components/Code.svelte";
-    import AddCollection from "./addCollection.svelte";
+    import Schema from "./schema.svelte";
+    import Record from "./record.svelte";
     import { onDestroy, onMount } from "svelte";
 </script>
 
 <script lang="ts">
-    let active: Record<string, unknown>;
+    let active: Item;
 
-    state.set({ some: "foo" });
-    function getItem(item: Record<string, unknown>) {
+    function getItem(item: Item) {
         fragment.set(`#data-${item.date}`);
         active = item;
     }
+
     const route = paramable<{ file: string }>("/data/:file?");
+
+    // onMount(() => {
+    //     if ($collections?.length && !$route.file)
+    //         redirect(`/data/${$collections[0]}`);
+    // });
 </script>
 
 <section class="cols scroll-x">
-    <Await promise={data.get(String($route.file))}>
-        {#if $data?.keys}
+    <Await promise={records.get($route.file)}>
+        {#if $records}
             <Table
-                data={{ thead: $data.keys, tbody: $data.items }}
+                data={{
+                    thead: $records.keys,
+                    tbody: $records.items || [],
+                }}
                 active={getItem}
             />
+            <Code code={JSON.stringify($records, null, 2)} />
             <!-- {#each $data.keys as key}
                 <a href="/data/{key}">{key}</a>
             {/each}
@@ -48,21 +59,26 @@
                     {/each}
                 </Tile>
             {/each} -->
-            <!-- <Code code={JSON.stringify(result, null, 2)} /> -->
         {:else}
             <p class="text-center">You haven't any data yet...</p>
         {/if}
     </Await>
 </section>
 
-<Await promise={data.get(String($route.file))} notify>
-    <AddCollection schemas={$data.schemas} />
-</Await>
+{#if $fragment === "#add-collection"}
+    <Schema open={$fragment === "#add-collection"} />
+{:else if $fragment === "#edit-collection"}
+    <Await promise={schemas.get($route.file)}>
+        <Schema
+            open={$fragment === "#edit-collection"}
+            header="Edit collection"
+            collectionName={$route.file}
+            bind:fields={$schemas}
+        />
+    </Await>
+{/if}
 
-<Aside open={$fragment === `#data-${active?.date}`} right>
-    <h2 slot="header">Record {active?.date}</h2>
-    <Code code={JSON.stringify(active, null, 2)} />
-</Aside>
+<Record {active} />
 
 <style>
     .cols {

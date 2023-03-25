@@ -1,6 +1,7 @@
 import type { PathLike } from 'fs';
 import type { InputType } from 'zlib';
 import type { OutgoingHttpHeaders, ServerResponse, IncomingMessage } from 'http';
+import { Base } from '$types/server.js';
 
 export type Options = {
     port: number
@@ -26,7 +27,7 @@ export type Req = {
     file: string
     extname: string
     exists: boolean
-} & IncomingMessage
+} & IncomingMessage & { base?: Base }
 
 export type Res = {
     body: InputType

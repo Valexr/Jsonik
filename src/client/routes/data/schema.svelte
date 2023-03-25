@@ -1,17 +1,19 @@
 <script lang="ts" context="module">
-    import { path, fragment, redirect, submit } from "svelte-pathfinder";
-    import { collections, SCHEMAS } from "$client/stores/data.js";
-    import Await from "$client/components/Await.svelte";
+    import { records, files, schemas, type Item } from "$client/stores/data.js";
     import Dialog from "$client/components/Dialog.svelte";
-    import Field, { type Schema } from "./field.svelte";
+    import Field from "./field.svelte";
+    import { SCHEMAS, type Schema } from "$client/stores/data.js";
+    import { goto } from "svelte-pathfinder";
 </script>
 
 <script lang="ts">
-    export let schemas: Schema[] | undefined;
+    export let open = false;
+    export let header = "New collection";
+    export let collectionName = "";
+    export let fields: Schema[] = [];
 
     let openID: number;
     let fieldID: number;
-    let fields: Schema[] = schemas || [];
     let validCollection = false;
 
     function addField() {
@@ -46,26 +48,28 @@
         fields = fields.filter((f) => f.id !== Number(id));
     }
 
-    async function addCollection(e: SubmitEvent) {
-        const data = new FormData(e.target as HTMLFormElement);
-        const collectionName = data.get("collectionName");
-        const schemas = fields;
-        await collections.add(String(collectionName), "schemas", schemas);
-        clearFields();
+    async function submitCollection(e: SubmitEvent) {
+        const data = new FormData(e.currentTarget as HTMLFormElement);
+        const name = data.get("collectionName");
+        const table = fields;
+        if (collectionName) {
+            await files.rename(collectionName, String(name));
+        }
+        await schemas.add(String(name), table);
+        await records.get(name);
+        goto(`/data/${name}`);
     }
 
     const clearFields = () => (fields = []);
 </script>
 
 <Dialog
-    open={[`#add-collection`, `#edit-${$path[1]}`].includes($fragment)}
-    on:submit={addCollection}
+    {open}
+    on:submit={submitCollection}
     on:close={clearFields}
     bind:valid={validCollection}
 >
-    <h3 slot="header">
-        {$fragment.includes("add") ? "New" : "Edit"} collection
-    </h3>
+    <h3 slot="header">{header}</h3>
     <fieldset class="cols">
         <label>
             <small>Name</small>
@@ -76,7 +80,7 @@
                 pattern="^[\w,\-]+$"
                 autofocus={true}
                 required
-                value={$fragment.includes("add") ? "" : $path[1]}
+                value={collectionName}
             />
         </label>
         <label>
@@ -86,24 +90,24 @@
     </fieldset>
     <fieldset class="cols column">
         <legend>Fields</legend>
-        {#if fields?.length}
-            {#each fields as field (field.id)}
-                <Field
-                    {field}
-                    id={field.id}
-                    open={field.id === openID}
-                    on:input={invalidateField}
-                    on:submit={saveField}
-                    on:reset={deleteField}
-                />
-            {/each}
-        {/if}
+
+        {#each fields as field (field.id)}
+            <Field
+                {field}
+                id={field.id}
+                open={field.id === openID}
+                on:input={invalidateField}
+                on:submit={saveField}
+                on:reset={deleteField}
+            />
+        {/each}
+
         <nav>
             <button
                 class="block link"
                 type="button"
                 on:click={addField}
-                disabled={fields?.some((f) => !f.valid)}
+                disabled={!validCollection || fields?.some((f) => !f.valid)}
             >
                 <i class="icon icon-svg icon-plus" />New field
             </button>
@@ -114,9 +118,7 @@
         <button
             type="submit"
             class="success"
-            disabled={!validCollection ||
-                fields?.some((f) => !f.valid) ||
-                !fields.length}
+            disabled={!validCollection || fields?.some((f) => !f.valid)}
         >
             Submit
         </button>

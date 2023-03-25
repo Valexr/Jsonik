@@ -40,5 +40,8 @@ function listen(
     return () => node.removeEventListener(event, handler, options);
 }
 
+function uniq(array: any[]) {
+    return Array.from(new Set(array))
+}
 
-export { deferred, switchTimeout, decimal, delay, s, listen }
+export { deferred, switchTimeout, decimal, delay, s, listen, uniq }

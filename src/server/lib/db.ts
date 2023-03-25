@@ -3,8 +3,6 @@ import { JSONFile } from 'lowdb/node';
 import { omatch, osome, group, checkdir } from '$server/lib/utils.js';
 import type { Base } from '$types/server.js';
 
-export default { connect };
-
 const dbs: { [file: string]: Low<any> } = {};
 
 export async function db(file: string) {
@@ -14,11 +12,11 @@ export async function db(file: string) {
     return dbs[file];
 }
 
-async function connect(file: string, table = 'items'): Promise<Base | undefined> {
+export async function base(file: string, table = 'items'): Promise<Base | undefined> {
     try {
         const base = await db(file);
         await base.read();
-        console.log(base)
+
         base.data ||= {};
         base.data[table] ||= [];
 
@@ -26,8 +24,8 @@ async function connect(file: string, table = 'items'): Promise<Base | undefined>
             base,
             data: base.data,
             table: base.data[table],
-            addTable: async (data: any[]) => {
-                base.data[table] = data
+            assign: async (data) => {
+                Object.assign(base.data, data)
                 await base.write();
                 return base.data[table]
             },

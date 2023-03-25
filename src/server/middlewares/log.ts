@@ -1,4 +1,4 @@
-import DB from '$server/lib/db.js'
+import { base } from '$server/lib/db.js'
 import type { Next, Req, Res } from "$server/derver/types.js";
 
 export async function log(req: Req, res: Res, next: Next) {
@@ -19,7 +19,7 @@ export async function log(req: Req, res: Res, next: Next) {
     //         date: res.sendDate
     //     }
     // });
-    const LOGS = await DB.connect('logs/data.json');
+    const LOGS = await base('logs/data.json');
     const date = Date.now()
     const { method, url, socket: { remoteAddress }, headers: { referer } } = req
     const { statusCode } = res
