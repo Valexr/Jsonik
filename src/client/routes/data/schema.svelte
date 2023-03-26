@@ -56,7 +56,7 @@
             await files.rename(collectionName, String(name));
         }
         await schemas.add(String(name), table);
-        await records.get(name);
+        await records.get(String(name));
         goto(`/data/${name}`);
     }
 

@@ -78,7 +78,9 @@
     </Await>
 {/if}
 
-<Record {active} />
+{#if $records}
+    <Record {active} />
+{/if}
 
 <style>
     .cols {

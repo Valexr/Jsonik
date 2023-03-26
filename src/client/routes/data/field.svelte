@@ -15,12 +15,14 @@
 
     let type = field?.type;
     let name = field?.name;
+    let opts = field?.opts;
 
     function selectType(e: SelectEvent) {
         const { value } = e.currentTarget;
         field = SCHEMAS.find((s) => s.type === value);
         type = field?.type;
         name = field?.name;
+        opts = field?.opts;
     }
 
     function inputType(value: any) {
@@ -30,7 +32,7 @@
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <details tabindex="0" bind:open>
-    <summary id="field" tabindex="0">{name}</summary>
+    <summary tabindex="0" class:valid={!valid || !field?.valid}>{name}</summary>
     <Form {id} on:input on:submit on:reset bind:valid>
         <fieldset class="cols col-2">
             <label>
@@ -60,7 +62,7 @@
         </fieldset>
 
         <fieldset class="cols col-3" name="opts" id="opts">
-            {#each Object.entries(field?.opts) as [name, value]}
+            {#each Object.entries(opts) as [name, value]}
                 <label>
                     <small>{name}</small>
                     <input {name} type={inputType(value)} {value} />
@@ -101,7 +103,7 @@
         padding: 0 var(--gap) var(--gap);
         margin: 0;
     }
-    details[open] summary#field {
+    details[open] summary {
         margin-bottom: var(--gap);
     }
     label.cols {

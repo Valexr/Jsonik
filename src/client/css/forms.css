@@ -30,7 +30,7 @@ legend {
 label:not([data-note]) {
     margin-bottom: var(--gap-lg);
     display: flex;
-    flex-wrap: inherit;
+    flex-wrap: wrap;
 }
 
 label small+:is(input, select, textarea) {

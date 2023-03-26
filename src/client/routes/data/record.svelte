@@ -8,7 +8,7 @@
         type Param,
         type Parsable,
     } from "svelte-pathfinder";
-    import { data, files, type Item } from "$client/stores/data.js";
+    import { records, files, type Item } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Table from "$client/components/Table.svelte";
@@ -20,7 +20,24 @@
     export let active: Item;
 </script>
 
-<Aside open={$fragment === `#data-${active?.date}`} right>
+<Aside open={$fragment === `#add-record`} right>
     <h2 slot="header">Record {active?.date}</h2>
     <Code code={JSON.stringify(active, null, 2)} />
+    <Form>
+        <fieldset class="">
+            {#each $records?.schemas as { type, name, opts }}
+                {#if type === "checkbox"}
+                    <label>
+                        <input type="checkbox" role="switch" {name} />&nbsp;
+                        <span>{name}</span>
+                    </label>
+                {:else}
+                    <label>
+                        <span>{name}</span>
+                        <input {type} {name} {...opts} />
+                    </label>
+                {/if}
+            {/each}
+        </fieldset>
+    </Form>
 </Aside>
