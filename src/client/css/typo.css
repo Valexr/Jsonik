@@ -50,7 +50,7 @@ pre {
 
 pre code {
     display: block;
-    border: 0.1rem solid transparent;
+    border: 0.09rem solid var(--surface);
     padding: var(--padding);
 }
 

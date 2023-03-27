@@ -11,9 +11,9 @@
 </script>
 
 <section>
-    <article class="back-active">
+    <article class="">
         <Form on:submit={login} bind:valid>
-            <h3>Auth</h3>
+            <!-- <h3>Auth</h3> -->
             <fieldset>
                 <label>
                     <input type="email" placeholder="email" required />
@@ -29,7 +29,7 @@
             </fieldset>
             <nav class="cols">
                 <!-- <button type="reset">Signin</button> -->
-                <button type="submit" class="success" disabled={!valid}>
+                <button type="submit" class="text-success" disabled={!valid}>
                     Login
                 </button>
             </nav>

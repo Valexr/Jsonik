@@ -1,33 +1,31 @@
 <script lang="ts" context="module">
-    import { records, files, schemas, type Item } from "$client/stores/data.js";
+    import { goto } from "svelte-pathfinder";
+    import {
+        collection,
+        files,
+        schemas,
+        schemasInvalid,
+        SCHEMAS,
+    } from "$client/stores/data.js";
+    import Await from "$client/components/Await.svelte";
     import Dialog from "$client/components/Dialog.svelte";
     import Field from "./field.svelte";
-    import { SCHEMAS, type Schema } from "$client/stores/data.js";
-    import { goto } from "svelte-pathfinder";
 </script>
 
 <script lang="ts">
     export let open = false;
-    export let header = "New collection";
-    export let collectionName = "";
-    export let fields: Schema[] = [];
+    export let header = "Add collection";
+    export let name = "";
 
-    let openID: number;
-    let fieldID: number;
     let validCollection = false;
 
     function addField() {
-        fieldID = Date.now();
-        fields = fields.concat([{ id: fieldID, ...SCHEMAS[0] }]);
-        openID = fieldID;
+        schemas.add([{ id: Date.now(), ...SCHEMAS[0] }]);
     }
 
     function invalidateField(e: Event) {
         const { id } = e.currentTarget as HTMLFormElement;
-        openID = Number(id);
-        fields = fields.map((f) => {
-            return f.id === openID ? { ...f, valid: false } : f;
-        });
+        schemas.invalidate(Number(id));
     }
 
     function saveField(e: SubmitEvent) {
@@ -39,37 +37,31 @@
             valid: true,
             ...{ type, name, required, opts },
         };
-        fields = fields.map((f) => (field.id === f.id ? field : f));
-        openID = Date.now();
+        schemas.save(field);
     }
 
     function deleteField(e: Event) {
         const { id } = e.currentTarget as HTMLFormElement;
-        fields = fields.filter((f) => f.id !== Number(id));
+        schemas.del(Number(id));
     }
 
     async function submitCollection(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
-        const name = data.get("collectionName");
-        const table = fields;
-        if (collectionName) {
-            await files.rename(collectionName, String(name));
-        }
-        await schemas.add(String(name), table);
-        await records.get(String(name));
-        goto(`/data/${name}`);
-    }
+        const newName = String(data.get("collectionName"));
 
-    const clearFields = () => (fields = []);
+        if (name && name !== newName) {
+            await files.rename(name, newName);
+        }
+
+        await files.add(newName, $schemas);
+        await collection.get(newName);
+        goto(`/data/${newName}`);
+    }
 </script>
 
-<Dialog
-    {open}
-    on:submit={submitCollection}
-    on:close={clearFields}
-    bind:valid={validCollection}
->
+<Dialog {open} on:submit={submitCollection} bind:valid={validCollection}>
     <h3 slot="header">{header}</h3>
+
     <fieldset class="cols">
         <label>
             <small>Name</small>
@@ -80,7 +72,7 @@
                 pattern="^[\w,\-]+$"
                 autofocus={true}
                 required
-                value={collectionName}
+                value={name}
             />
         </label>
         <label>
@@ -88,37 +80,41 @@
             <input placeholder="token" />
         </label>
     </fieldset>
+
     <fieldset class="cols column">
         <legend>Fields</legend>
 
-        {#each fields as field (field.id)}
-            <Field
-                {field}
-                id={field.id}
-                open={field.id === openID}
-                on:input={invalidateField}
-                on:submit={saveField}
-                on:reset={deleteField}
-            />
-        {/each}
+        <Await promise={schemas.get(name)}>
+            {#each $schemas as field (field.id)}
+                <Field
+                    {field}
+                    id={field.id}
+                    open={field.id === $schemasInvalid}
+                    on:input={invalidateField}
+                    on:submit={saveField}
+                    on:reset={deleteField}
+                />
+            {/each}
+        </Await>
 
         <nav>
             <button
                 class="block link"
                 type="button"
                 on:click={addField}
-                disabled={!validCollection || fields?.some((f) => !f.valid)}
+                disabled={!validCollection || $schemasInvalid}
             >
                 <i class="icon icon-svg icon-plus" />New field
             </button>
         </nav>
     </fieldset>
+
     <nav slot="footer">
         <button type="reset">Cancel</button>
         <button
             type="submit"
             class="success"
-            disabled={!validCollection || fields?.some((f) => !f.valid)}
+            disabled={!validCollection || $schemasInvalid}
         >
             Submit
         </button>

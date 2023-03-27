@@ -2,6 +2,7 @@
     import { fly } from "svelte/transition";
     import { fragment } from "svelte-pathfinder";
     import { clickout, clickOutside } from "$client/utils/actions.js";
+    import Form from "$client/components/Form.svelte";
 </script>
 
 <script lang="ts">
@@ -11,6 +12,7 @@
     export let right = false;
     export let bottom = false;
     export let left = false;
+    export let valid = false;
 
     let aside: HTMLElement;
 
@@ -18,6 +20,12 @@
     const Y = top ? -1 : bottom ? 1 : 0;
 
     const close = () => fragment.set("");
+
+    function action(aside: HTMLElement) {
+        const form = aside.firstChild as HTMLFormElement;
+        form.onsubmit = () => close();
+        form.onreset = () => close();
+    }
 </script>
 
 {#if open}
@@ -28,22 +36,41 @@
         class:bottom
         class:left
         class:open
+        bind:this={aside}
         transition:fly={{
             x: aside.offsetWidth * X,
             y: aside.offsetHeight * Y,
             opacity: 1,
         }}
         use:clickOutside={close}
-        bind:this={aside}
+        use:action
     >
-        <header>
-            <slot name="header" />
-            <button id="close" class="action" on:click={close}>
-                <i class="icon icon-svg icon-x" />
-            </button>
-        </header>
-        <article>
-            <slot />
-        </article>
+        <Form bind:valid on:submit on:reset on:input>
+            <header>
+                <slot name="header" />
+                <button id="close" class="action" on:click={close}>
+                    <i class="icon icon-svg icon-x" />
+                </button>
+            </header>
+            <article class="scroll">
+                <slot />
+            </article>
+            <!-- svelte-ignore a11y-autofocus -->
+            <footer>
+                <slot name="footer">
+                    <nav class="cols col-fit justify-end">
+                        <button type="reset" class="link">Cancel</button>
+                        <button
+                            type="submit"
+                            class="success"
+                            disabled={!valid}
+                            autofocus={valid}
+                        >
+                            Confirm
+                        </button>
+                    </nav>
+                </slot>
+            </footer>
+        </Form>
     </aside>
 {/if}

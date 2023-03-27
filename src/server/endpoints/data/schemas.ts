@@ -1,3 +1,4 @@
+import { Schema } from '$client/stores/data.js';
 import type { App } from '$server/derver/types.js';
 
 export function schemas(app: App) {
@@ -13,8 +14,9 @@ export function schemas(app: App) {
 
     app.post(async (req, res, next) => {
         try {
-            const schemas = req.body
-            await req.base?.assign({ schemas })
+            const schemas = req.body as Schema[]
+            const keys = Array.from(schemas, ({ name }) => name)
+            await req.base?.assign({ schemas, keys: ['id', ...keys] })
             res.send(req.body);
         } catch (err) {
             console.log('dbERR: ', err);

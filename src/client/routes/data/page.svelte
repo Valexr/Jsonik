@@ -9,7 +9,12 @@
         type Parsable,
         goto,
     } from "svelte-pathfinder";
-    import { records, files, schemas, type Item } from "$client/stores/data.js";
+    import {
+        collection,
+        files,
+        schemas,
+        type Item,
+    } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Table from "$client/components/Table.svelte";
@@ -17,38 +22,37 @@
     import Dialog from "$client/components/Dialog.svelte";
     import Tile from "$client/components/Tile.svelte";
     import Code from "$client/components/Code.svelte";
-    import Schema from "./schema.svelte";
-    import Record from "./record.svelte";
+    import AddSchema from "./schema.svelte";
+    import EditSchema from "./schema.svelte";
+    import AddRecord from "./record.svelte";
+    import EditRecord from "./record.svelte";
     import { onDestroy, onMount } from "svelte";
 </script>
 
 <script lang="ts">
     let active: Item;
+    let selected: number[];
 
     function getItem(item: Item) {
-        fragment.set(`#data-${item.date}`);
+        fragment.set(`#record-${item.id}`);
         active = item;
     }
 
     const route = paramable<{ file: string }>("/data/:file?");
 
-    // onMount(() => {
-    //     if ($collections?.length && !$route.file)
-    //         redirect(`/data/${$collections[0]}`);
-    // });
+    onMount(() => {
+        if ($files?.length && !$route.file) redirect(`/data/${$files[0]}`);
+    });
+
+    $: console.log(active);
 </script>
 
 <section class="cols scroll-x">
-    <Await promise={records.get($route.file)}>
-        {#if $records}
-            <Table
-                data={{
-                    thead: $records.keys,
-                    tbody: $records.items || [],
-                }}
-                active={getItem}
-            />
-            <Code code={JSON.stringify($records, null, 2)} />
+    <Await promise={collection.get($route.file)}>
+        {#if $collection}
+            {@const { keys: thead, records: tbody } = $collection}
+            <Table data={{ thead, tbody }} active={getItem} bind:selected />
+            <Code code={JSON.stringify($collection, null, 2)} />
             <!-- {#each $data.keys as key}
                 <a href="/data/{key}">{key}</a>
             {/each}
@@ -65,22 +69,19 @@
     </Await>
 </section>
 
-{#if $fragment === "#add-collection"}
-    <Schema open={$fragment === "#add-collection"} />
-{:else if $fragment === "#edit-collection"}
-    <Await promise={schemas.get($route.file)}>
-        <Schema
-            open={$fragment === "#edit-collection"}
-            header="Edit collection"
-            collectionName={$route.file}
-            bind:fields={$schemas}
-        />
-    </Await>
-{/if}
+<AddSchema open={$fragment === "#add-collection"} />
+<EditSchema
+    open={$fragment === "#edit-collection"}
+    header="Edit collection"
+    name={$route.file}
+/>
 
-{#if $records}
-    <Record {active} />
-{/if}
+<AddRecord name={$route.file} open={$fragment === `#add-record`} {active} />
+<EditRecord
+    name={$route.file}
+    open={$fragment === `#record-${active?.id}`}
+    {active}
+/>
 
 <style>
     .cols {

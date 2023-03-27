@@ -1,31 +1,39 @@
-import { writable } from 'svelte/store'
+import { derived, writable } from 'svelte/store'
 import { del, get, post, put, patch } from "$client/api/methods.js";
 import { uniq } from '$client/utils/index.js';
 
-export type Schema = Record<string, any>;
+export type Schema = Record<string, any>
+// {
+//     type: string,
+//     name: string,
+//     opts: Record<string, string | number>,
+//     id?: number,
+//     valid?: boolean,
+// } | undefined;
 export type Collection = Record<string, Schema[]>
 export type Item = Record<string, unknown>
 export type Data = {
-    schemas: Schema[]; keys: string[], items: Array<Item>
+    schemas: Schema[]; keys: string[], records: Array<Item>
 }
 
-function createRecords() {
+function createCollection() {
     const { set, subscribe, update } = writable<Data>()
+
     return {
         subscribe,
         async get(file = '') {
             const data = await get(`/data/${file}/records`)
             set(data)
         },
-        async add(file = '', body: BodyInit) {
-            const data = await post(`/data/${file}/records`, body, {
+        async add(file = '', body: Record<string, any>) {
+            const data = await post(`/data/${file}/records`, JSON.stringify(body), {
                 headers: { 'Content-Type': 'application/json' }
             })
             set(data)
         },
     }
 }
-export const records = createRecords()
+export const collection = createCollection()
 
 function createFiles() {
     const { set, subscribe, update } = writable<string[]>()
@@ -55,32 +63,48 @@ function createFiles() {
 export const files = createFiles()
 
 function createSchemas() {
-    const { set, subscribe, update } = writable<Schema[] | undefined>()
+    const { set, subscribe, update } = writable<Schema[]>([])
     return {
         set,
+        update,
         subscribe,
         async get(file = '') {
             const schemas = await get(`/data/${file}/schemas`)
             set(schemas)
         },
-        async add(file = '', body?: object[]) {
+        async upload(file = '', body?: object[]) {
             await post(`/data/${file}/schemas`, JSON.stringify(body), {
                 headers: { 'Content-Type': 'application/json' }
             })
-            files.update(state => !state.includes(file) ? state.concat(file) : state)
+            files.update(state => uniq(state.concat(file)))
         },
-        // async delete(file: string) {
-        //     file = await del(`/data/${file}/`)
-        //     update(state => state.filter(s => s !== file))
-        // }
+        add: (schema: Schema[]) => update(state => state.concat(schema)),
+        invalidate: (id: number) => update((state) =>
+            state.map((s) => s.id === id ? { ...s, valid: false } : s)
+        ),
+        save: (schema: Schema) => update(state =>
+            state.map((s) => (schema.id === s.id ? schema : s))
+        ),
+        del: (id: number) => update(state => state.filter(s => s.id !== id)),
+        clear: () => set([]),
     }
 }
 export const schemas = createSchemas()
+export const schemasInvalid = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
 
 export const SCHEMAS = [
     {
         type: 'text',
         name: 'text',
+        opts: {
+            minlength: 0,
+            maxlength: 0,
+            pattern: '^\\w+$',
+        }
+    },
+    {
+        type: 'textarea',
+        name: 'textarea',
         opts: {
             minlength: 0,
             maxlength: 0,
@@ -114,7 +138,10 @@ export const SCHEMAS = [
     {
         type: 'select',
         name: 'select',
-        opts: {}
+        opts: {
+            options: 'opt0, opt1, opt2...',
+            max: 1
+        }
     },
     {
         type: 'date',

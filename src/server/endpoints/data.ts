@@ -9,6 +9,7 @@ export function data(app: App) {
 
     app.get(pattern, async (req, res, next) => {
         const { file, table } = req.params
+
         if (!file && !table) {
             try {
                 const data = await readdir('data')
@@ -21,14 +22,14 @@ export function data(app: App) {
             try {
                 res.send(req.base?.data)
             } catch (err) {
-                console.log('dbERR: ', err);
+                console.error('dbERR: ', err);
                 next();
             }
         } else {
             try {
                 res.send(req.base?.data[table])
             } catch (err) {
-                console.log('dbERR: ', err);
+                console.error('dbERR: ', err);
                 next();
             }
         }
@@ -36,7 +37,8 @@ export function data(app: App) {
 
     app.post(pattern, async (req, res, next) => {
         try {
-            await req.base?.add(req.body)
+            const schemas = req.body
+            await req.base?.assign({ schemas })
             res.send(req.body);
         } catch (err) {
             console.log('dbERR: ', err);

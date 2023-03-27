@@ -13,9 +13,8 @@ export function records(app: App) {
                 // req.query.id ? res.send(base?.id(+req.query.id)) : res.send(items);
                 res.send(items);
             } else {
-                const keys = req.base?.data.schemas?.map((s: Schema) => s.type)
-                await req.base?.assign({ keys })
-                res.send(req.base?.data);
+                const { keys, records } = req.base?.data
+                res.send({ keys, records });
             }
         } catch (err) {
             console.log('dbERR: ', err);
@@ -24,13 +23,14 @@ export function records(app: App) {
     });
 
     app.post(async (req, res, next) => {
-        // const meta = { id: Date.now(), create: Date.now(), update: Date.now(), role: req.query.role };
         try {
-            await req.base?.assign(req.body)
-            // await base?.append({ ...req.body, ...meta });
+            const record = req.body as object
+            // await req.base?.assign({ records })
+            await req.base?.append({ id: Date.now(), ...record });
             // delete req.query.id;
             // const items = base?.match(req.query);
-            res.send('ok');
+            const { keys, records } = req.base?.data
+            res.send({ keys, records });
         } catch (err) {
             console.log('dbERR: ', err);
             next();

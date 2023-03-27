@@ -1,9 +1,10 @@
 aside {
     --cols-gap: var(--gap-sm);
+    display: flex;
     position: fixed;
     inset: 0;
     z-index: 100;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     background: var(--active);
     /* min-inline-size: 35em; */
     /* max-inline-size: 35em; */
@@ -23,15 +24,20 @@ aside.open::before {
 
 aside :is(header, footer) {
     padding: var(--padding);
+    background: var(--surface);
+    /* position: sticky; */
 }
 
-aside header {
-    position: relative;
-    background: var(--surface);
+aside form {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    min-width: inherit;
 }
 
 aside article {
     padding: var(--gap-lg);
+    flex: 1;
 }
 
 aside header #close {

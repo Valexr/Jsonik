@@ -2,6 +2,7 @@ import type { PathLike } from 'fs';
 import type { InputType } from 'zlib';
 import type { OutgoingHttpHeaders, ServerResponse, IncomingMessage } from 'http';
 import { Base } from '$types/server.js';
+import { Schema } from '$client/stores/data.js';
 
 export type Options = {
     port: number
@@ -23,7 +24,7 @@ export type Req = {
     search: string
     query: { [key: string]: string }
     params: { [key: string]: string; }
-    body: Body & PathLike | string | string[]
+    body: Body & PathLike | string | string[] | Schema[] | Record<string, any>
     file: string
     extname: string
     exists: boolean

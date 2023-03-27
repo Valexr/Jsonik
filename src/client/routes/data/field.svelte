@@ -28,10 +28,15 @@
     function inputType(value: any) {
         return !isNaN(value) ? "number" : "text";
     }
+
+    function defaultOpt(type: string, name: string, value: unknown) {
+        const schema = SCHEMAS.find((s) => s.type === type);
+        return schema?.opts[name] === value ? true : false;
+    }
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<details tabindex="0" bind:open>
+<details tabindex="0" bind:open draggable="true">
     <summary tabindex="0" class:valid={!valid || !field?.valid}>{name}</summary>
     <Form {id} on:input on:submit on:reset bind:valid>
         <fieldset class="cols col-2">
@@ -61,11 +66,17 @@
             </label>
         </fieldset>
 
-        <fieldset class="cols col-3" name="opts" id="opts">
+        <fieldset class="cols" name="opts" id="opts">
             {#each Object.entries(opts) as [name, value]}
+                {@const def = defaultOpt(type, name, value)}
                 <label>
                     <small>{name}</small>
-                    <input {name} type={inputType(value)} {value} />
+                    <input
+                        {name}
+                        type={inputType(value)}
+                        placeholder={String(value)}
+                        value={!def ? value : ""}
+                    />
                 </label>
             {/each}
         </fieldset>
