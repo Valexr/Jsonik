@@ -89,7 +89,7 @@ dialog form {
     display: flex;
     flex-flow: column nowrap;
     align-items: stretch;
-    min-width: inherit;
+    min-width: 100%;
 }
 
 dialog.img form header {
@@ -166,6 +166,17 @@ dialog.lg {
 dialog.fs {
     min-inline-size: 100%;
     min-block-size: 100%;
+}
+
+dialog {
+    max-inline-size: 50rem;
+}
+
+@media screen and (max-width: 600px) {
+    dialog {
+        min-inline-size: 100% !important;
+        max-inline-size: 100% !important;
+    }
 }
 
 /* Global */
