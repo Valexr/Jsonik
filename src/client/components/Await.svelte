@@ -5,7 +5,7 @@
 
 <script lang="ts">
     export let promise: Promise<any> | null;
-    export let result: any = null;
+    // export let result: any = null;
     export let error: any = "";
     export let success = "";
     export let notify = false;
@@ -17,9 +17,9 @@
     $: if (promise) {
         dispatch("await", promise);
         promise
-            .then((res) => {
-                promise = null;
-                result = res ?? true;
+            .then((result) => {
+                // promise = null;
+                // result = res ?? true;
                 dispatch("success", result);
 
                 if (success && notify)
@@ -27,7 +27,7 @@
             })
             .catch((e) => {
                 console.error(e);
-                promise = null;
+                // promise = null;
                 error = error || e.reason || e.message || e;
                 dispatch("error", error);
 
@@ -36,16 +36,18 @@
     }
 </script>
 
-{#if promise && !hidden}
-    <slot name="await">
-        <p aria-busy="true" class:lg={!sm} />
-    </slot>
-{:else if result && !hidden}
-    <slot {result} />
-{:else if !hidden}
-    <slot name="catch" {error}>
-        {#if error}
-            <samp class="error">{error}</samp>
-        {/if}
-    </slot>
+{#if !hidden}
+    {#await promise}
+        <slot name="await">
+            <p aria-busy="true" class:lg={!sm} />
+        </slot>
+    {:then result}
+        <slot {result} />
+    {:catch error}
+        <slot name="catch" {error}>
+            {#if error}
+                <samp class="error">{error}</samp>
+            {/if}
+        </slot>
+    {/await}
 {/if}

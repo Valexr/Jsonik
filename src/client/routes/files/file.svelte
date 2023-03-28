@@ -36,7 +36,7 @@
     href="#file-{encodeURI(file)}"
     style="background-image: url('/api/v1/files/{`${$path[1] || ''}`}/{file}')"
 />
-<label class="text-ellepsis">
+<label>
     <slot>
         {file}
     </slot>
@@ -89,12 +89,13 @@
         text-align: left;
         max-width: calc(100% - (var(--gap) * 8));
     }
-    label.text-ellepsis {
+    label {
         display: flex;
         align-items: center;
         justify-content: start;
+        flex-wrap: nowrap;
         width: 100%;
-        margin: 0 var(--gap-sm);
-        max-width: calc(var(--col-width) - var(--gap-sm));
+        margin: 0;
+        padding: 0 var(--gap-sm);
     }
 </style>

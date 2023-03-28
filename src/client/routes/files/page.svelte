@@ -91,6 +91,7 @@
         align-items: start;
         justify-content: space-between;
         padding: 0;
+        gap: 0;
     }
     [type="checkbox"] {
         flex: 0 0 auto;
@@ -100,5 +101,9 @@
         padding: 0 var(--gap);
         margin: auto;
         z-index: 1;
+    }
+    small {
+        max-width: calc(var(--col-width) - var(--gap));
+        flex: 0 auto;
     }
 </style>

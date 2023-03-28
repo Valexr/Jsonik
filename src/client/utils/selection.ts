@@ -36,7 +36,7 @@ export function selection(container: HTMLElement, {
     let selectedElements = [] as Element[];
 
     function onMouseDown(e: MouseEvent) {
-        if (state.disabled) return;
+        if (state.disabled || e.buttons === 2) return;
         if (!e.shiftKey) selectedElements = [];
         state.mouseDown = true;
         ctx.x1 = e.pageX;

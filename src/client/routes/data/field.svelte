@@ -44,7 +44,7 @@
     <summary tabindex="0" class:invalid={!valid || !field?.valid}>
         <i class="icon icon-svg icon-{field.type} text-gray" />
         <!-- svelte-ignore a11y-autofocus -->
-        <input bind:value={field.name} disabled={!open} autofocus={open} />
+        <input bind:value={field.name} autofocus={open} />
     </summary>
 
     <Form
