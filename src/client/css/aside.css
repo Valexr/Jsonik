@@ -66,8 +66,6 @@ aside.bottom {
     top: auto;
 }
 
-
-
 @media screen and (max-width: 600px) {
     aside {
         min-inline-size: 100%;
