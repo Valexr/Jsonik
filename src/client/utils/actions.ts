@@ -105,8 +105,8 @@ function expand(node: HTMLTextAreaElement) {
 
 function getFocusable(node: HTMLElement): Array<any> {
     return Array.from(node.querySelectorAll(
-        `:is(a, button, input, textarea, select, details):not(:disabled),
-         [tabindex]:not([tabindex="-1"])`
+        ':is(a, button, input, textarea, select, details, summary):not(:disabled, [type=hidden], .hidden,[tabindex="-1"])'
+        //  [tabindex]:not([tabindex="-1"])`
     ))
 }
 
@@ -123,6 +123,7 @@ function focusTrap(node: HTMLElement) {
             if (index === -1 && e.shiftKey) index = 0;
             index += focusable.length + (e.shiftKey ? -1 : 1);
             index %= focusable.length;
+            console.log(focusable[index])
             focusable[index].focus();
         }
     }

@@ -1,7 +1,11 @@
 <script lang="ts" context="module">
     import { fly } from "svelte/transition";
     import { fragment } from "svelte-pathfinder";
-    import { clickout, clickOutside } from "$client/utils/actions.js";
+    import {
+        clickout,
+        clickOutside,
+        keyEscape,
+    } from "$client/utils/actions.js";
     import Form from "$client/components/Form.svelte";
 </script>
 
@@ -43,6 +47,7 @@
             opacity: 1,
         }}
         use:clickOutside={close}
+        use:keyEscape={close}
         use:action
     >
         <Form bind:valid on:submit on:reset on:input>

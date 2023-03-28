@@ -19,10 +19,12 @@
     export let name = "";
 
     let validCollection = false;
+    let addOpen = false;
 
     function addField(schema?: Schema) {
         schema = schema || SCHEMAS[0];
         schemas.add([{ id: Date.now(), ...schema }]);
+        addOpen = false;
     }
 
     async function submitCollection(e: SubmitEvent) {
@@ -75,9 +77,11 @@
         </Await>
 
         <nav>
-            <details role="list" class="">
+            <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+            <details tabindex="0" role="list" bind:open={addOpen} class="top">
                 <!-- svelte-ignore a11y-no-redundant-roles -->
                 <summary
+                    tabindex="0"
                     aria-haspopup="listbox"
                     role="button"
                     class="block link"
@@ -91,7 +95,7 @@
                     {#each SCHEMAS as schema}
                         <li>
                             <button
-                                class="block"
+                                class="block link outline"
                                 type="button"
                                 on:click={() => addField(schema)}
                             >
@@ -121,6 +125,7 @@
 
 <style>
     details ul.cols {
+        --cols-gap: var(--gap);
         padding: var(--gap);
         position: relative;
     }
@@ -128,6 +133,12 @@
         justify-content: center;
     }
     details summary::after {
+        content: none;
+    }
+    details[open] ul.cols {
+        background-color: var(--back);
+    }
+    details[open] summary::before {
         content: none;
     }
     fieldset {

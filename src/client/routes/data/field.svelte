@@ -43,7 +43,8 @@
 <details tabindex="0" bind:open draggable={!open} on:input={invalidate}>
     <summary tabindex="0" class:invalid={!valid || !field?.valid}>
         <i class="icon icon-svg icon-{field.type} text-gray" />
-        <input bind:value={field.name} />
+        <!-- svelte-ignore a11y-autofocus -->
+        <input bind:value={field.name} disabled={!open} autofocus={open} />
     </summary>
 
     <Form
@@ -55,10 +56,10 @@
     >
         <fieldset class="hidden">
             <label>
-                <input name="type" value={field.type} />
+                <input type="hidden" name="type" value={field.type} />
             </label>
             <label>
-                <input name="name" value={field.name} />
+                <input type="hidden" name="name" value={field.name} />
             </label>
         </fieldset>
 
