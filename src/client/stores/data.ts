@@ -83,7 +83,7 @@ function createSchemas() {
             state.map((s) => s.id === id ? { ...s, valid: false } : s)
         ),
         save: (schema: Schema) => update(state =>
-            state.map((s) => (schema.id === s.id ? schema : s))
+            state.map((s) => (schema.id === s.id ? { ...schema, valid: true } : s))
         ),
         del: (id: number) => update(state => state.filter(s => s.id !== id)),
         clear: () => set([]),
@@ -99,7 +99,7 @@ export const SCHEMAS = [
         opts: {
             minlength: 0,
             maxlength: 0,
-            pattern: '^\\w+$',
+            pattern: 'e.g. ^\\w+$',
         }
     },
     {
@@ -108,7 +108,6 @@ export const SCHEMAS = [
         opts: {
             minlength: 0,
             maxlength: 0,
-            pattern: '^\\w+$',
         }
     },
     {
@@ -116,8 +115,7 @@ export const SCHEMAS = [
         name: 'number',
         opts: {
             min: 0,
-            max: 0,
-            step: 1
+            max: 0
         }
     },
     {
@@ -128,12 +126,16 @@ export const SCHEMAS = [
     {
         type: 'email',
         name: 'email',
-        opts: {}
+        opts: {
+            domains: 'allowed domains'
+        }
     },
     {
         type: 'url',
         name: 'url',
-        opts: {}
+        opts: {
+            domains: 'allowed domains'
+        }
     },
     {
         type: 'select',
@@ -146,7 +148,18 @@ export const SCHEMAS = [
     {
         type: 'date',
         name: 'date',
-        opts: {}
+        opts: {
+            min: 0,
+            max: 0
+        }
+    },
+    {
+        type: 'time',
+        name: 'time',
+        opts: {
+            min: 0,
+            max: 0
+        }
     },
     {
         type: 'file',

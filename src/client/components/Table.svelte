@@ -19,8 +19,8 @@
         <slot name="thead">
             {#if data?.thead?.length}
                 <tr>
+                    <th />
                     {#each data.thead as th}
-                        <th />
                         <th>
                             {#if html(th)}
                                 {@html th}

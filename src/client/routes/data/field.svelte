@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { SCHEMAS, type Schema } from "$client/stores/data.js";
+    import { schemas, SCHEMAS, type Schema } from "$client/stores/data.js";
     import Form from "$client/components/Form.svelte";
 
     export type SelectEvent = Event & {
@@ -8,75 +8,65 @@
 </script>
 
 <script lang="ts">
-    export let id: string;
     export let open: boolean;
-    export let field: Schema | undefined;
+    export let field: Schema = SCHEMAS[0];
     export let valid = false;
 
-    let type = field?.type;
-    let name = field?.name;
-    let opts = field?.opts;
+    function attributes(input: HTMLInputElement, opt: Record<string, any>) {
+        const { type, name, value } = opt;
+        const schema = SCHEMAS.find((s) => s.type === opt.type);
+        const def = schema?.opts[name as keyof typeof schema.opts];
+        const typeDate = "date, time, datetime-local".includes(type);
+        const inputType = (value?: string) =>
+            value && !isNaN(Number(value)) ? "number" : "text";
 
-    function selectType(e: SelectEvent) {
-        const { value } = e.currentTarget;
-        field = SCHEMAS.find((s) => s.type === value);
-        type = field?.type;
-        name = field?.name;
-        opts = field?.opts;
+        input.name = name;
+        input.type = typeDate ? type : inputType(String(def));
+        input.placeholder = String(def);
+        input.value = value === def ? "" : value;
     }
 
-    function inputType(value: any) {
-        return !isNaN(value) ? "number" : "text";
+    function invalidate() {
+        schemas.invalidate(field.id);
     }
-
-    function defaultOpt(type: string, name: string, value: unknown) {
-        const schema = SCHEMAS.find((s) => s.type === type);
-        return schema?.opts[name] === value ? true : false;
+    function save(e: SubmitEvent) {
+        const data = new FormData(e.currentTarget as HTMLFormElement);
+        const { type, name, required, ...opts } = Object.fromEntries(data);
+        schemas.save({ ...field, required, opts });
+    }
+    function del() {
+        schemas.del(field.id);
     }
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<details tabindex="0" bind:open draggable="true">
-    <summary tabindex="0" class:valid={!valid || !field?.valid}>{name}</summary>
-    <Form {id} on:input on:submit on:reset bind:valid>
-        <fieldset class="cols col-2">
+<details tabindex="0" bind:open draggable={!open} on:input={invalidate}>
+    <summary tabindex="0" class:invalid={!valid || !field?.valid}>
+        <i class="icon icon-svg icon-{field.type} text-gray" />
+        <input bind:value={field.name} />
+    </summary>
+
+    <Form
+        id={field.id}
+        method="POST"
+        on:submit={save}
+        on:reset={del}
+        bind:valid
+    >
+        <fieldset class="hidden">
             <label>
-                <small>Type</small>
-                <!-- svelte-ignore a11y-autofocus -->
-                <select
-                    id="type"
-                    name="type"
-                    autofocus={true}
-                    bind:value={type}
-                    on:change={selectType}
-                >
-                    {#each SCHEMAS as { type }}
-                        <option>{type}</option>
-                    {/each}
-                </select>
+                <input name="type" value={field.type} />
             </label>
             <label>
-                <small>Name</small>
-                <input
-                    name="name"
-                    required
-                    placeholder="field name"
-                    bind:value={name}
-                />
+                <input name="name" value={field.name} />
             </label>
         </fieldset>
 
         <fieldset class="cols" name="opts" id="opts">
-            {#each Object.entries(opts) as [name, value]}
-                {@const def = defaultOpt(type, name, value)}
+            {#each Object.entries(field.opts) as [name, value]}
                 <label>
                     <small>{name}</small>
-                    <input
-                        {name}
-                        type={inputType(value)}
-                        placeholder={String(value)}
-                        value={!def ? value : ""}
-                    />
+                    <input use:attributes={{ type: field.type, name, value }} />
                 </label>
             {/each}
         </fieldset>
@@ -87,9 +77,10 @@
                     name="required"
                     type="checkbox"
                     role="switch"
-                    checked={field?.required}
+                    checked={field.required}
                 />Required
             </label>
+
             <nav class="cols col-fit">
                 <button type="reset" class="link box text-error">
                     <i class="icon icon-svg icon-trash" />
@@ -113,6 +104,15 @@
     details fieldset {
         padding: 0 var(--gap) var(--gap);
         margin: 0;
+    }
+    details summary {
+        padding-left: 0.5em;
+    }
+    details summary .icon {
+        cursor: grab;
+    }
+    details summary input {
+        border: 0;
     }
     details[open] summary {
         margin-bottom: var(--gap);

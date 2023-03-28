@@ -6,6 +6,7 @@
         schemas,
         schemasInvalid,
         SCHEMAS,
+        Schema,
     } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Dialog from "$client/components/Dialog.svelte";
@@ -19,30 +20,9 @@
 
     let validCollection = false;
 
-    function addField() {
-        schemas.add([{ id: Date.now(), ...SCHEMAS[0] }]);
-    }
-
-    function invalidateField(e: Event) {
-        const { id } = e.currentTarget as HTMLFormElement;
-        schemas.invalidate(Number(id));
-    }
-
-    function saveField(e: SubmitEvent) {
-        const data = new FormData(e.currentTarget as HTMLFormElement);
-        const { type, name, required, ...opts } = Object.fromEntries(data);
-        const { id } = e.currentTarget as HTMLFormElement;
-        const field = {
-            id: Number(id),
-            valid: true,
-            ...{ type, name, required, opts },
-        };
-        schemas.save(field);
-    }
-
-    function deleteField(e: Event) {
-        const { id } = e.currentTarget as HTMLFormElement;
-        schemas.del(Number(id));
+    function addField(schema?: Schema) {
+        schema = schema || SCHEMAS[0];
+        schemas.add([{ id: Date.now(), ...schema }]);
     }
 
     async function submitCollection(e: SubmitEvent) {
@@ -76,8 +56,12 @@
             />
         </label>
         <label>
-            <small>Token</small>
-            <input placeholder="token" />
+            <small>Type</small>
+            <select name="collectionType">
+                <option>Base</option>
+                <option>View</option>
+                <option>Auth</option>
+            </select>
         </label>
     </fieldset>
 
@@ -86,26 +70,40 @@
 
         <Await promise={schemas.get(name)}>
             {#each $schemas as field (field.id)}
-                <Field
-                    {field}
-                    id={field.id}
-                    open={field.id === $schemasInvalid}
-                    on:input={invalidateField}
-                    on:submit={saveField}
-                    on:reset={deleteField}
-                />
+                <Field {field} open={field.id === $schemasInvalid} />
             {/each}
         </Await>
 
         <nav>
-            <button
-                class="block link"
-                type="button"
-                on:click={addField}
-                disabled={!validCollection || $schemasInvalid}
-            >
-                <i class="icon icon-svg icon-plus" />New field
-            </button>
+            <details role="list" class="">
+                <!-- svelte-ignore a11y-no-redundant-roles -->
+                <summary
+                    aria-haspopup="listbox"
+                    role="button"
+                    class="block link"
+                    class:disabled={!validCollection || $schemasInvalid}
+                >
+                    <i class="icon icon-svg icon-plus" />New field
+                </summary>
+                <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
+                <ul role="listbox" class="cols">
+                    <!-- svelte-ignore missing-declaration -->
+                    {#each SCHEMAS as schema}
+                        <li>
+                            <button
+                                class="block"
+                                type="button"
+                                on:click={() => addField(schema)}
+                            >
+                                <i
+                                    class="icon icon-svg icon-{schema.type} text-gray"
+                                />
+                                {schema.type}
+                            </button>
+                        </li>
+                    {/each}
+                </ul>
+            </details>
         </nav>
     </fieldset>
 
@@ -122,6 +120,16 @@
 </Dialog>
 
 <style>
+    details ul.cols {
+        padding: var(--gap);
+        position: relative;
+    }
+    details summary {
+        justify-content: center;
+    }
+    details summary::after {
+        content: none;
+    }
     fieldset {
         margin-bottom: var(--gap);
     }

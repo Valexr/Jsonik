@@ -86,7 +86,7 @@ details[role=list] ul[role=listbox] {
     padding: 0.5rem 0;
     list-style: none;
     position: absolute;
-    min-inline-size: max-content;
+    /* min-inline-size: max-content; */
     text-align: left;
     line-height: 2.25;
     overflow: hidden;

@@ -693,11 +693,6 @@
     -webkit-mask-image: url(../svg/feather/users.svg);
 }
 
-.icon-clock {
-    mask-image: url(../svg/feather/clock.svg);
-    -webkit-mask-image: url(../svg/feather/clock.svg);
-}
-
 .icon-settings {
     mask-image: url(../svg/feather/settings.svg);
     -webkit-mask-image: url(../svg/feather/settings.svg);
@@ -774,6 +769,66 @@
 }
 
 .icon-code {
+    mask-image: url(../svg/feather/code.svg);
+    -webkit-mask-image: url(../svg/feather/code.svg);
+}
+
+.icon-text {
+    mask-image: url(../svg/feather/type.svg);
+    -webkit-mask-image: url(../svg/feather/type.svg);
+}
+
+.icon-select {
+    mask-image: url(../svg/feather/list.svg);
+    -webkit-mask-image: url(../svg/feather/list.svg);
+}
+
+.icon-textarea {
+    mask-image: url(../svg/feather/edit.svg);
+    -webkit-mask-image: url(../svg/feather/edit.svg);
+}
+
+.icon-number {
+    mask-image: url(../svg/feather/hash.svg);
+    -webkit-mask-image: url(../svg/feather/hash.svg);
+}
+
+.icon-checkbox {
+    mask-image: url(../svg/feather/check-square.svg);
+    -webkit-mask-image: url(../svg/feather/check-square.svg);
+}
+
+.icon-email {
+    mask-image: url(../svg/feather/at-sign.svg);
+    -webkit-mask-image: url(../svg/feather/at-sign.svg);
+}
+
+.icon-url {
+    mask-image: url(../svg/feather/link.svg);
+    -webkit-mask-image: url(../svg/feather/link.svg);
+}
+
+.icon-date {
+    mask-image: url(../svg/feather/calendar.svg);
+    -webkit-mask-image: url(../svg/feather/calendar.svg);
+}
+
+.icon-time {
+    mask-image: url(../svg/feather/clock.svg);
+    -webkit-mask-image: url(../svg/feather/clock.svg);
+}
+
+.icon-file {
+    mask-image: url(../svg/feather/image.svg);
+    -webkit-mask-image: url(../svg/feather/image.svg);
+}
+
+.icon-markdown {
+    mask-image: url(../svg/feather/file-text.svg);
+    -webkit-mask-image: url(../svg/feather/file-text.svg);
+}
+
+.icon-json {
     mask-image: url(../svg/feather/code.svg);
     -webkit-mask-image: url(../svg/feather/code.svg);
 }
