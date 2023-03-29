@@ -12,8 +12,9 @@ export type Schema = Record<string, any>
 // } | undefined;
 export type Collection = Record<string, Schema[]>
 export type Item = Record<string, unknown>
+export type Key = string & { type: string; name: string }
 export type Data = {
-    schemas: Schema[]; keys: string[], records: Array<Item>
+    schemas: Array<Schema>; keys: Array<Key>, records: Array<Item>
 }
 
 function createCollection() {

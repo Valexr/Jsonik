@@ -33,9 +33,13 @@ label:not([data-note]) {
     flex-wrap: wrap;
 }
 
-label small+:is(input, select, textarea) {
+label :is(small, span)+:is(input, select, textarea) {
     margin-top: var(--gap-sm);
 }
+
+/* label :is(small, span) i {
+    vertical-align: sub;
+} */
 
 input,
 select,

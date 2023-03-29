@@ -20,9 +20,9 @@ export async function log(req: Req, res: Res, next: Next) {
     //     }
     // });
     const LOGS = await base('logs/data.json');
-    const date = Date.now()
+    const id = Date.now()
     const { method, url, socket: { remoteAddress }, headers: { referer } } = req
     const { statusCode } = res
-    await LOGS?.prepend({ date, method, status: statusCode, url, ip: remoteAddress, referer })
+    await LOGS?.prepend({ id, method, status: statusCode, url, ip: remoteAddress, referer })
     next();
 }

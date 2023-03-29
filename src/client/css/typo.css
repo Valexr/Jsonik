@@ -70,6 +70,10 @@ code span {
     text-align: center;
 }
 
+.text-left {
+    text-align: left;
+}
+
 .text-break {
     word-break: break-all;
     white-space: initial;

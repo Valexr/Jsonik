@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
     import {
+        url,
         path,
         state,
         fragment,
@@ -33,9 +34,9 @@
     let active: Item;
     let selected: number[];
 
-    function getItem(item: Item) {
-        fragment.set(`#record-${item.id}`);
-        active = item;
+    function getItem(id: number) {
+        fragment.set(`#record-${id}`);
+        active = $collection.records.find((r) => r.id === id) || {};
     }
 
     const route = paramable<{ file: string }>("/data/:file?");
@@ -44,14 +45,28 @@
         if ($files?.length && !$route.file) redirect(`/data/${$files[0]}`);
     });
 
+    function head(item: { type: string; name: string }) {
+        const { type, name } = item;
+        return `
+            <i class="icon icon-svg icon-${type} text-gray"></i> ${name}
+        `;
+    }
+
+    function sort() {
+        $collection.records.sort().reverse();
+    }
+
     $: console.log(active);
 </script>
 
 <section class="cols scroll-x">
     <Await promise={collection.get($route.file)}>
-        {#if $collection}
+        {#if $collection.keys}
             {@const { keys: thead, records: tbody } = $collection}
-            <Table data={{ thead, tbody }} active={getItem} bind:selected />
+            <!-- {@const thead = $collection.keys.map(({ type, name }) =>
+                head({ type, name })
+            )} -->
+            <Table data={{ thead, tbody }} current={getItem} bind:selected />
             <Code code={JSON.stringify($collection, null, 2)} />
             <!-- {#each $data.keys as key}
                 <a href="/data/{key}">{key}</a>

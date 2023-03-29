@@ -48,7 +48,7 @@
 </script>
 
 <Aside {open} right on:submit={submitRecord}>
-    <h2 slot="header">Add record</h2>
+    <h3 slot="header">Add record</h3>
     <Await promise={schemas.get(name)}>
         <fieldset>
             {#each makeRecords() as { type, name, required, opts, value }}
@@ -59,20 +59,26 @@
                             role="switch"
                             {name}
                             {required}
-                            {value}
+                            checked={value}
                         />&nbsp;
                         <span>{name}</span>
                     </label>
                 {:else if type === "textarea"}
                     <label>
-                        <span>{name}</span>
+                        <span>
+                            <i class="icon icon-svg icon-{type} text-gray" />
+                            {name}
+                        </span>
                         <textarea {name} {...clean(opts)} {required} use:expand
                             >{value}</textarea
                         >
                     </label>
                 {:else if type === "select"}
                     <label>
-                        <span>{name}</span>
+                        <span>
+                            <i class="icon icon-svg icon-{type} text-gray" />
+                            {name}
+                        </span>
                         <select
                             {name}
                             multiple={opts.max > 1}
@@ -96,7 +102,10 @@
                     />
                 {:else}
                     <label>
-                        <span>{name}</span>
+                        <span>
+                            <i class="icon icon-svg icon-{type} text-gray" />
+                            {name}
+                        </span>
                         <input
                             {type}
                             {name}

@@ -78,7 +78,7 @@
 
         <nav>
             <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-            <details tabindex="0" role="list" bind:open={addOpen} class="top">
+            <details tabindex="0" role="list" bind:open={addOpen}>
                 <!-- svelte-ignore a11y-no-redundant-roles -->
                 <summary
                     tabindex="0"
@@ -87,7 +87,8 @@
                     class="block link"
                     class:disabled={!validCollection || $schemasInvalid}
                 >
-                    <i class="icon icon-svg icon-plus" />New field
+                    <!-- <i class="icon icon-svg icon-plus" /> -->
+                    New field
                 </summary>
                 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
                 <ul role="listbox" class="cols">
@@ -130,10 +131,10 @@
         position: relative;
     }
     details summary {
-        justify-content: center;
+        /* justify-content: center; */
     }
     details summary::after {
-        content: none;
+        /* content: none; */
     }
     details[open] ul.cols {
         background-color: var(--back);

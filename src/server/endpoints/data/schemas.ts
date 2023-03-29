@@ -15,7 +15,7 @@ export function schemas(app: App) {
     app.post(async (req, res, next) => {
         try {
             const schemas = req.body as Schema[]
-            const keys = Array.from(schemas, ({ name }) => name)
+            const keys = Array.from(schemas, ({ type, name }) => ({ type, name }))
             await req.base?.assign({ schemas, keys: ['id', ...keys] })
             res.send(req.body);
         } catch (err) {

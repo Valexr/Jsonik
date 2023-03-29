@@ -72,14 +72,16 @@
         Upload {fileList?.length} file{s(fileList?.length)}
     </h3>
     {#if fileList}
-        {@const list = Array.from(fileList).map(({ name, size, type }, id) => ({
-            id: id + 1,
+        {@const list = Array.from(fileList).map(({ name, size, type }, i) => ({
+            id: i + 1,
             name,
             size,
             type,
         }))}
         <Table
-            active={console.log}
+            selectable={false}
+            timeable={0}
+            current={console.log}
             data={{
                 thead: ["id", "name", "size", "type"],
                 tbody: list,
