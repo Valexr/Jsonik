@@ -44,19 +44,6 @@
     onMount(() => {
         if ($files?.length && !$route.file) redirect(`/data/${$files[0]}`);
     });
-
-    function head(item: { type: string; name: string }) {
-        const { type, name } = item;
-        return `
-            <i class="icon icon-svg icon-${type} text-gray"></i> ${name}
-        `;
-    }
-
-    function sort() {
-        $collection.records.sort().reverse();
-    }
-
-    $: console.log(active);
 </script>
 
 <section class="cols scroll-x">

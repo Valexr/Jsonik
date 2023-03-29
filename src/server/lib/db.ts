@@ -44,6 +44,11 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 await base.write();
                 return base.data[table];
             },
+            upkeys: async (keys: Record<string, string>) => {
+                base.data[table] = base.data[table].map((t: Record<string, any>) => renameKeys(t, keys))
+                await base.write();
+                return base.data[table];
+            },
             update: async (id, meta) => {
                 base.data[table].forEach((i) => i.id === id && Object.assign(i, meta));
                 await base.write();
@@ -97,6 +102,16 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
     } catch (err) {
         console.log('dbERR:', err);
     }
+}
+
+function renameKeys(obj: Record<string, any>, newKeys: Record<string, string>) {
+    const entries = Object.keys(obj).map(key => {
+        const newKey = newKeys[key] || key;
+
+        return { [newKey]: obj[key] };
+    });
+
+    return Object.assign({}, ...entries);
 }
 
 // async function filters(q) {

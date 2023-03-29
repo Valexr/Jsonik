@@ -17,6 +17,15 @@ table td {
     white-space: normal;
 }
 
+table p {
+    margin: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    /* max-width: fit-content; */
+}
+
 table thead th[role=button] {
     padding: 0 var(--gap-sm);
     display: table-cell;

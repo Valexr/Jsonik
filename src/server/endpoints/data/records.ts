@@ -38,11 +38,13 @@ export function records(app: App) {
     });
 
     app.put(async (req, res, next) => {
-        const meta = { ...req.body, update: Date.now() };
+        // const meta = { ...req.body, update: Date.now() };
+        const keys = req.body
         try {
-            await req.base?.update(+req.query.id, meta);
-            delete req.query.id;
-            const items = req.base?.match(req.query);
+            const items = await req.base?.upkeys(keys)
+            // await req.base?.update(+req.query.id, meta);
+            // delete req.query.id;
+            // const items = req.base?.match(req.query);
             res.send(items);
         } catch (err) {
             console.log('dbERR: ', err);

@@ -29,7 +29,7 @@
     function invalidate() {
         schemas.invalidate(field.id);
     }
-    function save(e: SubmitEvent) {
+    function save(e: SubmitEvent | InputEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const { type, name, required, ...opts } = Object.fromEntries(data);
         schemas.save({ ...field, required, opts });
@@ -40,11 +40,21 @@
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<details tabindex="0" bind:open draggable={!open} on:input={invalidate}>
+<details
+    tabindex="0"
+    bind:open
+    draggable={!open}
+    on:input={invalidate}
+    on:submit={console.log}
+>
     <summary tabindex="0" class:invalid={!valid || !field?.valid}>
         <i class="icon icon-svg icon-{field.type} text-gray" />
         <!-- svelte-ignore a11y-autofocus -->
-        <input bind:value={field.name} autofocus={open} />
+        <input
+            bind:value={field.name}
+            autofocus={open}
+            on:change={() => schemas.save(field)}
+        />
     </summary>
 
     <Form
@@ -79,7 +89,7 @@
                     type="checkbox"
                     role="switch"
                     checked={field.required}
-                />Required
+                /> Required
             </label>
 
             <nav class="cols col-fit">

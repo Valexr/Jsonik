@@ -32,6 +32,12 @@ function createCollection() {
             })
             set(data)
         },
+        async update(file = '', body: Record<string, any>) {
+            const data = await put(`/data/${file}/records`, JSON.stringify(body), {
+                headers: { 'Content-Type': 'application/json' }
+            })
+            update((state) => Object.assign(state, { records: data }))
+        },
     }
 }
 export const collection = createCollection()

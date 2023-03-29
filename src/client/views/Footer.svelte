@@ -16,7 +16,9 @@
             <i class="icon icon-svg icon-plus" />
         </a>
         <Search />
-        <button class="box"><i class="icon icon-svg icon-code" /></button>
+        <a role="button" href="?some=foo" class="box">
+            <i class="icon icon-svg icon-code" />
+        </a>
     {:else}
         <p class="text-center">© {new Date().getFullYear()} Jsonik</p>
     {/if}

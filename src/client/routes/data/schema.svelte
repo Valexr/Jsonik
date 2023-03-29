@@ -30,12 +30,20 @@
     async function submitCollection(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const newName = String(data.get("collectionName"));
+        const { keys } = $collection;
+        const newKeys = keys?.slice(1).reduce((a, { type, name }) => {
+            const newName = $schemas.find((s) => s.type === type)?.name;
+            a[name] = newName;
+            return a;
+        }, {} as Record<string, string>);
 
         if (name && name !== newName) {
             await files.rename(name, newName);
         }
-
+        // rename key
+        // delete Object.assign(o, {[newKey]: o[oldKey] })[oldKey];
         await files.add(newName, $schemas);
+        if (newKeys) await collection.update(newName, newKeys);
         await collection.get(newName);
         goto(`/data/${newName}`);
     }
@@ -47,12 +55,10 @@
     <fieldset class="cols">
         <label>
             <small>Name</small>
-            <!-- svelte-ignore a11y-autofocus -->
             <input
                 name="collectionName"
                 placeholder="collection name"
                 pattern="^[\w,\-]+$"
-                autofocus={true}
                 required
                 value={name}
             />
@@ -87,7 +93,7 @@
                     class="block link"
                     class:disabled={!validCollection || $schemasInvalid}
                 >
-                    <!-- <i class="icon icon-svg icon-plus" /> -->
+                    <i class="icon icon-svg icon-plus" />
                     New field
                 </summary>
                 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
@@ -131,10 +137,10 @@
         position: relative;
     }
     details summary {
-        /* justify-content: center; */
+        justify-content: center;
     }
     details summary::after {
-        /* content: none; */
+        content: none;
     }
     details[open] ul.cols {
         background-color: var(--back);

@@ -21,7 +21,7 @@
         // "preserveValueImports": true,
         "moduleResolution": "NodeNext",
         // "importsNotUsedAsValues": "error",
-        "verbatimModuleSyntax": false,
+        // "verbatimModuleSyntax": false,
         "lib": [
             "DOM",
             "ESNext",

@@ -12,6 +12,7 @@ export type Base = {
     match: (query: object) => any;
     prepend: (obj: object, meta?: object) => Promise<any>;
     append: (obj: object, meta?: object) => Promise<any>;
+    upkeys: (keys: Record<string, string>) => Promise<void>
     update: (id: number | string, meta?: Object) => Promise<any>;
     patch: (query: string, meta?: object) => Promise<void>;
     delete: (query: object) => Promise<any>;

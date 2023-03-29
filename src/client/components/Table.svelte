@@ -9,12 +9,12 @@
     export let data: Table;
     export let current: ((id: number) => void) | undefined = undefined;
     export let selected: number[];
-    export let selectable = true;
+    export let selectable = 1;
     export let timeable = 1;
 
     function selectAll(e: InputEvent) {
         const { checked, id } = e.currentTarget;
-        selected = checked ? data.tbody.map((tb) => tb[id]) : [];
+        selected = checked ? data.tbody.map((tb) => tb.id) : [];
     }
 
     const html = (value: string) => /<|>/g.test(value);
@@ -50,11 +50,10 @@
     <thead>
         <slot name="thead">
             {#if data?.thead?.length}
-                {@const id = data.thead[0].name || data.thead[0]}
                 <tr>
                     {#if selectable}
                         <th>
-                            <input type="checkbox" on:change={selectAll} {id} />
+                            <input type="checkbox" on:change={selectAll} />
                         </th>
                     {/if}
                     {#if timeable}
@@ -62,27 +61,18 @@
                             <Icon icon="date" color="gray" /> created
                         </th>
                     {/if}
-                    {#each data.thead.slice(timeable) as th, i}
-                        {#if th.type && th.name}
-                            <th
-                                role="button"
-                                class="link"
-                                id={th.name}
-                                on:click={sort}
-                            >
+                    {#each data.thead.slice(timeable) as th}
+                        <th
+                            role="button"
+                            class="link"
+                            id={th.name || th}
+                            on:click={sort}
+                        >
+                            {#if th.type && th.name}
                                 <Icon icon={th.type} color="gray" />
-                                {th.name}
-                            </th>
-                        {:else}
-                            <th
-                                role="button"
-                                class="link"
-                                id={th}
-                                on:click={sort}
-                            >
-                                {th}
-                            </th>
-                        {/if}
+                            {/if}
+                            {th.name || th}
+                        </th>
                     {/each}
                 </tr>
             {/if}
@@ -105,12 +95,12 @@
                 {#if timeable}
                     <td>{date(id)}</td>
                 {/if}
-                {#each Object.values(tr).slice(timeable) as td, i}
+                {#each Object.values(tr).slice(timeable) as td}
                     <td>
                         {#if html(td)}
                             {@html td}
                         {:else}
-                            {td}
+                            <p>{td}</p>
                         {/if}
                     </td>
                 {/each}

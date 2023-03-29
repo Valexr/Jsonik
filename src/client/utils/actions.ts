@@ -123,7 +123,7 @@ function focusTrap(node: HTMLElement) {
             if (index === -1 && e.shiftKey) index = 0;
             index += focusable.length + (e.shiftKey ? -1 : 1);
             index %= focusable.length;
-            console.log(focusable[index])
+            // console.log(focusable[index])
             focusable[index].focus();
         }
     }

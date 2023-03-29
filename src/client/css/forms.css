@@ -29,8 +29,8 @@ legend {
 
 label:not([data-note]) {
     margin-bottom: var(--gap-lg);
-    display: flex;
-    flex-wrap: wrap;
+    display: block;
+    /* flex-wrap: wrap; */
 }
 
 label :is(small, span)+:is(input, select, textarea) {
@@ -192,7 +192,7 @@ textarea {
 }
 
 .invalid,
-:not(button, select, [type=checkbox], [type=search]):invalid,
+:not(button, select, [type=search]):invalid,
 :out-of-range {
     border-color: var(--error);
 }

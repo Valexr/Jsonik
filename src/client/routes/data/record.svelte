@@ -17,10 +17,12 @@
     } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
+    import Icon from "$client/components/Icon.svelte";
     import Table from "$client/components/Table.svelte";
     import Form from "$client/components/Form.svelte";
     import Code from "$client/components/Code.svelte";
     import { expand } from "$client/utils/actions.js";
+    import { date } from "$client/utils/time.js";
 </script>
 
 <script lang="ts">
@@ -29,26 +31,26 @@
     export let open = false;
 
     function makeRecords() {
-        return active
-            ? $schemas.map((s) => {
-                  console.log(active[s.name]);
-                  return active[s.name] ? { value: active[s.name], ...s } : s;
-              })
-            : $schemas;
+        const fn = (s: any) =>
+            active[s.name] ? { value: active[s.name], ...s } : s;
+        return active ? $schemas.map(fn) : $schemas;
     }
     function submitRecord(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const record = Object.fromEntries(data);
-        // const body = [{ id: Date.now(), ...record }];
         collection.add(name, record);
         console.log(record, active);
     }
-    const clean = (object: object) =>
-        JSON.parse(JSON.stringify(object, (_, value) => value || undefined));
+    function clean(obj: object) {
+        return JSON.parse(JSON.stringify(obj, (_, v) => v || undefined));
+    }
 </script>
 
 <Aside {open} right on:submit={submitRecord}>
     <h3 slot="header">Add record</h3>
+    {#if active}
+        <p>Created {date(Number(active?.id))}</p>
+    {/if}
     <Await promise={schemas.get(name)}>
         <fieldset>
             {#each makeRecords() as { type, name, required, opts, value }}
@@ -61,24 +63,18 @@
                             {required}
                             checked={value}
                         />&nbsp;
-                        <span>{name}</span>
+                        <small>{name}</small>
                     </label>
                 {:else if type === "textarea"}
                     <label>
-                        <span>
-                            <i class="icon icon-svg icon-{type} text-gray" />
-                            {name}
-                        </span>
+                        <small><Icon icon={type} color="gray" /> {name}</small>
                         <textarea {name} {...clean(opts)} {required} use:expand
                             >{value}</textarea
                         >
                     </label>
                 {:else if type === "select"}
                     <label>
-                        <span>
-                            <i class="icon icon-svg icon-{type} text-gray" />
-                            {name}
-                        </span>
+                        <small><Icon icon={type} color="gray" /> {name}</small>
                         <select
                             {name}
                             multiple={opts.max > 1}
@@ -92,20 +88,12 @@
                         </select>
                     </label>
                 {:else if "json, markdown".includes(type)}
-                    <span>{name}</span>
-                    <Code
-                        code={JSON.stringify(
-                            { type, name, opts, value },
-                            null,
-                            2
-                        )}
-                    />
+                    {@const code = { type, name, opts, value }}
+                    <small><Icon icon={type} color="gray" /> {name}</small>
+                    <Code code={JSON.stringify(code, null, 2)} />
                 {:else}
                     <label>
-                        <span>
-                            <i class="icon icon-svg icon-{type} text-gray" />
-                            {name}
-                        </span>
+                        <small><Icon icon={type} color="gray" /> {name}</small>
                         <input
                             {type}
                             {name}
