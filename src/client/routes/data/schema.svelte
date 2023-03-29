@@ -84,7 +84,7 @@
 
         <nav>
             <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-            <details tabindex="0" role="list" bind:open={addOpen}>
+            <details tabindex="0" role="list" bind:open={addOpen} class="top">
                 <!-- svelte-ignore a11y-no-redundant-roles -->
                 <summary
                     tabindex="0"
@@ -134,7 +134,7 @@
     details ul.cols {
         --cols-gap: var(--gap);
         padding: var(--gap);
-        position: relative;
+        position: sticky;
     }
     details summary {
         justify-content: center;
@@ -146,7 +146,7 @@
         background-color: var(--back);
     }
     details[open] summary::before {
-        content: none;
+        /* content: none; */
     }
     fieldset {
         margin-bottom: var(--gap);
