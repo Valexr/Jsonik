@@ -31,7 +31,7 @@
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const newName = String(data.get("collectionName"));
         const { keys } = $collection;
-        const newKeys = keys?.slice(1).reduce((a, { type, name }) => {
+        const newKeys = keys?.reduce((a, { type, name }) => {
             const newName = $schemas.find((s) => s.type === type)?.name;
             a[name] = newName;
             return a;

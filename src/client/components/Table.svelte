@@ -3,6 +3,12 @@
     import { date } from "$client/utils/time.js";
     import type { InputEvent } from "$types/client.js";
     import type { Item } from "$client/stores/data.js";
+
+    type Table = {
+        thead?: Array<string & { type: string; name: string }>;
+        tbody: Array<Record<string, any>>;
+        tfoot?: Array<string[]>;
+    };
 </script>
 
 <script lang="ts">
@@ -12,20 +18,8 @@
     export let selectable = 1;
     export let timeable = 1;
 
-    function selectAll(e: InputEvent) {
-        const { checked, id } = e.currentTarget;
-        selected = checked ? data.tbody.map((tb) => tb.id) : [];
-    }
-
-    const html = (value: string) => /<|>/g.test(value);
-
-    type Table = {
-        thead?: Array<string & { type: string; name: string }>;
-        tbody: Array<Record<string, any>>;
-        tfoot?: Array<string[]>;
-    };
-
     let sorted = true;
+
     function sort(e: MouseEvent) {
         const { id } = e.currentTarget as HTMLButtonElement;
         const compare = (a: Item, b: Item) =>
@@ -43,6 +37,15 @@
         if (!input) current?.(Number(id));
     }
 
+    function selectAll(e: InputEvent) {
+        const { checked } = e.currentTarget;
+        selected = checked ? data.tbody.map((tb) => tb.id) : [];
+    }
+
+    const html = (value: string) => /<|>/g.test(value);
+
+    $: checkedAll = () => selected?.length === data?.tbody?.length;
+
     $: console.log(selected);
 </script>
 
@@ -53,7 +56,11 @@
                 <tr>
                     {#if selectable}
                         <th>
-                            <input type="checkbox" on:change={selectAll} />
+                            <input
+                                type="checkbox"
+                                checked={selected?.length === data.tbody.length}
+                                on:change={selectAll}
+                            />
                         </th>
                     {/if}
                     {#if timeable}
@@ -61,7 +68,7 @@
                             <Icon icon="date" color="gray" /> created
                         </th>
                     {/if}
-                    {#each data.thead.slice(timeable) as th}
+                    {#each data.thead as th}
                         <th
                             role="button"
                             class="link"

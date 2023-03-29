@@ -51,9 +51,9 @@
         <i class="icon icon-svg icon-{field.type} text-gray" />
         <!-- svelte-ignore a11y-autofocus -->
         <input
-            bind:value={field.name}
             autofocus={open}
-            on:change={() => schemas.save(field)}
+            bind:value={field.name}
+            on:change|self={() => schemas.save(field)}
         />
     </summary>
 
