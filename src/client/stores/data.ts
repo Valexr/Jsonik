@@ -25,6 +25,7 @@ function createCollection() {
         async get(file = '') {
             const data = await get(`/data/${file}/records`)
             set(data)
+            return data
         },
         async add(file = '', body: Record<string, any>) {
             const data = await post(`/data/${file}/records`, JSON.stringify(body), {

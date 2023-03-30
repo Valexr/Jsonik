@@ -43,7 +43,7 @@
 </label>
 
 <Dialog open={$fragment === `#file-${file}`} from="center" size="lg" img>
-    {#if [".svg", ".jpg", ".jpeg", ".png", ".gif"].some( (ext) => file.includes(ext) )}
+    {#if [".svg", ".jpg", ".jpeg", ".png", ".gif", ".dng"].some( (ext) => file.includes(ext) )}
         <figure>
             <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
         </figure>

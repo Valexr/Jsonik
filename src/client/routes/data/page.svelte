@@ -50,21 +50,8 @@
     <Await promise={collection.get($route.file)}>
         {#if $collection.keys}
             {@const { keys: thead, records: tbody } = $collection}
-            <!-- {@const thead = $collection.keys.map(({ type, name }) =>
-                head({ type, name })
-            )} -->
             <Table data={{ thead, tbody }} current={getItem} bind:selected />
             <Code code={JSON.stringify($collection, null, 2)} />
-            <!-- {#each $data.keys as key}
-                <a href="/data/{key}">{key}</a>
-            {/each}
-            {#each $data.items as item}
-                <Tile id={item.id} on:click={() => getRecord(item.id)}>
-                    {#each Object.values(item).slice(1) as value}
-                        <span>{value}</span>
-                    {/each}
-                </Tile>
-            {/each} -->
         {:else}
             <p class="text-center">You haven't any data yet...</p>
         {/if}

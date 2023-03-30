@@ -26,7 +26,7 @@ export function records(app: App) {
         try {
             const record = req.body as object
             // await req.base?.assign({ records })
-            await req.base?.append({ id: Date.now(), ...record });
+            await req.base?.prepend({ id: Date.now(), ...record });
             // delete req.query.id;
             // const items = base?.match(req.query);
             const { keys, records } = req.base?.data

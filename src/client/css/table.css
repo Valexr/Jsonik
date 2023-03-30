@@ -36,7 +36,7 @@ table thead th[role=button] {
 
 table :is(th, td) {
     padding: var(--gap-sm);
-    line-height: 1;
+    line-height: initial;
 }
 
 table.selectable tr td:nth-of-type(1) input {

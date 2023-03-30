@@ -19,7 +19,13 @@
     aria-disabled={$path[1] === file}
 >
     {#if $path[1] === file}
-        <a href="#edit-collection" role="button" id={file} class="box link">
+        <a
+            href="#edit-collection"
+            draggable="false"
+            role="button"
+            id={file}
+            class="box link"
+        >
             <i class="icon icon-svg icon-edit" />
         </a>
     {/if}

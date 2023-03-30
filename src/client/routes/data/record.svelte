@@ -1,14 +1,5 @@
 <script lang="ts" context="module">
     import {
-        path,
-        state,
-        fragment,
-        redirect,
-        paramable,
-        type Param,
-        type Parsable,
-    } from "svelte-pathfinder";
-    import {
         Collection,
         schemas,
         files,
@@ -18,8 +9,6 @@
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Icon from "$client/components/Icon.svelte";
-    import Table from "$client/components/Table.svelte";
-    import Form from "$client/components/Form.svelte";
     import Code from "$client/components/Code.svelte";
     import { expand } from "$client/utils/actions.js";
     import { date } from "$client/utils/time.js";
@@ -39,7 +28,7 @@
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const record = Object.fromEntries(data);
         collection.add(name, record);
-        console.log(record, active);
+        console.log(data, record, active);
     }
     function clean(obj: object) {
         return JSON.parse(JSON.stringify(obj, (_, v) => v || undefined));
@@ -61,19 +50,27 @@
                             role="switch"
                             {name}
                             {required}
-                            checked={value}
+                            {value}
+                            bind:checked={value}
                         />&nbsp;
                         <small>{name}</small>
+                        <input type="hidden" {name} {value} />
                     </label>
                 {:else if type === "textarea"}
                     <label>
                         <small><Icon icon={type} color="gray" /> {name}</small>
-                        <textarea {name} {...clean(opts)} {required} use:expand
-                            >{value}</textarea
-                        >
+                        <textarea
+                            bind:value
+                            {name}
+                            {required}
+                            {...clean(opts)}
+                            use:expand
+                        />
                     </label>
+                    <input type="hidden" {name} {value} />
                 {:else if type === "select"}
                     <label>
+                        <input type="hidden" {name} {value} />
                         <small><Icon icon={type} color="gray" /> {name}</small>
                         <select
                             {name}
@@ -91,6 +88,43 @@
                     {@const code = { type, name, opts, value }}
                     <small><Icon icon={type} color="gray" /> {name}</small>
                     <Code code={JSON.stringify(code, null, 2)} />
+                    <input type="hidden" {name} {value} />
+                {:else if type === "date"}
+                    <label>
+                        <small><Icon icon={type} color="gray" /> {name}</small>
+                        <input
+                            type="date"
+                            {name}
+                            {required}
+                            {...clean(opts)}
+                            bind:value
+                        />
+                        <input type="hidden" {name} {value} />
+                    </label>
+                {:else if type === "time"}
+                    <label>
+                        <small><Icon icon={type} color="gray" /> {name}</small>
+                        <input
+                            type="time"
+                            {name}
+                            {required}
+                            {...clean(opts)}
+                            bind:value
+                        />
+                        <input type="hidden" {name} {value} />
+                    </label>
+                {:else if type === "file"}
+                    <label>
+                        <small><Icon icon={type} color="gray" /> {name}</small>
+                        <input
+                            type="file"
+                            {name}
+                            {required}
+                            {...clean(opts)}
+                            bind:value
+                        />
+                        <input type="hidden" {name} {value} />
+                    </label>
                 {:else}
                     <label>
                         <small><Icon icon={type} color="gray" /> {name}</small>

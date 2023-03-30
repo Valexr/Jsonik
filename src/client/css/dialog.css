@@ -89,7 +89,7 @@ dialog form {
     display: flex;
     flex-flow: column nowrap;
     align-items: stretch;
-    /* min-width: fit-content; */
+    width: 100%;
 }
 
 dialog.img form header {
