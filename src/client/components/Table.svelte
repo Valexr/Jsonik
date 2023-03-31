@@ -91,7 +91,6 @@
                         <input
                             type="checkbox"
                             value={id}
-                            on:click
                             bind:group={selected}
                         />
                     </td>

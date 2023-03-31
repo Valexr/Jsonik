@@ -39,6 +39,12 @@ table :is(th, td) {
     line-height: initial;
 }
 
+table.selectable :is(th, td):nth-of-type(1) {
+    position: sticky;
+    left: 0;
+    width: 2rem;
+}
+
 table.selectable tr td:nth-of-type(1) input {
     vertical-align: middle;
 }

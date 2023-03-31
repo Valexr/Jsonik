@@ -22,8 +22,8 @@ function createCollection() {
 
     return {
         subscribe,
-        async get(file = '') {
-            const data = await get(`/data/${file}/records`)
+        async get(file = '', id = 0) {
+            const data = await get(`/data/${file}/records}`)
             set(data)
             return data
         },
@@ -181,13 +181,13 @@ export const SCHEMAS = [
         opts: {}
     },
     {
-        type: 'markdown',
-        name: 'markdown',
+        type: 'json',
+        name: 'json',
         opts: {}
     },
     {
-        type: 'json',
-        name: 'json',
+        type: 'markdown',
+        name: 'markdown',
         opts: {}
     },
 ]

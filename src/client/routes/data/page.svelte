@@ -27,8 +27,8 @@
     import Code from "$client/components/Code.svelte";
     import AddSchema from "./schema.svelte";
     import EditSchema from "./schema.svelte";
-    import AddRecord from "./record.svelte";
-    import EditRecord from "./record.svelte";
+    import AddRecord from "./record/record.svelte";
+    import EditRecord from "./record/record.svelte";
     import { onDestroy, onMount } from "svelte";
 </script>
 
@@ -39,7 +39,7 @@
     const route = paramable<{ file: string }>("/data/:file?");
 
     function getItem(id: number) {
-        fragment.set(`#record-${id}`);
+        fragment.set(`#edit-record-${id}`);
         active = $collection.records.find((r) => r.id === id) || {};
     }
 
@@ -74,7 +74,7 @@
         {#if $collection.keys}
             {@const { keys: thead, records: tbody } = $collection}
             <Table data={{ thead, tbody }} current={getItem} bind:selected />
-            <Code code={JSON.stringify($collection, null, 2)} />
+            <Code input={JSON.stringify($collection, null, 2)} />
         {:else}
             <p class="text-center">You haven't any data yet...</p>
         {/if}
@@ -88,10 +88,10 @@
     name={$route.file}
 />
 
-<AddRecord name={$route.file} open={$fragment === `#add-record`} {active} />
+<AddRecord name={$route.file} open={$fragment === `#add-record`} />
 <EditRecord
     name={$route.file}
-    open={$fragment === `#record-${active?.id}`}
+    open={$fragment.includes(`#edit-record`)}
     {active}
 />
 

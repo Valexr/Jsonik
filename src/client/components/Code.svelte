@@ -1,7 +1,13 @@
 <script lang="ts" context="module">
     import { CodeJar } from "codejar";
+</script>
 
-    export function codedit(node: HTMLElement, code: string) {
+<script lang="ts">
+    export let input = "";
+    export let output = "";
+    export let invalid = false;
+
+    export function codedit(node: HTMLElement, cd: string) {
         const highlight = (editor: { textContent: any; innerHTML: any }) => {
             const code = editor.textContent;
             editor.innerHTML = code.replace(/(^\/\/.*)/g, "<span>$1</span>");
@@ -9,11 +15,15 @@
 
         const editor = CodeJar(node, highlight);
 
-        function update(code: string) {
-            editor.updateCode(code);
+        function update(cd: string) {
+            editor.updateCode(cd);
         }
 
-        update(code);
+        editor.onUpdate((text) => {
+            output = text;
+        });
+
+        update(cd);
 
         return {
             update,
@@ -24,8 +34,4 @@
     }
 </script>
 
-<script lang="ts">
-    export let code = "";
-</script>
-
-<pre><code use:codedit={code} /></pre>
+<pre><code use:codedit={input} class:invalid /></pre>
