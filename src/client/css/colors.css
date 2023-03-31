@@ -18,6 +18,10 @@
     color: var(--color)
 }
 
+.text-current {
+    color: currentColor;
+}
+
 .back-back {
     background-color: var(--back);
 }

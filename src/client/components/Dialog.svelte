@@ -2,6 +2,7 @@
     import { createEventDispatcher } from "svelte";
     import { fragment } from "svelte-pathfinder";
     import { focusTrap, keyEscape } from "$client/utils/actions.js";
+    import Icon from "./Icon.svelte";
     import Form from "./Form.svelte";
     export type DialogSize = "sm" | "md" | "lg" | "fs" | "";
     export type DialogFrom =
@@ -83,7 +84,7 @@
                 <slot name="header" />
                 {#if !img}
                     <button id="close" class="action" type="reset">
-                        <i class="icon icon-svg icon-x" />
+                        <Icon />
                     </button>
                 {/if}
             </header>

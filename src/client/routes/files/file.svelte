@@ -2,6 +2,7 @@
     import { fragment, path, redirect } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
     import Dialog from "$client/components/Dialog.svelte";
+    import Icon from "$client/components/Icon.svelte";
     import Input from "./input.svelte";
 </script>
 
@@ -54,7 +55,7 @@
             class="box"
             on:click|preventDefault={() => (editable = true)}
         >
-            <i class="icon icon-svg icon-edit" />
+            <Icon icon="edit" />
         </button>
         {#if editable}
             <Input
@@ -67,10 +68,10 @@
             <span class="scroll-x">{file}</span>
         {/if}
         <button id="delete" class="box text-error" on:click={deleteFile}>
-            <i class="icon icon-svg icon-trash" />
+            <Icon icon="edit" />
         </button>
         <button id="delete" class="box" on:click={close}>
-            <i class="icon icon-svg icon-x" />
+            <Icon />
         </button>
     </nav>
 </Dialog>

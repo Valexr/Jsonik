@@ -7,6 +7,7 @@
         keyEscape,
     } from "$client/utils/actions.js";
     import Form from "$client/components/Form.svelte";
+    import Icon from "$client/components/Icon.svelte";
 </script>
 
 <script lang="ts">
@@ -54,7 +55,7 @@
             <header>
                 <slot name="header" />
                 <button id="close" class="action" on:click={close}>
-                    <i class="icon icon-svg icon-x" />
+                    <Icon />
                 </button>
             </header>
             <article class="scroll">

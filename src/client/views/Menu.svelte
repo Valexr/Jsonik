@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
     // import { media } from "@slidy/media";
+    import Icon from "$client/components/Icon.svelte";
     import { pattern, path } from "svelte-pathfinder";
     import { routes, page } from "$client/routes/index.js";
 </script>
@@ -12,7 +13,7 @@
     <details role="list">
         <!-- svelte-ignore a11y-no-redundant-roles -->
         <summary aria-haspopup="listbox" role="button" class="link">
-            <i class="icon icon-svg icon-{$page.props.icon}" />
+            <Icon icon={$page.props.icon} />
             {$page.props.title}
         </summary>
         <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
@@ -21,7 +22,7 @@
                 {#each routes.filter((r) => r.props.menu) as { match, props: { title, menu, icon } }}
                     <li class:active={$pattern(match)}>
                         <a href={menu}>
-                            <i class="icon icon-svg icon-{icon}" />
+                            <Icon {icon} />
                             {title}
                         </a>
                     </li>

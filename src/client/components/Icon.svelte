@@ -1,6 +1,7 @@
 <script lang="ts">
-    export let icon: string;
-    export let color: string;
+    export let icon = "x";
+    export let color = "current";
+    export let size = "1x";
 </script>
 
-<i class="icon icon-svg icon-{icon} text-{color}" />
+<i class="icon icon-svg icon-{icon} icon-{size} text-{color}" />

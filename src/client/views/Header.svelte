@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { path } from "svelte-pathfinder";
     import Logo from "$client/components/Logo.svelte";
+    import Icon from "$client/components/Icon.svelte";
     import Menu from "$client/views/Menu.svelte";
     import type { Repository } from "$types/client.js";
 </script>
@@ -23,6 +24,6 @@
     <Logo {repository} />
     <Menu />
     <a href="/" role="button" class="link action">
-        <i class="icon icon-svg icon-125x icon-power" />
+        <Icon icon="power" size="125x" />
     </a>
 </header>

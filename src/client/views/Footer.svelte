@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { path } from "svelte-pathfinder";
     import Search from "$client/components/Search.svelte";
+    import Icon from "$client/components/Icon.svelte";
     import Details from "$client/components/Details.svelte";
 </script>
 
@@ -13,11 +14,11 @@
             data-tooltip="Add record"
             class="box"
         >
-            <i class="icon icon-svg icon-plus" />
+            <Icon icon="plus" />
         </a>
         <Search />
         <a role="button" href="?some=foo" class="box">
-            <i class="icon icon-svg icon-code" />
+            <Icon icon="code" />
         </a>
     {:else}
         <p class="text-center">© {new Date().getFullYear()} Jsonik</p>

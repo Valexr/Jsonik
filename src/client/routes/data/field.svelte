@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { schemas, SCHEMAS, type Schema } from "$client/stores/data.js";
     import Form from "$client/components/Form.svelte";
+    import Icon from "$client/components/Icon.svelte";
 
     export type SelectEvent = Event & {
         currentTarget: EventTarget & HTMLSelectElement;
@@ -48,7 +49,7 @@
     on:submit={console.log}
 >
     <summary tabindex="0" class:invalid={!valid || !field?.valid}>
-        <i class="icon icon-svg icon-{field.type} text-gray" />
+        <Icon icon={field.type} color="gray" />
         <!-- svelte-ignore a11y-autofocus -->
         <input
             autofocus={open}
@@ -94,14 +95,14 @@
 
             <nav class="cols col-fit">
                 <button type="reset" class="link box text-error">
-                    <i class="icon icon-svg icon-trash" />
+                    <Icon icon="trash" />
                 </button>
                 <button
                     type="submit"
                     class="link box text-success"
                     disabled={!valid || field?.valid}
                 >
-                    <i class="icon icon-svg icon-save" />
+                    <Icon icon="save" />
                 </button>
             </nav>
         </fieldset>

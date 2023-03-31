@@ -2,6 +2,7 @@
     import { fragment, path, goto } from "svelte-pathfinder";
     import { folders, files } from "$client/stores/files.js";
     import Await from "$client/components/Await.svelte";
+    import Icon from "$client/components/Icon.svelte";
     import Input from "./input.svelte";
     import Folder from "./folder.svelte";
 </script>
@@ -73,7 +74,7 @@
             class="box outline pos-sticky"
             draggable="false"
         >
-            <i class="icon icon-svg icon-125x icon-folder-plus" />
+            <Icon icon="folder-plus" size="125x" />
         </a>
         <a
             href="/files"

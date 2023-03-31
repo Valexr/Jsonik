@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { files } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
+    import Icon from "$client/components/Icon.svelte";
     import File from "./file.svelte";
 </script>
 
@@ -21,7 +22,7 @@
             class="pos-sticky outline"
             class:box={$files.length}
         >
-            <i class="icon icon-svg icon-125x icon-plus-square" />
+            <Icon icon="plus-square" size="125x" />
             {#if !$files.length}Add collection{/if}
         </a>
         {#each $files as file}

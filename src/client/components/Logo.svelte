@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import gh from "$client/svg/gh.svg";
+    import Icon from "$client/components/Icon.svelte";
     import type { Repository } from "$types/client.js";
 </script>
 
@@ -14,5 +14,5 @@
     role="button"
     class="action link"
 >
-    <i class="icon icon-svg icon-gh icon-15x" />
+    <Icon icon="gh" size="15x" />
 </a>

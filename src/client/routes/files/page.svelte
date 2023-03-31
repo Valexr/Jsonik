@@ -5,9 +5,10 @@
     import { s } from "$client/utils/index.js";
     import { selection } from "$client/utils/selection.js";
     import Await from "$client/components/Await.svelte";
+    import Icon from "$client/components/Icon.svelte";
+    import Toast from "$client/components/Toaster/Toast.svelte";
     import File from "./file.svelte";
     import Upload from "./upload.svelte";
-    import Toast from "$client/components/Toaster/Toast.svelte";
 </script>
 
 <script lang="ts">
@@ -33,10 +34,10 @@
         on:dragstart={(e) => e.dataTransfer?.setData("files", String(selected))}
         on:dragend={(e) => (selected.length = 0)}
     >
-        <i class="icon icon-svg icon-move" />
+        <Icon icon="move" />
         <span><b>{selected.length}</b> file{s(selected.length)} selected</span>
         <button class="box link text-error" on:click={deleteFiles}>
-            <i class="icon icon-svg icon-trash" />
+            <Icon icon="trash" />
         </button>
     </Toast>
 {/if}

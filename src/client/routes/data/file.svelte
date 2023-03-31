@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { path, redirect } from "svelte-pathfinder";
     import { files } from "$client/stores/data.js";
+    import Icon from "$client/components/Icon.svelte";
 </script>
 
 <script lang="ts">
@@ -26,13 +27,13 @@
             id={file}
             class="box link"
         >
-            <i class="icon icon-svg icon-edit" />
+            <Icon icon="edit" />
         </a>
     {/if}
     <span>{file}</span>
     {#if $path[1] === file}
         <button id={file} class="box link text-error" on:click={deleteFile}>
-            <i class="icon icon-svg icon-trash" />
+            <Icon icon="trash" />
         </button>
     {/if}
 </a>

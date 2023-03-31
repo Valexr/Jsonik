@@ -10,6 +10,7 @@
     } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Dialog from "$client/components/Dialog.svelte";
+    import Icon from "$client/components/Icon.svelte";
     import Field from "./field.svelte";
 </script>
 
@@ -93,7 +94,7 @@
                     class="block link"
                     class:disabled={!validCollection || $schemasInvalid}
                 >
-                    <i class="icon icon-svg icon-plus" />
+                    <Icon icon="plus" />
                     New field
                 </summary>
                 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
@@ -102,17 +103,24 @@
                     {#each SCHEMAS as schema}
                         <li>
                             <button
-                                class="block link outline"
                                 type="button"
+                                class="block link outline"
                                 on:click={() => addField(schema)}
                             >
-                                <i
-                                    class="icon icon-svg icon-{schema.type} text-gray"
-                                />
+                                <Icon icon={schema.type} color="gray" />
                                 {schema.type}
                             </button>
                         </li>
                     {/each}
+                    <li>
+                        <button
+                            type="button"
+                            class="box link"
+                            on:click={() => (addOpen = false)}
+                        >
+                            <Icon />
+                        </button>
+                    </li>
                 </ul>
             </details>
         </nav>
@@ -145,8 +153,11 @@
     details[open] ul.cols {
         background-color: var(--back);
     }
+    details[open] ul.cols li:last-of-type {
+        flex: 0 fit-content;
+    }
     details[open] summary::before {
-        /* content: none; */
+        content: none;
     }
     fieldset {
         margin-bottom: var(--gap);

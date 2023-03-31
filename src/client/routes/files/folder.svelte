@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { fragment, path, redirect } from "svelte-pathfinder";
     import { folders } from "$client/stores/files.js";
+    import Icon from "$client/components/Icon.svelte";
     import Input from "./input.svelte";
 </script>
 
@@ -37,7 +38,7 @@
     >
         {#if $path[1] === folder}
             <button class="box link" on:click|preventDefault={editFolder}>
-                <i class="icon icon-svg icon-edit" />
+                <Icon icon="edit" />
             </button>
         {/if}
         <span>{folder}</span>
@@ -46,7 +47,7 @@
                 class="box link text-error"
                 on:click={() => deleteFolder(folder)}
             >
-                <i class="icon icon-svg icon-trash" />
+                <Icon icon="trash" />
             </button>
         {/if}
     </a>

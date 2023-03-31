@@ -5,6 +5,7 @@
     import Form from "$client/components/Form.svelte";
     import Dialog from "$client/components/Dialog.svelte";
     import Table from "$client/components/Table.svelte";
+    import Icon from "$client/components/Icon.svelte";
     import type { InputEvent } from "$types/client.js";
 </script>
 
@@ -50,7 +51,7 @@
             class="block outline link dashed"
             use:drop
         >
-            <i class="icon icon-svg icon-file-plus icon-3x" />
+            <Icon icon="file-plus" size="3x" />
             <input
                 type="file"
                 name="files"
