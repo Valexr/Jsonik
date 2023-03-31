@@ -28,17 +28,23 @@ function createCollection() {
             return data
         },
         async add(file = '', body: Record<string, any>) {
-            const data = await post(`/data/${file}/records`, JSON.stringify(body), {
+            const records = await post(`/data/${file}/records`, JSON.stringify(body), {
                 headers: { 'Content-Type': 'application/json' }
             })
-            set(data)
+            set(records)
         },
         async update(file = '', body: Record<string, any>) {
-            const data = await put(`/data/${file}/records`, JSON.stringify(body), {
+            const records = await put(`/data/${file}/records`, JSON.stringify(body), {
                 headers: { 'Content-Type': 'application/json' }
             })
-            update((state) => Object.assign(state, { records: data }))
+            update((state) => Object.assign(state, { records }))
         },
+        async del(file = '', IDs: Array<number>) {
+            const records = await del(`/data/${file}/records`, JSON.stringify(IDs), {
+                headers: { 'Content-Type': 'application/json' }
+            })
+            update((state) => Object.assign(state, { records }))
+        }
     }
 }
 export const collection = createCollection()

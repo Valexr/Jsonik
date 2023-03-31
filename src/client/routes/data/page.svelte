@@ -16,9 +16,11 @@
         schemas,
         type Item,
     } from "$client/stores/data.js";
+    import { s } from "$client/utils/index.js";
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Table from "$client/components/Table.svelte";
+    import Toast from "$client/components/Toaster/Toast.svelte";
     import Form from "$client/components/Form.svelte";
     import Dialog from "$client/components/Dialog.svelte";
     import Tile from "$client/components/Tile.svelte";
@@ -32,19 +34,40 @@
 
 <script lang="ts">
     let active: Item;
-    let selected: number[];
+    let selected: number[] = [];
+
+    const route = paramable<{ file: string }>("/data/:file?");
 
     function getItem(id: number) {
         fragment.set(`#record-${id}`);
         active = $collection.records.find((r) => r.id === id) || {};
     }
 
-    const route = paramable<{ file: string }>("/data/:file?");
+    async function deleteRecords() {
+        await collection.del($route.file, selected);
+        selected.length = 0;
+    }
 
     onMount(() => {
-        if ($files?.length && !$route.file) redirect(`/data/${$files[0]}`);
+        if ($files && !$route.file) redirect(`/data/${$files[0]}`);
     });
 </script>
+
+{#if selected.length}
+    <Toast
+        draggable
+        type="pos-sticky"
+        on:close={() => (selected.length = 0)}
+        on:dragstart={(e) => e.dataTransfer?.setData("files", String(selected))}
+        on:dragend={(e) => (selected.length = 0)}
+    >
+        <!-- <i class="icon icon-svg icon-move" /> -->
+        <span><b>{selected.length}</b> file{s(selected.length)} selected</span>
+        <button class="box link text-error" on:click={deleteRecords}>
+            <i class="icon icon-svg icon-trash" />
+        </button>
+    </Toast>
+{/if}
 
 <section class="cols scroll-x">
     <Await promise={collection.get($route.file)}>

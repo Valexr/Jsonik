@@ -58,6 +58,11 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 base.data[table].forEach((i) => Object.assign(i, { [query]: i.languages.map((l) => l.name) }));
                 await base.write();
             },
+            deleteIDs: async (IDs: Array<number>) => {
+                base.data[table] = base.data[table].filter(({ id }) => !IDs.includes(id));
+                await base.write();
+                return base.data[table];
+            },
             delete: async (query) => {
                 base.data[table] = base.data[table].filter((o) => !omatch(o, query));
                 await base.write();

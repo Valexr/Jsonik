@@ -71,14 +71,14 @@ export function records(app: App) {
     });
 
     app.delete(async (req, res, next) => {
-        const { file, table } = req.params
-        if (!table) {
-            try {
-                await rm(`data/${file}.json`)
-                res.send(file)
-            } catch (e) {
-                console.log(e)
-            }
+        const { file } = req.params
+        try {
+            const IDs = req.body
+            const table = await req.base?.deleteIDs(IDs)
+            res.send(table)
+        } catch (err) {
+            console.log('dbERR: ', err);
+            next();
         }
         // try {
         //     req.query.prop ? await base?.deleteprop(req.query.prop) : await base?.delete(req.query);

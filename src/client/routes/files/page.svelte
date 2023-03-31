@@ -65,7 +65,6 @@
                         <input
                             type="checkbox"
                             value={file}
-                            required
                             bind:group={selected}
                         />&nbsp
                         <small class="text-ellepsis">

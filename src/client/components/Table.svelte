@@ -43,10 +43,6 @@
     }
 
     const html = (value: string) => /<|>/g.test(value);
-
-    $: checkedAll = () => selected?.length === data?.tbody?.length;
-
-    $: console.log(selected);
 </script>
 
 <table class:selectable>
@@ -58,7 +54,8 @@
                         <th>
                             <input
                                 type="checkbox"
-                                checked={selected?.length === data.tbody.length}
+                                checked={selected?.length > 0 &&
+                                    selected?.length === data.tbody.length}
                                 on:change={selectAll}
                             />
                         </th>

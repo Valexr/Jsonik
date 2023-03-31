@@ -15,6 +15,7 @@ export type Base = {
     upkeys: (keys: Record<string, string>) => Promise<void>
     update: (id: number | string, meta?: Object) => Promise<any>;
     patch: (query: string, meta?: object) => Promise<void>;
+    deleteIDs: (IDs: Array<number>) => Promise<any>
     delete: (query: object) => Promise<any>;
     deleteprop: (query: string) => Promise<any>;
     replace: (query: object, obj: object) => Promise<any>;

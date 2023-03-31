@@ -45,29 +45,29 @@
             {#each makeRecords() as { type, name, required, opts, value }}
                 {#if type === "checkbox"}
                     <label>
+                        <input type="hidden" {name} {value} />
                         <input
                             type="checkbox"
                             role="switch"
                             {name}
                             {required}
                             {value}
-                            bind:checked={value}
+                            checked={value}
                         />&nbsp;
                         <small>{name}</small>
-                        <input type="hidden" {name} {value} />
                     </label>
                 {:else if type === "textarea"}
+                    <!-- <input type="hidden" {name} {value} /> -->
                     <label>
                         <small><Icon icon={type} color="gray" /> {name}</small>
                         <textarea
-                            bind:value
+                            value
                             {name}
                             {required}
                             {...clean(opts)}
                             use:expand
                         />
                     </label>
-                    <input type="hidden" {name} {value} />
                 {:else if type === "select"}
                     <label>
                         <input type="hidden" {name} {value} />
@@ -85,45 +85,45 @@
                         </select>
                     </label>
                 {:else if "json, markdown".includes(type)}
+                    <input type="hidden" {name} {value} />
                     {@const code = { type, name, opts, value }}
                     <small><Icon icon={type} color="gray" /> {name}</small>
                     <Code code={JSON.stringify(code, null, 2)} />
-                    <input type="hidden" {name} {value} />
                 {:else if type === "date"}
                     <label>
+                        <input type="hidden" {name} {value} />
                         <small><Icon icon={type} color="gray" /> {name}</small>
                         <input
                             type="date"
                             {name}
                             {required}
                             {...clean(opts)}
-                            bind:value
+                            {value}
                         />
-                        <input type="hidden" {name} {value} />
                     </label>
                 {:else if type === "time"}
                     <label>
+                        <input type="hidden" {name} {value} />
                         <small><Icon icon={type} color="gray" /> {name}</small>
                         <input
                             type="time"
                             {name}
                             {required}
                             {...clean(opts)}
-                            bind:value
+                            {value}
                         />
-                        <input type="hidden" {name} {value} />
                     </label>
                 {:else if type === "file"}
                     <label>
+                        <input type="hidden" {name} {value} />
                         <small><Icon icon={type} color="gray" /> {name}</small>
                         <input
                             type="file"
                             {name}
                             {required}
                             {...clean(opts)}
-                            bind:value
+                            {value}
                         />
-                        <input type="hidden" {name} {value} />
                     </label>
                 {:else}
                     <label>
