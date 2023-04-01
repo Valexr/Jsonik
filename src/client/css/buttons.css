@@ -54,9 +54,9 @@ summary {
     font-weight: bold;
 }
 
-summary.block {
+/* summary.block {
     justify-content: space-between;
-}
+} */
 
 :is(button, [role=button]).primary {
     background-color: var(--color);
@@ -88,6 +88,7 @@ summary.block {
 }
 
 :is(button, [role=button], [type="file"]::file-selector-button):is(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
+    /* pointer-events: auto; */
     background-color: var(--active);
     border-color: currentColor;
     color: var(--gray);

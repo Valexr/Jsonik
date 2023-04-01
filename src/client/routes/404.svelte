@@ -20,7 +20,7 @@
     <h1>404</h1>
     <p class="text-center">Page not found</p>
 
-    <article class="back-active">
+    <article class="bg-active">
         <h2>Buttons</h2>
         <p class="cols">
             <a href="#_" role="button">a role="button"</a>
@@ -78,7 +78,7 @@
                 </p>
             </details>
         </p>
-        <Code {code} />
+        <Code input={code} />
     </article>
 
     <article>

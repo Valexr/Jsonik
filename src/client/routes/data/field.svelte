@@ -2,6 +2,7 @@
     import { schemas, SCHEMAS, type Schema } from "$client/stores/data.js";
     import Form from "$client/components/Form.svelte";
     import Icon from "$client/components/Icon.svelte";
+    import Details from "$client/components/Details.svelte";
 
     export type SelectEvent = Event & {
         currentTarget: EventTarget & HTMLSelectElement;
@@ -40,23 +41,21 @@
     }
 </script>
 
-<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<details
-    tabindex="0"
+<Details
     bind:open
     draggable={!open}
     on:input={invalidate}
-    on:submit={console.log}
+    invalid={!valid || !field?.valid}
+    back
 >
-    <summary tabindex="0" class:invalid={!valid || !field?.valid}>
+    <svelte:fragment slot="summary">
         <Icon icon={field.type} color="gray" />
-        <!-- svelte-ignore a11y-autofocus -->
         <input
-            autofocus={open}
+            required
             bind:value={field.name}
             on:change|self={() => schemas.save(field)}
         />
-    </summary>
+    </svelte:fragment>
 
     <Form
         id={field.id}
@@ -83,8 +82,8 @@
             {/each}
         </fieldset>
 
-        <fieldset class="cols col-fit" name="custom" id="custom">
-            <label class="cols align-center justify-start">
+        <fieldset class="cols col-fit align-center" name="custom" id="custom">
+            <label>
                 <input
                     name="required"
                     type="checkbox"
@@ -107,7 +106,7 @@
             </nav>
         </fieldset>
     </Form>
-</details>
+</Details>
 
 <style>
     details {

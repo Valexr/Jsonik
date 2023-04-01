@@ -10,10 +10,7 @@
     export let repository: Repository;
 </script>
 
-<header
-    class="cols col-fit align-center pos-sticky"
-    class:back-active={$path[0]}
->
+<header class="cols col-fit align-center pos-sticky" class:bg-active={$path[0]}>
     <!-- <details role="list">
         <summary aria-haspopup="listbox" role="button">Lang</summary>
         <ul role="listbox">

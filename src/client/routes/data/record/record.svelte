@@ -32,7 +32,7 @@
         const [edit, record, id] = $fragment.split("-");
         console.log(id);
         await collection.get(name);
-        active = $collection.records.find((r) => r.id === Number(id)) || {};
+        active = $collection.records?.find((r) => r.id === Number(id)) || {};
     }
     function makeRecords() {
         const fn = (s: any) =>
@@ -49,7 +49,7 @@
 
 <Aside {open} right on:submit={submitRecord}>
     <h3 slot="header">Add record</h3>
-    {#if active}
+    {#if active?.id}
         <p>Created {date(Number(active?.id))}</p>
     {/if}
     <Await promise={schemas.get(name).then(getRecord)}>

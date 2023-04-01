@@ -22,18 +22,18 @@
     color: currentColor;
 }
 
-.back-back {
+.bg-back {
     background-color: var(--back);
 }
 
-.back-surface {
+.bg-surface {
     background-color: var(--surface);
 }
 
-.back-hover {
+.bg-hover {
     background-color: var(--hover);
 }
 
-.back-active {
+.bg-active {
     background-color: var(--active);
 }

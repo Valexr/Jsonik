@@ -10,6 +10,11 @@ details[open]:not([role=list]) {
     /* max-inline-size: min-content; */
 }
 
+details form {
+    padding: var(--gap);
+    gap: var(--gap);
+}
+
 details summary {
     /* border: 0.1rem solid var(--surface); */
     background-color: transparent;
@@ -18,6 +23,10 @@ details summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+details summary input {
+    border: 0;
 }
 
 details summary>* {
@@ -44,7 +53,7 @@ details summary::-webkit-details-marker {
     content: '';
 }
 
-details summary::after {
+details summary:not(.clear)::after {
     content: '';
     background-image: var(--icon-chevron);
     background-position: center;

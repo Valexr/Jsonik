@@ -29,6 +29,7 @@ const serverOptions = {
     minify: !DEV,
     sourcemap: DEV,
     platform: 'node',
+    target: "esnext",
     format: 'esm',
     treeShaking: true,
     entryPoints: ['src/server/app.ts'],

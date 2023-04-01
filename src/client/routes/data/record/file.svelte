@@ -1,10 +1,8 @@
 <script lang="ts" context="module">
-    import { expand } from "$client/utils/actions.js";
     import Icon from "$client/components/Icon.svelte";
 </script>
 
 <script lang="ts">
-    export let type: string;
     export let name: string;
     export let required: boolean;
     export let opts: any;
@@ -19,7 +17,7 @@
 </script>
 
 <label>
-    <small><Icon icon={type} color="gray" /> {name}</small>
+    <small><Icon icon="file" color="gray" /> {name}</small>
     <input type="file" {name} {required} {...clean(opts)} {value} />
     <input type="hidden" {name} value={value || ""} />
 </label>

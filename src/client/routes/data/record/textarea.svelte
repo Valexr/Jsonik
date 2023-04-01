@@ -4,7 +4,6 @@
 </script>
 
 <script lang="ts">
-    export let type: string;
     export let name: string;
     export let required: boolean;
     export let opts: any;
@@ -19,6 +18,6 @@
 </script>
 
 <label>
-    <small><Icon icon={type} color="gray" /> {name}</small>
+    <small><Icon icon="textarea" color="gray" /> {name}</small>
     <textarea {value} {name} {required} {...clean(opts)} use:expand />
 </label>

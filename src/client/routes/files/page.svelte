@@ -104,7 +104,7 @@
     }
     small {
         max-width: calc(var(--col-width) - var(--gap));
-        max-width: 14.5ch;
+        max-width: 13.5ch;
         /* max-width: 8.25vw; */
         flex: 0 auto;
     }

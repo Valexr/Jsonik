@@ -67,10 +67,10 @@
         {:else}
             <span class="scroll-x">{file}</span>
         {/if}
-        <button id="delete" class="box text-error" on:click={deleteFile}>
-            <Icon icon="edit" />
+        <button class="box text-error" on:click={deleteFile}>
+            <Icon icon="trash" />
         </button>
-        <button id="delete" class="box" on:click={close}>
+        <button class="box" on:click={close}>
             <Icon />
         </button>
     </nav>

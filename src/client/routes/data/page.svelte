@@ -41,7 +41,7 @@
 
     function getItem(id: number) {
         fragment.set(`#edit-record-${id}`);
-        active = $collection.records.find((r) => r.id === id) || {};
+        // active = $collection?.records?.find((r) => r.id === id) || {};
     }
 
     async function deleteRecords() {
@@ -50,7 +50,7 @@
     }
 
     onMount(() => {
-        if ($files && !$route.file) redirect(`/data/${$files[0]}`);
+        // if ($files?.length && !$route.file) redirect(`/data/${$files[0]}`);
     });
 </script>
 
@@ -69,16 +69,22 @@
     </Toast>
 {/if}
 
-<section class="cols scroll-x">
-    <Await promise={collection.get($route.file)}>
-        {#if $collection.keys}
-            {@const { keys: thead, records: tbody } = $collection}
-            <Table data={{ thead, tbody }} current={getItem} bind:selected />
+<section class="scroll-x">
+    {#if $route.file}
+        <Await promise={collection.get($route.file)}>
+            {#if $collection.records}
+                {@const { keys: thead, records: tbody } = $collection}
+                <Table
+                    data={{ thead, tbody }}
+                    current={getItem}
+                    bind:selected
+                />
+            {:else}
+                <p class="text-center">You haven't any data yet...</p>
+            {/if}
             <Code input={JSON.stringify($collection, null, 2)} />
-        {:else}
-            <p class="text-center">You haven't any data yet...</p>
-        {/if}
-    </Await>
+        </Await>
+    {/if}
 </section>
 
 <AddSchema open={$fragment === "#add-collection"} />

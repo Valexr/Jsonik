@@ -92,7 +92,6 @@
                 <slot />
             </article>
             {#if !info}
-                <!-- svelte-ignore a11y-autofocus -->
                 <footer>
                     <slot name="footer">
                         <menu class="cols col-fit justify-end">
@@ -101,7 +100,6 @@
                                 type="submit"
                                 class="success"
                                 disabled={!valid}
-                                autofocus={valid}
                             >
                                 Confirm
                             </button>

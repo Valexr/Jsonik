@@ -104,7 +104,7 @@ function createSchemas() {
     }
 }
 export const schemas = createSchemas()
-export const schemasInvalid = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
+export const schemaInvalid = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
 
 export const SCHEMAS = [
     {

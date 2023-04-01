@@ -14,6 +14,10 @@ a:hover {
     text-decoration: none;
 }
 
+a :is([role=button], button) {
+    border: 0;
+}
+
 strong {
     font-size: large;
     font-weight: bold;
@@ -38,6 +42,13 @@ ol {
 
 ul[role=listbox] {
     list-style: none;
+}
+
+ul[role="listbox"].cols {
+    --cols-gap: var(--gap);
+    padding: var(--gap);
+    position: relative;
+    margin: 0;
 }
 
 pre {

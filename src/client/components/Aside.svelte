@@ -51,27 +51,21 @@
         use:keyEscape={close}
         use:action
     >
-        <Form bind:valid on:submit on:reset on:input>
+        <Form method="POST" bind:valid on:submit on:reset on:input>
             <header>
                 <slot name="header" />
-                <button id="close" class="action" on:click={close}>
+                <button type="reset" id="close" class="action" on:click={close}>
                     <Icon />
                 </button>
             </header>
             <article class="scroll">
                 <slot />
             </article>
-            <!-- svelte-ignore a11y-autofocus -->
             <footer>
                 <slot name="footer">
                     <nav class="cols col-fit justify-end">
                         <button type="reset" class="link">Cancel</button>
-                        <button
-                            type="submit"
-                            class="success"
-                            disabled={!valid}
-                            autofocus={valid}
-                        >
+                        <button type="submit" class="success" disabled={!valid}>
                             Confirm
                         </button>
                     </nav>

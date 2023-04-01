@@ -5,7 +5,7 @@
     export let method = "GET";
     export let action = "";
     export let enctype = "text/plain";
-    export let valid: boolean;
+    export let valid = false;
 
     export function validate(
         form: HTMLFormElement,
