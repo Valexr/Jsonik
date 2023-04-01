@@ -2,7 +2,7 @@
     import { files } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Icon from "$client/components/Icon.svelte";
-    import File from "./file.svelte";
+    import File from "./nav/file.svelte";
 </script>
 
 <script lang="ts">

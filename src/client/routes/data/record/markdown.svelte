@@ -4,15 +4,14 @@
 </script>
 
 <script lang="ts">
-    export let type: string;
     export let name: string;
     export let required: boolean;
-    export let opts: any;
     export let value: any;
+    // export let opts: any;
 
     let output = value || "";
 
-    const code = JSON.stringify({ type, name, opts, value }, null, 2);
+    const code = JSON.stringify({ name, value }, null, 2);
 </script>
 
 <label>

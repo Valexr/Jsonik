@@ -10,8 +10,8 @@
     import Dialog from "$client/components/Dialog.svelte";
     import Details from "$client/components/Details.svelte";
     import Icon from "$client/components/Icon.svelte";
-    import Field from "./field.svelte";
-    import Schemas from "./schemas.svelte";
+    import Field from "./schema/field.svelte";
+    import Schemas from "./schema/schemas.svelte";
 </script>
 
 <script lang="ts">
@@ -72,7 +72,11 @@
 
         <Await promise={schemas.get(name)}>
             {#each $schemas as field (field.id)}
-                <Field {field} open={field.id === $schemaInvalid} />
+                <Field
+                    {field}
+                    open={field.id === $schemaInvalid}
+                    bind:valid={validCollection}
+                />
             {/each}
         </Await>
 

@@ -12,13 +12,13 @@
     import Aside from "$client/components/Aside.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Code from "$client/components/Code.svelte";
-    import Input from "./input.svelte";
-    import Checkbox from "./checkbox.svelte";
-    import Textarea from "./textarea.svelte";
-    import Select from "./select.svelte";
-    import File from "./file.svelte";
-    import Json from "./json.svelte";
-    import Markdown from "./markdown.svelte";
+    import Input from "./record/input.svelte";
+    import Checkbox from "./record/checkbox.svelte";
+    import Textarea from "./record/textarea.svelte";
+    import Select from "./record/select.svelte";
+    import File from "./record/file.svelte";
+    import Json from "./record/json.svelte";
+    import Markdown from "./record/markdown.svelte";
 
     import { date } from "$client/utils/time.js";
 </script>

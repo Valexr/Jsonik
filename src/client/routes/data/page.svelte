@@ -28,8 +28,8 @@
     import Code from "$client/components/Code.svelte";
     import AddSchema from "./schema.svelte";
     import EditSchema from "./schema.svelte";
-    import AddRecord from "./record/record.svelte";
-    import EditRecord from "./record/record.svelte";
+    import AddRecord from "./record.svelte";
+    import EditRecord from "./record.svelte";
     import { onDestroy, onMount } from "svelte";
 </script>
 
@@ -100,9 +100,3 @@
     open={$fragment.includes(`#edit-record`)}
     {active}
 />
-
-<style>
-    .cols {
-        --cols-gap: var(--gap);
-    }
-</style>

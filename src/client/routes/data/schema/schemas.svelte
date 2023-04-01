@@ -12,7 +12,7 @@
 </script>
 
 <ul role="listbox" class="cols">
-    {#each SCHEMAS as schema, i}
+    {#each SCHEMAS as { type }, i}
         <li>
             <button
                 id={String(i)}
@@ -20,8 +20,8 @@
                 class="block link outline"
                 on:click={addField}
             >
-                <Icon icon={schema.type} color="gray" />
-                {schema.type}
+                <Icon icon={type} color="gray" />
+                {type}
             </button>
         </li>
     {/each}

@@ -6,8 +6,8 @@
 <script lang="ts">
     export let name: string;
     export let required: boolean;
-    export let opts: any;
     export let value: any;
+    // export let opts: any;
 
     let output = value || "";
 </script>

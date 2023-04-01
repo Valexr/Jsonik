@@ -52,6 +52,7 @@
         <Icon icon={field.type} color="gray" />
         <input
             required
+            pattern="^[\w, \-]+"
             bind:value={field.name}
             on:change|self={() => schemas.save(field)}
         />
@@ -107,28 +108,3 @@
         </fieldset>
     </Form>
 </Details>
-
-<style>
-    details {
-        background-color: var(--back);
-    }
-    details fieldset {
-        padding: 0 var(--gap) var(--gap);
-        margin: 0;
-    }
-    details summary {
-        padding-left: 0.5em;
-    }
-    details summary .icon {
-        cursor: grab;
-    }
-    details summary input {
-        border: 0;
-    }
-    details[open] summary {
-        margin-bottom: var(--gap);
-    }
-    label.cols {
-        --cols-gap: var(--gap-sm);
-    }
-</style>
