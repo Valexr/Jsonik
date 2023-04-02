@@ -16,7 +16,7 @@
     }
 </script>
 
-<label>
+<label data-note={`Accept: ${opts?.accept}`}>
     <small><Icon icon="file" color="gray" /> {name}</small>
     <input type="file" {name} {required} {...clean(opts)} {value} />
     <input type="hidden" {name} value={value || ""} />

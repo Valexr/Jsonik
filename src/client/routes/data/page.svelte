@@ -17,20 +17,17 @@
         type Item,
     } from "$client/stores/data.js";
     import { s } from "$client/utils/index.js";
+
     import Await from "$client/components/Await.svelte";
-    import Aside from "$client/components/Aside.svelte";
     import Table from "$client/components/Table.svelte";
     import Toast from "$client/components/Toaster/Toast.svelte";
     import Icon from "$client/components/Icon.svelte";
-    import Form from "$client/components/Form.svelte";
-    import Dialog from "$client/components/Dialog.svelte";
-    import Tile from "$client/components/Tile.svelte";
     import Code from "$client/components/Code.svelte";
-    import AddSchema from "./schema.svelte";
-    import EditSchema from "./schema.svelte";
+
+    import AddCollection from "./addCollection.svelte";
+    import EditCollection from "./editCollection.svelte";
     import AddRecord from "./record.svelte";
     import EditRecord from "./record.svelte";
-    import { onDestroy, onMount } from "svelte";
 </script>
 
 <script lang="ts">
@@ -48,10 +45,6 @@
         await collection.del($route.file, selected);
         selected.length = 0;
     }
-
-    onMount(() => {
-        // if ($files?.length && !$route.file) redirect(`/data/${$files[0]}`);
-    });
 </script>
 
 {#if selected.length}
@@ -70,33 +63,45 @@
 {/if}
 
 <section class="scroll-x">
-    {#if $route.file}
-        <Await promise={collection.get($route.file)}>
-            {#if $collection.records}
-                {@const { keys: thead, records: tbody } = $collection}
-                <Table
-                    data={{ thead, tbody }}
-                    current={getItem}
-                    bind:selected
-                />
-            {:else}
-                <p class="text-center">You haven't any data yet...</p>
-            {/if}
-            <Code input={JSON.stringify($collection, null, 2)} />
-        </Await>
-    {/if}
+    <Await promise={collection.get($route.file)}>
+        {#if $collection.records?.length}
+            {@const { keys: thead, records: tbody } = $collection}
+            <Table data={{ thead, tbody }} current={getItem} bind:selected />
+        {/if}
+        <Code input={JSON.stringify($collection, null, 2)} />
+        <AddCollection slot="catch" />
+    </Await>
 </section>
 
-<AddSchema open={$fragment === "#add-collection"} />
-<EditSchema
-    open={$fragment === "#edit-collection"}
-    header="Edit collection"
-    name={$route.file}
-/>
+{#if $route.file}
+    {#if $collection.keys?.length}
+        <p id="addRecord" class="text-center pos-sticky">
+            <a href="#add-record" role="button">
+                <Icon icon="plus" /> Add record
+            </a>
+        </p>
+    {:else}
+        <p class="text-center">
+            <a href="#edit-collection" role="button">
+                <Icon icon="plus" /> Add fields
+            </a>
+        </p>
+    {/if}
+{/if}
 
-<AddRecord name={$route.file} open={$fragment === `#add-record`} />
+<EditCollection open={$fragment === "#edit-collection"} file={$route.file} />
+
+<AddRecord file={$route.file} open={$fragment === `#add-record`} />
 <EditRecord
-    name={$route.file}
+    file={$route.file}
+    header="Edit record"
     open={$fragment.includes(`#edit-record`)}
     {active}
 />
+
+<style>
+    #addRecord {
+        bottom: 3.5rem;
+        margin-top: var(--gap-lg);
+    }
+</style>

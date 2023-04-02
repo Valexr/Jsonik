@@ -24,7 +24,7 @@ export type Req = {
     search: string
     query: { [key: string]: string }
     params: { [key: string]: string; }
-    body: Body & PathLike | string | string[] | number[] | Schema[] | Record<string, any>
+    body: any
     file: string
     extname: string
     exists: boolean

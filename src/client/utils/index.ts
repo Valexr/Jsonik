@@ -40,7 +40,7 @@ function listen(
     return () => node.removeEventListener(event, handler, options);
 }
 
-function uniq(array: any[]) {
+function uniq(array?: any[]) {
     return Array.from(new Set(array))
 }
 

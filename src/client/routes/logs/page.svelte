@@ -28,7 +28,7 @@
 </Await>
 
 <Aside open={$fragment === `#log-${fragmentID}`} right>
-    <h2 slot="header">Record {fragmentID}</h2>
+    <h3 slot="header">Record {fragmentID}</h3>
     <Await promise={get(`/logs/data/items?id=${fragmentID}`)} let:result>
         <Code input={JSON.stringify(result, null, 2)} />
     </Await>

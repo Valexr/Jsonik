@@ -1,6 +1,6 @@
 import { readdir, rename, rm } from 'fs/promises';
 import type { App } from '$server/derver/types.js';
-import { Data, Schema } from '$client/stores/data.js';
+import { Collection, Schema } from '$client/stores/data.js';
 
 
 export function records(app: App) {
@@ -12,10 +12,10 @@ export function records(app: App) {
                 const items = req.query.q ? req.base?.search(req.query.q) : req.base?.match(req.query);
                 // req.query.id ? res.send(base?.id(+req.query.id)) : res.send(items);
                 res.send(items);
-            } else {
-                const { keys, records } = req.base?.data
-                res.send({ keys, records });
-            }
+            } else if (file) {
+                const { keys, records, schemas } = req.base?.data
+                res.send({ keys, records, schemas });
+            } else next()
         } catch (err) {
             console.log('dbERR: ', err);
             next();
@@ -29,8 +29,8 @@ export function records(app: App) {
             await req.base?.prepend({ id: Date.now(), ...record });
             // delete req.query.id;
             // const items = base?.match(req.query);
-            const { keys, records } = req.base?.data
-            res.send({ keys, records });
+            const { keys, records, schemas } = req.base?.data
+            res.send({ keys, records, schemas });
         } catch (err) {
             console.log('dbERR: ', err);
             next();

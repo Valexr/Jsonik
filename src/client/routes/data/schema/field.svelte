@@ -11,13 +11,13 @@
 
 <script lang="ts">
     export let open: boolean;
-    export let field: Schema = SCHEMAS[0];
+    export let field: Partial<Schema> = SCHEMAS[0];
     export let valid = false;
 
     function attributes(input: HTMLInputElement, opt: Record<string, any>) {
         const { type, name, value } = opt;
         const schema = SCHEMAS.find((s) => s.type === opt.type);
-        const def = schema?.opts[name as keyof typeof schema.opts];
+        const def = schema?.opts?.[name as keyof typeof schema.opts];
         const typeDate = "date, time, datetime-local".includes(type);
         const inputType = (value?: string) =>
             value && !isNaN(Number(value)) ? "number" : "text";
@@ -29,37 +29,44 @@
     }
 
     function invalidate() {
+        console.log("invaludate");
         schemas.invalidate(field.id);
     }
     function save(e: SubmitEvent | InputEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const { type, name, required, ...opts } = Object.fromEntries(data);
-        schemas.save({ ...field, required, opts });
+        field = { ...field, required, opts } as unknown as Schema;
+        schemas.save(field);
     }
     function del() {
         schemas.del(field.id);
     }
 </script>
 
+<!-- svelte-ignore a11y-autofocus -->
 <Details
     bind:open
     draggable={!open}
     on:input={invalidate}
-    invalid={!valid || !field?.valid}
+    invalid={!valid || !field.valid}
+    class="block"
+    button={!open}
     back
 >
     <svelte:fragment slot="summary">
         <Icon icon={field.type} color="gray" />
         <input
             required
-            pattern="^[\w, \-]+"
+            type="text"
+            pattern="^[\w,\-]+"
+            autofocus={true}
             bind:value={field.name}
             on:change|self={() => schemas.save(field)}
         />
     </svelte:fragment>
 
     <Form
-        id={field.id}
+        id={String(field.id)}
         method="POST"
         on:submit={save}
         on:reset={del}
@@ -75,12 +82,16 @@
         </fieldset>
 
         <fieldset class="cols" name="opts" id="opts">
-            {#each Object.entries(field.opts) as [name, value]}
-                <label>
-                    <small>{name}</small>
-                    <input use:attributes={{ type: field.type, name, value }} />
-                </label>
-            {/each}
+            {#if field.opts}
+                {#each Object.entries(field.opts) as [name, value]}
+                    <label>
+                        <small>{name}</small>
+                        <input
+                            use:attributes={{ type: field.type, name, value }}
+                        />
+                    </label>
+                {/each}
+            {/if}
         </fieldset>
 
         <fieldset class="cols col-fit align-center" name="custom" id="custom">
@@ -100,7 +111,7 @@
                 <button
                     type="submit"
                     class="link box text-success"
-                    disabled={!valid || field?.valid}
+                    disabled={!valid || field.valid}
                 >
                     <Icon icon="save" />
                 </button>

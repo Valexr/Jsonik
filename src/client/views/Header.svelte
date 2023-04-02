@@ -11,13 +11,6 @@
 </script>
 
 <header class="cols col-fit align-center pos-sticky" class:bg-active={$path[0]}>
-    <!-- <details role="list">
-        <summary aria-haspopup="listbox" role="button">Lang</summary>
-        <ul role="listbox">
-            <li><a href="/">ru</a></li>
-            <li><a href="/logs">en</a></li>
-        </ul>
-    </details> -->
     <Logo {repository} />
     <Menu />
     <a href="/" role="button" class="link action">

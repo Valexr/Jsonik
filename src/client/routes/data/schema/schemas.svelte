@@ -4,10 +4,13 @@
 </script>
 
 <script lang="ts">
+    export let open = false;
+
     function addField(e: MouseEvent) {
         const { id } = e.currentTarget as HTMLButtonElement;
         const schema = SCHEMAS[Number(id)];
         schemas.add([{ id: Date.now(), ...schema }]);
+        open = false;
     }
 </script>
 

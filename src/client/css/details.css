@@ -13,6 +13,8 @@ details[open]:not([role=list]) {
 details form {
     padding: var(--gap);
     gap: var(--gap);
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 details summary {
@@ -23,6 +25,10 @@ details summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+details summary[aria-disabled=true] {
+    pointer-events: none;
 }
 
 details summary input {

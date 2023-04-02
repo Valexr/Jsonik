@@ -1,11 +1,15 @@
-<script lang="ts">
-    import { tick } from "svelte";
+<script lang="ts" context="module">
+    export type Size = "sm" | "md" | "lg" | "fs" | "";
+</script>
 
+<script lang="ts">
     export let id: string = "";
+    export let size: Size = "";
     export let method = "GET";
     export let action = "";
     export let enctype = "text/plain";
     export let valid = false;
+    export let center = false;
 
     export function validate(
         form: HTMLFormElement,
@@ -25,6 +29,8 @@
     on:reset|preventDefault
     on:change
     on:input
+    class={size}
+    class:center
     use:validate={(value) => (valid = value)}
 >
     <slot />

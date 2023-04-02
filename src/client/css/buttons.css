@@ -107,3 +107,27 @@ summary {
 [type="file"]::file-selector-button:hover:active {
     background-color: var(--active);
 }
+
+/* GROUPS */
+.buttons-group {
+    display: flex;
+}
+
+.buttons-group>* {
+    border-radius: 0;
+    margin: 0 -0.0655em;
+}
+
+.buttons-group>*:is(:hover, .active, .primary) {
+    z-index: 1;
+}
+
+.buttons-group>*:first-child {
+    border-top-left-radius: var(--border-radius-sm);
+    border-bottom-left-radius: var(--border-radius-sm);
+}
+
+.buttons-group>*:last-child {
+    border-top-right-radius: var(--border-radius-sm);
+    border-bottom-right-radius: var(--border-radius-sm);
+}

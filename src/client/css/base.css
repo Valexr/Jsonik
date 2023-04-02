@@ -65,6 +65,7 @@ nav {
 menu {
     --cols-gap: var(--gap-sm) !important;
     padding: 0;
+    margin: 0;
 }
 
 figure {

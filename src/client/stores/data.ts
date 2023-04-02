@@ -1,29 +1,29 @@
 import { derived, writable } from 'svelte/store'
 import { del, get, post, put, patch } from "$client/api/methods.js";
 import { uniq } from '$client/utils/index.js';
+import { cache } from './cache.js';
 
-export type Schema = Record<string, any>
-// {
-//     type: string,
-//     name: string,
-//     opts: Record<string, string | number>,
-//     id?: number,
-//     valid?: boolean,
-// } | undefined;
-export type Collection = Record<string, Schema[]>
+export type Schema = {
+    type: string,
+    name: string,
+    opts: Record<string, string | number>,
+    id: number,
+    valid?: boolean,
+    required?: boolean
+};
 export type Item = Record<string, unknown>
 export type Key = string & { type: string; name: string }
-export type Data = {
+export type Collection = {
     schemas: Array<Schema>; keys: Array<Key>, records: Array<Item>
 }
 
 function createCollection() {
-    const { set, subscribe, update } = writable<Data>()
+    const { set, subscribe, update } = cache<Partial<Collection>>('collection', {})
 
     return {
         subscribe,
         async get(file = '', id = 0) {
-            const data = await get(`/data/${file}/records}`)
+            const data = await get(`/data/${file}/records`)
             set(data)
             return data
         },
@@ -50,7 +50,7 @@ function createCollection() {
 export const collection = createCollection()
 
 function createFiles() {
-    const { set, subscribe, update } = writable<string[]>()
+    const { set, subscribe, update } = cache<string[]>('files', [])
     return {
         update,
         subscribe,
@@ -58,7 +58,7 @@ function createFiles() {
             const files = await get(`/data/files/`)
             set(files)
         },
-        async add(file = '', schemas?: Schema[]) {
+        async add(file = '', schemas?: Partial<Schema>[]) {
             await post(`/data/${file}/schemas`, JSON.stringify(schemas), {
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -77,7 +77,7 @@ function createFiles() {
 export const files = createFiles()
 
 function createSchemas() {
-    const { set, subscribe, update } = writable<Schema[]>([])
+    const { set, subscribe, update } = cache<Partial<Schema>[]>('schemas', [])
     return {
         set,
         update,
@@ -92,21 +92,21 @@ function createSchemas() {
             })
             files.update(state => uniq(state.concat(file)))
         },
-        add: (schema: Schema[]) => update(state => state.concat(schema)),
-        invalidate: (id: number) => update((state) =>
+        add: (schema: Partial<Schema>[]) => update(state => state.concat(schema)),
+        invalidate: (id?: number) => update((state) =>
             state.map((s) => s.id === id ? { ...s, valid: false } : s)
         ),
-        save: (schema: Schema) => update(state =>
-            state.map((s) => (schema.id === s.id ? { ...schema, valid: true } : s))
+        save: (schema?: Partial<Schema>) => update(state =>
+            state.map((s) => (schema?.id === s.id ? { ...schema, valid: true } : s))
         ),
-        del: (id: number) => update(state => state.filter(s => s.id !== id)),
+        del: (id?: number) => update(state => state.filter(s => s.id !== id)),
         clear: () => set([]),
     }
 }
 export const schemas = createSchemas()
 export const schemaInvalid = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
-
-export const SCHEMAS = [
+export const schema = derived(collection, $collection => $collection.schemas || [])
+export const SCHEMAS: Partial<Schema>[] = [
     {
         type: 'text',
         name: 'text',
@@ -178,7 +178,10 @@ export const SCHEMAS = [
     {
         type: 'file',
         name: 'file',
-        opts: {}
+        opts: {
+            accept: 'e.g. .doc,.docx,.xml',
+            multiple: 1
+        }
     },
     {
         type: 'json',
