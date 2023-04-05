@@ -12,6 +12,15 @@
     export let valid = true;
     export let open = false;
     export let pattern = "^[\\w|\\-]+$";
+
+    const tabs = ["Fields", "Rules"];
+
+    let activeTab = tabs[0];
+
+    function setTab(e: MouseEvent) {
+        const { id } = e.currentTarget as HTMLButtonElement;
+        activeTab = id;
+    }
 </script>
 
 <fieldset class="cols">
@@ -38,15 +47,48 @@
 
 <fieldset class="cols column">
     <legend class="buttons-group">
-        <a href="#_" role="button" aria-disabled="true">Fields</a>
-        <a href="#_" role="button">Rules</a>
+        {#each tabs as tab}
+            <button
+                id={tab}
+                type="button"
+                disabled={activeTab === tab}
+                on:click={setTab}
+            >
+                {tab}
+            </button>
+        {/each}
     </legend>
 
-    <Await promise={schemas.get(file)}>
-        {#each $schemas as field (field.id)}
-            <Field {field} open={field.id === $schemaInvalid} bind:valid />
-        {/each}
-    </Await>
+    {#if activeTab === "Fields"}
+        <Await promise={schemas.get(file)}>
+            {#each $schemas as field (field.id)}
+                <Field {field} open={field.id === $schemaInvalid} bind:valid />
+            {/each}
+        </Await>
+    {:else}
+        <fieldset class="cols column">
+            <label>
+                <small>List/Search</small>
+                <input placeholder="List/Search" />
+            </label>
+            <label>
+                <small>View</small>
+                <input placeholder="View" />
+            </label>
+            <label>
+                <small>Create</small>
+                <input placeholder="Create" />
+            </label>
+            <label>
+                <small>Update</small>
+                <input placeholder="Update" />
+            </label>
+            <label>
+                <small>Delete</small>
+                <input placeholder="Delete" />
+            </label>
+        </fieldset>
+    {/if}
 
     <nav>
         <Details

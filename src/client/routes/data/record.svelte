@@ -44,20 +44,18 @@
 
 <Aside {open} right on:submit={submitRecord}>
     <h3 slot="header">{header} {active?.id || ""}</h3>
-    <p class="cols">
-        {#if active?.id}
-            <small>Created: {date(Number(active?.id))}</small>
-        {/if}
-        {#if active?.updated}
-            <small>Updated: {date(Number(active?.updated))}</small>
-        {/if}
-    </p>
-    <nav class="buttons-group">
-        <a href={$fragment} role="button" class="link">Form</a>
-        <a href={$fragment} role="button">Code</a>
-    </nav>
+    {#if active?.id && active?.updated}
+        <p class="cols col-fit" style="--cols-gap: var(--gap-sm)">
+            <small><span>Created:</span> {date(Number(active?.id))}</small>
+            <small><span>Updated:</span> {date(Number(active?.updated))}</small>
+        </p>
+    {/if}
     <Await promise={schemas.get(file).then(getRecord)}>
         <fieldset>
+            <legend class="buttons-group">
+                <a href={$fragment} role="button" aria-disabled="true">Form</a>
+                <a href={$fragment} role="button">Code</a>
+            </legend>
             <input type="hidden" name="id" value={active?.id} />
             {#each makeRecords() as { type, ...props }}
                 {#if type === "checkbox"}

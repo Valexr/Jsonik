@@ -5,6 +5,7 @@
         files,
         schemas,
         schemaInvalid,
+        schemasKeys,
     } from "$client/stores/data.js";
     import Dialog from "$client/components/Dialog.svelte";
     import Schema from "./schema/schema.svelte";
@@ -24,9 +25,12 @@
             await files.rename(file, newName);
         }
 
-        await records.upkeys(newName, schemas.keys());
-        await schemas.set(newName);
+        await records.upkeys(newName, $schemasKeys);
+        schemas.cleanup();
+        await schemas.set(newName, $schemas);
     }
+
+    $: console.log($schemasKeys);
 </script>
 
 <Dialog {open} on:submit={submitCollection} bind:valid>

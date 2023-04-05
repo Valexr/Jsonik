@@ -54,7 +54,7 @@ fieldset.cols label {
 
 legend {
     font-size: large;
-    font-weight: bold;
+    position: relative;
     margin-bottom: var(--gap-sm);
 }
 

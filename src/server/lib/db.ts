@@ -46,7 +46,7 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 return base.data[table];
             },
             upkeys: async (keys: Record<string, string>) => {
-                base.data[table] = base.data[table].map((t: Record<string, any>) => updateRecordKeys(t, keys))
+                base.data[table] = base.data[table].map((r: Record<string, any>) => upKeys(r, keys))
                 await base.write();
                 return base.data[table];
             },
@@ -112,40 +112,9 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
     }
 }
 
-function upRecordKeys(obj: Record<string, any>, newKeys: Record<string, string>) {
-    console.log(obj, newKeys)
-    const { id, updated } = obj
-    const renamedEntries = Object.keys(obj).map(key => {
-        if (key in newKeys) {
-            const newKey = newKeys[key] || key;
-            return { [newKey]: obj[key] };
-        }
-    }).filter(Boolean);
-
-    const newEntries = Object.entries(newKeys).map(([k, v]) => {
-        if (!(k in obj) && !(v in obj)) {
-            return { [v]: '' }
-        }
-    }).filter(Boolean)
-
-    console.log(renamedEntries, newEntries)
-
-    return Object.assign({ id }, ...renamedEntries, ...newEntries, { updated });
-}
-
-
-function updateRecordKeys(object: Item, keys: Key) {
-    const replaced: Key = {};
-    const mut: Key = {};
-
-    for (const key in keys) {
-        if (object[key]) {
-            replaced[key] = object[key];
-            mut[keys[key]] = object[key];
-
-            if (!mut[key]) delete object[key];
-        }
-    }
-
-    return Object.assign(object, mut);
+function upKeys(object: Item, keys: Key) {
+    const { id, updated } = object
+    const mapper = ([k, v]: [string, string]) => ({ [v]: object[k] || '' })
+    const entries = Object.entries(keys).map(mapper)
+    return Object.assign({ id }, ...entries, { updated })
 }

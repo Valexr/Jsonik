@@ -40,6 +40,7 @@ summary {
 
 :is(button, [role=button]).outline {
     border-color: var(--surface);
+    background-color: transparent;
 }
 
 :is(button, [role=button]).dashed {
@@ -89,8 +90,8 @@ summary {
 
 :is(button, [role=button], [type="file"]::file-selector-button):is(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
     /* pointer-events: auto; */
-    background-color: var(--active);
-    border-color: currentColor;
+    background-color: transparent;
+    border-color: var(--surface);
     color: var(--gray);
     cursor: auto;
 }
