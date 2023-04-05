@@ -1,23 +1,24 @@
 import { readdir, rename, rm } from 'fs/promises';
 import type { App } from '$server/derver/types.js';
-import { Collection, Schema } from '$client/stores/data.js';
-
 
 export function records(app: App) {
     app.get(async (req, res, next) => {
         const { file } = req.params
+        const data = await readdir('data')
+        const files = data.map(f => f.replace(/\..+$/, '')).filter(Boolean)
+
         try {
             if (Object.keys(req.query).length) {
                 // const filters = base?.filters(req.query);
                 const items = req.query.q ? req.base?.search(req.query.q) : req.base?.match(req.query);
                 // req.query.id ? res.send(base?.id(+req.query.id)) : res.send(items);
                 res.send(items);
-            } else if (file) {
-                const { keys, records, schemas } = req.base?.data
-                res.send({ keys, records, schemas });
-            } else next()
+            } else if (files.includes(file)) {
+                const { records } = req.base?.data
+                res.send(records);
+            } else res.error(404, 'Collection not found')
         } catch (err) {
-            console.log('dbERR: ', err);
+            console.log('recordsGET: ', err);
             next();
         }
     });
@@ -29,8 +30,8 @@ export function records(app: App) {
             await req.base?.prepend({ id: Date.now(), ...record });
             // delete req.query.id;
             // const items = base?.match(req.query);
-            const { keys, records, schemas } = req.base?.data
-            res.send({ keys, records, schemas });
+            const { records } = req.base?.data
+            res.send(records);
         } catch (err) {
             console.log('dbERR: ', err);
             next();

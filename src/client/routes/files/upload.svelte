@@ -42,7 +42,7 @@
     }
 </script>
 
-<Form>
+<Form method="POST" center>
     <fieldset>
         <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
         <label
@@ -81,7 +81,7 @@
         }))}
         {@const thead = ["id", "name", "size", "type"]}
         <Table
-            selectable={false}
+            selectable={0}
             timeable={0}
             current={console.log}
             data={{ thead, tbody }}

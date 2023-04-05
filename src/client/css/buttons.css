@@ -95,6 +95,10 @@ summary {
     cursor: auto;
 }
 
+/* [role="button"][aria-disabled="true"]:has(+ button) {
+    padding: 0;
+} */
+
 [type="file"]::file-selector-button {
     margin-right: var(--gap);
     font-size: small;
@@ -111,9 +115,12 @@ summary {
 /* GROUPS */
 .buttons-group {
     display: flex;
+    min-width: 100%;
+    margin: var(--gap) 0;
 }
 
 .buttons-group>* {
+    flex: auto;
     border-radius: 0;
     margin: 0 -0.0655em;
 }

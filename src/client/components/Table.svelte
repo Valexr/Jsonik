@@ -2,11 +2,11 @@
     import Icon from "./Icon.svelte";
     import { date } from "$client/utils/time.js";
     import type { InputEvent } from "$types/client.js";
-    import type { Item } from "$client/stores/data.js";
+    import type { Item, Schema } from "$client/stores/data.js";
 
     type Table = {
-        thead?: Array<string & { type: string; name: string }>;
-        tbody: Array<Record<string, any>>;
+        thead?: Array<Partial<Schema>>;
+        tbody: Array<Item>;
         tfoot?: Array<string[]>;
     };
 </script>
@@ -69,7 +69,7 @@
                         <th
                             role="button"
                             class="link"
-                            id={th.name || th}
+                            id={String(th.name || th)}
                             on:click={sort}
                         >
                             {#if th.type && th.name}

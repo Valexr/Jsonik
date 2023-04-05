@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import { goto } from "svelte-pathfinder";
     import {
-        collection,
+        records,
         files,
         schemas,
         schemaInvalid,
@@ -15,15 +15,16 @@
     export let open = false;
     export let file = "";
 
-    let valid = false;
+    let valid = true;
 
     async function submitCollection(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const newName = String(data.get("collectionName"));
 
-        const newKeys = $collection?.keys?.reduce((a, { type, name }) => {
+        const newKeys = $schemas?.reduce((a, { type, name }) => {
             const newName = $schemas.find((s) => s.type === type)?.name || "";
             a[name] = newName;
+            console.log(a, name, newName);
             return a;
         }, {} as Record<string, string>);
 
@@ -31,10 +32,10 @@
             await files.rename(file, newName);
         }
 
-        await files.add(newName, $schemas);
+        await schemas.set(newName, $schemas);
 
         if (newKeys && Object.keys(newKeys).length)
-            await collection.update(newName, newKeys);
+            await records.update(newName, newKeys);
 
         // await collection.get(newName);
         goto(`/data/${newName}`);
@@ -43,7 +44,7 @@
 
 <Dialog {open} on:submit={submitCollection} bind:valid>
     <h3 slot="header">Edit collection</h3>
-    <Schema bind:valid {file} pattern="(?!^.*,.*$)[\w,\-]+" />
+    <Schema bind:valid {file} />
     <nav slot="footer">
         <button type="reset" class="link">Cancel</button>
         <button

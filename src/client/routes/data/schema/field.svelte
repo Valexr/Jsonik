@@ -11,8 +11,8 @@
 
 <script lang="ts">
     export let open: boolean;
-    export let field: Partial<Schema> = SCHEMAS[0];
-    export let valid = false;
+    export let field = SCHEMAS[0];
+    export let valid = true;
 
     function attributes(input: HTMLInputElement, opt: Record<string, any>) {
         const { type, name, value } = opt;
@@ -29,17 +29,16 @@
     }
 
     function invalidate() {
-        console.log("invaludate");
         schemas.invalidate(field.id);
     }
-    function save(e: SubmitEvent | InputEvent) {
+    function save(e: SubmitEvent | InputEvent | KeyboardEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const { type, name, required, ...opts } = Object.fromEntries(data);
         field = { ...field, required, opts } as unknown as Schema;
-        schemas.save(field);
+        schemas.save(field as Schema);
     }
     function del() {
-        schemas.del(field.id);
+        schemas.delete(field.id);
     }
 </script>
 
@@ -58,10 +57,10 @@
         <input
             required
             type="text"
-            pattern="^[\w,\-]+"
             autofocus={true}
+            pattern="^[\w|\-]+$"
             bind:value={field.name}
-            on:change|self={() => schemas.save(field)}
+            form={String(field.id)}
         />
     </svelte:fragment>
 

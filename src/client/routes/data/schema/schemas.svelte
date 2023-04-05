@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import Icon from "$client/components/Icon.svelte";
-    import { SCHEMAS, schemas } from "$client/stores/data.js";
+    import { type Schema, SCHEMAS, schemas } from "$client/stores/data.js";
 </script>
 
 <script lang="ts">
@@ -9,7 +9,7 @@
     function addField(e: MouseEvent) {
         const { id } = e.currentTarget as HTMLButtonElement;
         const schema = SCHEMAS[Number(id)];
-        schemas.add([{ id: Date.now(), ...schema }]);
+        schemas.add([{ id: Date.now(), ...schema } as Schema]);
         open = false;
     }
 </script>

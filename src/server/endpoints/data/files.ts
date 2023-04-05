@@ -8,6 +8,7 @@ export function files(app: App) {
         try {
             const data = await readdir('data')
             const files = data.map(f => f.replace(/\..+$/, '')).filter(Boolean)
+            Object.assign(req, files)
             res.send(files)
         } catch (e) {
             console.error(e)
@@ -17,14 +18,12 @@ export function files(app: App) {
     app.patch(async (req, res, next) => {
         const { file } = req.params
         const { name } = req.query
-        // if (file && name) {
         try {
             await rename(`data/${file}.json`, `data/${name}.json`)
             res.send(name)
         } catch (e) {
             console.error(e)
         }
-        // } else next()
     });
 
     app.delete(async (req, res, next) => {

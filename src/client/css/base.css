@@ -57,8 +57,8 @@ article {
     border-radius: var(--border-radius-lg);
 }
 
-nav {
-    --cols-gap: var(--gap-sm) !important;
+nav.cols {
+    --cols-gap: var(--gap-sm);
     padding: 0;
 }
 

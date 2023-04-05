@@ -3,7 +3,8 @@
     import Await from "$client/components/Await.svelte";
     import Icon from "$client/components/Icon.svelte";
     import File from "./nav/file.svelte";
-    import { paramable } from "svelte-pathfinder";
+    import { path, paramable } from "svelte-pathfinder";
+    import { scrollIntoView } from "$client/utils/actions.js";
 </script>
 
 <script lang="ts">
@@ -16,18 +17,17 @@
         class="text-center cols col-fit nowrap scroll-x"
         class:justify-start={$files.length}
         class:justify-center={!$files.length}
+        use:scrollIntoView={$path[0]}
     >
         {#if $files.length}
             <a
                 href="/data"
                 role="button"
                 draggable="false"
-                class="pos-sticky"
+                class="pos-sticky box"
                 aria-disabled={!$route.file}
-                class:box={$files.length}
             >
                 <Icon icon="plus-square" size="125x" />
-                {#if !$files.length}Add collection{/if}
             </a>
         {/if}
         {#each $files as file}

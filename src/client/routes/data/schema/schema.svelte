@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { files, schemas, schemaInvalid } from "$client/stores/data.js";
+    import { schemas, schemaInvalid } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Details from "$client/components/Details.svelte";
     import Icon from "$client/components/Icon.svelte";
@@ -9,9 +9,9 @@
 
 <script lang="ts">
     export let file = "";
-    export let valid = false;
+    export let valid = true;
     export let open = false;
-    export let pattern = `(?!^${$files.join("$|^")}$)(?!^.*\,.*$)[\\w,\\-]+`;
+    export let pattern = "^[\\w|\\-]+$";
 </script>
 
 <fieldset class="cols">
@@ -37,7 +37,10 @@
 </fieldset>
 
 <fieldset class="cols column">
-    <legend>Fields</legend>
+    <legend class="buttons-group">
+        <a href="" role="button" class="link">Fields</a>
+        <a href="" role="button">Rules</a>
+    </legend>
 
     <Await promise={schemas.get(file)}>
         {#each $schemas as field (field.id)}

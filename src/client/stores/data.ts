@@ -11,60 +11,18 @@ export type Schema = {
     valid?: boolean,
     required?: boolean
 };
-export type Item = Record<string, unknown>
-export type Key = string & { type: string; name: string }
-export type Collection = {
-    schemas: Array<Schema>; keys: Array<Key>, records: Array<Item>
-}
-
-function createCollection() {
-    const { set, subscribe, update } = cache<Partial<Collection>>('collection', {})
-
-    return {
-        subscribe,
-        async get(file = '', id = 0) {
-            const data = await get(`/data/${file}/records`)
-            set(data)
-            return data
-        },
-        async add(file = '', body: Record<string, any>) {
-            const records = await post(`/data/${file}/records`, JSON.stringify(body), {
-                headers: { 'Content-Type': 'application/json' }
-            })
-            set(records)
-        },
-        async update(file = '', body: Record<string, any>) {
-            const records = await put(`/data/${file}/records`, JSON.stringify(body), {
-                headers: { 'Content-Type': 'application/json' }
-            })
-            update((state) => Object.assign(state, { records }))
-        },
-        async del(file = '', IDs: Array<number>) {
-            const records = await del(`/data/${file}/records`, JSON.stringify(IDs), {
-                headers: { 'Content-Type': 'application/json' }
-            })
-            update((state) => Object.assign(state, { records }))
-        }
-    }
-}
-export const collection = createCollection()
+export type Item = Record<string, any>
 
 function createFiles() {
     const { set, subscribe, update } = cache<string[]>('files', [])
     return {
         update,
         subscribe,
-        async get(file = '', table = '') {
+        async get() {
             const files = await get(`/data/files/`)
             set(files)
         },
-        async add(file = '', schemas?: Partial<Schema>[]) {
-            await post(`/data/${file}/schemas`, JSON.stringify(schemas), {
-                headers: { 'Content-Type': 'application/json' }
-            })
-            update(state => uniq(state.concat(file)))
-        },
-        async rename(file = '', name = '') {
+        async rename(file: string, name: string) {
             name = await patch(`/data/files/${file}?name=${name}`);
             update(state => uniq(state.map(f => (f === file ? name : f))))
         },
@@ -76,36 +34,67 @@ function createFiles() {
 }
 export const files = createFiles()
 
-function createSchemas() {
-    const { set, subscribe, update } = cache<Partial<Schema>[]>('schemas', [])
+function createRecords() {
+    const { set, subscribe, update } = cache<Item[]>('records', [])
+
     return {
-        set,
+        subscribe,
+        async get(file: string) {
+            const records = await get(`/data/${file}/records`)
+            set(records)
+        },
+        async set(file: string, item: Item) {
+            const records = await post(`/data/${file}/records`, JSON.stringify(item), {
+                headers: { 'Content-Type': 'application/json' }
+            })
+            set(records)
+        },
+        async update(file: string, item: Item) {
+            const records = await put(`/data/${file}/records`, JSON.stringify(item), {
+                headers: { 'Content-Type': 'application/json' }
+            })
+            update(() => records)
+        },
+        async delete(file: string, IDs: Array<number>) {
+            const records = await del(`/data/${file}/records`, JSON.stringify(IDs), {
+                headers: { 'Content-Type': 'application/json' }
+            })
+            update(() => records)
+        }
+    }
+}
+export const records = createRecords()
+
+function createSchemas() {
+    const { set, subscribe, update } = cache<Schema[]>('schemas', [])
+
+    return {
         update,
         subscribe,
-        async get(file = '') {
+        async get(file: string) {
             const schemas = await get(`/data/${file}/schemas`)
             set(schemas)
         },
-        async upload(file = '', body?: object[]) {
-            await post(`/data/${file}/schemas`, JSON.stringify(body), {
+        async set(file: string, schema?: Schema[]) {
+            await post(`/data/${file}/schemas`, JSON.stringify(schema), {
                 headers: { 'Content-Type': 'application/json' }
             })
             files.update(state => uniq(state.concat(file)))
         },
-        add: (schema: Partial<Schema>[]) => update(state => state.concat(schema)),
+        add: (schema: Schema[]) => update(state => state.concat(schema)),
         invalidate: (id?: number) => update((state) =>
             state.map((s) => s.id === id ? { ...s, valid: false } : s)
         ),
-        save: (schema?: Partial<Schema>) => update(state =>
+        save: (schema?: Schema) => update(state =>
             state.map((s) => (schema?.id === s.id ? { ...schema, valid: true } : s))
         ),
-        del: (id?: number) => update(state => state.filter(s => s.id !== id)),
+        delete: (id?: number) => update(state => state.filter(s => s.id !== id)),
         clear: () => set([]),
     }
 }
 export const schemas = createSchemas()
 export const schemaInvalid = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
-export const schema = derived(collection, $collection => $collection.schemas || [])
+
 export const SCHEMAS: Partial<Schema>[] = [
     {
         type: 'text',

@@ -1,9 +1,8 @@
 <script lang="ts" context="module">
     import { path, redirect, query, fragment } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
-    import { selectable } from "$client/utils/actions.js";
-    import { s } from "$client/utils/index.js";
     import { selection } from "$client/utils/selection.js";
+    import { s } from "$client/utils/index.js";
     import Await from "$client/components/Await.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Toast from "$client/components/Toaster/Toast.svelte";

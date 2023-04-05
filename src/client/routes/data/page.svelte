@@ -1,21 +1,6 @@
 <script lang="ts" context="module">
-    import {
-        url,
-        path,
-        state,
-        fragment,
-        redirect,
-        paramable,
-        type Param,
-        type Parsable,
-        goto,
-    } from "svelte-pathfinder";
-    import {
-        collection,
-        files,
-        schemas,
-        type Item,
-    } from "$client/stores/data.js";
+    import { fragment, paramable } from "svelte-pathfinder";
+    import { schemas, records, type Item } from "$client/stores/data.js";
     import { s } from "$client/utils/index.js";
 
     import Await from "$client/components/Await.svelte";
@@ -38,11 +23,10 @@
 
     function getItem(id: number) {
         fragment.set(`#edit-record-${id}`);
-        // active = $collection?.records?.find((r) => r.id === id) || {};
     }
 
     async function deleteRecords() {
-        await collection.del($route.file, selected);
+        await records.delete($route.file, selected);
         selected.length = 0;
     }
 </script>
@@ -63,31 +47,27 @@
 {/if}
 
 <section class="scroll-x">
-    <Await promise={collection.get($route.file)}>
-        {#if $collection.records?.length}
-            {@const { keys: thead, records: tbody } = $collection}
-            <Table data={{ thead, tbody }} current={getItem} bind:selected />
+    <Await
+        promise={records.get($route.file).then(() => schemas.get($route.file))}
+        notify
+    >
+        {#if $records?.length}
+            <Table
+                data={{ thead: $schemas, tbody: $records }}
+                current={getItem}
+                bind:selected
+            />
+        {:else if !$schemas?.length}
+            <p class="text-center">
+                <a href="#edit-collection" role="button">
+                    <Icon icon="plus" /> Add fields
+                </a>
+            </p>
         {/if}
-        <Code input={JSON.stringify($collection, null, 2)} />
-        <AddCollection slot="catch" />
+        <Code input={JSON.stringify({ $schemas, $records }, null, 2)} />
+        <AddCollection slot="catch" file={$route.file} />
     </Await>
 </section>
-
-{#if $route.file}
-    {#if $collection.keys?.length}
-        <p id="addRecord" class="text-center pos-sticky">
-            <a href="#add-record" role="button">
-                <Icon icon="plus" /> Add record
-            </a>
-        </p>
-    {:else}
-        <p class="text-center">
-            <a href="#edit-collection" role="button">
-                <Icon icon="plus" /> Add fields
-            </a>
-        </p>
-    {/if}
-{/if}
 
 <EditCollection open={$fragment === "#edit-collection"} file={$route.file} />
 
@@ -98,10 +78,3 @@
     open={$fragment.includes(`#edit-record`)}
     {active}
 />
-
-<style>
-    #addRecord {
-        bottom: 3.5rem;
-        margin-top: var(--gap-lg);
-    }
-</style>

@@ -208,7 +208,6 @@ select::after {
 
 textarea {
     resize: none;
-    max-width: 100%;
     overflow: hidden;
     line-height: 1.5;
     padding: var(--padding);

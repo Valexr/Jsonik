@@ -5,6 +5,7 @@
     import Icon from "$client/components/Icon.svelte";
     import Input from "./input.svelte";
     import Folder from "./folder.svelte";
+    import { scrollIntoView } from "$client/utils/actions.js";
 </script>
 
 <script lang="ts">
@@ -16,20 +17,19 @@
     }
 
     function drop(node: HTMLElement, from: string) {
-        console.log($path[0], location.pathname);
         const update = (from: string) => {
             const selectors = 'a[href^="/files"]:not([aria-disabled="true"])';
-            const anchors: NodeListOf<HTMLElement> =
+            const anchors: NodeListOf<HTMLAnchorElement> =
                 node.querySelectorAll(selectors);
+            const focused = (a: HTMLAnchorElement, val: boolean) =>
+                val ? a.focus() : a.blur();
 
             Array.from(anchors).forEach((a) => {
-                const disabled = (val: boolean) =>
-                    a.setAttribute("aria-disabled", String(val));
                 a.ondragover = (e: DragEvent) => {
                     e.preventDefault();
-                    disabled(true);
+                    focused(a, true);
                 };
-                a.ondragleave = (e: DragEvent) => disabled(false);
+                a.ondragleave = (e: DragEvent) => focused(a, false);
                 a.ondrop = async (e: DragEvent) => {
                     const { dataTransfer, currentTarget } = e;
                     const { id: to } = currentTarget as HTMLElement;
@@ -39,23 +39,11 @@
                         return files.move(from, file, to);
                     });
                     await Promise.all(promises);
-                    disabled(false);
+                    focused(a, false);
                 };
             });
         };
         update(from);
-        return {
-            update,
-        };
-    }
-
-    function scroll(node: HTMLElement, path: string) {
-        const update = (path: string) => {
-            const selectors = 'a[href^="/files"][aria-disabled="true"]';
-            const anchor = node.querySelector(selectors);
-            anchor?.scrollIntoView({ behavior: "auto", inline: "end" });
-        };
-        update(path);
         return {
             update,
         };
@@ -65,8 +53,8 @@
 <Await promise={folders.get()} notify>
     <nav
         class="text-center cols nowrap col-fit justify-start scroll-x"
-        use:scroll={String($path[1] || "")}
-        use:drop={String($path[1] || "")}
+        use:scrollIntoView={$path[0]}
+        use:drop={$path[1]}
     >
         <a
             href="#add-folder"

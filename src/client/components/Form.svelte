@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+    import { tick } from "svelte";
     export type Size = "sm" | "md" | "lg" | "fs" | "";
 </script>
 
@@ -8,14 +9,14 @@
     export let method = "GET";
     export let action = "";
     export let enctype = "text/plain";
-    export let valid = false;
+    export let valid = true;
     export let center = false;
 
     export function validate(
         form: HTMLFormElement,
         valid: (value: boolean) => void
     ) {
-        setTimeout(() => valid(form.checkValidity()), 100);
+        tick().then(() => valid(form.checkValidity()));
         form.oninput = () => valid(form.checkValidity());
     }
 </script>
@@ -23,8 +24,8 @@
 <form
     {id}
     {method}
-    {enctype}
     {action}
+    {enctype}
     on:submit|preventDefault
     on:reset|preventDefault
     on:change

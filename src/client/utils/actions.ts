@@ -97,6 +97,7 @@ function sticked(node: HTMLElement, cb?: (sticked: boolean) => void) {
 }
 
 function expand(node: HTMLTextAreaElement) {
+    node.style.height = `${node.scrollHeight + 24}px`
     if (node.nodeName === 'TEXTAREA')
         node.oninput = (e: Event) => {
             node.style.height = 'auto'
@@ -141,72 +142,16 @@ function keyEscape(node: HTMLElement, cb: () => void) {
     };
 }
 
-function selectable(node: HTMLElement) {
-    let x1 = 0,
-        y1 = 0,
-        x2 = 0,
-        y2 = 0;
-
-    const div = document.createElement("div");
-    // const items = node.childNodes;
-    // items.forEach((child) => {
-    //     child.onpointerover = () => (child.style.borderColor = "red");
-    //     child.onpointerleave = () => (child.style.borderColor = "");
-    // });
-    div.style.cssText = `
-    border: 1px solid red;
-    background: rgba(255, 0, 0, 0.25);
-    position: absolute;
-    z-index: 1;
-    `
-    function reCalc() {
-        const x3 = Math.min(x1, x2);
-        const x4 = Math.max(x1, x2);
-        const y3 = Math.min(y1, y2);
-        const y4 = Math.max(y1, y2);
-        div.style.left = x3 + "px";
-        div.style.top = y3 + "px";
-        div.style.width = x4 - x3 + "px";
-        div.style.height = y4 - y3 + "px";
-    }
-    node.onpointerdown = (e) => {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        x1 = e.pageX;
-        y1 = e.pageY
-        reCalc()
-        node.onpointermove = move;
-        div.hidden = false;
-        node.append(div);
-
+function scrollIntoView(node: HTMLElement, path: string) {
+    const update = (path: string) => {
+        const selectors = `a[href^="/${path}"][aria-disabled="true"]`;
+        const anchor = node.querySelector(selectors);
+        anchor?.scrollIntoView({ behavior: "auto", inline: "center" });
     };
-    let selected: EventTarget[] = []
-    function move(e: PointerEvent) {
-        const { target, currentTarget } = e
-        const matched = e.composedPath().find(t => t.id)
-        if (matched) {
-            if (selected.includes(matched)) {
-                selected = selected.filter(s => s !== matched)
-            } else selected.push(matched)
-        }
-        console.log(selected, { target, currentTarget })
-        e.preventDefault();
-        e.stopPropagation();
-        x2 = e.pageX;
-        y2 = e.pageY;
-        reCalc();
-    }
-    window.onpointerup = (e) => {
-        e.preventDefault();
-        div.style.left = "";
-        div.style.top = "";
-        div.style.width = "";
-        div.style.height = "";
-        div.hidden = true;
-        node.onpointermove = null;
-        div.remove()
+    update(path);
+    return {
+        update,
     };
-    node.onpointerleave = (e) => e.preventDefault()
 }
 
-export { clickout, validation, sticked, clickOutside, expand, focusTrap, keyEscape, selectable }
+export { clickout, validation, sticked, clickOutside, expand, focusTrap, keyEscape, scrollIntoView }

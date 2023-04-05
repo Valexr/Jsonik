@@ -116,6 +116,8 @@ function renameKeys(obj: Record<string, any>, newKeys: Record<string, string>) {
         return { [newKey]: obj[key] };
     });
 
+    console.log(newKeys, entries)
+
     return Object.assign({}, ...entries);
 }
 

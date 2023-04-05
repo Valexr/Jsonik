@@ -1,15 +1,7 @@
 <script lang="ts" context="module">
     import { onMount } from "svelte";
     import { fragment } from "svelte-pathfinder";
-    import {
-        Collection,
-        schemas,
-        schema,
-        files,
-        type Item,
-        collection,
-        Schema,
-    } from "$client/stores/data.js";
+    import { schemas, records, type Item } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Icon from "$client/components/Icon.svelte";
@@ -33,19 +25,17 @@
 
     function getRecord() {
         const [edit, record, id] = $fragment.split("-");
-        // await collection.get(file);
-        active = $collection.records?.find((r) => r.id === Number(id)) || {};
+        active = $records?.find((r) => r.id === Number(id)) || {};
     }
     function makeRecords() {
-        getRecord();
         const fn = (s: any) =>
             active?.[s.name] ? { ...s, value: active[s.name] } : s;
-        return active ? $schema.map(fn) : $schema;
+        return active ? $schemas.map(fn) : $schemas;
     }
     function submitRecord(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const record = Object.fromEntries(data);
-        collection.add(file, record);
+        records.set(file, record);
         console.log(data, record, active);
     }
 </script>
@@ -53,27 +43,31 @@
 <Aside {open} right on:submit={submitRecord}>
     <h3 slot="header">{header} {active?.id || ""}</h3>
     {#if active?.id}
-        <p>Created {date(Number(active?.id))}</p>
+        <p>Created: {date(Number(active?.id))}</p>
     {/if}
-    <!-- <Await promise={schemas.get(file).then(getRecord)}> -->
-    <fieldset>
-        {#each makeRecords() as { type, ...props }}
-            {#if type === "checkbox"}
-                <Checkbox {...props} />
-            {:else if type === "textarea"}
-                <Textarea {...props} />
-            {:else if type === "select"}
-                <Select {...props} />
-            {:else if type === "json"}
-                <Json {...props} />
-            {:else if type === "markdown"}
-                <Markdown {...props} />
-            {:else if type === "file"}
-                <File {...props} />
-            {:else}
-                <Input {type} {...props} />
-            {/if}
-        {/each}
-    </fieldset>
-    <!-- </Await> -->
+    <nav class="buttons-group">
+        <a href={$fragment} role="button" class="link">Form</a>
+        <a href={$fragment} role="button">Code</a>
+    </nav>
+    <Await promise={schemas.get(file).then(getRecord)}>
+        <fieldset>
+            {#each makeRecords() as { type, ...props }}
+                {#if type === "checkbox"}
+                    <Checkbox {...props} />
+                {:else if type === "textarea"}
+                    <Textarea {...props} />
+                {:else if type === "select"}
+                    <Select {...props} />
+                {:else if type === "json"}
+                    <Json {...props} />
+                {:else if type === "markdown"}
+                    <Markdown {...props} />
+                {:else if type === "file"}
+                    <File {...props} />
+                {:else}
+                    <Input {type} {...props} />
+                {/if}
+            {/each}
+        </fieldset>
+    </Await>
 </Aside>
