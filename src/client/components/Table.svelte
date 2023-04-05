@@ -5,7 +5,7 @@
     import type { Item, Key, Schema } from "$client/stores/data.js";
 
     type Table = {
-        thead?: Array<Key>;
+        thead?: Array<Partial<Schema>>;
         tbody: Array<Item>;
         tfoot?: Array<string[]>;
     };
@@ -111,14 +111,16 @@
                     <td>{date(id)}</td>
                 {/if}
                 {#if data.thead}
-                    {#each data.thead as { type, name }}
-                        <td>
-                            {#if html(tr[name])}
-                                {@html tr[name]}
-                            {:else}
-                                <p>{tr[name]}</p>
-                            {/if}
-                        </td>
+                    {#each data.thead as td}
+                        {#if td.name}
+                            <td>
+                                {#if html(tr[td.name])}
+                                    {@html tr[td.name]}
+                                {:else}
+                                    <p>{tr[td.name]}</p>
+                                {/if}
+                            </td>
+                        {/if}
                     {/each}
                 {/if}
                 {#if updated}
