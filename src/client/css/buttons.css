@@ -130,11 +130,13 @@ summary {
 }
 
 .buttons-group>*:first-child {
+    border-right: 0;
     border-top-left-radius: var(--border-radius-sm);
     border-bottom-left-radius: var(--border-radius-sm);
 }
 
 .buttons-group>*:last-child {
+    border-left: 0;
     border-top-right-radius: var(--border-radius-sm);
     border-bottom-right-radius: var(--border-radius-sm);
 }

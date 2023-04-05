@@ -55,6 +55,7 @@
             <Table
                 data={{ thead: $schemas, tbody: $records }}
                 current={getItem}
+                updated={-1}
                 bind:selected
             />
         {:else if !$schemas?.length}
@@ -71,7 +72,7 @@
 
 <EditCollection open={$fragment === "#edit-collection"} file={$route.file} />
 
-<AddRecord file={$route.file} open={$fragment === `#add-record`} />
+<AddRecord file={$route.file} open={$fragment.includes(`#add-record`)} />
 <EditRecord
     file={$route.file}
     header="Edit record"

@@ -27,7 +27,7 @@ export function schemas(app: App) {
     app.put(async (req, res, next) => {
         // const meta = { ...req.body, update: Date.now() }
         try {
-            await req.base?.update(+req.query.id, {});
+            await req.base?.update({});
             delete req.query.id;
             const items = req.base?.match(req.query);
             res.send(items);

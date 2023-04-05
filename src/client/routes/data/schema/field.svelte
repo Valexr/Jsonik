@@ -14,6 +14,8 @@
     export let field = SCHEMAS[0];
     export let valid = true;
 
+    let prevName = field.name;
+
     function attributes(input: HTMLInputElement, opt: Record<string, any>) {
         const { type, name, value } = opt;
         const schema = SCHEMAS.find((s) => s.type === opt.type);
@@ -34,7 +36,8 @@
     function save(e: SubmitEvent | InputEvent | KeyboardEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const { type, name, required, ...opts } = Object.fromEntries(data);
-        field = { ...field, required, opts } as unknown as Schema;
+        console.log(prevName, name);
+        field = { ...field, prevName, required, opts } as unknown as Schema;
         schemas.save(field as Schema);
     }
     function del() {

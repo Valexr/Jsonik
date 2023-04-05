@@ -35,22 +35,30 @@
     function submitRecord(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const record = Object.fromEntries(data);
-        records.set(file, record);
-        console.log(data, record, active);
+        console.log(record);
+        $fragment.includes(`#edit-record`)
+            ? records.update(file, record)
+            : records.set(file, record);
     }
 </script>
 
 <Aside {open} right on:submit={submitRecord}>
     <h3 slot="header">{header} {active?.id || ""}</h3>
-    {#if active?.id}
-        <p>Created: {date(Number(active?.id))}</p>
-    {/if}
+    <p class="cols">
+        {#if active?.id}
+            <small>Created: {date(Number(active?.id))}</small>
+        {/if}
+        {#if active?.updated}
+            <small>Updated: {date(Number(active?.updated))}</small>
+        {/if}
+    </p>
     <nav class="buttons-group">
         <a href={$fragment} role="button" class="link">Form</a>
         <a href={$fragment} role="button">Code</a>
     </nav>
     <Await promise={schemas.get(file).then(getRecord)}>
         <fieldset>
+            <input type="hidden" name="id" value={active?.id} />
             {#each makeRecords() as { type, ...props }}
                 {#if type === "checkbox"}
                     <Checkbox {...props} />

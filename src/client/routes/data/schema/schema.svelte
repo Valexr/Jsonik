@@ -38,8 +38,8 @@
 
 <fieldset class="cols column">
     <legend class="buttons-group">
-        <a href="" role="button" class="link">Fields</a>
-        <a href="" role="button">Rules</a>
+        <a href="#_" role="button" aria-disabled="true">Fields</a>
+        <a href="#_" role="button">Rules</a>
     </legend>
 
     <Await promise={schemas.get(file)}>

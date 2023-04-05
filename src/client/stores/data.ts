@@ -9,9 +9,11 @@ export type Schema = {
     opts: Record<string, string | number>,
     id: number,
     valid?: boolean,
+    prevName?: string,
     required?: boolean
 };
 export type Item = Record<string, any>
+export type Key = Record<string, string>
 
 function createFiles() {
     const { set, subscribe, update } = cache<string[]>('files', [])
@@ -43,14 +45,20 @@ function createRecords() {
             const records = await get(`/data/${file}/records`)
             set(records)
         },
-        async set(file: string, item: Item) {
-            const records = await post(`/data/${file}/records`, JSON.stringify(item), {
+        async set(file: string, record: Item) {
+            const records = await post(`/data/${file}/records`, JSON.stringify(record), {
                 headers: { 'Content-Type': 'application/json' }
             })
             set(records)
         },
-        async update(file: string, item: Item) {
-            const records = await put(`/data/${file}/records`, JSON.stringify(item), {
+        async update(file: string, record: Item) {
+            const records = await put(`/data/${file}/records`, JSON.stringify(record), {
+                headers: { 'Content-Type': 'application/json' }
+            })
+            update(() => records)
+        },
+        async upkeys(file: string, keys: Item) {
+            const records = await patch(`/data/${file}/records`, JSON.stringify(keys), {
                 headers: { 'Content-Type': 'application/json' }
             })
             update(() => records)
@@ -66,7 +74,7 @@ function createRecords() {
 export const records = createRecords()
 
 function createSchemas() {
-    const { set, subscribe, update } = cache<Schema[]>('schemas', [])
+    const { set, subscribe, update, get: getStore } = cache<Schema[]>('schemas', [])
 
     return {
         update,
@@ -75,12 +83,18 @@ function createSchemas() {
             const schemas = await get(`/data/${file}/schemas`)
             set(schemas)
         },
-        async set(file: string, schema?: Schema[]) {
-            await post(`/data/${file}/schemas`, JSON.stringify(schema), {
+        async set(file: string) {
+            this.cleanup()
+            const schemas = getStore()
+            await post(`/data/${file}/schemas`, JSON.stringify(schemas), {
                 headers: { 'Content-Type': 'application/json' }
             })
             files.update(state => uniq(state.concat(file)))
         },
+        keys: () => getStore().reduce<Key>((a, { prevName, name }) => {
+            a[prevName || name] = name;
+            return a;
+        }, {}),
         add: (schema: Schema[]) => update(state => state.concat(schema)),
         invalidate: (id?: number) => update((state) =>
             state.map((s) => s.id === id ? { ...s, valid: false } : s)
@@ -88,6 +102,7 @@ function createSchemas() {
         save: (schema?: Schema) => update(state =>
             state.map((s) => (schema?.id === s.id ? { ...schema, valid: true } : s))
         ),
+        cleanup: () => update(state => state.map(({ prevName, ...schema }) => schema)),
         delete: (id?: number) => update(state => state.filter(s => s.id !== id)),
         clear: () => set([]),
     }

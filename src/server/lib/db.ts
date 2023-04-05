@@ -2,6 +2,7 @@ import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 import { omatch, osome, group, checkdir } from '$server/lib/utils.js';
 import type { Base } from '$types/server.js';
+import { Item } from '$client/stores/data.js';
 
 const dbs: { [file: string]: Low<any> } = {};
 
@@ -30,12 +31,12 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 return base.data[table]
             },
             write: async () => await base.write(),
-            id: (id) => base.data[table].find((i) => i.id === id),
-            find: (prop) => base.data[table].find((i) => Object.entries(prop).every(([k, v]) => i[k] === v)),
-            search: (query) => base.data[table].filter((o) => osome(o, query)),
-            match: (query) => base.data[table].filter((o) => omatch(o, query)),
-            prepend: async (obj, meta) => {
-                base.data[table].unshift({ ...obj, ...meta });
+            id: (id) => base.data[table].find((i: Item) => i.id === id),
+            find: (prop) => base.data[table].find((i: Item) => Object.entries(prop).every(([k, v]) => i[k] === v)),
+            search: (query) => base.data[table].filter((o: Item) => osome(o, query)),
+            match: (query) => base.data[table].filter((o: Item) => omatch(o, query)),
+            prepend: async (obj) => {
+                base.data[table].unshift(obj);
                 await base.write();
                 return base.data[table];
             },
@@ -45,36 +46,37 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 return base.data[table];
             },
             upkeys: async (keys: Record<string, string>) => {
-                base.data[table] = base.data[table].map((t: Record<string, any>) => renameKeys(t, keys))
+                base.data[table] = base.data[table].map((t: Record<string, any>) => upRecordKeys(t, keys))
                 await base.write();
                 return base.data[table];
             },
-            update: async (id, meta) => {
-                base.data[table].forEach((i) => i.id === id && Object.assign(i, meta));
+            update: async (meta) => {
+                base.data[table].forEach((i: Item) => i.id === meta?.id && Object.assign(i, meta));
                 await base.write();
                 return base.data[table];
             },
             patch: async (query) => {
-                base.data[table].forEach((i) => Object.assign(i, { [query]: i.languages.map((l) => l.name) }));
+                base.data[table].forEach((i: Item) =>
+                    Object.assign(i, { [query]: i.languages.map((l: Item) => l.name) }));
                 await base.write();
             },
             deleteIDs: async (IDs: Array<number>) => {
-                base.data[table] = base.data[table].filter(({ id }) => !IDs.includes(id));
+                base.data[table] = base.data[table].filter(({ id }: Item) => !IDs.includes(id));
                 await base.write();
                 return base.data[table];
             },
             delete: async (query) => {
-                base.data[table] = base.data[table].filter((o) => !omatch(o, query));
+                base.data[table] = base.data[table].filter((o: Item) => !omatch(o, query));
                 await base.write();
                 return base.data[table];
             },
             deleteprop: async (query) => {
-                base.data[table] = base.data[table].forEach((o) => delete o[query]);
+                base.data[table] = base.data[table].forEach((o: Item) => delete o[query]);
                 await base.write();
                 return base.data[table];
             },
             replace: async (query, obj) => {
-                base.data[table] = base.data[table].filter((o) => !omatch(o, query));
+                base.data[table] = base.data[table].filter((o: Item) => !omatch(o, query));
                 base.data[table].push(obj);
                 await base.write();
                 return base.data[table];
@@ -95,7 +97,8 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 const filters = Object.keys(query)
                     .filter((q) => q !== 'q' && q !== 'id')
                     .reduce((a, k, i) => {
-                        const items = i === 0 ? base.data[table] : base.data[table].filter((o) => omatch(o, qa[i - 1]));
+                        const items = i === 0 ? base.data[table] : base.data[table]
+                            .filter((o: Item) => omatch(o, qa[i - 1]));
                         const vals = Object.keys(group(items, [k])).filter(Boolean);
                         const val = [...new Set(`${vals}`.split(',').sort())];
                         return { ...a, [k]: val };
@@ -109,37 +112,23 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
     }
 }
 
-function renameKeys(obj: Record<string, any>, newKeys: Record<string, string>) {
-    const entries = Object.keys(obj).map(key => {
-        const newKey = newKeys[key] || key;
+function upRecordKeys(obj: Record<string, any>, newKeys: Record<string, string>) {
+    console.log(obj, newKeys)
+    const { id, updated } = obj
+    const renamedEntries = Object.keys(obj).map(key => {
+        if (key in newKeys) {
+            const newKey = newKeys[key] || key;
+            return { [newKey]: obj[key] };
+        }
+    }).filter(Boolean);
 
-        return { [newKey]: obj[key] };
-    });
+    const newEntries = Object.entries(newKeys).map(([k, v]) => {
+        if (!(k in obj) && !(v in obj)) {
+            return { [v]: '' }
+        }
+    }).filter(Boolean)
 
-    console.log(newKeys, entries)
+    console.log(renamedEntries, newEntries)
 
-    return Object.assign({}, ...entries);
+    return Object.assign({ id }, ...renamedEntries, ...newEntries, { updated });
 }
-
-// async function filters(q) {
-//     const itms = await db.get(`/locales/items`);
-//     const diff = () => {
-//         return q.includes("&q") ? "&q" : "&id";
-//     };
-//     const query = q.split(diff())[0];
-//     function getQuery(i) {
-//         return query.split("&").slice(0, [i]).join("&");
-//     }
-//     const filters = await Object.keys(q.params)
-//         .filter((q) => q !== "q" && q !== "id")
-//         .reduce(async (acc, k, i) => {
-//             const items = await db.get(`/locales/items${getQuery(i)}`);
-//             const vals = Object.keys(group(items, [k])).filter(Boolean);
-//             const a = await acc;
-//             const val = [...new Set(`${vals}`.split(",").sort())];
-//             return { ...a, [k]: val };
-//         }, Promise.resolve({}));
-
-//     console.log("filters:", filters, "query: ", getQuery(3));
-//     return filters;
-// }

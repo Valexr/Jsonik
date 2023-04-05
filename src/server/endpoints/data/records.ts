@@ -25,11 +25,10 @@ export function records(app: App) {
 
     app.post(async (req, res, next) => {
         try {
-            const record = req.body as object
-            // await req.base?.assign({ records })
-            await req.base?.prepend({ id: Date.now(), ...record });
-            // delete req.query.id;
-            // const items = base?.match(req.query);
+            const record = req.body
+            const id = Date.now()
+            await req.base?.prepend({ ...record, id, updated: id });
+
             const { records } = req.base?.data
             res.send(records);
         } catch (err) {
@@ -39,13 +38,9 @@ export function records(app: App) {
     });
 
     app.put(async (req, res, next) => {
-        // const meta = { ...req.body, update: Date.now() };
-        const keys = req.body
+        const meta = { ...req.body, id: Number(req.body.id), updated: Date.now() };
         try {
-            const items = await req.base?.upkeys(keys)
-            // await req.base?.update(+req.query.id, meta);
-            // delete req.query.id;
-            // const items = req.base?.match(req.query);
+            const items = await req.base?.update(meta);
             res.send(items);
         } catch (err) {
             console.log('dbERR: ', err);
@@ -54,20 +49,13 @@ export function records(app: App) {
     });
 
     app.patch(async (req, res, next) => {
-        const { file } = req.params
-        const { name } = req.query
-        if (req.query.name) {
-            await rename(`data/${file}.json`, `data/${name}.json`)
-            res.send(name)
-        } else {
-            try {
-                req.base?.patch(req.query.patch);
-                await req.base?.write();
-                next();
-            } catch (err) {
-                console.log('dbERR: ', err);
-                next();
-            }
+        const keys = req.body
+        try {
+            const items = await req.base?.upkeys(keys)
+            res.send(items)
+        } catch (e) {
+            console.log('recordsPatch: ', e);
+            next();
         }
     });
 

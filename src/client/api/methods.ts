@@ -12,8 +12,8 @@ async function put(url: string, payload?: BodyInit, options?: RequestInit) {
     return fetch(url, { method: 'PUT', ...options }, payload);
 }
 
-async function patch(url: string, payload?: BodyInit) {
-    return fetch(url, { method: 'PATCH' }, payload);
+async function patch(url: string, payload?: BodyInit, options?: RequestInit) {
+    return fetch(url, { method: 'PATCH', ...options }, payload);
 }
 
 async function del(url: string, payload?: BodyInit, options?: RequestInit) {

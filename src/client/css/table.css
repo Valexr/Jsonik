@@ -55,6 +55,12 @@ table.selectable tr td:nth-of-type(2) {
     white-space: nowrap;
 }
 
+table.updated tr td:last-child {
+    font-size: small;
+    color: var(--gray);
+    white-space: nowrap;
+}
+
 table :not(thead) tr:hover {
     cursor: pointer;
     background-color: var(--hover);

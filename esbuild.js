@@ -36,7 +36,7 @@ const serverOptions = {
     outfile: 'app/app.mjs',
     legalComments: 'none',
     metafile: !DEV,
-    plugins: [eslint()],
+    // plugins: [eslint()],
     define: {
         'process.env.NODE_ENV': DEV ? '"dev"' : '"prod"'
     }

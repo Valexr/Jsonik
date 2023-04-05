@@ -20,6 +20,7 @@ export function cache<T>(key: string, initial: T, local?: boolean) {
     }
 
     return {
+        get: () => initial,
         set: (value: T) => sync(value),
         update: (fn: (arg: T) => any) => sync(fn(initial)),
         remove: () => store?.removeItem(key),

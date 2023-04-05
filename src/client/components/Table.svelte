@@ -17,6 +17,7 @@
     export let selected: number[];
     export let selectable = 1;
     export let timeable = 1;
+    export let updated = data.tbody.length - 1;
 
     let sorted = true;
 
@@ -45,7 +46,7 @@
     const html = (value: string) => /<|>/g.test(value);
 </script>
 
-<table class:selectable>
+<table class:selectable class:updated={updated < 0}>
     <thead>
         <slot name="thead">
             {#if data?.thead?.length}
@@ -61,7 +62,7 @@
                         </th>
                     {/if}
                     {#if timeable}
-                        <th role="button" id="id" on:click={sort} class="link">
+                        <th role="button" id="id" class="link" on:click={sort}>
                             <Icon icon="date" color="gray" /> created
                         </th>
                     {/if}
@@ -78,6 +79,16 @@
                             {th.name || th}
                         </th>
                     {/each}
+                    {#if updated < 0}
+                        <th
+                            role="button"
+                            id="updated"
+                            class="link"
+                            on:click={sort}
+                        >
+                            <Icon icon="date" color="gray" /> updated
+                        </th>
+                    {/if}
                 </tr>
             {/if}
         </slot>
@@ -85,6 +96,7 @@
     <tbody>
         {#each data.tbody as tr}
             {@const id = Object.values(tr)[0]}
+            {@const up = Object.values(tr).at(-1)}
             <tr {id} on:click={select}>
                 {#if selectable}
                     <td>
@@ -98,7 +110,7 @@
                 {#if timeable}
                     <td>{date(id)}</td>
                 {/if}
-                {#each Object.values(tr).slice(timeable) as td}
+                {#each Object.values(tr).slice(timeable, updated) as td}
                     <td>
                         {#if html(td)}
                             {@html td}
@@ -107,6 +119,9 @@
                         {/if}
                     </td>
                 {/each}
+                {#if updated < 0}
+                    <td>{date(up || id)}</td>
+                {/if}
             </tr>
         {/each}
     </tbody>
