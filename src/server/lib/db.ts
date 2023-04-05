@@ -2,7 +2,7 @@ import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 import { omatch, osome, group, checkdir } from '$server/lib/utils.js';
 import type { Base } from '$types/server.js';
-import { Item } from '$client/stores/data.js';
+import { Item, Key } from '$client/stores/data.js';
 
 const dbs: { [file: string]: Low<any> } = {};
 
@@ -46,7 +46,7 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 return base.data[table];
             },
             upkeys: async (keys: Record<string, string>) => {
-                base.data[table] = base.data[table].map((t: Record<string, any>) => upRecordKeys(t, keys))
+                base.data[table] = base.data[table].map((t: Record<string, any>) => updateRecordKeys(t, keys))
                 await base.write();
                 return base.data[table];
             },
@@ -131,4 +131,21 @@ function upRecordKeys(obj: Record<string, any>, newKeys: Record<string, string>)
     console.log(renamedEntries, newEntries)
 
     return Object.assign({ id }, ...renamedEntries, ...newEntries, { updated });
+}
+
+
+function updateRecordKeys(object: Item, keys: Key) {
+    const replaced: Key = {};
+    const mut: Key = {};
+
+    for (const key in keys) {
+        if (object[key]) {
+            replaced[key] = object[key];
+            mut[keys[key]] = object[key];
+
+            if (!mut[key]) delete object[key];
+        }
+    }
+
+    return Object.assign(object, mut);
 }

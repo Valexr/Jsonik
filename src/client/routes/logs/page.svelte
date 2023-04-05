@@ -20,7 +20,9 @@
 <Await promise={get(`/logs/data/items?q=${$query.q || ""}`)} let:result notify>
     <section class="scroll-x">
         {#if result}
-            {@const thead = Object.keys(result.at(-1)).slice(1)}
+            {@const thead = Object.keys(result.at(-1))
+                .slice(1)
+                .map((k) => ({ name: k }))}
             {@const tbody = result}
             <Table data={{ thead, tbody }} current={getRecord} />
         {/if}

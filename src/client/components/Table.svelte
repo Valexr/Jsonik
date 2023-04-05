@@ -2,10 +2,10 @@
     import Icon from "./Icon.svelte";
     import { date } from "$client/utils/time.js";
     import type { InputEvent } from "$types/client.js";
-    import type { Item, Schema } from "$client/stores/data.js";
+    import type { Item, Key, Schema } from "$client/stores/data.js";
 
     type Table = {
-        thead?: Array<Partial<Schema>>;
+        thead?: Array<Key>;
         tbody: Array<Item>;
         tfoot?: Array<string[]>;
     };
@@ -14,10 +14,10 @@
 <script lang="ts">
     export let data: Table;
     export let current: ((id: number) => void) | undefined = undefined;
-    export let selected: number[];
-    export let selectable = 1;
-    export let timeable = 1;
-    export let updated = data.tbody.length - 1;
+    export let selected: number[] = [];
+    export let selectable = true;
+    export let timeable = true;
+    export let updated = false;
 
     let sorted = true;
 
@@ -46,7 +46,7 @@
     const html = (value: string) => /<|>/g.test(value);
 </script>
 
-<table class:selectable class:updated={updated < 0}>
+<table class:selectable class:updated>
     <thead>
         <slot name="thead">
             {#if data?.thead?.length}
@@ -79,7 +79,7 @@
                             {th.name || th}
                         </th>
                     {/each}
-                    {#if updated < 0}
+                    {#if updated}
                         <th
                             role="button"
                             id="updated"
@@ -95,8 +95,8 @@
     </thead>
     <tbody>
         {#each data.tbody as tr}
-            {@const id = Object.values(tr)[0]}
-            {@const up = Object.values(tr).at(-1)}
+            {@const id = tr.id}
+            {@const up = tr.updated}
             <tr {id} on:click={select}>
                 {#if selectable}
                     <td>
@@ -110,16 +110,18 @@
                 {#if timeable}
                     <td>{date(id)}</td>
                 {/if}
-                {#each Object.values(tr).slice(timeable, updated) as td}
-                    <td>
-                        {#if html(td)}
-                            {@html td}
-                        {:else}
-                            <p>{td}</p>
-                        {/if}
-                    </td>
-                {/each}
-                {#if updated < 0}
+                {#if data.thead}
+                    {#each data.thead as { type, name }}
+                        <td>
+                            {#if html(tr[name])}
+                                {@html tr[name]}
+                            {:else}
+                                <p>{tr[name]}</p>
+                            {/if}
+                        </td>
+                    {/each}
+                {/if}
+                {#if updated}
                     <td>{date(up || id)}</td>
                 {/if}
             </tr>

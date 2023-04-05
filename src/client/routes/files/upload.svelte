@@ -79,10 +79,15 @@
             size,
             type,
         }))}
-        {@const thead = ["id", "name", "size", "type"]}
+        {@const thead = [
+            { name: "id" },
+            { name: "name" },
+            { name: "size" },
+            { name: "type" },
+        ]}
         <Table
-            selectable={0}
-            timeable={0}
+            selectable={false}
+            timeable={false}
             current={console.log}
             data={{ thead, tbody }}
         />

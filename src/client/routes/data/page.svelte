@@ -55,7 +55,7 @@
             <Table
                 data={{ thead: $schemas, tbody: $records }}
                 current={getItem}
-                updated={-1}
+                updated
                 bind:selected
             />
         {:else if !$schemas?.length}
