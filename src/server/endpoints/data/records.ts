@@ -1,4 +1,4 @@
-import { readdir, rename, rm } from 'fs/promises';
+import { readdir } from 'fs/promises';
 import type { App } from '$server/derver/types.js';
 
 export function records(app: App) {
@@ -10,9 +10,9 @@ export function records(app: App) {
         try {
             if (Object.keys(req.query).length) {
                 // const filters = base?.filters(req.query);
-                const items = req.query.q ? req.base?.search(req.query.q) : req.base?.match(req.query);
+                const records = req.query.q ? req.base?.search(req.query.q) : req.base?.match(req.query);
                 // req.query.id ? res.send(base?.id(+req.query.id)) : res.send(items);
-                res.send(items);
+                res.send(records);
             } else if (files.includes(file)) {
                 const { records } = req.base?.data
                 res.send(records);
@@ -32,18 +32,18 @@ export function records(app: App) {
             const { records } = req.base?.data
             res.send(records);
         } catch (err) {
-            console.log('dbERR: ', err);
+            console.log('recordsPOST: ', err);
             next();
         }
     });
 
     app.put(async (req, res, next) => {
-        const meta = { ...req.body, id: Number(req.body.id), updated: Date.now() };
+        const record = { ...req.body, id: Number(req.body.id), updated: Date.now() };
         try {
-            const items = await req.base?.update(meta);
-            res.send(items);
+            const records = await req.base?.update(record);
+            res.send(records);
         } catch (err) {
-            console.log('dbERR: ', err);
+            console.log('recordsPUT: ', err);
             next();
         }
     });
@@ -51,32 +51,22 @@ export function records(app: App) {
     app.patch(async (req, res, next) => {
         const keys = req.body
         try {
-            const items = await req.base?.upkeys(keys)
-            res.send(items)
+            const records = await req.base?.upkeys(keys)
+            res.send(records)
         } catch (e) {
-            console.log('recordsPatch: ', e);
+            console.log('recordsPATCH: ', e);
             next();
         }
     });
 
     app.delete(async (req, res, next) => {
-        const { file } = req.params
         try {
             const IDs = req.body
-            const table = await req.base?.deleteIDs(IDs)
-            res.send(table)
+            const records = await req.base?.deleteIDs(IDs)
+            res.send(records)
         } catch (err) {
-            console.log('dbERR: ', err);
+            console.log('recordsDELETE: ', err);
             next();
         }
-        // try {
-        //     req.query.prop ? await base?.deleteprop(req.query.prop) : await base?.delete(req.query);
-        //     delete req.query.id;
-        //     const items = base?.match(req.query);
-        //     res.send(items);
-        // } catch (err) {
-        //     console.log('dbERR: ', err);
-        //     next();
-        // }
     });
 }

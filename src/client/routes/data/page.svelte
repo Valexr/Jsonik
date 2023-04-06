@@ -65,10 +65,16 @@
                 </a>
             </p>
         {/if}
-        <Code input={JSON.stringify({ $schemas, $records }, null, 2)} />
+        <!-- <Code input={JSON.stringify({ $schemas, $records }, null, 2)} /> -->
         <AddCollection slot="catch" file={$route.file} />
     </Await>
 </section>
+
+<nav id="addRecord" class="text-center pos-sticky">
+    <a tabindex="0" href="#add-record" role="button">
+        <Icon icon="plus" /> Add record
+    </a>
+</nav>
 
 <EditCollection open={$fragment === "#edit-collection"} file={$route.file} />
 
@@ -79,3 +85,10 @@
     open={$fragment.includes(`#edit-record`)}
     {active}
 />
+
+<style>
+    #addRecord {
+        bottom: 3.5rem;
+        margin-top: var(--gap);
+    }
+</style>

@@ -1,10 +1,9 @@
 <script lang="ts" context="module">
-    import { goto } from "svelte-pathfinder";
     import {
         records,
         files,
         schemas,
-        schemaInvalid,
+        schemaInvalID,
         schemasKeys,
     } from "$client/stores/data.js";
     import Dialog from "$client/components/Dialog.svelte";
@@ -29,8 +28,6 @@
         schemas.cleanup();
         await schemas.set(newName, $schemas);
     }
-
-    $: console.log($schemasKeys);
 </script>
 
 <Dialog {open} on:submit={submitCollection} bind:valid>
@@ -41,7 +38,7 @@
         <button
             type="submit"
             class="success"
-            disabled={!valid || !isNaN(Number($schemaInvalid))}
+            disabled={!valid || !isNaN(Number($schemaInvalID))}
         >
             Confirm
         </button>

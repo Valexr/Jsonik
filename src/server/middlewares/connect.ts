@@ -8,7 +8,7 @@ export async function connect(req: Req, res: Res, next: Next) {
         req.base = await base(`${folder}/${file}.json`, table);
         next();
     } catch (e) {
-        console.error('connectERR: ', e);
+        console.error('connect: ', e);
         next();
     }
 }

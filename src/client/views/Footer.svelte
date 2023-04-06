@@ -7,13 +7,6 @@
 
 <footer class="pos-sticky container cols">
     {#if $path[0]}
-        {#if $path[1] && $schemas?.length}
-            <!-- <p id="addRecord" class="text-center pos-sticky"> -->
-            <a href="#add-record" role="button">
-                <Icon icon="plus" /> Add record
-            </a>
-            <!-- </p> -->
-        {/if}
         <Search />
     {:else}
         <p class="text-center">© {new Date().getFullYear()} Jsonik</p>

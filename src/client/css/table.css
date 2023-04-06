@@ -18,6 +18,10 @@ table th span {
     gap: 0.25rem;
 }
 
+table th span i:nth-child(2) {
+    margin-left: var(--gap);
+}
+
 table td {
     vertical-align: initial;
     white-space: normal;
@@ -33,7 +37,7 @@ table td p {
 }
 
 table thead th[role=button] {
-    padding: 0 var(--gap-sm);
+    padding: 0 var(--gap);
     display: table-cell;
     text-align: start;
     color: var(--gray);
@@ -41,7 +45,7 @@ table thead th[role=button] {
 }
 
 table :is(th, td) {
-    padding: var(--gap-sm);
+    padding: var(--gap-sm) var(--gap);
     line-height: initial;
 }
 

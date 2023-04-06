@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { goto } from "svelte-pathfinder";
-    import { files, schemas, schemaInvalid } from "$client/stores/data.js";
+    import { files, schemas, schemaInvalID } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Form from "$client/components/Form.svelte";
     import Schema from "./schema/schema.svelte";
@@ -33,7 +33,7 @@
         <button
             type="submit"
             class="success"
-            disabled={!valid || !isNaN(Number($schemaInvalid))}
+            disabled={!valid || !isNaN(Number($schemaInvalID))}
         >
             Confirm
         </button>

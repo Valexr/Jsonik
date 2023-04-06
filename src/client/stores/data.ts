@@ -74,7 +74,7 @@ function createRecords() {
 export const records = createRecords()
 
 function createSchemas() {
-    const { set, subscribe, update, get: getStore } = cache<Schema[]>('schemas', [])
+    const { set, subscribe, update } = cache<Schema[]>('schemas', [])
 
     return {
         update,
@@ -84,17 +84,11 @@ function createSchemas() {
             set(schemas)
         },
         async set(file: string, schemas: Schema[]) {
-            // this.cleanup()
-            // const schemas = getStore()
             await post(`/data/${file}/schemas`, JSON.stringify(schemas), {
                 headers: { 'Content-Type': 'application/json' }
             })
             files.update(state => uniq(state.concat(file)))
         },
-        // keys: () => getStore().reduce<Key>((a, { prevName, name }) => {
-        //     a[prevName || name] = name;
-        //     return a;
-        // }, {}),
         add: (schema: Schema[]) => update(state => state.concat(schema)),
         invalidate: (id?: number) => update((state) =>
             state.map((s) => s.id === id ? { ...s, valid: false } : s)
@@ -108,7 +102,7 @@ function createSchemas() {
     }
 }
 export const schemas = createSchemas()
-export const schemaInvalid = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
+export const schemaInvalID = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
 export const schemasKeys = derived(schemas, $schemas => $schemas?.reduce<Key>((a, { prevName, name }) => {
     a[prevName || name] = name;
     return a;

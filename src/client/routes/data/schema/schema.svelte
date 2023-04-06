@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { schemas, schemaInvalid } from "$client/stores/data.js";
+    import { schemas, schemaInvalID } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Details from "$client/components/Details.svelte";
     import Icon from "$client/components/Icon.svelte";
@@ -62,10 +62,10 @@
     {#if activeTab === "Fields"}
         <Await promise={schemas.get(file)}>
             {#each $schemas as field (field.id)}
-                <Field {field} open={field.id === $schemaInvalid} bind:valid />
+                <Field {field} open={field.id === $schemaInvalID} bind:valid />
             {/each}
         </Await>
-    {:else}
+    {:else if activeTab === "Rules"}
         <fieldset class="cols column">
             <label>
                 <small>List/Search</small>
@@ -93,7 +93,7 @@
     <nav>
         <Details
             bind:open
-            disabled={!valid || !isNaN(Number($schemaInvalid))}
+            disabled={!valid || !isNaN(Number($schemaInvalID))}
             class="block clear"
             back={open}
             button

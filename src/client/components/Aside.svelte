@@ -4,6 +4,7 @@
     import {
         clickout,
         clickOutside,
+        focusTrap,
         keyEscape,
     } from "$client/utils/actions.js";
     import Form from "$client/components/Form.svelte";
@@ -26,7 +27,7 @@
 
     const close = () => fragment.set("");
 
-    function action(aside: HTMLElement) {
+    function closeAction(aside: HTMLElement) {
         const form = aside.firstChild as HTMLFormElement;
         form.onsubmit = () => close();
         form.onreset = () => close();
@@ -49,7 +50,8 @@
         }}
         use:clickOutside={close}
         use:keyEscape={close}
-        use:action
+        use:closeAction
+        use:focusTrap
     >
         <Form method="POST" bind:valid on:submit on:reset on:input>
             <header>

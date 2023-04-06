@@ -2,7 +2,7 @@
     import Icon from "./Icon.svelte";
     import { date } from "$client/utils/time.js";
     import type { InputEvent } from "$types/client.js";
-    import type { Item, Key, Schema } from "$client/stores/data.js";
+    import type { Item, Schema } from "$client/stores/data.js";
 
     type Table = {
         thead?: Array<Partial<Schema>>;
@@ -19,15 +19,15 @@
     export let timeable = true;
     export let updated = false;
 
-    let sorted = true;
+    let sorted: Record<string, string> = { id: "down" };
 
     function sort(e: MouseEvent) {
         const { id } = e.currentTarget as HTMLButtonElement;
         const compare = (a: Item, b: Item) =>
             String(a[id]).localeCompare(String(b[id]));
         const fn = (a: Item, b: Item) =>
-            sorted ? compare(a, b) : compare(b, a);
-        sorted = !sorted;
+            sorted[id] === "up" ? compare(a, b) : compare(b, a);
+        sorted = { [id]: sorted[id] === "up" ? "down" : "up" };
         data.tbody = data.tbody.sort(fn);
     }
 
@@ -64,7 +64,10 @@
                     {#if timeable}
                         <th role="button" id="id" class="link" on:click={sort}>
                             <span>
-                                <Icon icon="date" color="gray" /> created
+                                <Icon icon="date" /> created
+                                {#if "id" in sorted}
+                                    <Icon icon="arrow-{sorted.id}" />
+                                {/if}
                             </span>
                         </th>
                     {/if}
@@ -77,9 +80,16 @@
                         >
                             <span>
                                 {#if th.type && th.name}
-                                    <Icon icon={th.type} color="gray" />
+                                    <Icon icon={th.type} />
                                 {/if}
                                 {th.name || th}
+                                {#if String(th.name || th) in sorted}
+                                    <Icon
+                                        icon="arrow-{sorted[
+                                            String(th.name || th)
+                                        ]}"
+                                    />
+                                {/if}
                             </span>
                         </th>
                     {/each}
@@ -92,6 +102,9 @@
                         >
                             <span>
                                 <Icon icon="date" color="gray" /> updated
+                                {#if "updated" in sorted}
+                                    <Icon icon="arrow-{sorted.updated}" />
+                                {/if}
                             </span>
                         </th>
                     {/if}

@@ -12,6 +12,7 @@ export function files(app: App) {
             res.send(files)
         } catch (e) {
             console.error(e)
+            next()
         }
     })
 
@@ -23,6 +24,7 @@ export function files(app: App) {
             res.send(name)
         } catch (e) {
             console.error(e)
+            next()
         }
     });
 
@@ -33,6 +35,7 @@ export function files(app: App) {
             res.send(file)
         } catch (e) {
             console.error(e)
+            next()
         }
     });
 }

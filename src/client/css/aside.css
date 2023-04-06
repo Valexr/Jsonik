@@ -36,7 +36,7 @@ aside form {
 }
 
 aside form label small {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.25rem;
 }
