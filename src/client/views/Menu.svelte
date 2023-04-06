@@ -11,7 +11,7 @@
 </script>
 
 <menu>
-    <Details role="list" button class="link">
+    <Details role="list" button class="link {!$path[0] ? 'clear' : ''}">
         <svelte:fragment slot="summary">
             <Icon icon={$page.props.icon} />
             {$page.props.title}

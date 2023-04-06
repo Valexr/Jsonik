@@ -843,3 +843,13 @@
     mask-image: url(../svg/feather/arrow-up.svg);
     -webkit-mask-image: url(../svg/feather/arrow-up.svg);
 }
+
+.icon-arrow-left {
+    mask-image: url(../svg/feather/arrow-left.svg);
+    -webkit-mask-image: url(../svg/feather/arrow-left.svg);
+}
+
+.icon-arrow-right {
+    mask-image: url(../svg/feather/arrow-right.svg);
+    -webkit-mask-image: url(../svg/feather/arrow-right.svg);
+}

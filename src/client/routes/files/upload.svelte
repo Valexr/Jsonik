@@ -22,9 +22,9 @@
     }
 
     async function uploadFiles(e: SubmitEvent) {
-        const promises = Array.from(fileList || [])?.map((file) => {
-            return files.add(`${$path[1] || ""}`, file);
-        });
+        const promises = Array.from(fileList || [], (file) =>
+            files.add(`${$path[1] || ""}`, file)
+        );
         await Promise.all(promises);
         clearFiles();
     }
@@ -73,7 +73,7 @@
         Upload {fileList?.length} file{s(fileList?.length)}
     </h3>
     {#if fileList}
-        {@const tbody = Array.from(fileList).map(({ name, size, type }, i) => ({
+        {@const tbody = Array.from(fileList, ({ name, size, type }, i) => ({
             id: i + 1,
             name,
             size,

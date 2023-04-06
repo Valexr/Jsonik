@@ -21,7 +21,8 @@ export function startHTTPServer(options: Options) {
     })
 
     server.on('listening', () => {
-        console.log(`Started on http://${options.host}:${options.port}`)
+        const time = new Date().toLocaleTimeString(undefined, { hour12: false });
+        console.log(`${time} Server on http://${options.host}:${options.port}`)
     })
 
     server.on('error', (e) => {
