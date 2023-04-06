@@ -35,7 +35,7 @@
     function submitRecord(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const record = Object.fromEntries(data);
-        console.log(record);
+
         $fragment.includes(`#edit-record`)
             ? records.update(file, record)
             : records.set(file, record);

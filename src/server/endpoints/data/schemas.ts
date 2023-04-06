@@ -1,6 +1,7 @@
 import type { App } from '$server/derver/types.js';
 
 export function schemas(app: App) {
+
     app.get(async (req, res, next) => {
         try {
             res.send(req.base?.table)

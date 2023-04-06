@@ -2,6 +2,7 @@ import { readdir } from 'fs/promises';
 import type { App } from '$server/derver/types.js';
 
 export function records(app: App) {
+
     app.get(async (req, res, next) => {
         const { file } = req.params
         const data = await readdir('data')

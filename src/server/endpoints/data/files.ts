@@ -3,6 +3,7 @@ import { checkdir } from "$server/lib/utils.js";
 import { App } from "$server/derver/types.js";
 
 export function files(app: App) {
+
     app.get(async (req, res, next) => {
         await checkdir('data')
         try {
