@@ -61,7 +61,8 @@
             <Input
                 on:submit={renameFile}
                 value={file}
-                pattern="^[\w,\-,.,%]+"
+                pattern="^[\w|\-|.|%]+"
+                placeholder="File name"
                 {onclose}
             />
         {:else}

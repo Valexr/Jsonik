@@ -12,11 +12,19 @@
         <label>
             <input
                 name="q"
+                list="items"
                 bind:value
                 type="search"
                 placeholder="search"
                 class:collapsed={collapsed && !value}
             />
+            <datalist id="items">
+                <option value="Internet Explorer" />
+                <option value="Firefox" />
+                <option value="Chrome" />
+                <option value="Opera" />
+                <option value="Safari" />
+            </datalist>
         </label>
     </fieldset>
 </form>

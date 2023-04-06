@@ -7,6 +7,7 @@
     export let value = "";
     export let required = false;
     export let pattern = "^[\\w|\\-]+$";
+    export let placeholder = "Folder name";
     export let onclose: (() => void) | undefined = undefined;
 
     function close(node: HTMLInputElement, onclose?: () => void) {
@@ -37,6 +38,7 @@
                 {required}
                 {value}
                 {pattern}
+                {placeholder}
                 use:close={onclose}
             />
         </label>

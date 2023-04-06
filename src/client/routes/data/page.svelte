@@ -49,7 +49,6 @@
 <section class="scroll-x">
     <Await
         promise={records.get($route.file).then(() => schemas.get($route.file))}
-        notify
     >
         {#if $records?.length}
             <Table
@@ -70,11 +69,13 @@
     </Await>
 </section>
 
-<nav id="addRecord" class="text-center pos-sticky">
-    <a tabindex="0" href="#add-record" role="button">
-        <Icon icon="plus" /> Add record
-    </a>
-</nav>
+{#if $schemas.length}
+    <nav id="addRecord" class="text-center pos-sticky">
+        <a tabindex="0" href="#add-record" role="button">
+            <Icon icon="plus" /> Add record
+        </a>
+    </nav>
+{/if}
 
 <EditCollection open={$fragment === "#edit-collection"} file={$route.file} />
 
