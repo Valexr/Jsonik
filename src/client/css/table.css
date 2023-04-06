@@ -12,12 +12,18 @@ table th {
     font-size: medium;
 }
 
+table th span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
 table td {
     vertical-align: initial;
     white-space: normal;
 }
 
-table p {
+table td p {
     margin: 0;
     overflow: hidden;
     display: -webkit-box;

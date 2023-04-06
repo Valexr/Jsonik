@@ -91,14 +91,6 @@
             current={console.log}
             data={{ thead, tbody }}
         />
-        <!-- <ol>
-            {#each fileList as file}
-                <li>
-                    {file.name}
-                    <b>{(file.size / 1000).toFixed(0)}</b>Kb
-                </li>
-            {/each}
-        </ol> -->
     {/if}
 </Dialog>
 

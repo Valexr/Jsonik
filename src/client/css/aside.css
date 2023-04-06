@@ -35,6 +35,12 @@ aside form {
     min-width: inherit;
 }
 
+aside form label small {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
 aside article {
     padding: var(--gap-lg);
     flex: 1;

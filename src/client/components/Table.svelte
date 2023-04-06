@@ -63,7 +63,9 @@
                     {/if}
                     {#if timeable}
                         <th role="button" id="id" class="link" on:click={sort}>
-                            <Icon icon="date" color="gray" /> created
+                            <span>
+                                <Icon icon="date" color="gray" /> created
+                            </span>
                         </th>
                     {/if}
                     {#each data.thead as th}
@@ -73,10 +75,12 @@
                             id={String(th.name || th)}
                             on:click={sort}
                         >
-                            {#if th.type && th.name}
-                                <Icon icon={th.type} color="gray" />
-                            {/if}
-                            {th.name || th}
+                            <span>
+                                {#if th.type && th.name}
+                                    <Icon icon={th.type} color="gray" />
+                                {/if}
+                                {th.name || th}
+                            </span>
                         </th>
                     {/each}
                     {#if updated}
@@ -86,7 +90,9 @@
                             class="link"
                             on:click={sort}
                         >
-                            <Icon icon="date" color="gray" /> updated
+                            <span>
+                                <Icon icon="date" color="gray" /> updated
+                            </span>
                         </th>
                     {/if}
                 </tr>
