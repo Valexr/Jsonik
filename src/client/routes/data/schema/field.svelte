@@ -36,7 +36,7 @@
     function save(e: SubmitEvent | InputEvent | KeyboardEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const { type, name, required, ...opts } = Object.fromEntries(data);
-        console.log(prevName, name);
+
         field = { ...field, prevName, required, opts } as unknown as Schema;
         schemas.save(field as Schema);
     }

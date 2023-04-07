@@ -81,9 +81,6 @@
 </Await>
 
 <style>
-    nav {
-        margin: var(--gap-lg) 0;
-    }
     [href="#add-folder"] {
         left: 0;
         z-index: 1;

@@ -8,11 +8,15 @@ export function logs(app: App) {
 
     app.get(pattern, async (req, res, next) => {
         try {
-            if (Object.keys(req.query).length) {
+            console.log(req.query)
+            if (Object.values(req.query).some(v => v)) {
+                const { q, page, limit } = req.query
                 const items = req.query.q
-                    ? req.base?.search(req.query.q)
+                    ? req.base?.search(q)
                     : req.base?.match(req.query);
-                res.send(items);
+                const index = Number(page) - 1
+                const start = index ? index * Number(limit) : index
+                res.send(items.splice(start, limit));
             } else if (!req.params.file && !req.params.table) {
                 res.send(req.body)
             } else if (!req.params.table) {

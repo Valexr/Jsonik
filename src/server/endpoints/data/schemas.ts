@@ -4,7 +4,8 @@ export function schemas(app: App) {
 
     app.get(async (req, res, next) => {
         try {
-            res.send(req.base?.table)
+            const { schemas } = req.base?.data
+            res.send(schemas)
         } catch (e) {
             console.log('schemasGET: ', e);
             next();
@@ -15,7 +16,7 @@ export function schemas(app: App) {
         try {
             const schemas = req.body
             await req.base?.assign({ schemas })
-            res.send(req.body);
+            res.send(schemas);
         } catch (e) {
             console.log('schemasPOST: ', e);
             next();

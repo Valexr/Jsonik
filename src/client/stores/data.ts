@@ -87,6 +87,7 @@ function createSchemas() {
             await post(`/data/${file}/schemas`, JSON.stringify(schemas), {
                 headers: { 'Content-Type': 'application/json' }
             })
+            update(state => schemas)
             files.update(state => uniq(state.concat(file)))
         },
         add: (schema: Schema[]) => update(state => state.concat(schema)),

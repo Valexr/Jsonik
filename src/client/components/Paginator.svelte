@@ -6,10 +6,11 @@
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
 
-    export let total: number;
-    export let limit: number;
-    export let active: number;
-    export let spread: number;
+    export let total: number = 10;
+    export let limit: number = 10;
+    export let limits: number[] = [10, 20, 30, 40, 50];
+    export let active: number = 1;
+    export let spread: number = 3;
 
     const prev = () => (active > 1 && active--, dispatch("prev", active));
     const cur = (i: number) => ((active = i), dispatch("current", i));
@@ -39,41 +40,67 @@
 
         return spread ? uniq(result) : items;
     };
+
+    function spreading(ul: HTMLUListElement) {
+        console.log(ul.offsetWidth);
+        const RO = new ResizeObserver(() => {
+            const { offsetWidth } = ul;
+            // spread = Math.ceil(offsetWidth / 50) - 5;
+        });
+        RO.observe(ul);
+        return {
+            destroy() {
+                RO.disconnect();
+            },
+        };
+    }
 </script>
 
-<ul class="paginator cols col-fit" role="navigation">
-    <li>
-        <button class="box" on:click={prev} disabled={active === 1}>
-            <Icon icon="arrow-left" />
-        </button>
-    </li>
-    {#if pages.length}
-        {#each spreaded(pages) as page, i}
-            <li>
-                {#if typeof page === "boolean"}
-                    <span>...</span>
-                {:else}
-                    <button
-                        class="box"
-                        on:click={() => cur(Number(page))}
-                        disabled={active === page}
-                    >
-                        {page}
-                    </button>
-                {/if}
-            </li>
+<nav class="cols">
+    <ul class="paginator cols col-fit" role="navigation" use:spreading>
+        <li>
+            <button class="box" on:click={prev} disabled={active === 1}>
+                <Icon icon="arrow-left" />
+            </button>
+        </li>
+        {#if pages.length}
+            {#each spreaded(pages) as page, i}
+                <li>
+                    {#if typeof page === "boolean"}
+                        <span>...</span>
+                    {:else}
+                        <button
+                            class="link"
+                            on:click={() => cur(Number(page))}
+                            disabled={active === page}
+                        >
+                            {page}
+                        </button>
+                    {/if}
+                </li>
+            {/each}
+        {/if}
+        <li>
+            <button
+                class="box"
+                on:click={next}
+                disabled={active === pages.length}
+            >
+                <Icon icon="arrow-right" />
+            </button>
+        </li>
+    </ul>
+    <select bind:value={limit}>
+        {#each limits as limit}
+            <option selected>{limit}</option>
         {/each}
-    {/if}
-    <li>
-        <button class="box" on:click={next} disabled={active === pages.length}>
-            <Icon icon="arrow-right" />
-        </button>
-    </li>
-</ul>
+    </select>
+</nav>
 
 <style>
     .paginator {
         --cols-gap: var(--gap-sm);
+        display: inline-flex;
         align-items: center;
         list-style: none;
         margin: auto;
@@ -82,5 +109,12 @@
     }
     .paginator li {
         line-height: 1.5;
+    }
+    .paginator li:not(:first-child, :last-child) button {
+        padding: 0 var(--gap-sm);
+    }
+    select {
+        width: auto;
+        max-width: fit-content;
     }
 </style>

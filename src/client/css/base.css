@@ -48,8 +48,8 @@ header {
     flex: auto;
 }
 
-main {
-    /* margin-bottom: var(--gap-lg); */
+main>nav {
+    margin: var(--gap-lg) 0;
 }
 
 article {

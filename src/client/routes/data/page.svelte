@@ -47,26 +47,30 @@
 {/if}
 
 <section class="scroll-x">
-    <Await
-        promise={records.get($route.file).then(() => schemas.get($route.file))}
-    >
-        {#if $records?.length}
-            <Table
-                data={{ thead: $schemas, tbody: $records }}
-                current={getItem}
-                updated
-                bind:selected
-            />
-        {:else if !$schemas?.length}
-            <p class="text-center">
-                <a href="#edit-collection" role="button">
-                    <Icon icon="plus" /> Add fields
-                </a>
-            </p>
-        {/if}
-        <!-- <Code input={JSON.stringify({ $schemas, $records }, null, 2)} /> -->
-        <AddCollection slot="catch" file={$route.file} />
-    </Await>
+    {#key $fragment}
+        <Await
+            promise={records
+                .get($route.file)
+                .then(() => schemas.get($route.file))}
+        >
+            {#if $records?.length}
+                <Table
+                    data={{ thead: $schemas, tbody: $records }}
+                    current={getItem}
+                    updated
+                    bind:selected
+                />
+            {:else if !$schemas?.length}
+                <p class="text-center">
+                    <a href="#edit-collection" role="button">
+                        <Icon icon="plus" /> Add fields
+                    </a>
+                </p>
+            {/if}
+            <!-- <Code input={JSON.stringify({ $schemas, $records }, null, 2)} /> -->
+            <AddCollection slot="catch" file={$route.file} />
+        </Await>
+    {/key}
 </section>
 
 {#if $schemas.length}

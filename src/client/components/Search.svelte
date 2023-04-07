@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { submit } from "svelte-pathfinder";
+    import { submit, query } from "svelte-pathfinder";
 </script>
 
 <script lang="ts">
@@ -7,26 +7,33 @@
     let value: string;
 </script>
 
-<form on:submit={submit}>
+<form method="GET" on:submit={submit}>
     <fieldset>
         <label>
             <input
                 name="q"
-                list="items"
                 bind:value
+                list="items"
                 type="search"
                 placeholder="search"
                 class:collapsed={collapsed && !value}
             />
-            <datalist id="items">
+            <!-- <datalist id="items">
                 <option value="Internet Explorer" />
                 <option value="Firefox" />
                 <option value="Chrome" />
                 <option value="Opera" />
                 <option value="Safari" />
-            </datalist>
+            </datalist> -->
+        </label>
+        <label>
+            <input name="limit" class="hidden" value={$query.limit} />
+        </label>
+        <label>
+            <input name="page" class="hidden" value={$query.page} />
         </label>
     </fieldset>
+    <button class="hidden" />
 </form>
 
 <style>

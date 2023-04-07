@@ -37,9 +37,6 @@
 </Await>
 
 <style>
-    nav {
-        margin: var(--gap-lg) 0;
-    }
     a[href="/data"] {
         left: 0;
         z-index: 1;
