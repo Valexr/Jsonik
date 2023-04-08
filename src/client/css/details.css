@@ -131,3 +131,7 @@ details[role=list] ul[role=listbox] li a {
     gap: var(--gap-sm);
     padding: 0 1rem;
 }
+
+details:focus summary {
+    border-color: currentColor;
+}

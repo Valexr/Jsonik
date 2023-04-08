@@ -97,6 +97,10 @@ function createSchemas() {
         save: (schema?: Schema) => update(state =>
             state.map((s) => (schema?.id === s.id ? { ...schema, valid: true } : s))
         ),
+        move: (from: number, to: number) => update(state => {
+            state.splice(to, 0, state.splice(from, 1)[0])
+            return state
+        }),
         cleanup: () => update(state => state.map(({ prevName, ...schema }) => schema)),
         delete: (id?: number) => update(state => state.filter(s => s.id !== id)),
         clear: () => set([]),

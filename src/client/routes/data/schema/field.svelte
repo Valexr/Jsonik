@@ -10,6 +10,7 @@
 </script>
 
 <script lang="ts">
+    export let id: string = "";
     export let open: boolean;
     export let field = SCHEMAS[0];
     export let valid = true;
@@ -43,16 +44,40 @@
     function del() {
         schemas.delete(field.id);
     }
+
+    function dnd(de: HTMLDetailsElement) {
+        de.ondragstart = (e: DragEvent) => {
+            e.dataTransfer?.clearData();
+            e.dataTransfer?.setData("fieldID", id);
+        };
+        de.ondragover = (e: DragEvent) => {
+            e.preventDefault();
+            de.focus();
+        };
+        de.ondragleave = (e: DragEvent) => de.blur();
+        de.ondrop = async (e: DragEvent) => {
+            const { dataTransfer, currentTarget } = e;
+            const { id: to } = currentTarget as HTMLElement;
+            const from = dataTransfer?.getData("fieldID");
+
+            if (from !== to) {
+                schemas.move(Number(from), Number(to));
+            }
+            de.blur();
+        };
+    }
 </script>
 
 <!-- svelte-ignore a11y-autofocus -->
 <Details
+    {id}
     bind:open
     draggable={!open}
     on:input={invalidate}
     invalid={!valid || !field.valid}
     class="block"
     button={!open}
+    action={dnd}
     back
 >
     <svelte:fragment slot="summary">

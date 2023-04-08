@@ -80,7 +80,7 @@ summary {
     background-color: var(--hover);
 }
 
-:is(button, [role=button], [type="file"]::file-selector-button):is(:focus, :focus-visible) {
+:is(button, [role=button], [type="file"]::file-selector-button):is(:focus, :focus-visible, :focus-within) {
     border-color: currentColor;
 }
 

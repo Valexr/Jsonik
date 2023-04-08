@@ -17,7 +17,8 @@
 
         await schemas.set(collectionName, $schemas);
         const fragment = !$schemas.length ? "#edit-collection" : "";
-        goto(`/data/${collectionName}${fragment}`);
+        if (collectionName === file) history.go();
+        else goto(`/data/${collectionName}${fragment}`);
     }
 
     function clearSchemas() {

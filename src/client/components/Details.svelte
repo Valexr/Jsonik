@@ -13,6 +13,7 @@
 </script>
 
 <script lang="ts">
+    export let id: string = "";
     export let role = "";
     export let top = false;
     export let open = false;
@@ -21,17 +22,20 @@
     export let draggable = false;
     export let invalid = false;
     export let back = false;
+    export let action = (node: HTMLDetailsElement) => {};
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <details
-    tabindex="0"
+    {id}
     {role}
+    tabindex="0"
     class:top
     class:bg-back={back}
     bind:open
     {draggable}
     on:input
+    use:action
 >
     <summary
         tabindex="0"

@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+    import { fragment } from "svelte-pathfinder";
     import { schemas, schemaInvalID } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Details from "$client/components/Details.svelte";
@@ -61,8 +62,13 @@
 
     {#if activeTab === "Fields"}
         <Await promise={schemas.get(file)}>
-            {#each $schemas as field (field.id)}
-                <Field {field} open={field.id === $schemaInvalID} bind:valid />
+            {#each $schemas as field, id (field.id)}
+                <Field
+                    {field}
+                    id={String(id)}
+                    open={field.id === $schemaInvalID}
+                    bind:valid
+                />
             {/each}
         </Await>
     {:else if activeTab === "Rules"}
