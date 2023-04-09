@@ -97,7 +97,7 @@ function sticked(node: HTMLElement, cb?: (sticked: boolean) => void) {
 }
 
 function expand(node: HTMLTextAreaElement) {
-    node.style.height = `${node.scrollHeight + 24}px`
+    // node.style.height = `${node.scrollHeight + 24}px`
     if (node.nodeName === 'TEXTAREA')
         node.oninput = (e: Event) => {
             node.style.height = 'auto'

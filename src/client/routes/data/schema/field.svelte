@@ -85,7 +85,7 @@
         <input
             required
             type="text"
-            autofocus={true}
+            autofocus={open}
             pattern="^[\w|\-]+$"
             bind:value={field.name}
             form={String(field.id)}

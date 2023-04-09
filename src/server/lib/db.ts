@@ -46,7 +46,7 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 return base.data[table];
             },
             upkeys: async (keys: Record<string, string>) => {
-                base.data[table] = base.data[table].map((r: Record<string, any>) => upKeys(r, keys))
+                base.data[table] = base.data[table].map((r: Item) => upKeys(r, keys))
                 await base.write();
                 return base.data[table];
             },
@@ -107,8 +107,8 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 return filters;
             },
         };
-    } catch (err) {
-        console.log('dbERR:', err);
+    } catch (e) {
+        console.log('base:', e);
     }
 }
 

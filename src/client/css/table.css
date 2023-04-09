@@ -72,6 +72,10 @@ table.updated tr td:last-child {
     white-space: nowrap;
 }
 
+table.updated tr :is(th, td):is(:nth-child(2), :last-child) {
+    width: 1%;
+}
+
 table :not(thead) tr:hover {
     cursor: pointer;
     background-color: var(--hover);

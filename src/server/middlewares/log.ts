@@ -19,6 +19,13 @@ export async function log(req: Req, res: Res, next: Next) {
     //         date: res.sendDate
     //     }
     // });
+    // const logError = (e: Error) => {
+    //     res.off('error', logError)
+    //     console.log(e.message);
+    // };
+
+    // res.on('error', logError)
+
     const LOGS = await base('logs/data.json');
     const id = Date.now()
     const { method, url, socket: { remoteAddress }, headers: { referer } } = req

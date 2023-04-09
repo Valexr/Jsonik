@@ -4,7 +4,7 @@ import { mwLivereload } from './livereload.js';
 import type { Options, Mw, App, Req, Res, Next } from './types.js';
 
 export function startHTTPServer(options: Options) {
-    const server = http.createServer(function (req, res) {
+    const server = http.createServer((req, res) => {
         const middlewares: Mw[] = [
             mwURLParse(),
             mwBodyParse(),
@@ -17,19 +17,28 @@ export function startHTTPServer(options: Options) {
             ...(options.livereload ? [mwLivereload()] : []),
         ];
 
+        // const logError = (e: Error) => {
+        //     res.off('error', logError)
+        //     console.log(e.message);
+        // };
+
+        // res.on('error', logError)
+
         runMiddlewares(middlewares, req as Req, res as Res);
     })
 
+    const { host, port } = options
+
     server.on('listening', () => {
         const time = new Date().toLocaleTimeString(undefined, { hour12: false });
-        console.log(`${time} Server on http://${options.host}:${options.port}`)
+        console.log(`${time} Server on http://${host}:${port}`)
     })
 
     server.on('error', (e) => {
         console.error('Server starting error:', e);
     })
 
-    server.listen(options.port, options.host);
+    server.listen(port, host);
 
     process.on('SIGTERM', () => server.close());
     process.on('exit', () => server.close());

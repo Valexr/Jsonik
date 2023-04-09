@@ -1,5 +1,4 @@
 <script lang="ts" context="module">
-    import { fragment } from "svelte-pathfinder";
     import { schemas, schemaInvalID } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Details from "$client/components/Details.svelte";

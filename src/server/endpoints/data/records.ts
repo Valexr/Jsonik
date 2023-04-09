@@ -17,7 +17,10 @@ export function records(app: App) {
             } else if (files.includes(file)) {
                 const { records } = req.base?.data
                 res.send(records);
-            } else res.error(404, 'Collection not found')
+            } else {
+                throw Error('Collection not found')
+                // res.error(404, 'Collection not found')
+            }
         } catch (err) {
             console.log('recordsGET: ', err);
             next();
