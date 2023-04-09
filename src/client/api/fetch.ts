@@ -5,8 +5,8 @@ const base = '/api/v1';
 // const access = get(session).access
 
 export default async function (url: RequestInfo, { ...options }: RequestInit, body?: BodyInit) {
-    const isJson = options.headers?.['Content-Type' as keyof typeof options.headers] === 'application/json'
-    console.log(body, isJson)
+    // const isJson = options.headers?.['Content-Type' as keyof typeof options.headers] === 'application/json'
+    // console.log(body, isJson)
     function req() {
         return fetch(base + url, {
             ...options,

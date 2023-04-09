@@ -1,9 +1,8 @@
 <script lang="ts" context="module">
     import { goto } from "svelte-pathfinder";
     import { files, schemas, schemaInvalID } from "$client/stores/data.js";
-    import Await from "$client/components/Await.svelte";
     import Form from "$client/components/Form.svelte";
-    import Schema from "./schema/schema.svelte";
+    import Fields from "./fields.svelte";
 </script>
 
 <script lang="ts">
@@ -11,7 +10,7 @@
 
     let valid = true;
 
-    async function submitCollection(e: SubmitEvent) {
+    async function addSchema(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const collectionName = String(data.get("collectionName"));
 
@@ -26,9 +25,9 @@
     }
 </script>
 
-<Form on:submit={submitCollection} on:reset={clearSchemas} bind:valid center>
+<Form on:submit={addSchema} on:reset={clearSchemas} bind:valid center>
     <h1 class="text-center">Add collection</h1>
-    <Schema bind:valid {file} pattern="(?!^{$files.join('$|^')}$)[\w|\-]+" />
+    <Fields bind:valid {file} pattern="(?!^{$files.join('$|^')}$)[\w|\-]+" />
     <nav class="cols">
         <button type="reset" class="link">Cancel</button>
         <button

@@ -21,15 +21,15 @@ function createFiles() {
         update,
         subscribe,
         async get() {
-            const files = await get(`/data/files/`)
+            const files = await get(`/data//`)
             set(files)
         },
         async rename(file: string, name: string) {
-            name = await patch(`/data/files/${file}?name=${name}`);
+            name = await patch(`/data//${file}?name=${name}`);
             update(state => uniq(state.map(f => (f === file ? name : f))))
         },
         async delete(file: string) {
-            file = await del(`/data/files/${file}`)
+            file = await del(`/data//${file}`)
             update(state => state.filter(s => s !== file))
         }
     }

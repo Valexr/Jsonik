@@ -7,7 +7,7 @@
         schemasKeys,
     } from "$client/stores/data.js";
     import Dialog from "$client/components/Dialog.svelte";
-    import Schema from "./schema/schema.svelte";
+    import Fields from "./fields.svelte";
 </script>
 
 <script lang="ts">
@@ -16,7 +16,7 @@
 
     let valid = true;
 
-    async function submitCollection(e: SubmitEvent) {
+    async function editSchema(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const newName = String(data.get("collectionName"));
 
@@ -30,9 +30,9 @@
     }
 </script>
 
-<Dialog {open} on:submit={submitCollection} bind:valid>
+<Dialog {open} on:submit={editSchema} bind:valid>
     <h3 slot="header">Edit collection</h3>
-    <Schema bind:valid {file} />
+    <Fields bind:valid {file} />
     <nav slot="footer">
         <button type="reset" class="link">Cancel</button>
         <button

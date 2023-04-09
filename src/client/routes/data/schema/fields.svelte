@@ -10,11 +10,11 @@
 <script lang="ts">
     export let file = "";
     export let valid = true;
-    export let open = false;
     export let pattern = "^[\\w|\\-]+$";
 
     const tabs = ["Fields", "Rules"];
 
+    let open = false;
     let activeTab = tabs[0];
 
     function setTab(e: MouseEvent) {
