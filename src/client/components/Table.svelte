@@ -1,8 +1,10 @@
 <script lang="ts" context="module">
     import Icon from "./Icon.svelte";
     import { date } from "$client/utils/time.js";
+    import LightBox from "$client/components/LightBox.svelte";
     import type { InputEvent } from "$types/client.js";
-    import type { Item, Schema } from "$client/stores/data.js";
+    import type { Item } from "$client/stores/data.js";
+    import type { Schema } from "$client/stores/schemas.js";
 
     type Table = {
         thead?: Array<Partial<Schema>>;
@@ -34,7 +36,7 @@
     function select(e: MouseEvent) {
         const { id } = e.currentTarget as HTMLTableRowElement;
         const { nodeName } = e.target as HTMLTableRowElement;
-        const input = nodeName === "INPUT";
+        const input = ["INPUT", "A"].includes(nodeName);
         if (!input) current?.(Number(id));
     }
 
@@ -135,6 +137,17 @@
                             <td>
                                 {#if html(tr[td.name])}
                                     {@html tr[td.name]}
+                                {:else if td.type === "file"}
+                                    <ul
+                                        role="listbox"
+                                        class="cols col-fit align-center justify-start nowrap"
+                                    >
+                                        {#each tr[td.name] as file (file)}
+                                            <li>
+                                                <LightBox {file} />
+                                            </li>
+                                        {/each}
+                                    </ul>
                                 {:else}
                                     <p>{tr[td.name]}</p>
                                 {/if}
@@ -162,3 +175,15 @@
         </slot>
     </tfoot>
 </table>
+
+<style>
+    /* a {
+        width: 3rem;
+        height: 3rem;
+        border-radius: var(--border-radius-sm);
+        display: inline-block;
+        color: transparent;
+        background-size: cover;
+        overflow: hidden;
+    } */
+</style>

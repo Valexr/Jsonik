@@ -19,13 +19,12 @@
     export let bottom = false;
     export let left = false;
     export let valid = false;
+    export let close = () => fragment.set("");
 
     let aside: HTMLElement;
 
     const X = left ? -1 : right ? 1 : 0;
     const Y = top ? -1 : bottom ? 1 : 0;
-
-    const close = () => fragment.set("");
 
     function closeAction(aside: HTMLElement) {
         const form = aside.firstChild as HTMLFormElement;

@@ -1,10 +1,11 @@
 <script lang="ts" context="module">
+    import { goto } from "svelte-pathfinder";
     import {
-        records,
         files,
         schemas,
-        schemaInvalID,
+        records,
         schemasKeys,
+        schemaInvalID,
     } from "$client/stores/data.js";
     import Dialog from "$client/components/Dialog.svelte";
     import Fields from "./fields.svelte";
@@ -27,12 +28,13 @@
         await records.upkeys(newName, $schemasKeys);
         schemas.cleanup();
         await schemas.set(newName, $schemas);
+        goto(`/data/${newName}`);
     }
 </script>
 
 <Dialog {open} on:submit={editSchema} bind:valid>
     <h3 slot="header">Edit collection</h3>
-    <Fields bind:valid {file} />
+    <Fields bind:valid {file} pattern="^[\w|\-]+$" />
     <nav slot="footer">
         <button type="reset" class="link">Cancel</button>
         <button

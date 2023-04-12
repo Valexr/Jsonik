@@ -42,13 +42,23 @@ ol {
 
 ul[role=listbox] {
     list-style: none;
+    padding: 0;
 }
 
 ul[role="listbox"].cols {
     --cols-gap: var(--gap);
-    padding: var(--gap);
+    /* padding: var(--gap); */
     position: relative;
     margin: 0;
+}
+
+ul[role="listbox"] li {
+    /* padding: var(--gap-sm); */
+    border-radius: var(--border-radius-sm);
+}
+
+ul[role="listbox"] li:hover {
+    background-color: var(--hover);
 }
 
 pre {

@@ -7,7 +7,7 @@
 }
 
 .text-error {
-    color: var(--error);
+    color: var(--error) !important;
 }
 
 .text-gray {

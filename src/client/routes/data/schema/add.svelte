@@ -14,6 +14,7 @@
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const collectionName = String(data.get("collectionName"));
 
+        schemas.cleanup();
         await schemas.set(collectionName, $schemas);
         const fragment = !$schemas.length ? "#edit-collection" : "";
         if (collectionName === file) history.go();

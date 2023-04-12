@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { fragment, paramable } from "svelte-pathfinder";
+    import { fragment, query, paramable } from "svelte-pathfinder";
     import { files, schemas, records, type Item } from "$client/stores/data.js";
     import { s } from "$client/utils/index.js";
 
@@ -8,6 +8,7 @@
     import Toast from "$client/components/Toaster/Toast.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Code from "$client/components/Code.svelte";
+    import Dialog from "$client/components/Dialog.svelte";
 
     import AddSchema from "./schema/add.svelte";
     import EditSchema from "./schema/edit.svelte";
@@ -16,13 +17,17 @@
 </script>
 
 <script lang="ts">
-    let active: Item;
+    let active: Item | null;
     let selected: number[] = [];
 
     const route = paramable<{ file: string }>("/data/:file?");
+    const promise = records
+        .get($route.file)
+        .then(() => schemas.get($route.file));
 
-    function getItem(id: number) {
-        fragment.set(`#edit-record-${id}`);
+    function getRecord(id: number) {
+        query.set({ record: id });
+        active = $records?.find((r) => r.id === id) || {};
     }
 
     async function deleteRecords() {
@@ -47,29 +52,27 @@
 {/if}
 
 <section class="scroll-x">
-    <Await promise={records.get($route.file)}>
-        <Await promise={schemas.get($route.file)}>
-            {#if $records?.length}
-                <Table
-                    data={{ thead: $schemas, tbody: $records }}
-                    current={getItem}
-                    bind:selected
-                    updated
-                />
-            {:else if !$schemas?.length}
-                <p class="text-center">
-                    <a href="#edit-collection" role="button">
-                        <Icon icon="plus" /> Add fields
-                    </a>
-                </p>
-            {/if}
-            <Code input={JSON.stringify({ $schemas, $records }, null, 2)} />
-        </Await>
+    <Await {promise}>
+        {#if $records?.length}
+            <Table
+                data={{ thead: $schemas, tbody: $records }}
+                current={getRecord}
+                bind:selected
+                updated
+            />
+        {:else if !$schemas?.length}
+            <p class="text-center">
+                <a href="#edit-collection" role="button">
+                    <Icon icon="plus" /> Add fields
+                </a>
+            </p>
+        {/if}
+        <Code input={JSON.stringify({ $schemas, $records }, null, 2)} />
         <AddSchema slot="catch" file={$route.file} />
     </Await>
 </section>
 
-<EditSchema open={$fragment === "#edit-collection"} file={$route.file} />
+<EditSchema open={$fragment.includes("#edit-collection")} file={$route.file} />
 
 {#if $schemas.length}
     <nav id="addRecord" class="text-center pos-sticky">
@@ -83,9 +86,27 @@
 <EditRecord
     file={$route.file}
     header="Edit record"
-    open={$fragment.includes(`#edit-record`)}
+    open={!!$query.record}
+    close={() => query.set("")}
     {active}
 />
+
+<!-- <Dialog open={$fragment.includes("#preview")} img from="center">
+    {@const file = $fragment.replace("#preview-", "")}
+    <figure>
+        <img src={file} alt={file} />
+    </figure>
+    <nav slot="footer">
+        {@const file = $fragment.replace("#preview-", "")}
+        <span>{file}</span>
+        <button type="reset" class="box text-error">
+            <Icon icon="trash" />
+        </button>
+        <button type="reset" class="box">
+            <Icon />
+        </button>
+    </nav>
+</Dialog> -->
 
 <style>
     #addRecord {

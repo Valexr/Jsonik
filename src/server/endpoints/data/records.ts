@@ -18,8 +18,8 @@ export function records(app: App) {
                 const { records } = req.base?.data
                 res.send(records);
             } else {
-                throw Error('Collection not found')
-                // res.error(404, 'Collection not found')
+                // throw Error('Collection not found')
+                res.error(404, 'Collection not found')
             }
         } catch (err) {
             console.log('recordsGET: ', err);
@@ -30,7 +30,7 @@ export function records(app: App) {
     app.post(async (req, res, next) => {
         try {
             const record = req.body
-            const id = Date.now()
+            const id = record.id || Date.now()
             await req.base?.prepend({ ...record, id, updated: id });
 
             const { records } = req.base?.data

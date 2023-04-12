@@ -1,11 +1,10 @@
 <script lang="ts">
     export let name: string;
     export let required: boolean;
-    export let value: any;
+    export let value: boolean;
 </script>
 
 <label>
-    <input type="hidden" {name} value={value || ""} />
     <input
         type="checkbox"
         role="switch"
@@ -14,4 +13,5 @@
         bind:checked={value}
     />&nbsp;
     <small>{name}</small>
+    <input type="hidden" {name} value={value || ""} />
 </label>

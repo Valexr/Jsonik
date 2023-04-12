@@ -8,7 +8,7 @@
     export let size: Size = "";
     export let method = "GET";
     export let action = "";
-    export let enctype = "text/plain";
+    export let enctype = "multipart/form-data";
     export let valid = true;
     export let center = false;
 

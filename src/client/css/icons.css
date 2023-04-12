@@ -824,6 +824,11 @@
     -webkit-mask-image: url(../svg/feather/image.svg);
 }
 
+.icon-tel {
+    mask-image: url(../svg/feather/phone.svg);
+    -webkit-mask-image: url(../svg/feather/phone.svg);
+}
+
 .icon-markdown {
     mask-image: url(../svg/feather/file-text.svg);
     -webkit-mask-image: url(../svg/feather/file-text.svg);

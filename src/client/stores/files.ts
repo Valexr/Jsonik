@@ -13,7 +13,7 @@ function createFiles() {
         },
         async add(folder = '', file?: File) {
             file = await post(`/files/${folder}/${file?.name}`, file);
-            update(state => state.concat(String(file)))
+            update(state => state?.concat(String(file)))
         },
         async move(from = '', file: string, to = '') {
             file = await put(`/files/${from}/${to}?file=${encodeURI(file)}`);

@@ -10,7 +10,7 @@
 <script lang="ts">
     export let file = "";
     export let valid = true;
-    export let pattern = "^[\\w|\\-]+$";
+    export let pattern: string;
 
     const tabs = ["Fields", "Rules"];
 

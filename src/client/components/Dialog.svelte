@@ -40,6 +40,7 @@
         form.onreset = () => dialog.close();
 
         dialog.onclick = (e) => {
+            e.stopPropagation();
             const { nodeName } = e.target as HTMLDialogElement;
             if (nodeName === "DIALOG") {
                 dialog.close();

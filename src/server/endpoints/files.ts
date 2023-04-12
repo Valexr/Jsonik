@@ -12,7 +12,9 @@ export function files(app: App) {
         await checkdir('files')
 
         if (file) {
-            createReadStream(`files/${folder}/${file}`).pipe(res)
+            const stream = createReadStream(`files/${folder}/${file}`)
+            stream.on('error', (e) => res.error(422, e.message))
+            stream.pipe(res)
         } else {
             try {
                 const root = await readdir(`files`)

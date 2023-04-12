@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import Icon from "$client/components/Icon.svelte";
-    import { type Schema, SCHEMAS, schemas } from "$client/stores/data.js";
+    import { type Schema, schemas } from "$client/stores/data.js";
+    import { SCHEMAS } from "$client/stores/schemas.js";
 </script>
 
 <script lang="ts">

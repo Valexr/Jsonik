@@ -26,7 +26,7 @@
                     toast.success({ msg: success, timeout: 3000 });
             })
             .catch((e) => {
-                // console.error(e);
+                console.error(e);
                 promise = null;
                 error = error || e.reason || e.message || e;
                 dispatch("error", error);

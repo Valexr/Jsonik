@@ -1,5 +1,7 @@
 <script lang="ts" context="module">
-    import { schemas, SCHEMAS, type Schema } from "$client/stores/data.js";
+    import { schemas } from "$client/stores/data.js";
+    import { SCHEMAS, type Schema } from "$client/stores/schemas.js";
+
     import Form from "$client/components/Form.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Details from "$client/components/Details.svelte";
@@ -13,7 +15,7 @@
     export let id: string = "";
     export let open: boolean;
     export let field = SCHEMAS[0];
-    export let valid = true;
+    export let valid = false;
 
     let prevName = field.name;
 
@@ -36,9 +38,16 @@
     }
     function save(e: SubmitEvent | InputEvent | KeyboardEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
-        const { type, name, required, ...opts } = Object.fromEntries(data);
+        const { type, name, required, multiple, ...opts } =
+            Object.fromEntries(data);
 
-        field = { ...field, prevName, required, opts } as unknown as Schema;
+        field = {
+            ...field,
+            prevName,
+            required,
+            multiple,
+            opts,
+        } as unknown as Schema;
         schemas.save(field as Schema);
     }
     function del() {
@@ -114,7 +123,11 @@
                     <label>
                         <small>{name}</small>
                         <input
-                            use:attributes={{ type: field.type, name, value }}
+                            use:attributes={{
+                                type: field.type,
+                                name,
+                                value,
+                            }}
                         />
                     </label>
                 {/each}
@@ -122,14 +135,16 @@
         </fieldset>
 
         <fieldset class="cols col-fit align-center" name="custom" id="custom">
-            <label>
-                <input
-                    name="required"
-                    type="checkbox"
-                    role="switch"
-                    checked={field.required}
-                /> Required
-            </label>
+            <nav class="cols">
+                <label>
+                    <input
+                        name="required"
+                        type="checkbox"
+                        role="switch"
+                        checked={field.required}
+                    /> Required
+                </label>
+            </nav>
 
             <nav class="cols col-fit">
                 <button type="reset" class="link box text-error">
