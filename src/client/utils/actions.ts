@@ -135,8 +135,9 @@ function focusTrap(node: HTMLElement) {
 }
 
 function keyEscape(node: HTMLElement, cb: () => void) {
-    node.onkeydown = (e) => {
+    window.onkeydown = (e) => {
         if (e.key === "Escape") {
+            e.preventDefault();
             cb();
         }
     };

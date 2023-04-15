@@ -2,8 +2,15 @@
     import { fragment } from "svelte-pathfinder";
     import Dialog from "$client/components/Dialog.svelte";
     import Icon from "$client/components/Icon.svelte";
+    import { records } from "$client/stores/data.js";
+    import { files } from "$client/stores/files.js";
 
-    type Image = File & { collection: string; name: string };
+    type Image = File & {
+        collection: string;
+        name: string;
+        record: string;
+        field: string;
+    };
 </script>
 
 <script lang="ts">
@@ -11,9 +18,16 @@
 
     function createURL(file: Image) {
         const { collection, name } = file;
-        return file instanceof File
-            ? URL.createObjectURL(file)
-            : `/api/v1/files/${collection}/${name}`;
+        return `/api/v1/files/${collection}/${name}`;
+        // return file instanceof File
+        //     ? URL.createObjectURL(file)
+        //     : `/api/v1/files/${collection}/${name}`;
+    }
+
+    async function deleteFile() {
+        const { collection, name } = file;
+        await records.deleteFiles(collection, [name]);
+        await files.delete(collection, name);
     }
 </script>
 
@@ -28,13 +42,19 @@
     {file.name}
 </a>
 
-<Dialog open={$fragment === `#file-${file.name}`} from="center" img>
+<Dialog
+    on:close={() => fragment.set("")}
+    on:submit={deleteFile}
+    open={$fragment === `#file-${file.name}`}
+    from="center"
+    img
+>
     <figure>
         <img src={createURL(file)} alt={file.name} />
     </figure>
     <nav class="cols col-fit align-center nowrap" slot="footer">
         <span class="scroll-x">{file.name}</span>
-        <button type="reset" class="box text-error">
+        <button type="submit" class="box text-error">
             <Icon icon="trash" />
         </button>
         <button type="reset" class="box">
@@ -47,9 +67,7 @@
     a {
         color: transparent;
         background-size: cover;
-        overflow: hidden;
         text-indent: -999px;
-        /* width: 2.5em; */
         height: 2.5em;
     }
     nav.cols {

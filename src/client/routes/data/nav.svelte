@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { files } from "$client/stores/data.js";
+    import { collections } from "$client/stores/data.js";
     import Await from "$client/components/Await.svelte";
     import Icon from "$client/components/Icon.svelte";
     import File from "./nav/file.svelte";
@@ -12,14 +12,14 @@
     const route = paramable("/data/:file?");
 </script>
 
-<Await promise={files.get()}>
+<Await promise={collections.get()}>
     <nav
         class="text-center cols col-fit nowrap scroll-x"
-        class:justify-start={$files.length}
-        class:justify-center={!$files.length}
+        class:justify-start={$collections.length}
+        class:justify-center={!$collections.length}
         use:scrollIntoView={$path[0]}
     >
-        {#if $files.length}
+        {#if $collections.length}
             <a
                 href="/data"
                 role="button"
@@ -30,7 +30,7 @@
                 <Icon icon="plus-square" size="125x" />
             </a>
         {/if}
-        {#each $files as file}
+        {#each $collections as file}
             <File {file} />
         {/each}
     </nav>

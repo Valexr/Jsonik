@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { schemas } from "$client/stores/data.js";
+    import { schemas, schemaNames } from "$client/stores/data.js";
     import { SCHEMAS, type Schema } from "$client/stores/schemas.js";
 
     import Form from "$client/components/Form.svelte";
@@ -14,7 +14,7 @@
 <script lang="ts">
     export let id: string = "";
     export let open: boolean;
-    export let field = SCHEMAS[0];
+    export let field: Schema;
     export let valid = false;
 
     let prevName = field.name;
@@ -95,7 +95,10 @@
             required
             type="text"
             autofocus={open}
-            pattern="^[\w|\-]+$"
+            pattern={!field.name
+                ? `(?!^${$schemaNames.join("$|^")}$)[\\w|\\-]+`
+                : `^[\\w|\\-]+$`}
+            placeholder={field.type}
             bind:value={field.name}
             form={String(field.id)}
         />

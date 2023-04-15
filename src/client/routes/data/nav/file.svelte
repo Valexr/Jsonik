@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { path, redirect } from "svelte-pathfinder";
-    import { files } from "$client/stores/data.js";
+    import { collections } from "$client/stores/data.js";
     import Icon from "$client/components/Icon.svelte";
 </script>
 
@@ -8,8 +8,8 @@
     export let file: string;
 
     async function deleteFile() {
-        await files.delete(file);
-        redirect(`/data/${$files.at(-1) || ""}`);
+        await collections.delete(file);
+        redirect(`/data/${$collections.at(-1) || ""}`);
     }
 </script>
 

@@ -14,6 +14,7 @@ export function files(app: App) {
         if (file) {
             const stream = createReadStream(`files/${folder}/${file}`)
             stream.on('error', (e) => res.error(422, e.message))
+            // stream.on('data', console.log)
             stream.pipe(res)
         } else {
             try {

@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import { goto } from "svelte-pathfinder";
     import {
-        files,
+        collections,
         schemas,
         records,
         schemasKeys,
@@ -22,7 +22,7 @@
         const newName = String(data.get("collectionName"));
 
         if (file && file !== newName) {
-            await files.rename(file, newName);
+            await collections.rename(file, newName);
         }
 
         await records.upkeys(newName, $schemasKeys);
@@ -32,7 +32,7 @@
     }
 </script>
 
-<Dialog {open} on:submit={editSchema} bind:valid>
+<Dialog {open} on:submit={editSchema} on:close bind:valid>
     <h3 slot="header">Edit collection</h3>
     <Fields bind:valid {file} pattern="^[\w|\-]+$" />
     <nav slot="footer">

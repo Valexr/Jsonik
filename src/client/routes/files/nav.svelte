@@ -26,6 +26,8 @@
 
             Array.from(anchors).forEach((a) => {
                 a.ondragover = (e: DragEvent) => {
+                    const { dataTransfer, currentTarget } = e;
+                    e.stopPropagation();
                     e.preventDefault();
                     focused(a, true);
                 };

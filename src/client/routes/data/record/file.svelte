@@ -1,6 +1,8 @@
 <script lang="ts" context="module">
+    import { files } from "$client/stores/files.js";
     import { toast } from "$client/components/Toaster/toast.js";
     import Icon from "$client/components/Icon.svelte";
+    import Await from "$client/components/Await.svelte";
     import LightBox from "$client/components/LightBox.svelte";
     import type { InputEvent } from "$types/client.js";
 </script>
@@ -10,11 +12,10 @@
     export let required: boolean;
     export let opts: any;
     export let value: any = [];
+    export let collection: string;
+    export let record: number;
 
-    let inputFiles: FileList | null;
     let deletedFile: File & string;
-
-    // https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types
 
     function fileSize(size: number) {
         if (size < 1024) {
@@ -26,10 +27,8 @@
         }
     }
     function checkLimits(e: InputEvent) {
-        const input = e.currentTarget as HTMLInputElement;
+        const input = e.currentTarget;
         const { maxFiles, maxSize } = opts;
-
-        inputFiles = input.files;
 
         if (
             maxFiles &&
@@ -78,24 +77,48 @@
             return DT.files;
         }
         return {
-            update(file: File) {
+            async update(file: File) {
                 value = value.filter(({ name }: File) =>
                     name.localeCompare(file.name)
                 );
-                inputFiles = removeFileFromFileList(file.name);
-                input.files = inputFiles;
+                input.files = removeFileFromFileList(file.name);
+                await files.delete(collection, file.name);
                 input.setCustomValidity("");
                 input.checkValidity();
             },
         };
     }
+    let fileList: Promise<void>[] = [];
+
+    async function uploadFiles(e: InputEvent) {
+        const input = e.currentTarget;
+        if (input.files) {
+            for (const file of input.files) {
+                if (file.name) {
+                    const { name: fname, type, size } = file;
+                    const filename = `${record}-${name}-${encodeURI(fname)}`;
+                    value.push({
+                        name: filename,
+                        type,
+                        size,
+                        collection,
+                        record,
+                        field: name,
+                    });
+                    fileList.push(files.add(collection, file, filename));
+                }
+            }
+            await Promise.all(fileList);
+            value = value;
+        }
+    }
 </script>
 
 <label data-note={dataNote()} for="">
     <small><Icon icon="file" color="gray" /> {name}</small>
-    {#if value.length || inputFiles?.length}
+    {#if value.length}
         <ul role="listbox">
-            {#each value.concat(...(inputFiles || [])) as file (file)}
+            {#each value as file (file)}
                 <li class="cols col-fit align-center">
                     <LightBox {file} />
                     <span class="scroll-x">{file.name}</span>
@@ -117,8 +140,10 @@
         accept={opts.accept}
         multiple={opts.maxFiles > 1}
         on:input={checkLimits}
+        on:change={uploadFiles}
         use:deleteFile={deletedFile}
     />
+    <input type="hidden" {name} value={JSON.stringify(value)} />
 </label>
 
 <style>

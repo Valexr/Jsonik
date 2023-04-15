@@ -1,4 +1,5 @@
 import { derived, writable } from 'svelte/store'
+import { files as Files } from '$client/stores/files.js'
 import { del, get, post, put, patch } from "$client/api/methods.js";
 import { uniq } from '$client/utils/index.js';
 import { cache } from './cache.js';
@@ -7,8 +8,8 @@ import type { Schema } from './schemas.js';
 export type Item = Record<string, any>
 export type Key = Record<string, string>
 
-function createFiles() {
-    const { set, subscribe, update } = cache<string[]>('files', [])
+function createCollections() {
+    const { set, subscribe, update } = cache<string[]>('collections', [])
     return {
         update,
         subscribe,
@@ -26,17 +27,15 @@ function createFiles() {
         }
     }
 }
-export const files = createFiles()
+export const collections = createCollections()
 
 function createRecords() {
     const { set, subscribe, update } = cache<Item[]>('records', [])
 
     return {
         subscribe,
-        async get(file = '') {
-            // const data = await get(`/data/${file}/`)
-            // console.log(data)
-            const records = await get(`/data/${file}/records`)
+        async get(file = '', query = '') {
+            const records = await get(`/data/${file}/records${query}`)
             set(file ? records : [])
             if (!file) throw new Error('file not found')
         },
@@ -57,6 +56,16 @@ function createRecords() {
                 headers: { 'Content-Type': 'application/json' }
             })
             update(() => records)
+        },
+        async deleteFiles(collection: string, fileNames: string[]) {
+            for (const filename of fileNames) {
+                const [id, field, ...name] = filename.split('-')
+                if (name) {
+                    const record = await get(`/data/${collection}/records?id=${id}`)
+                    record[field] = record[field].filter((f: File) => f.name !== filename)
+                    await this.update(collection, record)
+                }
+            }
         },
         async delete(file: string, IDs: Array<number>) {
             const records = await del(`/data/${file}/records`, JSON.stringify(IDs), {
@@ -83,7 +92,7 @@ function createSchemas() {
                 headers: { 'Content-Type': 'application/json' }
             })
             update(state => schemas)
-            files.update(state => uniq(state.concat(file)))
+            collections.update(state => uniq(state.concat(file)))
         },
         add: (schema: Schema[]) => update(state => state.concat(schema)),
         invalidate: (id?: number) => update((state) =>
@@ -103,6 +112,7 @@ function createSchemas() {
 }
 export const schemas = createSchemas()
 export const schemaInvalID = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
+export const schemaNames = derived(schemas, $schemas => $schemas?.map(({ name }) => name))
 export const schemasKeys = derived(schemas, $schemas => $schemas?.reduce<Key>((a, { prevName, name }) => {
     a[prevName || name] = name;
     return a;

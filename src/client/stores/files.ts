@@ -1,18 +1,19 @@
 import { writable } from 'svelte/store'
+import { cache } from './cache.js';
 import { del, get, patch, post, put } from "$client/api/methods.js";
 
 export type Files = { files: string[], folders: string[], folder: string }
 
 function createFiles() {
-    const { set, subscribe, update } = writable<string[]>()
+    const { set, subscribe, update } = cache<string[]>('files', [])
     return {
         subscribe,
         async get(folder = '', file = '') {
             const { files } = await get(`/files/${folder}/${file}`)
             set(files)
         },
-        async add(folder = '', file?: File) {
-            file = await post(`/files/${folder}/${file?.name}`, file);
+        async add(folder = '', file?: File, name?: string) {
+            file = await post(`/files/${folder}/${name || file?.name}`, file);
             update(state => state?.concat(String(file)))
         },
         async move(from = '', file: string, to = '') {
@@ -25,7 +26,7 @@ function createFiles() {
         },
         async delete(folder = '', file = '') {
             await del(`/files/${folder}/${file}`);
-            update(state => state.filter(f => f !== file))
+            update(state => state?.filter(f => f !== file))
         }
     }
 }
@@ -33,7 +34,7 @@ function createFiles() {
 export const files = createFiles()
 
 function createFolders() {
-    const { set, subscribe, update } = writable<string[]>()
+    const { set, subscribe, update } = cache<string[]>('folders', [])
     return {
         set, subscribe, update,
         async get() {

@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import Icon from "$client/components/Icon.svelte";
-    import { type Schema, schemas } from "$client/stores/data.js";
-    import { SCHEMAS } from "$client/stores/schemas.js";
+    import { schemas } from "$client/stores/data.js";
+    import { SCHEMAS, type Schema } from "$client/stores/schemas.js";
 </script>
 
 <script lang="ts">
@@ -30,3 +30,9 @@
         </li>
     {/each}
 </ul>
+
+<style>
+    ul[role="listbox"] {
+        padding: var(--gap);
+    }
+</style>

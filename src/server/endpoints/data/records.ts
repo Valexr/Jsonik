@@ -11,8 +11,8 @@ export function records(app: App) {
         try {
             if (Object.keys(req.query).length) {
                 // const filters = base?.filters(req.query);
-                const records = req.query.q ? req.base?.search(req.query.q) : req.base?.match(req.query);
-                // req.query.id ? res.send(base?.id(+req.query.id)) : res.send(items);
+                const records = req.query.q ? req.base?.search(req.query.q) :
+                    req.query.id ? req.base?.id(+req.query.id) : req.base?.match(req.query);
                 res.send(records);
             } else if (files.includes(file)) {
                 const { records } = req.base?.data

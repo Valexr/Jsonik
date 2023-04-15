@@ -1,6 +1,11 @@
 <script lang="ts" context="module">
     import { fragment, query, paramable } from "svelte-pathfinder";
-    import { files, schemas, records, type Item } from "$client/stores/data.js";
+    import {
+        collections,
+        schemas,
+        records,
+        type Item,
+    } from "$client/stores/data.js";
     import { s } from "$client/utils/index.js";
 
     import Await from "$client/components/Await.svelte";
@@ -17,7 +22,7 @@
 </script>
 
 <script lang="ts">
-    let active: Item | null;
+    let active: Item | undefined;
     let selected: number[] = [];
 
     const route = paramable<{ file: string }>("/data/:file?");
@@ -44,7 +49,9 @@
         on:dragstart={(e) => e.dataTransfer?.setData("files", String(selected))}
         on:dragend={(e) => (selected.length = 0)}
     >
-        <span><b>{selected.length}</b> file{s(selected.length)} selected</span>
+        <span>
+            <b>{selected.length}</b> record{s(selected.length)} selected
+        </span>
         <button class="box link text-error" on:click={deleteRecords}>
             <Icon icon="trash" />
         </button>
@@ -72,45 +79,35 @@
     </Await>
 </section>
 
-<EditSchema open={$fragment.includes("#edit-collection")} file={$route.file} />
+<EditSchema
+    open={$fragment.includes("#edit-collection")}
+    on:close={() => fragment.set("")}
+    file={$route.file}
+/>
 
 {#if $schemas.length}
     <nav id="addRecord" class="text-center pos-sticky">
-        <a tabindex="0" href="#add-record" role="button">
+        <a tabindex="0" href="?record=add" role="button">
             <Icon icon="plus" /> Add record
         </a>
     </nav>
 {/if}
 
-<AddRecord file={$route.file} open={$fragment.includes(`#add-record`)} />
+<AddRecord
+    file={$route.file}
+    open={$query.record === "add"}
+    close={() => query.set("")}
+/>
 <EditRecord
     file={$route.file}
     header="Edit record"
-    open={!!$query.record}
+    open={!isNaN(Number($query.record))}
     close={() => query.set("")}
     {active}
 />
 
-<!-- <Dialog open={$fragment.includes("#preview")} img from="center">
-    {@const file = $fragment.replace("#preview-", "")}
-    <figure>
-        <img src={file} alt={file} />
-    </figure>
-    <nav slot="footer">
-        {@const file = $fragment.replace("#preview-", "")}
-        <span>{file}</span>
-        <button type="reset" class="box text-error">
-            <Icon icon="trash" />
-        </button>
-        <button type="reset" class="box">
-            <Icon />
-        </button>
-    </nav>
-</Dialog> -->
-
 <style>
     #addRecord {
         bottom: 3.5rem;
-        margin-top: var(--gap);
     }
 </style>

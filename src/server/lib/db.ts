@@ -51,7 +51,7 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 return base.data[table];
             },
             update: async (meta) => {
-                base.data[table].forEach((i: Item) => i.id === meta?.id && Object.assign(i, meta));
+                base.data[table] = base.data[table].map((i: Item) => i.id === meta?.id ? meta : i);
                 await base.write();
                 return base.data[table];
             },

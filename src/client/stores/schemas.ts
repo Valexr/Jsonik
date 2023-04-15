@@ -11,7 +11,6 @@ export type Schema = {
 export const SCHEMAS: Partial<Schema>[] = [
     {
         type: 'text',
-        name: 'text',
         opts: {
             minlength: 0,
             maxlength: 0,
@@ -20,7 +19,6 @@ export const SCHEMAS: Partial<Schema>[] = [
     },
     {
         type: 'textarea',
-        name: 'textarea',
         opts: {
             minlength: 0,
             maxlength: 0,
@@ -28,7 +26,6 @@ export const SCHEMAS: Partial<Schema>[] = [
     },
     {
         type: 'number',
-        name: 'number',
         opts: {
             min: 0,
             max: 0,
@@ -36,12 +33,10 @@ export const SCHEMAS: Partial<Schema>[] = [
     },
     {
         type: 'checkbox',
-        name: 'checkbox',
         opts: {}
     },
     {
         type: 'email',
-        name: 'email',
         opts: {
             pattern: 'e.g. ^.*\\.com$',
             placeholder: 'e@mail.com'
@@ -49,7 +44,6 @@ export const SCHEMAS: Partial<Schema>[] = [
     },
     {
         type: 'url',
-        name: 'url',
         opts: {
             pattern: 'e.g. ^https.*\\.com$',
             placeholder: 'https://domain.zone'
@@ -57,7 +51,6 @@ export const SCHEMAS: Partial<Schema>[] = [
     },
     {
         type: 'tel',
-        name: 'tel',
         opts: {
             pattern: 'e.g. ^\\d.*$',
             placeholder: '+0-000-000-00-00'
@@ -65,7 +58,6 @@ export const SCHEMAS: Partial<Schema>[] = [
     },
     {
         type: 'select',
-        name: 'select',
         opts: {
             options: 'opt0, opt1, opt2...',
             size: 1
@@ -73,7 +65,6 @@ export const SCHEMAS: Partial<Schema>[] = [
     },
     {
         type: 'date',
-        name: 'date',
         opts: {
             min: 0,
             max: 0
@@ -81,7 +72,6 @@ export const SCHEMAS: Partial<Schema>[] = [
     },
     {
         type: 'time',
-        name: 'time',
         opts: {
             min: 0,
             max: 0
@@ -89,7 +79,6 @@ export const SCHEMAS: Partial<Schema>[] = [
     },
     {
         type: 'file',
-        name: 'file',
         opts: {
             maxFiles: 0,
             maxSize: 0,
@@ -98,12 +87,10 @@ export const SCHEMAS: Partial<Schema>[] = [
     },
     {
         type: 'json',
-        name: 'json',
         opts: {}
     },
     {
         type: 'markdown',
-        name: 'markdown',
         opts: {}
     },
 ]

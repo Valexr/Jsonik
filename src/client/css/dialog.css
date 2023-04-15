@@ -9,8 +9,9 @@ dialog {
     min-inline-size: 20em;
     animation-name: from-top;
     animation-duration: 450ms;
+    animation-fill-mode: both;
     will-change: transform;
-    display: flex;
+    display: none;
     overflow: hidden;
     box-shadow: none;
 }
@@ -72,6 +73,7 @@ dialog[loading] {
 
 dialog[open] {
     pointer-events: auto;
+    display: flex;
 }
 
 dialog[open]::backdrop {

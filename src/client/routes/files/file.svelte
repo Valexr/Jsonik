@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { fragment, path, redirect } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
+    import { collections, records } from "$client/stores/data.js";
     import Dialog from "$client/components/Dialog.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Input from "./input.svelte";
@@ -19,6 +20,9 @@
     }
 
     async function deleteFile() {
+        if ($collections.includes($path[1])) {
+            await records.deleteFiles(`${$path[1] || ""}`, [file]);
+        }
         await files.delete(`${$path[1] || ""}`, file);
     }
 
@@ -43,7 +47,13 @@
     </slot>
 </label>
 
-<Dialog open={$fragment === `#file-${file}`} from="center" size="lg" img>
+<Dialog
+    on:close={close}
+    open={$fragment === `#file-${file}`}
+    from="center"
+    size="lg"
+    img
+>
     {#if [".svg", ".jpg", ".jpeg", ".png", ".gif", ".dng"].some( (ext) => file.includes(ext) )}
         <figure>
             <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
@@ -59,8 +69,8 @@
         </button>
         {#if editable}
             <Input
-                on:submit={renameFile}
                 value={file}
+                on:submit={renameFile}
                 pattern="^[\w|\-|.|%]+"
                 placeholder="File name"
                 {onclose}
@@ -71,7 +81,7 @@
         <button class="box text-error" on:click={deleteFile}>
             <Icon icon="trash" />
         </button>
-        <button class="box" on:click={close}>
+        <button class="box" type="reset">
             <Icon />
         </button>
     </nav>

@@ -8,6 +8,7 @@
     import Toast from "$client/components/Toaster/Toast.svelte";
     import File from "./file.svelte";
     import Upload from "./upload.svelte";
+    import { collections, records } from "$client/stores/data.js";
 </script>
 
 <script lang="ts">
@@ -18,6 +19,9 @@
             return files.delete(`${$path[1] || ""}`, file);
         });
         await Promise.all(promises);
+        if ($collections.includes($path[1])) {
+            await records.deleteFiles(`${$path[1] || ""}`, selected);
+        }
         selected = [];
     }
     function match(els: Element[]) {

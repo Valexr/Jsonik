@@ -1,6 +1,10 @@
 <script lang="ts" context="module">
     import { goto } from "svelte-pathfinder";
-    import { files, schemas, schemaInvalID } from "$client/stores/data.js";
+    import {
+        collections,
+        schemas,
+        schemaInvalID,
+    } from "$client/stores/data.js";
     import Form from "$client/components/Form.svelte";
     import Fields from "./fields.svelte";
 </script>
@@ -28,7 +32,11 @@
 
 <Form on:submit={addSchema} on:reset={clearSchemas} bind:valid center>
     <h1 class="text-center">Add collection</h1>
-    <Fields bind:valid {file} pattern="(?!^{$files.join('$|^')}$)[\w|\-]+" />
+    <Fields
+        bind:valid
+        {file}
+        pattern="(?!^{$collections.join('$|^')}$)[\w|\-]+"
+    />
     <nav class="cols">
         <button type="reset" class="link">Cancel</button>
         <button

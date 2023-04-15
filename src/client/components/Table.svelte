@@ -58,7 +58,7 @@
                             <input
                                 type="checkbox"
                                 checked={selected?.length > 0 &&
-                                    selected?.length === data.tbody.length}
+                                    selected?.length === data.tbody?.length}
                                 on:change={selectAll}
                             />
                         </th>
@@ -131,7 +131,7 @@
                 {#if timeable}
                     <td>{date(id)}</td>
                 {/if}
-                {#if data.thead}
+                {#if data.thead?.length}
                     {#each data.thead as td}
                         {#if td.name}
                             <td>
@@ -142,11 +142,13 @@
                                         role="listbox"
                                         class="cols col-fit align-center justify-start nowrap"
                                     >
-                                        {#each tr[td.name] as file (file)}
-                                            <li>
-                                                <LightBox {file} />
-                                            </li>
-                                        {/each}
+                                        {#if tr[td.name]?.length}
+                                            {#each tr[td.name] as file (file)}
+                                                <li>
+                                                    <LightBox {file} />
+                                                </li>
+                                            {/each}
+                                        {/if}
                                     </ul>
                                 {:else}
                                     <p>{tr[td.name]}</p>
