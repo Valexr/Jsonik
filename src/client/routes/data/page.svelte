@@ -14,21 +14,23 @@
     import Icon from "$client/components/Icon.svelte";
     import Code from "$client/components/Code.svelte";
     import Dialog from "$client/components/Dialog.svelte";
+    import LBmodal from "$client/components/LightBox/Modal.svelte";
 
     import AddSchema from "./schema/add.svelte";
     import EditSchema from "./schema/edit.svelte";
     import AddRecord from "./record.svelte";
     import EditRecord from "./record.svelte";
+    import { files } from "$client/stores/files.js";
 </script>
 
 <script lang="ts">
     let active: Item | undefined;
     let selected: number[] = [];
 
-    const route = paramable<{ file: string }>("/data/:file?");
-    const promise = records
-        .get($route.file)
-        .then(() => schemas.get($route.file));
+    const route = paramable<{ collection: string }>("/data/:collection?");
+    const promise = schemas
+        .get($route.collection)
+        .then(() => records.get($route.collection));
 
     function getRecord(id: number) {
         query.set({ record: id });
@@ -36,7 +38,26 @@
     }
 
     async function deleteRecords() {
-        await records.delete($route.file, selected);
+        let Files: File[] = [];
+        for (const recordID of selected) {
+            const record = $records.find(({ id }) => id == recordID);
+            for (const name in record) {
+                const fileType = $schemas.some(
+                    (s) => s.name === name && s.type === "file"
+                );
+                if (fileType) {
+                    Files = Files.concat(record[name]);
+                    console.log(record[name]);
+                }
+            }
+        }
+        const promises = Files.map(({ name }) => {
+            return files.delete($route.collection, name);
+        });
+        try {
+            await Promise.all(promises);
+        } catch (e) {}
+        await records.delete($route.collection, selected);
         selected.length = 0;
     }
 </script>
@@ -75,14 +96,14 @@
             </p>
         {/if}
         <Code input={JSON.stringify({ $schemas, $records }, null, 2)} />
-        <AddSchema slot="catch" file={$route.file} />
+        <AddSchema slot="catch" file={$route.collection} />
     </Await>
 </section>
 
 <EditSchema
     open={$fragment.includes("#edit-collection")}
     on:close={() => fragment.set("")}
-    file={$route.file}
+    file={$route.collection}
 />
 
 {#if $schemas.length}
@@ -94,12 +115,12 @@
 {/if}
 
 <AddRecord
-    file={$route.file}
+    collection={$route.collection}
     open={$query.record === "add"}
     close={() => query.set("")}
 />
 <EditRecord
-    file={$route.file}
+    collection={$route.collection}
     header="Edit record"
     open={!isNaN(Number($query.record))}
     close={() => query.set("")}

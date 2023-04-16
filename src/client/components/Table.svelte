@@ -135,9 +135,10 @@
                     {#each data.thead as td}
                         {#if td.name}
                             <td>
-                                {#if html(tr[td.name])}
+                                <!-- {#if html(tr[td.name])}
                                     {@html tr[td.name]}
-                                {:else if td.type === "file"}
+                                {:else  -->
+                                {#if td.type === "file"}
                                     <ul
                                         role="listbox"
                                         class="cols col-fit align-center justify-start nowrap"

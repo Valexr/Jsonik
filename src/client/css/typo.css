@@ -57,10 +57,6 @@ ul[role="listbox"] li {
     border-radius: var(--border-radius-sm);
 }
 
-ul[role="listbox"] li:hover {
-    background-color: var(--hover);
-}
-
 pre {
     background-color: var(--back);
     border-radius: var(--border-radius-sm);

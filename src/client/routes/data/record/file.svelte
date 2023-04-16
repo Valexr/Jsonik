@@ -13,7 +13,7 @@
     export let opts: any;
     export let value: any = [];
     export let collection: string;
-    export let record: number;
+    export let recordID: number;
 
     let deletedFile: File & string;
 
@@ -96,13 +96,13 @@
             for (const file of input.files) {
                 if (file.name) {
                     const { name: fname, type, size } = file;
-                    const filename = `${record}-${name}-${encodeURI(fname)}`;
+                    const filename = `${recordID}-${name}-${encodeURI(fname)}`;
                     value.push({
                         name: filename,
                         type,
                         size,
                         collection,
-                        record,
+                        recordID,
                         field: name,
                     });
                     fileList.push(files.add(collection, file, filename));

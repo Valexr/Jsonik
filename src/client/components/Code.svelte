@@ -10,8 +10,10 @@
     export function codedit(node: HTMLElement, cd: string) {
         const highlight = (editor: { textContent: any; innerHTML: any }) => {
             const code = editor.textContent;
-            editor.innerHTML = code.replace(/(^\/\/.*)/g, "<span>$1</span>");
+            // editor.innerHTML = code.replace(/(^\/\/.*)/g, "<span>$1</span>");
         };
+
+        node.onkeydown = (e) => e.stopPropagation();
 
         const editor = CodeJar(node, highlight);
 

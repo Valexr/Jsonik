@@ -27,7 +27,7 @@ const svelteOptions = {
 const serverOptions = {
     bundle: true,
     minify: !DEV,
-    sourcemap: DEV,
+    sourcemap: DEV && 'inline',
     platform: 'node',
     target: "esnext",
     format: 'esm',
@@ -65,7 +65,7 @@ const clientOptions = {
     inject: DEV ? ['./env/lr.js'] : []
 };
 
-await rm(['app']);
+await rm(['app/client', 'app/app.mjs']);
 
 if (DEV) {
     const client = await context(clientOptions);

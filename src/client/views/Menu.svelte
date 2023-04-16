@@ -7,11 +7,17 @@
 </script>
 
 <script lang="ts">
+    let open = false;
     // console.log($path);
 </script>
 
 <menu>
-    <Details role="list" button class="link {!$path[0] ? 'clear' : ''}">
+    <Details
+        bind:open
+        role="list"
+        button
+        class="link {!$path[0] ? 'clear' : ''}"
+    >
         <svelte:fragment slot="summary">
             <Icon icon={$page.props.icon} />
             {$page.props.title}
@@ -21,7 +27,7 @@
             <ul role="listbox">
                 {#each routes.filter((r) => r.props.menu) as { match, props: { title, menu, icon } }}
                     <li class:active={$pattern(match)}>
-                        <a href={menu}>
+                        <a href={menu} on:click={() => (open = false)}>
                             <Icon {icon} />
                             {title}
                         </a>

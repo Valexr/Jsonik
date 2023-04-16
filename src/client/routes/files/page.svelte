@@ -15,13 +15,13 @@
     let selected: string[] = [];
 
     async function deleteFiles() {
+        if ($collections.includes($path[1])) {
+            await records.deleteFiles(`${$path[1] || ""}`, selected);
+        }
         const promises = selected.map((file) => {
             return files.delete(`${$path[1] || ""}`, file);
         });
         await Promise.all(promises);
-        if ($collections.includes($path[1])) {
-            await records.deleteFiles(`${$path[1] || ""}`, selected);
-        }
         selected = [];
     }
     function match(els: Element[]) {
@@ -57,11 +57,8 @@
         on:error={() => redirect("/files")}
         notify
     >
-        <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
         <ul role="listbox" class="grid">
-            <li>
-                <Upload />
-            </li>
+            <li><Upload /></li>
             {#each $files?.sort((a, b) => a.localeCompare(b)) as file (file)}
                 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
                 <li role="button" class="box" id={file}>

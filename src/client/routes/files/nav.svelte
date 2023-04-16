@@ -54,7 +54,7 @@
 
 <Await promise={folders.get()} notify>
     <nav
-        class="text-center cols nowrap col-fit justify-start scroll-x"
+        class="cols col-fit nowrap justify-start scroll-x"
         use:scrollIntoView={$path[0]}
         use:drop={$path[1]}
     >

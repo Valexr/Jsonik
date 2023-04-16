@@ -76,29 +76,24 @@ summary {
     background-color: var(--error);
 }
 
-:is(button, [role=button], [type="file"]::file-selector-button):is(:hover) {
+:is(button, [role=button], [type="file"]::file-selector-button):hover {
     background-color: var(--hover);
+}
+
+:is(button, [role=button], [type="file"]::file-selector-button):hover:active {
+    background-color: var(--active);
 }
 
 :is(button, [role=button], [type="file"]::file-selector-button):is(:focus, :focus-visible, :focus-within) {
     border-color: currentColor;
 }
 
-:is(button, [role=button], [type="file"]::file-selector-button):is(:hover:active) {
-    background-color: var(--active);
-}
-
 :is(button, [role=button], [type="file"]::file-selector-button):is(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
-    /* pointer-events: auto; */
     background-color: transparent;
     border-color: var(--surface);
     color: var(--gray);
     cursor: auto;
 }
-
-/* [role="button"][aria-disabled="true"]:has(+ button) {
-    padding: 0;
-} */
 
 [type="file"]::file-selector-button {
     margin-right: var(--gap);

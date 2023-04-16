@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+    import { marked } from "marked";
     import Code from "$client/components/Code.svelte";
     import Icon from "$client/components/Icon.svelte";
 </script>
@@ -9,13 +10,14 @@
     export let value: any;
     // export let opts: any;
 
-    let output = value || "";
-
-    const code = JSON.stringify({ name, value }, null, 2);
+    let output = value;
 </script>
 
 <label>
     <textarea class="hidden" {name} {required} value={output} />
     <small><Icon icon="markdown" color="gray" /> {name}</small>
-    <Code invalid={required && !output} input={code} bind:output />
+    <Code invalid={required && !output} input={value} bind:output />
+    {#if output}
+        {@html marked.parse(output)}
+    {/if}
 </label>

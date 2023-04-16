@@ -9,7 +9,7 @@
     export let value: any;
     // export let opts: any;
 
-    let output = value || "";
+    let output = value;
 </script>
 
 <label>

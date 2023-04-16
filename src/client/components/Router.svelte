@@ -2,7 +2,6 @@
     import { click, prefs, path } from "svelte-pathfinder";
     import { page } from "$client/routes/index.js";
     import type { Name } from "$types/client.js";
-    import { get } from "$client/api/methods.js";
 
     // Object.assign(prefs);
 </script>

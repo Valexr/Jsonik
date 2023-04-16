@@ -37,7 +37,7 @@ function createRecords() {
         async get(file = '', query = '') {
             const records = await get(`/data/${file}/records${query}`)
             set(file ? records : [])
-            if (!file) throw new Error('file not found')
+            if (!file) throw Error('file not found')
         },
         async set(file: string, record: Item) {
             const records = await post(`/data/${file}/records`, JSON.stringify(record), {
@@ -59,9 +59,9 @@ function createRecords() {
         },
         async deleteFiles(collection: string, fileNames: string[]) {
             for (const filename of fileNames) {
-                const [id, field, ...name] = filename.split('-')
-                if (name) {
-                    const record = await get(`/data/${collection}/records?id=${id}`)
+                const [recordID, field, ...name] = filename.split('-')
+                if (name.length) {
+                    const [record] = await get(`/data/${collection}/records?id=${recordID}`)
                     record[field] = record[field].filter((f: File) => f.name !== filename)
                     await this.update(collection, record)
                 }

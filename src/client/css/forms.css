@@ -58,10 +58,13 @@ legend {
     margin-bottom: var(--gap-sm);
 }
 
+label {
+    position: relative;
+}
+
 label:not([data-note]) {
     margin-bottom: var(--gap-lg);
     display: block;
-    /* flex-wrap: wrap; */
 }
 
 fieldset.cols label :is(small, span) {

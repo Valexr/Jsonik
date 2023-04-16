@@ -8,15 +8,12 @@
 </script>
 
 <script lang="ts">
-    // String.raw`^[\w,\-]+`
     const route = paramable("/data/:file?");
 </script>
 
 <Await promise={collections.get()}>
     <nav
-        class="text-center cols col-fit nowrap scroll-x"
-        class:justify-start={$collections.length}
-        class:justify-center={!$collections.length}
+        class="cols col-fit nowrap justify-start scroll-x"
         use:scrollIntoView={$path[0]}
     >
         {#if $collections.length}
@@ -30,8 +27,8 @@
                 <Icon icon="plus-square" size="125x" />
             </a>
         {/if}
-        {#each $collections as file}
-            <File {file} />
+        {#each $collections as collection}
+            <File {collection} />
         {/each}
     </nav>
 </Await>

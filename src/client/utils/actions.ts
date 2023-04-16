@@ -18,10 +18,10 @@ function clickout(node: EventTarget, cb: { (): (boolean | any) }) {
 }
 
 const clickOutside: Action<HTMLElement, (() => void)> = (node, handler) => {
-    const handleClick = (event: MouseEvent) => {
-        const { target, defaultPrevented } = event
+    const handleClick = (e: MouseEvent) => {
+        const { target, defaultPrevented } = e
         if (node && !node.contains(target as Node) && !defaultPrevented && handler) {
-            event.stopImmediatePropagation()
+            e.stopImmediatePropagation()
             handler()
         }
     };

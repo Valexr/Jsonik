@@ -71,7 +71,6 @@
     }
 </script>
 
-<!-- {#if open} -->
 <dialog
     use:action={open}
     on:close|preventDefault
@@ -104,4 +103,3 @@
         {/if}
     </Form>
 </dialog>
-<!-- {/if} -->

@@ -60,16 +60,16 @@
     </legend>
 
     {#if activeTab === "Fields"}
-        <Await promise={schemas.get(file)}>
-            {#each $schemas as field, id (field.id)}
-                <Field
-                    {field}
-                    id={String(id)}
-                    open={field.id === $schemaInvalID}
-                    bind:valid
-                />
-            {/each}
-        </Await>
+        <!-- <Await promise={schemas.get(file)}> -->
+        {#each $schemas as field, id (field.id)}
+            <Field
+                {field}
+                id={String(id)}
+                open={field.id === $schemaInvalID}
+                bind:valid
+            />
+        {/each}
+        <!-- </Await> -->
     {:else if activeTab === "Rules"}
         <fieldset class="cols column">
             <label>
