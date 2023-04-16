@@ -1,11 +1,7 @@
 <script lang="ts" context="module">
     import { fragment, query, paramable } from "svelte-pathfinder";
-    import {
-        collections,
-        schemas,
-        records,
-        type Item,
-    } from "$client/stores/data.js";
+    import { schemas, records, type Item } from "$client/stores/data.js";
+    import { files } from "$client/stores/files.js";
     import { s } from "$client/utils/index.js";
 
     import Await from "$client/components/Await.svelte";
@@ -13,14 +9,12 @@
     import Toast from "$client/components/Toaster/Toast.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Code from "$client/components/Code.svelte";
-    import Dialog from "$client/components/Dialog.svelte";
     import LBmodal from "$client/components/LightBox/Modal.svelte";
 
     import AddSchema from "./schema/add.svelte";
     import EditSchema from "./schema/edit.svelte";
     import AddRecord from "./record.svelte";
     import EditRecord from "./record.svelte";
-    import { files } from "$client/stores/files.js";
 </script>
 
 <script lang="ts">

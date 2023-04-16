@@ -26,7 +26,9 @@
     function sort(e: MouseEvent) {
         const { id } = e.currentTarget as HTMLButtonElement;
         const compare = (a: Item, b: Item) =>
-            String(a[id]).localeCompare(String(b[id]));
+            !isNaN(a[id])
+                ? Math.sign(b[id] - a[id])
+                : String(a[id]).localeCompare(String(b[id]));
         const fn = (a: Item, b: Item) =>
             sorted[id] === "up" ? compare(a, b) : compare(b, a);
         sorted = { [id]: sorted[id] === "up" ? "down" : "up" };
