@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import { fragment, path, redirect } from "svelte-pathfinder";
-    import { folders } from "$client/stores/files.js";
+    import { folders, files } from "$client/stores/files.js";
+    import { collections, records } from "$client/stores/data.js";
     import Icon from "$client/components/Icon.svelte";
     import Input from "./input.svelte";
 </script>
@@ -16,6 +17,9 @@
     }
 
     async function deleteFolder(folder: string) {
+        if ($collections.includes(folder)) {
+            await records.deleteFiles(folder, $files);
+        }
         await folders.delete(folder);
         redirect("/files");
     }

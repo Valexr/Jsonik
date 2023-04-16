@@ -1,13 +1,15 @@
 <script lang="ts" context="module">
     import { path, redirect } from "svelte-pathfinder";
-    import { collections } from "$client/stores/data.js";
+    import { collections, schemas, records } from "$client/stores/data.js";
+    import { folders } from "$client/stores/files.js";
     import Icon from "$client/components/Icon.svelte";
 </script>
 
 <script lang="ts">
     export let collection: string;
 
-    async function deleteFile() {
+    async function deleteCollection() {
+        await folders.delete(collection);
         await collections.delete(collection);
         redirect(`/data/${$collections.at(-1) || ""}`);
     }
@@ -35,7 +37,7 @@
         <button
             id={collection}
             class="box link text-error"
-            on:click={deleteFile}
+            on:click={deleteCollection}
         >
             <Icon icon="trash" />
         </button>

@@ -40,23 +40,16 @@
     async function deleteRecords() {
         let Files: File[] = [];
         for (const recordID of selected) {
-            const record = $records.find(({ id }) => id == recordID);
-            for (const name in record) {
-                const fileType = $schemas.some(
-                    (s) => s.name === name && s.type === "file"
+            const record = $records.find(({ id }) => id === recordID);
+            for (const fieldname in record) {
+                const typeFile = $schemas.some(
+                    ({ name, type }) => name === fieldname && type === "file"
                 );
-                if (fileType) {
-                    Files = Files.concat(record[name]);
-                    console.log(record[name]);
-                }
+                Files = Files.concat(typeFile ? record[fieldname] : []);
             }
         }
-        const promises = Files.map(({ name }) => {
-            return files.delete($route.collection, name);
-        });
-        try {
-            await Promise.all(promises);
-        } catch (e) {}
+        const fileNames = Files.map(({ name }) => name);
+        await files.delete($route.collection, fileNames);
         await records.delete($route.collection, selected);
         selected.length = 0;
     }

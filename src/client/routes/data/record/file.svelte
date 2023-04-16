@@ -82,7 +82,7 @@
                     name.localeCompare(file.name)
                 );
                 input.files = removeFileFromFileList(file.name);
-                await files.delete(collection, file.name);
+                await files.delete(collection, [file.name]);
                 input.setCustomValidity("");
                 input.checkValidity();
             },

@@ -1,5 +1,11 @@
 <script lang="ts" context="module">
-    import { path, redirect, query, fragment } from "svelte-pathfinder";
+    import {
+        path,
+        redirect,
+        query,
+        fragment,
+        paramable,
+    } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
     import { selection } from "$client/utils/selection.js";
     import { s } from "$client/utils/index.js";
@@ -14,14 +20,13 @@
 <script lang="ts">
     let selected: string[] = [];
 
+    const route = paramable<{ file: string }>("/files/:file?");
+
     async function deleteFiles() {
-        if ($collections.includes($path[1])) {
-            await records.deleteFiles(`${$path[1] || ""}`, selected);
+        if ($collections.includes($route.file)) {
+            await records.deleteFiles($route.file, selected);
         }
-        const promises = selected.map((file) => {
-            return files.delete(`${$path[1] || ""}`, file);
-        });
-        await Promise.all(promises);
+        await files.delete($route.file, selected);
         selected = [];
     }
     function match(els: Element[]) {
