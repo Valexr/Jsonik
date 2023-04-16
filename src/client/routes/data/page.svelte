@@ -40,11 +40,9 @@
     async function deleteRecords() {
         let Files: File[] = [];
         for (const recordID of selected) {
-            const record = $records.find(({ id }) => id === recordID);
+            const record = records.id(recordID);
             for (const fieldname in record) {
-                const typeFile = $schemas.some(
-                    ({ name, type }) => name === fieldname && type === "file"
-                );
+                const typeFile = schemas.type(fieldname) === "file";
                 Files = Files.concat(typeFile ? record[fieldname] : []);
             }
         }

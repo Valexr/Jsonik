@@ -30,10 +30,11 @@ function createCollections() {
 export const collections = createCollections()
 
 function createRecords() {
-    const { set, subscribe, update } = cache<Item[]>('records', [])
+    const { set, subscribe, update, get: getValue } = cache<Item[]>('records', [])
 
     return {
         subscribe,
+        id: (id: number) => getValue().find(v => v.id === id),
         async get(file = '', query = '') {
             const records = await get(`/data/${file}/records${query}`)
             set(file ? records : [])
@@ -78,7 +79,7 @@ function createRecords() {
 export const records = createRecords()
 
 function createSchemas() {
-    const { set, subscribe, update } = cache<Schema[]>('schemas', [])
+    const { set, subscribe, update, get: getValue } = cache<Schema[]>('schemas', [])
 
     return {
         update,
@@ -105,6 +106,7 @@ function createSchemas() {
             state.splice(to, 0, state.splice(from, 1)[0])
             return state
         }),
+        type: (fieldname: string) => getValue().find(v => v.name === fieldname)?.type,
         cleanup: () => update(state => state.map(({ prevName, ...schema }) => schema)),
         delete: (id?: number) => update(state => state.filter(s => s.id !== id)),
         clear: () => set([]),
