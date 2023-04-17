@@ -8,7 +8,7 @@
 </script>
 
 <script lang="ts">
-    export let file = "";
+    export let collection = "";
     export let valid = true;
     export let pattern: string;
 
@@ -31,7 +31,7 @@
             name="collectionName"
             placeholder="collection name"
             {pattern}
-            value={file}
+            value={collection}
             required
         />
     </label>

@@ -1,6 +1,11 @@
 <script lang="ts" context="module">
     import { fragment, query, paramable } from "svelte-pathfinder";
-    import { schemas, records, type Item } from "$client/stores/data.js";
+    import {
+        schemas,
+        schemaType,
+        records,
+        type Item,
+    } from "$client/stores/data.js";
     import { files } from "$client/stores/files.js";
     import { s } from "$client/utils/index.js";
 
@@ -64,8 +69,8 @@
     </Toast>
 {/if}
 
-<section class="scroll-x">
-    <Await {promise}>
+<Await {promise}>
+    <section class="scroll-x">
         {#if $records?.length}
             <Table
                 data={{ thead: $schemas, tbody: $records }}
@@ -81,36 +86,30 @@
             </p>
         {/if}
         <Code input={JSON.stringify({ $schemas, $records }, null, 2)} />
-        <AddSchema slot="catch" file={$route.collection} />
-    </Await>
-</section>
+    </section>
 
-<EditSchema
-    open={$fragment.includes("#edit-collection")}
-    on:close={() => fragment.set("")}
-    file={$route.collection}
-/>
+    <AddSchema slot="catch" collection={$route.collection} />
+    <EditSchema
+        open={$fragment.includes("#edit-collection")}
+        on:close={() => fragment.set("")}
+        collection={$route.collection}
+    />
+    <AddRecord collection={$route.collection} open={$query.record === "add"} />
+    <EditRecord
+        header="Edit record"
+        collection={$route.collection}
+        open={!isNaN(Number($query.record))}
+        {active}
+    />
 
-{#if $schemas.length}
-    <nav id="addRecord" class="text-center pos-sticky">
-        <a tabindex="0" href="?record=add" role="button">
-            <Icon icon="plus" /> Add record
-        </a>
-    </nav>
-{/if}
-
-<AddRecord
-    collection={$route.collection}
-    open={$query.record === "add"}
-    close={() => query.set("")}
-/>
-<EditRecord
-    collection={$route.collection}
-    header="Edit record"
-    open={!isNaN(Number($query.record))}
-    close={() => query.set("")}
-    {active}
-/>
+    {#if $schemas.length}
+        <nav id="addRecord" class="text-center pos-sticky">
+            <a tabindex="0" href="?record=add" role="button">
+                <Icon icon="plus" /> Add record
+            </a>
+        </nav>
+    {/if}
+</Await>
 
 <style>
     #addRecord {

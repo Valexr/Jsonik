@@ -27,7 +27,7 @@
         const { id } = e.currentTarget as HTMLButtonElement;
         const compare = (a: Item, b: Item) =>
             !isNaN(a[id])
-                ? Math.sign(b[id] - a[id])
+                ? Math.sign(a[id] - b[id])
                 : String(a[id]).localeCompare(String(b[id]));
         const fn = (a: Item, b: Item) =>
             sorted[id] === "up" ? compare(a, b) : compare(b, a);

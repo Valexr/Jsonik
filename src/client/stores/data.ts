@@ -2,6 +2,7 @@ import { derived, writable } from 'svelte/store'
 import { files as Files } from '$client/stores/files.js'
 import { del, get, post, put, patch } from "$client/api/methods.js";
 import { uniq } from '$client/utils/index.js';
+import { gettable } from './gettable.js';
 import { cache } from './cache.js';
 import type { Schema } from './schemas.js';
 
@@ -30,7 +31,7 @@ function createCollections() {
 export const collections = createCollections()
 
 function createRecords() {
-    const { set, subscribe, update, get: getValue } = cache<Item[]>('records', [])
+    const { set, subscribe, update, get: getValue } = gettable<Item[]>([])
 
     return {
         subscribe,
@@ -46,7 +47,7 @@ function createRecords() {
             })
             set(records)
         },
-        async update(file: string, record: Item) {
+        async update(file: string, record?: Item) {
             const records = await put(`/data/${file}/records`, JSON.stringify(record), {
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -58,14 +59,22 @@ function createRecords() {
             })
             update(() => records)
         },
-        async deleteFiles(collection: string, fileNames: string[]) {
-            for (const filename of fileNames) {
+        async deleteFiles(file: string, fileNames: string[]) {
+            if (!getValue().length) await this.get(file)
+            const records = fileNames.reduce<Array<Item | undefined>>((a, filename) => {
                 const [recordID, field, ...name] = filename.split('-')
-                if (name.length) {
-                    const [record] = await get(`/data/${collection}/records?id=${recordID}`)
-                    record[field] = record[field].filter((f: File) => f.name !== filename)
-                    await this.update(collection, record)
+                if (name) {
+                    const record = this.id(Number(recordID))
+                    if (record) {
+                        record[field] = record[field].filter((f: File) => f.name !== filename)
+                        a.push(record)
+                    }
                 }
+                return uniq(a)
+            }, [])
+            console.log(records)
+            for (const record of records) {
+                await this.update(file, record)
             }
         },
         async delete(file: string, IDs: Array<number>) {
@@ -79,7 +88,7 @@ function createRecords() {
 export const records = createRecords()
 
 function createSchemas() {
-    const { set, subscribe, update, get: getValue } = cache<Schema[]>('schemas', [])
+    const { set, subscribe, update, get: getValue } = gettable<Schema[]>([])
 
     return {
         update,
@@ -113,6 +122,7 @@ function createSchemas() {
     }
 }
 export const schemas = createSchemas()
+export const schemaType = (fieldname: string) => derived(schemas, $schemas => $schemas?.find(v => v.name === fieldname)?.type)
 export const schemaInvalID = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
 export const schemaNames = derived(schemas, $schemas => $schemas?.map(({ name }) => name))
 export const schemasKeys = derived(schemas, $schemas => $schemas?.reduce<Key>((a, { prevName, name }) => {

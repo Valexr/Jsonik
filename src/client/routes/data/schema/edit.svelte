@@ -13,7 +13,7 @@
 
 <script lang="ts">
     export let open = false;
-    export let file = "";
+    export let collection = "";
 
     let valid = true;
 
@@ -21,8 +21,8 @@
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const newName = String(data.get("collectionName"));
 
-        if (file && file !== newName) {
-            await collections.rename(file, newName);
+        if (collection && collection !== newName) {
+            await collections.rename(collection, newName);
         }
 
         await records.upkeys(newName, $schemasKeys);
@@ -34,7 +34,7 @@
 
 <Dialog {open} on:submit={editSchema} on:close bind:valid>
     <h3 slot="header">Edit collection</h3>
-    <Fields bind:valid {file} pattern="^[\w|\-]+$" />
+    <Fields bind:valid {collection} pattern="^[\w|\-]+$" />
     <nav slot="footer">
         <button type="reset" class="link">Cancel</button>
         <button

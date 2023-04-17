@@ -45,13 +45,13 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 await base.write();
                 return base.data[table];
             },
-            upkeys: async (keys: Record<string, string>) => {
+            upKeys: async (keys: Record<string, string>) => {
                 base.data[table] = base.data[table].map((r: Item) => upKeys(r, keys))
                 await base.write();
                 return base.data[table];
             },
-            update: async (meta) => {
-                base.data[table] = base.data[table].map((i: Item) => i.id === meta?.id ? meta : i);
+            upRecord: async (record) => {
+                base.data[table] = base.data[table].map((i: Item) => i.id === record?.id ? record : i);
                 await base.write();
                 return base.data[table];
             },
@@ -70,7 +70,7 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 await base.write();
                 return base.data[table];
             },
-            deleteprop: async (query) => {
+            deleteProp: async (query) => {
                 base.data[table] = base.data[table].forEach((o: Item) => delete o[query]);
                 await base.write();
                 return base.data[table];

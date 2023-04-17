@@ -44,4 +44,25 @@ function uniq(array?: any[]) {
     return Array.from(new Set(array))
 }
 
+function typed(o: Record<string, any>) {
+    return Object.entries(o).reduce<Record<string, any>>((a, [k, v]) => {
+        a[k] =
+            (v && Number(v)) || ["true", "false"].includes(v)
+                ? Boolean(v)
+                : v;
+        return a;
+    }, {});
+}
+
 export { deferred, switchTimeout, decimal, delay, s, listen, uniq }
+
+
+function removeFileFromFileList(fileList: FileList, name: string) {
+    const DT = new DataTransfer();
+    if (fileList) {
+        for (const file of fileList) {
+            if (name !== file.name) DT.items.add(file);
+        }
+    }
+    return DT.files;
+}

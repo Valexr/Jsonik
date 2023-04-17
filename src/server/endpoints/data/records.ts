@@ -43,7 +43,7 @@ export function records(app: App) {
     app.put(async (req, res, next) => {
         const record = { ...req.body, id: Number(req.body.id), updated: Date.now() };
         try {
-            const records = await req.base?.update(record);
+            const records = await req.base?.upRecord(record);
             res.send(records);
         } catch (err) {
             console.log('recordsPUT: ', err);
@@ -54,7 +54,7 @@ export function records(app: App) {
     app.patch(async (req, res, next) => {
         const keys = req.body
         try {
-            const records = await req.base?.upkeys(keys)
+            const records = await req.base?.upKeys(keys)
             res.send(records)
         } catch (e) {
             console.log('recordsPATCH: ', e);

@@ -23,7 +23,7 @@
         if ($collections.includes($path[1])) {
             await records.deleteFiles(`${$path[1] || ""}`, [file]);
         }
-        await files.delete(`${$path[1] || ""}`, file);
+        await files.delete(`${$path[1] || ""}`, [file]);
     }
 
     function onclose() {
@@ -99,7 +99,7 @@
     .cols span {
         flex: auto;
         text-align: left;
-        max-width: calc(100% - (var(--gap) * 8));
+        max-width: calc(100% - var(--gap));
     }
     label {
         display: flex;

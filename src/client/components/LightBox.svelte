@@ -27,7 +27,7 @@
     async function deleteFile() {
         const { collection, name } = file;
         await records.deleteFiles(collection, [name]);
-        await files.delete(collection, name);
+        await files.delete(collection, [name]);
     }
 </script>
 

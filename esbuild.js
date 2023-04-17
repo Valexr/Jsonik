@@ -33,7 +33,7 @@ const serverOptions = {
     format: 'esm',
     treeShaking: true,
     entryPoints: ['src/server/app.ts'],
-    outfile: 'app/app.js',
+    outfile: 'app/app.mjs',
     legalComments: 'none',
     metafile: !DEV,
     // plugins: [eslint()],
@@ -65,7 +65,7 @@ const clientOptions = {
     inject: DEV ? ['./env/lr.js'] : []
 };
 
-await rm(['app/client', 'app/app.js']);
+await rm(['app/client', 'app/app.mjs']);
 
 if (DEV) {
     const client = await context(clientOptions);
@@ -77,7 +77,7 @@ if (DEV) {
     await server.watch();
     await server.rebuild();
 
-    nodemon('app/app.js');
+    nodemon('app/app.mjs');
 
     function cleanup() {
         client.dispose();

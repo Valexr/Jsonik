@@ -5,7 +5,7 @@ import { del, get, patch, post, put } from "$client/api/methods.js";
 export type Files = { files: string[], folders: string[], folder: string }
 
 function createFiles() {
-    const { set, subscribe, update } = cache<string[]>('files', [])
+    const { set, subscribe, update } = writable<string[]>([])
     return {
         subscribe,
         async get(folder = '', file = '') {
@@ -37,7 +37,7 @@ function createFiles() {
 export const files = createFiles()
 
 function createFolders() {
-    const { set, subscribe, update } = cache<string[]>('folders', [])
+    const { set, subscribe, update } = writable<string[]>([])
     return {
         set, subscribe, update,
         async get() {

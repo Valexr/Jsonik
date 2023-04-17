@@ -75,7 +75,7 @@
     {#if fileList}
         {@const tbody = Array.from(fileList, ({ name, size, type }, i) => ({
             id: i + 1,
-            name,
+            name: encodeURI(name),
             size,
             type,
         }))}

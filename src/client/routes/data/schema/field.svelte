@@ -9,6 +9,7 @@
     export type SelectEvent = Event & {
         currentTarget: EventTarget & HTMLSelectElement;
     };
+    export type Opts = Record<string, FormDataEntryValue | number>;
 </script>
 
 <script lang="ts">
@@ -17,7 +18,7 @@
     export let field: Schema;
     export let valid = false;
 
-    let prevName = field.name;
+    const prevName = field.name;
 
     function attributes(input: HTMLInputElement, opt: Record<string, any>) {
         const { type, name, value } = opt;
@@ -36,19 +37,18 @@
     function invalidate() {
         schemas.invalidate(field.id);
     }
-    function save(e: SubmitEvent | InputEvent | KeyboardEvent) {
+    function save(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
-        const { type, name, required, multiple, ...opts } =
-            Object.fromEntries(data);
+        const entries = Object.fromEntries(data) as Record<string, any>;
+        const { type, name, required, ...opts } = entries;
 
-        field = {
-            ...field,
-            prevName,
-            required,
-            multiple,
-            opts,
-        } as unknown as Schema;
-        schemas.save(field as Schema);
+        for (const key in opts) {
+            const value = opts[key];
+            opts[key] = (value && Number(value)) || value;
+        }
+
+        Object.assign(field, { prevName, required, opts });
+        schemas.save(field);
     }
     function del() {
         schemas.delete(field.id);

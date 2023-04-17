@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-    export let file = "";
+    export let collection = "";
 
     let valid = true;
 
@@ -21,7 +21,7 @@
         schemas.cleanup();
         await schemas.set(collectionName, $schemas);
         const fragment = !$schemas.length ? "#edit-collection" : "";
-        if (collectionName === file) history.go();
+        if (collectionName === collection) history.go();
         else goto(`/data/${collectionName}${fragment}`);
     }
 
@@ -34,7 +34,7 @@
     <h1 class="text-center">Add collection</h1>
     <Fields
         bind:valid
-        {file}
+        {collection}
         pattern="(?!^{$collections.join('$|^')}$)[\w|\-]+"
     />
     <nav class="cols">

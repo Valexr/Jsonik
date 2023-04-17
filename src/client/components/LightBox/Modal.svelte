@@ -21,7 +21,7 @@
     $: console.log(collection, filename);
     async function deleteFile() {
         await records.deleteFiles(collection, [filename.join("-")]);
-        await files.delete(collection, filename.join("-"));
+        await files.delete(collection, [filename.join("-")]);
     }
 
     function close() {

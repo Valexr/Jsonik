@@ -1,13 +1,14 @@
 import { derived, writable } from 'svelte/store'
 import { del, get, post, put, patch } from "$client/api/methods.js";
 import { uniq } from '$client/utils/index.js';
+import { gettable } from './gettable.js';
 import { cache } from './cache.js';
 import type { Params } from 'svelte-pathfinder';
 
 export type Item = Record<string, any>
 
 function createLogs() {
-    const { set, subscribe, update, get: getStore } = cache<Item[]>('logs', [])
+    const { set, subscribe, update, get: getStore } = gettable<Item[]>([])
     return {
         update,
         subscribe,
@@ -16,12 +17,10 @@ function createLogs() {
             const logs = await get(`/logs/data/items?q=${q || ''}&limit=${limit || ''}&page=${page || ''}`)
             set(logs)
         },
-        getID(id: number) {
-            return getStore().find(l => l.id === id)
-        },
         async getTotal() {
             return await get('/logs/data/items')
-        }
+        },
+        getID: (id: number) => getStore().find(l => l.id === id)
         // async rename(file: string, name: string) {
         //     name = await patch(`/data/files/${file}?name=${name}`);
         //     update(state => uniq(state.map(f => (f === file ? name : f))))

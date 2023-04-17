@@ -16,7 +16,8 @@ export function logs(app: App) {
                     : req.base?.match(req.query);
                 const index = Number(page) - 1
                 const start = index ? index * Number(limit) : index
-                res.send(items.splice(start, limit));
+                const perpage = items.splice(start, limit)
+                res.send(perpage);
             } else if (!req.params.file && !req.params.table) {
                 res.send(req.body)
             } else if (!req.params.table) {
