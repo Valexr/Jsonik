@@ -47,11 +47,11 @@ function createRecords() {
             })
             set(records)
         },
-        async update(file: string, record?: Item) {
-            const records = await put(`/data/${file}/records`, JSON.stringify(record), {
+        async update(file: string, records: Item[]) {
+            const updated = await put(`/data/${file}/records`, JSON.stringify(records), {
                 headers: { 'Content-Type': 'application/json' }
             })
-            update(() => records)
+            update(() => updated)
         },
         async upkeys(file: string, keys: Item) {
             const records = await patch(`/data/${file}/records`, JSON.stringify(keys), {
@@ -59,9 +59,9 @@ function createRecords() {
             })
             update(() => records)
         },
-        async deleteFiles(file: string, fileNames: string[]) {
+        async deleteFiles(file = '', fileNames: string[]) {
             if (!getValue().length) await this.get(file)
-            const records = fileNames.reduce<Array<Item | undefined>>((a, filename) => {
+            const records = fileNames.reduce<Array<Item>>((a, filename) => {
                 const [recordID, field, ...name] = filename.split('-')
                 if (name) {
                     const record = this.id(Number(recordID))
@@ -72,10 +72,8 @@ function createRecords() {
                 }
                 return uniq(a)
             }, [])
-            console.log(records)
-            for (const record of records) {
-                await this.update(file, record)
-            }
+
+            await this.update(file, records)
         },
         async delete(file: string, IDs: Array<number>) {
             const records = await del(`/data/${file}/records`, JSON.stringify(IDs), {

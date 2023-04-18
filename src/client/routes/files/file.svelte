@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { fragment, path, redirect } from "svelte-pathfinder";
+    import { fragment, paramable, path, redirect } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
     import { collections, records } from "$client/stores/data.js";
     import Dialog from "$client/components/Dialog.svelte";
@@ -12,18 +12,20 @@
 
     let editable = false;
 
+    const route = paramable<{ folder: string }>("/files/:folder?");
+
     async function renameFile(e: SubmitEvent) {
         const data = new FormData(e.target as HTMLFormElement);
-        const name = data.get("value");
-        await files.rename(`${$path[1] || ""}`, file, String(name));
-        redirect(`/files/${$path[1] || ""}`);
+        const name = data.get("value") as string;
+        await files.rename($route.folder, file, encodeURI(name));
+        redirect(`/files/${$route.folder || ""}`);
     }
 
     async function deleteFile() {
-        if ($collections.includes($path[1])) {
-            await records.deleteFiles(`${$path[1] || ""}`, [file]);
+        if ($collections.includes($route.folder)) {
+            await records.deleteFiles($route.folder, [file]);
         }
-        await files.delete(`${$path[1] || ""}`, [file]);
+        await files.delete($route.folder, [file]);
     }
 
     function onclose() {
@@ -39,7 +41,7 @@
 <a
     draggable="false"
     href="#file-{encodeURI(file)}"
-    style="background-image: url('/api/v1/files/{`${$path[1] || ''}`}/{file}')"
+    style="background-image: url('/api/v1/files/{$route.folder || ''}/{file}')"
 />
 <label>
     <slot>
@@ -56,7 +58,10 @@
 >
     {#if [".svg", ".jpg", ".jpeg", ".png", ".gif", ".dng"].some( (ext) => file.includes(ext) )}
         <figure>
-            <img src={`/api/v1/files/${$path[1] || ""}/${file}`} alt={file} />
+            <img
+                src={`/api/v1/files/${$route.folder || ""}/${file}`}
+                alt={file}
+            />
         </figure>
     {/if}
     <nav slot="footer" class="cols col-fit nowrap">

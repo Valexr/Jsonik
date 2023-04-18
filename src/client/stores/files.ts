@@ -24,7 +24,7 @@ function createFiles() {
             await patch(`/files/${folder}/${file}?name=${name}`);
             update(state => state.map(f => (f === file ? name : f)))
         },
-        async delete(folder: string, files: string[]) {
+        async delete(folder = '', files: string[]) {
             const promises = files?.map((file) => {
                 del(`/files/${folder}/${file}`)
             });
@@ -53,9 +53,10 @@ function createFolders() {
             update(state => state.map(f => (f === folder ? name : f)))
         },
         async delete(folder = '') {
-            await del(`/files/${folder}/`);
-            update(state => state.filter(f => f !== folder))
-
+            try {
+                await del(`/files/${folder}/`);
+                update(state => state.filter(f => f !== folder))
+            } catch (e) { }
         }
     }
 }

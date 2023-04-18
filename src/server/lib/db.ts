@@ -45,13 +45,16 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 await base.write();
                 return base.data[table];
             },
-            upKeys: async (keys: Record<string, string>) => {
-                base.data[table] = base.data[table].map((r: Item) => upKeys(r, keys))
+            upKeys: async (keys) => {
+                base.data[table] = base.data[table].map((i: Item) => upKeys(i, keys))
                 await base.write();
                 return base.data[table];
             },
-            upRecord: async (record) => {
-                base.data[table] = base.data[table].map((i: Item) => i.id === record?.id ? record : i);
+            upRecords: async (records) => {
+                base.data[table] = base.data[table].map((i: Item) => {
+                    const record = records.find(({ id }) => i.id === id)
+                    return record || i
+                });
                 await base.write();
                 return base.data[table];
             },

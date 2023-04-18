@@ -89,7 +89,7 @@
         }
 
         $query.record === active?.id
-            ? records.update(collection, record)
+            ? records.update(collection, [record])
             : records.set(collection, record);
     }
 

@@ -14,7 +14,6 @@ export function files(app: App) {
         if (file) {
             const stream = createReadStream(`files/${folder}/${file}`)
             stream.on('error', (e) => res.error(422, e.message))
-            // stream.on('data', console.log)
             stream.pipe(res)
         } else {
             try {
@@ -85,8 +84,7 @@ export function files(app: App) {
             await rm(`files/${folder}/${file}`, { recursive: true })
             res.send(`files/${folder}/${file} deleted`)
         } catch (e) {
-            res.error(404, `${folder} or ${file} not found`)
-            next()
+            res.error(404, `${folder} ${file} not found`)
         }
     })
 }

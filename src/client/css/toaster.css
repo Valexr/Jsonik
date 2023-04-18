@@ -82,7 +82,7 @@
     gap: 0.5em;
 }
 
-.toast[draggable] {
+.toast[draggable="true"] {
     cursor: move;
 }
 

@@ -20,13 +20,13 @@
 <script lang="ts">
     let selected: string[] = [];
 
-    const route = paramable<{ file: string }>("/files/:file?");
+    const route = paramable<{ folder: string }>("/files/:folder?");
 
     async function deleteFiles() {
-        if ($collections.includes($route.file)) {
-            await records.deleteFiles($route.file, selected);
+        if ($collections.includes($route.folder)) {
+            await records.deleteFiles($route.folder, selected);
         }
-        await files.delete($route.file, selected);
+        await files.delete($route.folder, selected);
         selected = [];
     }
     function match(els: Element[]) {
@@ -58,7 +58,7 @@
     }}
 >
     <Await
-        promise={files.get(String($path[1] || ""))}
+        promise={files.get($route.folder)}
         on:error={() => redirect("/files")}
         notify
     >

@@ -41,10 +41,10 @@ export function records(app: App) {
     });
 
     app.put(async (req, res, next) => {
-        const record = { ...req.body, id: Number(req.body.id), updated: Date.now() };
+        const records = req.body.map((r: Record<string, any>) => ({ ...r, updated: Date.now() }));
         try {
-            const records = await req.base?.upRecord(record);
-            res.send(records);
+            const updated = await req.base?.upRecords(records);
+            res.send(updated);
         } catch (err) {
             console.log('recordsPUT: ', err);
             next();
