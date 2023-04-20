@@ -83,10 +83,6 @@
     .cols:is(.col-2, .col-3, .col-4)>* {
         flex: auto;
     }
-
-    /* .grid {
-        --col-width: 8.5em !important;
-    } */
 }
 
 .grid {

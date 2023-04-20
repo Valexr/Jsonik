@@ -4,10 +4,7 @@ aside {
     position: fixed;
     inset: 0;
     z-index: 100;
-    /* overflow-y: auto; */
     background: var(--active);
-    /* min-inline-size: 35em; */
-    /* max-inline-size: 35em; */
     min-width: 35em;
 }
 

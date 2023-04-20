@@ -221,36 +221,3 @@ html:has(.overlay) {
         transform: rotate(360deg);
     }
 }
-
-.with-sidebar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap);
-}
-
-.with-sidebar> :nth-child(1) {
-    flex-grow: 1;
-}
-
-.with-sidebar> :nth-child(2) {
-    flex-basis: 0;
-    flex-grow: 999;
-    min-inline-size: 40rem;
-}
-
-
-.switcher {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap);
-}
-
-.switcher>* {
-    flex-grow: 1;
-    flex-basis: calc((30rem - 100%) * 999);
-}
-
-.switcher> :nth-last-child(n+ 5),
-.switcher> :nth-last-child(n+ 5)~* {
-    flex-basis: 100%;
-}

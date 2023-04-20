@@ -65,6 +65,12 @@
     text-align: center;
 }
 
+.toast.pos-sticky {
+    top: calc(var(--gap-lg) * 2.75);
+    margin: auto;
+    z-index: 1;
+}
+
 .toast {
     --toast-color: var(--gray);
     position: relative;
@@ -79,7 +85,9 @@
     min-inline-size: fit-content;
     max-inline-size: max-content;
     z-index: 0;
-    gap: 0.5em;
+    padding: 0;
+    padding-left: var(--gap);
+    /* gap: 0.5em; */
 }
 
 .toast[draggable="true"] {
@@ -116,9 +124,9 @@
 
 .toast button#close {
     color: var(--toast-color);
-    margin-right: -0.5em;
-    background: none;
-    flex: 1 0 auto;
-    max-width: 1em;
-    padding: 0;
+    /* margin-right: -0.5em; */
+    /* background: none; */
+    /* flex: 1 0 auto; */
+    /* max-width: 1em; */
+    /* padding: 0; */
 }

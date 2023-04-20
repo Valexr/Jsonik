@@ -102,16 +102,9 @@
     [type="checkbox"] {
         flex: 0 0 auto;
     }
-    :global(.toast.pos-sticky) {
-        top: calc(var(--gap-lg) * 2.75);
-        padding: 0 var(--gap);
-        margin: auto;
-        z-index: 1;
-    }
     small {
         max-width: calc(var(--col-width) - var(--gap));
         max-width: 13.5ch;
-        /* max-width: 8.25vw; */
         flex: 0 auto;
     }
 </style>

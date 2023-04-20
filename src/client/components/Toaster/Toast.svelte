@@ -6,6 +6,8 @@
     import { toast } from "./toast.js";
     import type { ToastItem } from "./toast.js";
 
+    import Icon from "$client/components/Icon.svelte";
+
     interface Options {
         delay?: number;
         duration?: number;
@@ -82,11 +84,13 @@
     {draggable}
 >
     <slot>
-        {#if toastItem.icon}<i class="icon icon-{toastItem.icon}" />{/if}
+        <!-- {#if toastItem.icon}<i class="icon icon-{toastItem.icon}" />{/if} -->
         <samp>{toastItem.msg}</samp>
     </slot>
 
     {#if closable}
-        <button id="close" class="icon icon-close" on:click={close} />
+        <button id="close" class="box link" on:click={close}>
+            <Icon />
+        </button>
     {/if}
 </article>

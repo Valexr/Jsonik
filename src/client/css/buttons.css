@@ -55,10 +55,6 @@ summary {
     font-weight: bold;
 }
 
-/* summary.block {
-    justify-content: space-between;
-} */
-
 :is(button, [role=button]).primary {
     background-color: var(--color);
     color: var(--back);
