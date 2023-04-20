@@ -8,16 +8,9 @@
     export let required: boolean;
     export let opts: any;
     export let value: any;
-
-    function clean(obj: object | string) {
-        const isObj = typeof obj === "object";
-        return isObj
-            ? JSON.parse(JSON.stringify(obj, (_, v) => v || undefined))
-            : value || "";
-    }
 </script>
 
 <label>
     <small><Icon icon="textarea" color="gray" /> {name}</small>
-    <textarea {value} {name} {required} {...clean(opts)} use:expand />
+    <textarea {value} {name} {required} {...opts} use:expand />
 </label>

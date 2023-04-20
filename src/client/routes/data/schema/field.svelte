@@ -68,7 +68,6 @@
             const { dataTransfer, currentTarget } = e;
             const { id: to } = currentTarget as HTMLElement;
             const from = dataTransfer?.getData("fieldID");
-
             if (from !== to) {
                 schemas.move(Number(from), Number(to));
             }

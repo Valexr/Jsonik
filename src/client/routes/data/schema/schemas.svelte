@@ -15,6 +15,7 @@
     }
 </script>
 
+<!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
 <ul role="listbox" class="cols">
     {#each SCHEMAS as { type }, i}
         <li>

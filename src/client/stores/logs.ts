@@ -1,14 +1,14 @@
 import { derived, writable } from 'svelte/store'
 import { del, get, post, put, patch } from "$client/api/methods.js";
 import { uniq } from '$client/utils/index.js';
-import { gettable } from './gettable.js';
-import { cache } from './cache.js';
+import { getable } from './getable.js';
+import { cacheable } from './cacheable.js';
 import type { Params } from 'svelte-pathfinder';
 
 export type Item = Record<string, any>
 
 function createLogs() {
-    const { set, subscribe, update, get: getStore } = gettable<Item[]>([])
+    const { set, subscribe, update, get: getStore } = getable<Item[]>([])
     return {
         update,
         subscribe,

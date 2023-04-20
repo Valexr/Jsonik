@@ -89,6 +89,7 @@
 <label data-note={dataNote()}>
     <small><Icon icon="file" color="gray" /> {name}</small>
     {#if value.length}
+        <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
         <ul role="listbox">
             {#each value as file (file)}
                 <li class="cols col-fit align-center">

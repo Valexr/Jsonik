@@ -4,6 +4,7 @@ import zlib from 'zlib';
 import mime from './mime.json';
 import type { Next, Options, Req, Res } from "./types.js";
 import type { OutgoingHttpHeaders } from 'http';
+import { createReadStream } from 'node:fs';
 
 export function mwURLParse() {
     return function (req: Req, _res: Res, next: Next) {
@@ -32,11 +33,7 @@ export function mwBodyParse() {
             req.on('end', () => {
                 if (data) {
                     try {
-                        if (isJson) {
-                            req.body = JSON.parse(data);
-                        } else {
-                            req.body = data;
-                        }
+                        req.body = isJson ? JSON.parse(data) : data;
                     } catch (err: any & Error) {
                         req.body = {} as Req['body'];
                         console.log(err.message);
@@ -111,6 +108,11 @@ export function mwStatic() {
         }
         const ext = mime[req.extname as keyof typeof mime]
         if (ext) res.setHeader('Content-Type', ext);
+
+        // const stream = createReadStream(req.file)
+        // stream.on('error', (e) => res.error(422, e.message))
+        // stream.pipe(res)
+
         res.body = await fs.readFile(req.file);
         next();
     }

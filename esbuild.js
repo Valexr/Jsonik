@@ -7,14 +7,13 @@ import meta from './env/meta.js';
 import copy from './env/copy.js';
 import eslint from './env/eslint.js';
 import nodemon from './env/nodemon.js';
+import change from './env/change.js';
 
 const DEV = process.argv.includes('--dev');
 
 const svelteOptions = {
-    compileOptions: {
-        dev: DEV,
-        css: false,
-        immutable: true
+    compilerOptions: {
+        dev: DEV
     },
     preprocess: [
         preprocess({
@@ -32,20 +31,24 @@ const serverOptions = {
     target: "esnext",
     format: 'esm',
     treeShaking: true,
-    entryPoints: ['src/server/app.ts'],
+    entryPoints: [DEV ? 'src/server/dev.ts' : 'src/server/app.ts'],
     outfile: 'app/app.mjs',
     legalComments: 'none',
     metafile: !DEV,
-    // plugins: [eslint()],
+    plugins: [
+        // eslint(),
+        ...(DEV ? [nodemon('app/app.mjs')] : [])
+    ],
     define: {
         'process.env.NODE_ENV': DEV ? '"dev"' : '"prod"'
-    }
+    },
+    logLevel: 'info'
 };
 
 const clientOptions = {
     bundle: true,
     minify: !DEV,
-    sourcemap: DEV,
+    sourcemap: DEV && 'inline',
     entryPoints: ['src/client/app.ts'],
     outdir: 'app/client/build',
     loader: { '.svg': 'file' },
@@ -60,9 +63,10 @@ const clientOptions = {
             ['src/client/app.html', 'app/client/index.html'],
             ['src/client/assets', 'app/client'],
         ]),
-        log
+        ...(DEV ? [change] : [])
     ],
-    inject: DEV ? ['./env/lr.js'] : []
+    inject: DEV ? ['./env/lr.js'] : [],
+    logLevel: 'info'
 };
 
 await rm(['app/client', 'app/app.mjs']);
@@ -75,9 +79,7 @@ if (DEV) {
     await client.rebuild();
 
     await server.watch();
-    await server.rebuild();
-
-    nodemon('app/app.mjs');
+    await server.rebuild();;
 
     function cleanup() {
         client.dispose();
@@ -90,6 +92,7 @@ if (DEV) {
 } else {
     const server = await build(serverOptions);
     const client = await build(clientOptions);
+
     await meta(server, 'server');
     await meta(client, 'client');
 }

@@ -1,6 +1,5 @@
 import http from 'http';
 import { mwURLParse, mwBodyParse, mwSend, mwError, mwFile, mwStatic, mwCompress, mwCache } from './mws.js'
-import { mwLivereload } from './livereload.js';
 import type { Options, Mw, App, Req, Res, Next } from './types.js';
 
 export function startHTTPServer(options: Options) {
@@ -14,7 +13,6 @@ export function startHTTPServer(options: Options) {
             ...(options.serve ? [mwFile(options), mwStatic()] : []),
             ...(options.compress ? [mwCompress()] : []),
             ...(options.cache ? [mwCache(options)] : []),
-            ...(options.livereload ? [mwLivereload()] : []),
         ];
 
         // const logError = (e: Error) => {
@@ -29,6 +27,8 @@ export function startHTTPServer(options: Options) {
 
     const { host, port } = options
 
+    server.listen(port, host);
+
     server.on('listening', () => {
         const time = new Date().toLocaleTimeString(undefined, { hour12: false });
         console.log(`${time} Server on http://${host}:${port}`)
@@ -37,8 +37,6 @@ export function startHTTPServer(options: Options) {
     server.on('error', (e) => {
         console.error('Server starting error:', e);
     })
-
-    server.listen(port, host);
 
     process.on('SIGTERM', () => server.close());
     process.on('exit', () => server.close());
@@ -72,7 +70,7 @@ export function createMiddlwaresList(): App {
 
                 if (obj.method && obj.method !== req.method) return next();
 
-                if (obj.pattern && obj.pattern !== '') {
+                if (!!obj.pattern) {
                     const match = getRouteMatch(obj.pattern, req.path);
                     if (!match || (obj.exact && !match.exact)) return next();
                     req.params = match.params as Record<string, string>;
@@ -122,8 +120,6 @@ function getRouteMatch(pattern: string, path: string) {
                 : s.startsWith(':') ? (keys.push(s.slice(1)), '(.+)') : s
         })
         .join('/');
-
-    // console.log(path.match(/^(.*)\/([^\/]*)$/))
 
     let exact = true;
     let match = path.match(new RegExp(`^${rx}$`));

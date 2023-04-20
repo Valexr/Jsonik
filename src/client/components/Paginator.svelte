@@ -8,7 +8,7 @@
 
     export let total: number = 10;
     export let limit: number = 10;
-    export let limits: number[] = [10, 20, 30, 40, 50];
+    export let limits: number[] = [10, 20, 30, 40, 50, 100];
     export let active: number = 1;
     export let spread: number = 3;
 

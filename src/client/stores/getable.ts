@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-export function gettable<T>(init: T) {
+export function getable<T>(init: T) {
     const { subscribe, set } = writable(init);
     return {
         subscribe,

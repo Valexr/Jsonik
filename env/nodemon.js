@@ -1,27 +1,17 @@
-import { watch } from 'fs';
-import { join, dirname } from "path";
-import { fork } from "child_process";
+import { join, dirname } from "node:path";
+import { fork } from "node:child_process";
 
 const CWD = process.cwd();
 
-export default function nodemon(path) {
+export default function (path) {
     let child;
-
-    const kill = () => {
-        if (child) child.kill();
+    return {
+        name: 'nodemon',
+        setup(build) {
+            build.onEnd(result => {
+                if (child) child.kill();
+                child = fork(join(CWD, path), [], { cwd: join(CWD, dirname(path)) });
+            });
+        },
     };
-
-    const start = () => {
-        child = fork(join(CWD, path), { cwd: join(CWD, dirname(path)) });
-    };
-
-    process.on('SIGTERM', kill);
-    process.on('exit', kill);
-
-    watch(path, (e) => {
-        if (e === 'change') {
-            kill();
-            start();
-        }
-    });
-}
+};

@@ -141,6 +141,7 @@
                                     {@html tr[td.name]}
                                 {:else  -->
                                 {#if td.type === "file"}
+                                    <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
                                     <ul
                                         role="listbox"
                                         class="cols col-fit align-center justify-start nowrap"

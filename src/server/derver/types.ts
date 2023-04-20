@@ -1,8 +1,6 @@
-import type { PathLike } from 'fs';
 import type { InputType } from 'zlib';
 import type { OutgoingHttpHeaders, ServerResponse, IncomingMessage } from 'http';
 import { Base } from '$types/server.js';
-import { Schema } from '$client/stores/data.js';
 
 export type Options = {
     port: number
@@ -12,7 +10,7 @@ export type Options = {
     compress: boolean,
     cache: number,
     spa: boolean,
-    livereload?: boolean,
+    watch?: () => void,
 } & { middlewares: App }
 
 export type Req = {

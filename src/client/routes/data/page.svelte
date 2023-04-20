@@ -1,11 +1,6 @@
 <script lang="ts" context="module">
     import { fragment, query, paramable } from "svelte-pathfinder";
-    import {
-        schemas,
-        schemaType,
-        records,
-        type Item,
-    } from "$client/stores/data.js";
+    import { schemas, records, type Item } from "$client/stores/data.js";
     import { files } from "$client/stores/files.js";
     import { s } from "$client/utils/index.js";
 

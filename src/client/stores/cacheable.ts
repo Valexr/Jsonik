@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store'
 
-export function cache<T>(key: string, initial: T, local?: boolean) {
+export function cacheable<T>(key: string, initial: T, local?: boolean) {
     const { subscribe, set } = writable<T>(initial)
     const store = typeof window === 'object' ? local ? localStorage : sessionStorage : undefined
     const item = store?.getItem(key) || ''

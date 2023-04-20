@@ -62,6 +62,7 @@
         on:error={() => redirect("/files")}
         notify
     >
+        <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
         <ul role="listbox" class="grid">
             <li><Upload /></li>
             {#each $files?.sort((a, b) => a.localeCompare(b)) as file (file)}

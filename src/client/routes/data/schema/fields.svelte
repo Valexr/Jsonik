@@ -60,7 +60,7 @@
     </legend>
 
     {#if activeTab === "Fields"}
-        <!-- <Await promise={schemas.get(file)}> -->
+        <!-- <Await promise={schemas.get(collection)}> -->
         {#each $schemas as field, id (field.id)}
             <Field
                 {field}

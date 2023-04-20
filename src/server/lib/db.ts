@@ -9,7 +9,7 @@ const dbs: { [file: string]: Low<any> } = {};
 export async function db(file: string) {
     const [folder] = file.split('/')
     await checkdir(folder)
-    dbs[file] ||= new Low(new JSONFile(file));
+    dbs[file] ||= new Low(new JSONFile(file), {});
     return dbs[file];
 }
 

@@ -1,16 +1,15 @@
 import { derived, writable } from 'svelte/store'
-import { files as Files } from '$client/stores/files.js'
 import { del, get, post, put, patch } from "$client/api/methods.js";
 import { uniq } from '$client/utils/index.js';
-import { gettable } from './gettable.js';
-import { cache } from './cache.js';
+import { getable } from './getable.js';
+import { cacheable } from './cacheable.js';
 import type { Schema } from './schemas.js';
 
 export type Item = Record<string, any>
 export type Key = Record<string, string>
 
 function createCollections() {
-    const { set, subscribe, update } = cache<string[]>('collections', [])
+    const { set, subscribe, update } = cacheable<string[]>('collections', [])
     return {
         update,
         subscribe,
@@ -31,7 +30,7 @@ function createCollections() {
 export const collections = createCollections()
 
 function createRecords() {
-    const { set, subscribe, update, get: getValue } = gettable<Item[]>([])
+    const { set, subscribe, update, get: getValue } = getable<Item[]>([])
 
     return {
         subscribe,
@@ -86,7 +85,7 @@ function createRecords() {
 export const records = createRecords()
 
 function createSchemas() {
-    const { set, subscribe, update, get: getValue } = gettable<Schema[]>([])
+    const { set, subscribe, update, get: getValue } = getable<Schema[]>([])
 
     return {
         update,
@@ -120,7 +119,6 @@ function createSchemas() {
     }
 }
 export const schemas = createSchemas()
-export const schemaType = (fieldname: string) => derived(schemas, $schemas => $schemas?.find(v => v.name === fieldname)?.type)
 export const schemaInvalID = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
 export const schemaNames = derived(schemas, $schemas => $schemas?.map(({ name }) => name))
 export const schemasKeys = derived(schemas, $schemas => $schemas?.reduce<Key>((a, { prevName, name }) => {
