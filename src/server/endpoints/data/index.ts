@@ -4,7 +4,7 @@ import { records } from './records.js';
 import { collect } from './collect.js';
 import { connect } from '$server/middlewares/connect.js';
 
-import type { App } from '$server/derver/types.js';
+import type { App } from '$server/http/types.js';
 
 export function data(app: App) {
     app.use('/:file/:table', connect);

@@ -8,7 +8,7 @@ import { createReadStream } from 'node:fs';
 
 export function mwURLParse() {
     return function (req: Req, _res: Res, next: Next) {
-        const parts = new URL(req.url, 'http://' + (req.headers.host || 'derver.tld'));
+        const parts = new URL(req.url, 'http://' + (req.headers.host || 'http.tld'));
         req.path = parts.pathname;
         req.host = parts.host;
         req.hostname = parts.hostname;

@@ -1,5 +1,5 @@
 import { base } from '$server/lib/db.js'
-import type { Next, Req, Res } from "$server/derver/types.js";
+import type { Next, Req, Res } from "$server/http/types.js";
 
 export async function log(req: Req, res: Res, next: Next) {
     // console.dir({

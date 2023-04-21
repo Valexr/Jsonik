@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { cache } from './cacheable.js';
+import { cacheable } from './cacheable.js';
 import { del, get, patch, post, put } from "$client/api/methods.js";
 
 export type Files = { files: string[], folders: string[], folder: string }

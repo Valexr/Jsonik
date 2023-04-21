@@ -1,6 +1,6 @@
 import { readdir, rename, rm, readFile } from "fs/promises";
 import { checkdir } from "$server/lib/utils.js";
-import { App } from "$server/derver/types.js";
+import { App } from "$server/http/types.js";
 
 export function collect(app: App) {
 

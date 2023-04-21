@@ -1,5 +1,5 @@
 import { connect } from '$server/middlewares/connect.js';
-import type { App } from '$server/derver/types.js';
+import type { App } from '$server/http/types.js';
 
 export function logs(app: App) {
     const pattern = '/:file?/:table?'

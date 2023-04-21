@@ -48,8 +48,9 @@
         if (!active) {
             const data = new FormData(e.currentTarget as HTMLFormElement);
             const entries = Object.fromEntries(data);
-            console.log(entries.id);
+
             let fileNames: string[] = [];
+
             for (const name in entries) {
                 const type = schemas.type(name);
                 if (type === "file") {

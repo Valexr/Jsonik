@@ -1,7 +1,7 @@
 import { createReadStream, createWriteStream } from "fs";
 import { readdir, rm, rename } from "fs/promises";
 import { checkdir } from "$server/lib/utils.js";
-import type { App } from "$server/derver/types.js";
+import type { App } from "$server/http/types.js";
 
 export function files(app: App) {
     const pattern = '/:folder?/:file?'

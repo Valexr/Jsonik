@@ -1,4 +1,4 @@
-import type { App } from '$server/derver/types.js';
+import type { App } from '$server/http/types.js';
 
 export function schemas(app: App) {
 

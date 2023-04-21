@@ -1,6 +1,6 @@
 import { readdir, rename, rm } from 'fs/promises';
 import { connect } from '$server/middlewares/connect.js';
-import type { App } from '$server/derver/types.js';
+import type { App } from '$server/http/types.js';
 
 export function data(app: App) {
     const pattern = '/:file?/:table?'

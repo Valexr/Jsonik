@@ -1,5 +1,5 @@
 import { readdir } from 'fs/promises';
-import type { App } from '$server/derver/types.js';
+import type { App } from '$server/http/types.js';
 
 export function records(app: App) {
 

@@ -1,7 +1,7 @@
 import cookie from 'cookie';
 import DB from '$server/lib/db.js';
 import { atob } from '$server/lib/utils.js';
-import type { Next, Req, Res } from '$server/derver/types.js';
+import type { Next, Req, Res } from '$server/http/types.js';
 
 export async function cookies(req: Req, res: Res, next: Next) {
     // console.log(crypto.randomUUID(), crypto.scrypt('password', 'salt', 64, (err, derivedKey) => {

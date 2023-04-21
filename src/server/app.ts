@@ -1,4 +1,4 @@
-import { derver } from '$server/derver/index.js';
+import { server } from '$server/http/index.js';
 import { data } from '$server/endpoints/data/index.js';
 import { files } from '$server/endpoints/files.js';
 import { logs } from '$server/endpoints/logs.js';
@@ -6,7 +6,7 @@ import { log } from '$server/middlewares/log.js';
 // import { auth } from '$server/endpoints/auth/index.js';
 // import { cookies } from '$server/endpoints/auth/cookies';
 // import { token } from '$server/endpoints/auth/token.js';
-import type { App, Options } from '$server/derver/types.js';
+import type { App, Options } from '$server/http/types.js';
 
 const DEV = process.env.NODE_ENV === 'dev';
 
@@ -19,7 +19,7 @@ const options: Partial<Options> = {
     spa: true,
 }
 
-export const app = derver(options)
+export const app = server(options)
 
 app.sub('/api/v1', (app: App) => {
     app.use(log);

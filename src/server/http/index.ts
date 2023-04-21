@@ -1,17 +1,16 @@
 import { startHTTPServer, createMiddlwaresList } from './http.js';
-import { clientWatch } from './watch.js';
 import type { Options } from './types.js';
 
 const defaultOptions: Partial<Options> = {
     host: 'localhost',
-    port: 7000,
+    port: 8000,
     index: 'index.html',
     compress: false,
     cache: 0,
     spa: false,
 }
 
-export function derver(options: Partial<Options>) {
+export function server(options: Partial<Options>) {
     const middlewares = createMiddlwaresList()
     const opts = Object.assign(defaultOptions, options, { middlewares });
 
