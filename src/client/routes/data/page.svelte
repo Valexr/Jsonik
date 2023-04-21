@@ -49,7 +49,6 @@
 
 {#if selected.length}
     <Toast
-        draggable
         type="pos-sticky"
         on:close={() => (selected.length = 0)}
         on:dragstart={(e) => e.dataTransfer?.setData("files", String(selected))}

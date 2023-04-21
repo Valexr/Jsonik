@@ -6,38 +6,35 @@ import type { Next, Options, Req, Res } from "./types.js";
 import type { OutgoingHttpHeaders } from 'http';
 import { createReadStream } from 'node:fs';
 
-export function mwURLParse() {
+export function url() {
     return function (req: Req, _res: Res, next: Next) {
-        const parts = new URL(req.url, 'http://' + (req.headers.host || 'http.tld'));
+        const parts = new URL(req.url, `http://${req.headers.host}`);
         req.path = parts.pathname;
         req.host = parts.host;
         req.hostname = parts.hostname;
         req.port = parts.port;
         req.search = parts.search;
         req.query = Array.from(parts.searchParams)
-            .reduce<{ [key: string]: string }>((obj, [name, value]) => (obj[name] = value, obj), {});
+            .reduce<Record<string, string>>((o, [k, v]) => (o[k] = v, o), {});
         next();
     }
 }
 
-export function mwBodyParse() {
+export function json() {
     return function (req: Req, _res: Res, next: Next) {
-        const isForm = req.headers['content-type'] === 'multipart/form-data'
-        const isJson = req.headers['content-type'] === 'application/json'
-
-        if (isJson || isForm) {
+        if (req.headers['content-type'] === 'application/json') {
             let data = '';
+
             req.on('data', chunk => {
                 data += chunk;
             })
+
             req.on('end', () => {
-                if (data) {
-                    try {
-                        req.body = isJson ? JSON.parse(data) : data;
-                    } catch (err: any & Error) {
-                        req.body = {} as Req['body'];
-                        console.log(err.message);
-                    }
+                try {
+                    req.body = JSON.parse(data);
+                } catch (err: any & Error) {
+                    req.body = {} as Req['body'];
+                    console.log(err.message);
                 }
                 next();
             });
@@ -45,7 +42,7 @@ export function mwBodyParse() {
     }
 }
 
-export function mwFile(options: Options) {
+export function file(options: Options) {
     return async function (req: Req, _res: Res, next: Next) {
         req.file = path.join(options.serve, req.path);
         req.extname = path.extname(req.file);
@@ -70,7 +67,7 @@ export function mwFile(options: Options) {
     }
 }
 
-export function mwSend() {
+export function send() {
     return function (_req: Req, res: Res, next: Next) {
         res.send = function (message) {
             let mime = 'text/plain';
@@ -85,7 +82,7 @@ export function mwSend() {
     }
 }
 
-export function mwError() {
+export function error() {
     return function (_req: Req, res: Res, next: Next) {
         res.error = (code = 500, message: string | Body, headers?: OutgoingHttpHeaders) => {
             let mime = 'text/plain';
@@ -100,7 +97,7 @@ export function mwError() {
     }
 }
 
-export function mwStatic() {
+export function statik() {
     return async function (req: Req, res: Res, next: Next) {
         if (!req.exists) {
             res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -118,7 +115,7 @@ export function mwStatic() {
     }
 }
 
-export function mwCompress() {
+export function compress() {
     return function (req: Req, res: Res, next: () => void) {
         if (res.body && req.headers['accept-encoding']) {
             if (req.headers['accept-encoding'].includes('br')) {
@@ -133,7 +130,7 @@ export function mwCompress() {
     }
 }
 
-export function mwCache(options: Options) {
+export function cache(options: Options) {
     return function (req: Req, res: Res, next: Next) {
         if (typeof options.cache !== 'number') options.cache = 31536000;
         res.setHeader('Cache-Control', 'max-age=' + options.cache);

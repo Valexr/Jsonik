@@ -31,7 +31,7 @@ class HttpBadRequest extends HttpError {
 }
 
 class HttpNotFound extends HttpError {
-    constructor(message = 'Not Found', data: any) {
+    constructor(message = 'Not Found', data?: any) {
         super({
             message,
             name: "HttpNotFound",

@@ -87,7 +87,11 @@
     z-index: 0;
     padding: 0;
     padding-left: var(--gap);
-    /* gap: 0.5em; */
+    /* gap: var(--gap-sm); */
+}
+
+.toast>i {
+    margin-right: var(--gap-sm);
 }
 
 .toast[draggable="true"] {

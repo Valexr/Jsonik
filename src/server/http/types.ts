@@ -11,7 +11,7 @@ export type Options = {
     cache: number,
     spa: boolean,
     watch?: () => void,
-} & { middlewares: App }
+}
 
 export type Req = {
     url: string | URL
@@ -34,7 +34,7 @@ export type Res = {
     error: (code: number | undefined, message: string, headers?: OutgoingHttpHeaders) => void
 } & ServerResponse
 
-export type Next = () => void
+export type Next = (err?: any & Error) => void
 
 export type Mw = ((req: Req, res: Res, next: Next) => void) | null
 

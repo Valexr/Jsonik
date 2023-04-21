@@ -1,5 +1,6 @@
 import { readdir } from 'fs/promises';
 import type { App } from '$server/http/types.js';
+import { HttpNotFound } from '$server/lib/errors.js';
 
 export function records(app: App) {
 
@@ -19,6 +20,8 @@ export function records(app: App) {
             } else {
                 // throw Error('Collection not found')
                 res.error(404, 'Collection not found')
+                // const err = new HttpNotFound('Collection not found')
+                // next(err)
             }
         } catch (err) {
             console.log('recordsGET: ', err);
