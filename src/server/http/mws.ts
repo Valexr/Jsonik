@@ -97,6 +97,13 @@ export function error() {
     }
 }
 
+export function session() {
+    return function (req: Req, res: Res, next: Next) {
+        req.session ||= {}
+        next()
+    }
+}
+
 export function statik() {
     return async function (req: Req, res: Res, next: Next) {
         if (!req.exists) {
@@ -106,12 +113,12 @@ export function statik() {
         const ext = mime[req.extname as keyof typeof mime]
         if (ext) res.setHeader('Content-Type', ext);
 
-        // const stream = createReadStream(req.file)
-        // stream.on('error', (e) => res.error(422, e.message))
-        // stream.pipe(res)
+        const stream = createReadStream(req.file)
+        stream.on('error', (e) => res.error(422, e.message))
+        stream.pipe(res)
 
-        res.body = await fs.readFile(req.file);
-        next();
+        // res.body = await fs.readFile(req.file);
+        // next();
     }
 }
 

@@ -37,8 +37,7 @@ function createRecords() {
         id: (id: number) => getValue().find(v => v.id === id),
         async get(file = '', query = '') {
             const records = await get(`/data/${file}/records${query}`)
-            set(file ? records : [])
-            if (!file) throw Error('file not found')
+            set(records)
         },
         async set(file: string, record: Item) {
             const records = await post(`/data/${file}/records`, JSON.stringify(record), {
@@ -91,8 +90,12 @@ function createSchemas() {
         update,
         subscribe,
         async get(file = '') {
-            const schemas = await get(`/data/${file}/schemas`)
-            set(file ? schemas : [])
+            try {
+                const schemas = await get(`/data/${file}/schemas`)
+                set(schemas)
+            } catch (e) {
+                set([])
+            }
         },
         async set(file: string, schemas: Schema[]) {
             await post(`/data/${file}/schemas`, JSON.stringify(schemas), {

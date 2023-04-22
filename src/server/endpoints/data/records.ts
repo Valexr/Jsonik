@@ -1,31 +1,15 @@
-import { readdir } from 'fs/promises';
 import type { App } from '$server/http/types.js';
-import { HttpNotFound } from '$server/lib/errors.js';
 
 export function records(app: App) {
 
-    app.get(async (req, res, next) => {
-        const { file } = req.params
-        const data = await readdir('data')
-        const files = data.map(f => f.replace(/\..+$/, '')).filter(Boolean)
-
-        try {
-            if (Object.keys(req.query).length) {
-                const records = req.query.q ? req.base?.search(req.query.q) : req.base?.match(req.query)
-                // req.query.id ? req.base?.id(+req.query.id) : req.base?.match(req.query);
-                res.send(records);
-            } else if (files.includes(file)) {
-                const { records } = req.base?.data
-                res.send(records);
-            } else {
-                // throw Error('Collection not found')
-                res.error(404, 'Collection not found')
-                // const err = new HttpNotFound('Collection not found')
-                // next(err)
-            }
-        } catch (err) {
-            console.log('recordsGET: ', err);
-            next();
+    app.get((req, res, next) => {
+        if (Object.keys(req.query).length) {
+            const records = req.query.q ? req.base?.search(req.query.q) : req.base?.match(req.query)
+            // req.query.id ? req.base?.id(+req.query.id) : req.base?.match(req.query);
+            res.send(records);
+        } else {
+            const { records } = req.base?.data
+            res.send(records);
         }
     });
 

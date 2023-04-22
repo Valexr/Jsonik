@@ -8,7 +8,7 @@ export function logs(app: App) {
 
     app.get(pattern, async (req, res, next) => {
         try {
-            console.log(req.query)
+            // console.log(req.query)
             if (Object.values(req.query).some(v => v)) {
                 const { q, page, limit } = req.query
                 const items = req.query.q

@@ -5,8 +5,8 @@ export interface Timer {
     clear: () => void;
 }
 
-export function Timer(callback: Function, delay: number): Timer {
-    let timerId: number,
+export function Timer(callback: () => void, delay: number): Timer {
+    let timerId: NodeJS.Timeout,
         start: number,
         remaining: number = delay;
 

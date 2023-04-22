@@ -2,14 +2,9 @@ import type { App } from '$server/http/types.js';
 
 export function schemas(app: App) {
 
-    app.get(async (req, res, next) => {
-        try {
-            const { schemas } = req.base?.data
-            res.send(schemas)
-        } catch (e) {
-            console.log('schemasGET: ', e);
-            next();
-        }
+    app.get((req, res, next) => {
+        const { schemas } = req.base?.data
+        res.send(schemas)
     });
 
     app.post(async (req, res, next) => {

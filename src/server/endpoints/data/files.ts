@@ -5,6 +5,7 @@ import { App } from "$server/http/types.js";
 export function files(app: App) {
 
     app.get(async (req, res, next) => {
+        // console.log(req.url, req.params)
         await checkdir('data')
         try {
             const data = await readdir('data')

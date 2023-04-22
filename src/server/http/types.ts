@@ -26,6 +26,7 @@ export type Req = {
     file: string
     extname: string
     exists: boolean
+    session: Record<string, any>
 } & IncomingMessage & { base?: Base }
 
 export type Res = {
@@ -36,7 +37,7 @@ export type Res = {
 
 export type Next = (err?: any & Error) => void
 
-export type Mw = ((req: Req, res: Res, next: Next) => void) | null
+export type Mw = ((req: Req, res: Res, next: Next) => void)
 
 export type App = {
     list: () => Mw[];

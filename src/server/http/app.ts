@@ -12,62 +12,60 @@ type Obj = {
 export function create(): App {
     const middlewares: Mw[] = [];
 
-    function getMethods(pattern?: string) {
+    function app(pattern = '') {
         const methods = new Proxy<object>({}, {
             get(_, name: string) {
                 if (name === 'list') return () => middlewares;
                 if (name === 'sub') return function () {
                     const args = Array.from(arguments);
-                    const parentPattern = (pattern || '') + args.shift();
-                    args.forEach(fn => fn(getMethods(parentPattern)));
+                    const parentPattern = pattern + args.shift();
+                    args.forEach(fn => fn(app(parentPattern)));
                 };
 
                 return function (): object {
-                    addMiddleware(parseArguments(Array.from(arguments), name, pattern));
+                    execute(parse(Array.from(arguments), name, pattern));
                     return methods;
                 };
             }
         });
         return methods;
     }
-    return getMethods() as App;
+    return app() as App;
 
-    function addMiddleware(obj: Obj) {
-        for (const mw of obj.middlewares) {
+    function execute(parsed: Obj) {
+        for (const mw of parsed.middlewares) {
             middlewares.push(function (req: Req, res: Res, next: Next) {
-
-                if (obj.method && obj.method !== req.method) return next();
-
-                if (!!obj.pattern) {
-                    const match = pattern(obj.pattern, req.path);
-                    if (!match || (obj.exact && !match.exact)) return next();
+                if (parsed.method && parsed.method !== req.method) return next();
+                if (!!parsed.pattern) {
+                    const match = pattern(parsed.pattern, req.path);
+                    if (!match || (parsed.exact && !match.exact)) return next();
                     req.params = match.params as Record<string, string>;
                 }
-                mw?.(req, res, next);
+                mw(req, res, next);
             });
         }
     }
 
-    function parseArguments(args: Array<Mw>, name: string, pattern = '') {
+    function parse(args: Array<Mw>, name: string, pattern = '') {
         const subpattern = typeof args[0] === 'string' ? args.shift() : '';
         return {
             method: name === 'use' ? '' : name.toUpperCase(),
             pattern: pattern + subpattern,
             exact: !(pattern && !subpattern),
-            middlewares: args.filter((fn: any) => typeof fn === 'function')
+            middlewares: args
         }
     }
 }
 
 export function run(mws: Mw[], req: Req, res: Res) {
-    mws.push((_req, res) => res.end(res.body || ''));
+    mws.push((req, res) => res.end(res.body || ''));
     const next = (err?: any & Error): void =>
-        err ? onError(err, req, res, next)
+        err ? error(err, req, res, next)
             : mws.shift()?.(req, res, next)
     next();
 }
 
-function onError(err: any & Error, req: Req, res: Res, next: Next) {
+function error(err: any & Error, req: Req, res: Res, next: Next) {
     const code = (res.statusCode = err.code || err.status || err.statusCode || 500);
     if (typeof err === 'string' || Buffer.isBuffer(err)) res.end(err);
     else res.end(err.message || http.STATUS_CODES[code]);

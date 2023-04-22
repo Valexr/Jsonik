@@ -30,6 +30,8 @@ export async function log(req: Req, res: Res, next: Next) {
     const id = Date.now()
     const { method, url, socket: { remoteAddress }, headers: { referer } } = req
     const { statusCode } = res
+
+    Object.assign(req.session, { statusCode })
     await LOGS?.prepend({ id, method, status: statusCode, url, ip: remoteAddress, referer })
     next();
 }
