@@ -20,4 +20,5 @@ export type Base = {
     deleteProp: (query: string) => Promise<any>;
     replace: (query: object, obj: object) => Promise<any>;
     filters: (query: string | object) => object;
+    clear: () => Promise<void>
 }

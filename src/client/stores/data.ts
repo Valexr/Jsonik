@@ -36,8 +36,13 @@ function createRecords() {
         subscribe,
         id: (id: number) => getValue().find(v => v.id === id),
         async get(file = '', query = '') {
-            const records = await get(`/data/${file}/records${query}`)
-            set(records)
+            try {
+                const records = await get(`/data/${file}/records${query}`)
+                set(records)
+            } catch (e) {
+                set([])
+                throw e
+            }
         },
         async set(file: string, record: Item) {
             const records = await post(`/data/${file}/records`, JSON.stringify(record), {
@@ -95,6 +100,7 @@ function createSchemas() {
                 set(schemas)
             } catch (e) {
                 set([])
+                throw e
             }
         },
         async set(file: string, schemas: Schema[]) {

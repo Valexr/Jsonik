@@ -1,5 +1,5 @@
 // import assert from 'assert';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 // export const slug = (...args: (string | number)[]): string => {
 export function slugify({ ...args }) {
     return args
@@ -140,5 +140,14 @@ export async function checkdir(path: string) {
         await mkdir(path, { recursive: true });
     } catch (e) {
         console.error(e)
+    }
+}
+export async function checkfile(path: string) {
+    try {
+        const data = await readFile(path, { encoding: 'utf8' });
+        return data
+    } catch (e) {
+        console.error(e)
+        await writeFile(path, []);
     }
 }

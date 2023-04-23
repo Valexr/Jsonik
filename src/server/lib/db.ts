@@ -84,6 +84,10 @@ export async function base(file: string, table = 'items'): Promise<Base | undefi
                 await base.write();
                 return base.data[table];
             },
+            clear: async () => {
+                base.data = {}
+                await base.write();
+            },
             filters: (query) => {
                 const qa =
                     typeof query === 'string'
