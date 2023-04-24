@@ -6,8 +6,6 @@ import { App } from "$server/http/types.js";
 export function files(app: App) {
 
     app.get(async (req, res, next) => {
-        // console.log(req.url, req.params)
-        await checkdir('data')
         try {
             const data = await readdir('data')
             const files = data.map(f => f.replace(/\..+$/, '')).filter(Boolean)
@@ -33,7 +31,6 @@ export function files(app: App) {
     app.delete(async (req, res, next) => {
         const { file } = req.params
         try {
-            // const data = await readFile(`data/${file}.json`, { encoding: 'utf8' })
             const db = await base(`data/${file}.json`)
             await db?.clear()
             await rm(`data/${file}.json`)

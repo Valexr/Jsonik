@@ -21,7 +21,7 @@ aside.open::before {
 
 aside :is(header, footer) {
     padding: var(--padding);
-    background: var(--surface);
+    /* background: var(--surface); */
     /* position: sticky; */
 }
 

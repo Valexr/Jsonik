@@ -27,6 +27,7 @@ summary {
 :is(button, [role=button]):is(.action, .box) {
     padding: var(--gap-sm);
     aspect-ratio: 1/1;
+    min-width: 2.25rem;
 }
 
 :is(button, [role=button]).action {
@@ -91,6 +92,10 @@ summary {
     cursor: auto;
 }
 
+:is(button, [role=button], [type="file"]::file-selector-button):is(:disabled, [aria-disabled="true"], [aria-busy="true"]):not(.box) {
+    padding: 0;
+}
+
 [type="file"]::file-selector-button {
     margin-right: var(--gap);
     font-size: small;
@@ -105,29 +110,30 @@ summary {
 }
 
 /* GROUPS */
-.buttons-group {
+[role=group] {
     display: flex;
     min-width: 100%;
-    margin: var(--gap) 0;
+    /* margin: var(--gap) 0; */
+    padding: 0;
 }
 
-.buttons-group>* {
+[role=group]>* {
     flex: auto;
     border-radius: 0;
     margin: 0 -0.0655em;
 }
 
-.buttons-group>*:is(:hover, .active, .primary) {
+[role=group]>*:is(:hover, .active, .primary) {
     z-index: 1;
 }
 
-.buttons-group>*:first-child {
+[role=group]>*:first-child {
     border-right: 0;
     border-top-left-radius: var(--border-radius-sm);
     border-bottom-left-radius: var(--border-radius-sm);
 }
 
-.buttons-group>*:last-child {
+[role=group]>*:last-child {
     border-left: 0;
     border-top-right-radius: var(--border-radius-sm);
     border-bottom-right-radius: var(--border-radius-sm);

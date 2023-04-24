@@ -9,7 +9,6 @@
     import Toast from "$client/components/Toaster/Toast.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Code from "$client/components/Code.svelte";
-    import LBmodal from "$client/components/LightBox/Modal.svelte";
 
     import AddSchema from "./schema/add.svelte";
     import EditSchema from "./schema/edit.svelte";

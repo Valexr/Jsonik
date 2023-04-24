@@ -16,7 +16,7 @@
         form: HTMLFormElement,
         valid: (value: boolean) => void
     ) {
-        setTimeout(() => valid(form.checkValidity()), 50);
+        setTimeout(() => valid(form.checkValidity()), 0);
         form.oninput = () => valid(form.checkValidity());
     }
 </script>

@@ -67,7 +67,7 @@
     <nav slot="footer" class="cols col-fit nowrap">
         <button
             id="rename"
-            class="box"
+            class="box link"
             on:click|preventDefault={() => (editable = true)}
         >
             <Icon icon="edit" />
@@ -83,10 +83,10 @@
         {:else}
             <span class="scroll-x">{file}</span>
         {/if}
-        <button class="box text-error" on:click={deleteFile}>
+        <button class="box link text-error" on:click={deleteFile}>
             <Icon icon="trash" />
         </button>
-        <button class="box" type="reset">
+        <button class="box link" type="reset">
             <Icon />
         </button>
     </nav>

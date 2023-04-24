@@ -70,6 +70,7 @@
             href="/files"
             tabindex="0"
             role="button"
+            class="box"
             aria-disabled={!$path[1]}
             draggable="false">/</a
         >

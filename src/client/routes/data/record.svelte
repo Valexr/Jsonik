@@ -111,7 +111,7 @@
     <!-- <Await promise={schemas.get(collection).then(getRecord)}> -->
     <!-- {#if $schemas.length} -->
     <fieldset>
-        <legend class="buttons-group">
+        <legend role="group">
             {#each tabs as tab}
                 <button
                     id={tab}

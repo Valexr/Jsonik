@@ -56,9 +56,3 @@
         {/if}
     </a>
 {/if}
-
-<style>
-    [role="button"][aria-disabled="true"] {
-        padding: 0;
-    }
-</style>

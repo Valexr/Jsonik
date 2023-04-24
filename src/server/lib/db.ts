@@ -6,16 +6,17 @@ import type { Item, Key } from '$client/stores/data.js';
 
 const dbs: { [file: string]: Low<any> } = {};
 
-export async function db(file: string) {
-    const [folder] = file.split('/')
+export async function db(path: string) {
+    const [folder] = path.split('/')
     await checkdir(folder)
-    dbs[file] ||= new Low(new JSONFile(file), {});
-    return dbs[file];
+    dbs[path] ||= new Low(new JSONFile(path), {});
+    console.log(dbs)
+    return dbs[path];
 }
 
-export async function base(file: string, table = 'items'): Promise<Base | undefined> {
+export async function base(path: string, table = 'items'): Promise<Base | undefined> {
     try {
-        const base = await db(file);
+        const base = await db(path);
         await base.read();
 
         base.data ||= {};

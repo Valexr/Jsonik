@@ -118,7 +118,7 @@ dialog.img form footer {
 }
 
 dialog form :is(header, footer) {
-    background-color: var(--surface);
+    /* background-color: var(--surface); */
     padding: var(--padding);
 }
 

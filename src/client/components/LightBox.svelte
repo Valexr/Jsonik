@@ -54,10 +54,10 @@
     </figure>
     <nav class="cols col-fit align-center nowrap" slot="footer">
         <span class="scroll-x">{file.name}</span>
-        <button type="submit" class="box text-error">
+        <button type="submit" class="box link text-error">
             <Icon icon="trash" />
         </button>
-        <button type="reset" class="box">
+        <button type="reset" class="box link">
             <Icon />
         </button>
     </nav>

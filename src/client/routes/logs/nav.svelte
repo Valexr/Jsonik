@@ -7,7 +7,7 @@
 
 <script lang="ts">
     query.set({
-        limit: 10,
+        limit: 100,
         page: 1,
     });
 </script>

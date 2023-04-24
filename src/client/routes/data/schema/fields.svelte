@@ -46,7 +46,7 @@
 </fieldset>
 
 <fieldset class="cols column">
-    <legend class="buttons-group">
+    <legend role="group">
         {#each tabs as tab}
             <button
                 id={tab}
@@ -60,7 +60,6 @@
     </legend>
 
     {#if activeTab === "Fields"}
-        <!-- <Await promise={schemas.get(collection)}> -->
         {#each $schemas as field, id (field.id)}
             <Field
                 {field}
@@ -69,7 +68,6 @@
                 bind:valid
             />
         {/each}
-        <!-- </Await> -->
     {:else if activeTab === "Rules"}
         <fieldset class="cols column">
             <label>
@@ -115,8 +113,5 @@
 <style>
     fieldset {
         margin-bottom: var(--gap);
-    }
-    nav {
-        margin: var(--gap-sm) 0 var(--gap);
     }
 </style>
