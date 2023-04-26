@@ -19,7 +19,6 @@ export async function connect(req: Req, res: Res, next: Next) {
             // const err = new HttpNotFound('Collection not found')
             // next(err)
             res.error(404, 'Collection not found')
-            // throw Error('Collection not found')
         } else {
             req.base = await base(`${folder}/${file}.json`, table);
             next();

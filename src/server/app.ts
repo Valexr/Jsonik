@@ -2,7 +2,7 @@ import { server } from '$server/http/index.js';
 import { data } from '$server/endpoints/data/index.js';
 import { files } from '$server/endpoints/files.js';
 import { logs } from '$server/endpoints/logs.js';
-import { last, log } from '$server/middlewares/log.js';
+import { log } from '$server/middlewares/log.js';
 // import { auth } from '$server/endpoints/auth/index.js';
 // import { cookies } from '$server/endpoints/auth/cookies';
 // import { token } from '$server/endpoints/auth/token.js';
@@ -30,5 +30,4 @@ app.sub('/api/v1', (app: App) => {
     app.sub('/data', data);
     app.sub('/files', files);
     app.sub('/logs', logs);
-    app.use(last)
 });

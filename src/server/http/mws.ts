@@ -29,11 +29,14 @@ export function json(req: Req, res: Res, next: Next) {
         req.on('end', () => {
             try {
                 req.body = JSON.parse(data);
+                next();
             } catch (err: any & Error) {
                 req.body = {} as Req['body'];
-                console.log(err.message);
+                err.status = 422;
+                err.details = err.message;
+                err.message = 'Invalid content';
+                next(err);
             }
-            next();
         });
         req.on('error', next)
     } else next();
