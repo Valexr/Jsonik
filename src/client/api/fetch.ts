@@ -5,6 +5,7 @@ const base = '/api/v1';
 // const access = get(session).access
 
 export default async function <T>(url: RequestInfo, { ...options }: RequestInit, body?: BodyInit): Promise<any & T> {
+    console.log(body)
     try {
         const res = await fetch(base + url, {
             ...options,

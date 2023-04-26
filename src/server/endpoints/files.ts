@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from "fs";
-import { readdir, rm, rename } from "fs/promises";
+import { readdir, rm, rename, writeFile } from "fs/promises";
 import { checkdir } from "$server/lib/utils.js";
 import type { App } from "$server/http/types.js";
 
@@ -23,12 +23,12 @@ export function files(app: App) {
                 const files = items.filter(i => i.includes('.'))
                 res.send({ files, folders })
             } catch (e) {
-                res.error(404, `${folder} or ${file} not found`)
+                res.error(404, `${folder || file} not found`)
             }
         }
     });
 
-    app.post(pattern, async (req, res) => {
+    app.post(pattern, async (req, res, next) => {
         const { folder, file } = req.params
 
         await checkdir(`files/${folder}`)
@@ -84,7 +84,7 @@ export function files(app: App) {
             await rm(`files/${folder}/${file}`, { recursive: true })
             res.send(`files/${folder}/${file} deleted`)
         } catch (e) {
-            res.error(404, `${folder} ${file} not found`)
+            res.error(404, `${folder || file} not found`)
         }
     })
 }

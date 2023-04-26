@@ -29,7 +29,6 @@ export function json(req: Req, res: Res, next: Next) {
         req.on('end', () => {
             try {
                 req.body = JSON.parse(data);
-                next();
             } catch (err: any & Error) {
                 req.body = {} as Req['body'];
                 err.status = 422;
@@ -39,7 +38,8 @@ export function json(req: Req, res: Res, next: Next) {
             }
         });
         req.on('error', next)
-    } else next();
+    }
+    next();
 }
 
 export function send(req: Req, res: Res, next: Next) {
@@ -56,16 +56,46 @@ export function send(req: Req, res: Res, next: Next) {
 }
 
 export function error(req: Req, res: Res, next: Next) {
-    res.error = (code = 500, message: string | Body, headers?: OutgoingHttpHeaders) => {
+    res.error = (code = 500, message: string | Body) => {
         let mime = 'text/plain';
         if (typeof message === 'object') {
             message = JSON.stringify(message);
             mime = 'application/json'
         }
-        res.writeHead(code, { 'Content-Type': mime, ...headers });
+        res.writeHead(code, { 'Content-Type': mime });
         res.end(message);
     };
     next();
+}
+
+export async function cookie(req: Req, res: Res, next: Next) {
+    if (req.headers.cookie) {
+        req.cookie = parse(req.headers.cookie)
+    }
+    res.cookie = (value: Record<string, string | number | boolean>) => {
+        res.setHeader('Set-Cookie', stringify(value));
+    }
+
+    function parse(str: string): Record<string, string | number | boolean> {
+        const entries = str.split(/;\s?/).map(v => decodeURIComponent(v).split(/=(.+)/))
+        return Object.fromEntries(entries)
+    }
+
+    function stringify(cookies: Record<string, string | number | boolean>) {
+        return Object.entries(cookies)
+            .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
+            .join('; ');
+    }
+    next()
+}
+
+export async function token(req: Req, res: Res, next: Next) {
+    if (req.headers.authorization) {
+        req.token = req.headers.authorization?.split(' ')[1]
+    }
+    res.token = (token: string) => {
+        res.setHeader('Authorization', `Baerer ${token}`);
+    }
 }
 
 export function session(req: Req, res: Res, next: Next) {
@@ -75,23 +105,25 @@ export function session(req: Req, res: Res, next: Next) {
 
 export function file(options: Options) {
     return async function (req: Req, res: Res, next: Next) {
-        req.file = path.join(options.serve, req.path);
-        req.extname = path.extname(req.file);
-
-        if (req.extname === '') {
-            req.file = path.join(req.file, options.index);
+        if (req.method === 'GET') {
+            req.file = path.join(options.serve, req.path);
             req.extname = path.extname(req.file);
-        }
 
-        req.exists = await isExists(req.file);
+            if (req.extname === '') {
+                req.file = path.join(req.file, options.index);
+                req.extname = path.extname(req.file);
+            }
 
-        if (options.spa && !req.exists && req.extname === path.extname(options.index)) {
-            let dir = path.dirname(req.file);
-            do {
-                dir = path.dirname(dir)
-                req.file = path.join(dir, options.index);
-                if (req.exists = await isExists(req.file)) break;
-            } while (dir !== '.')
+            req.exists = await isExists(req.file);
+
+            if (options.spa && !req.exists && req.extname === path.extname(options.index)) {
+                let dir = path.dirname(req.file);
+                do {
+                    dir = path.dirname(dir)
+                    req.file = path.join(dir, options.index);
+                    if (req.exists = await isExists(req.file)) break;
+                } while (dir !== '.')
+            }
         }
 
         next();
@@ -99,19 +131,16 @@ export function file(options: Options) {
 }
 
 export async function statik(req: Req, res: Res, next: Next) {
-    if (!req.exists) {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        return res.end('Not found');
+    if (req.method === 'GET') {
+        if (!req.exists) res.error(404, 'Not found');
+
+        const ext = mime[req.extname as keyof typeof mime]
+        if (ext) res.setHeader('Content-Type', ext);
+
+        const stream = createReadStream(req.file)
+        stream.on('error', (e) => res.error(422, e.message))
+        stream.pipe(res)
     }
-    const ext = mime[req.extname as keyof typeof mime]
-    if (ext) res.setHeader('Content-Type', ext);
-
-    const stream = createReadStream(req.file)
-    stream.on('error', (e) => res.error(422, e.message))
-    stream.pipe(res)
-
-    // res.body = await fs.readFile(req.file);
-    // next();
 }
 
 export function compress(req: Req, res: Res, next: () => void) {

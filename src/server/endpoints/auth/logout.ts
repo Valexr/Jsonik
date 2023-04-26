@@ -1,23 +1,22 @@
-import cookie from 'cookie';
-import DB from '$server/lib/db.js';
+import { base } from '$server/lib/db.js';
 import { atob } from '$server/lib/utils.js';
+import type { Next, Req, Res } from '$server/http/types.js';
 
-export async function logout(req, res, next) {
-    if (req.headers.cookie)
+export async function logout(req: Req, res: Res, next: Next) {
+    if (req.cookie)
         try {
-            const cookies = cookie.parse(req.headers.cookie);
-            const SESSIONS = await DB.connect('sessions', 'items');
-            const session = SESSIONS.id(atob(cookies.sid));
+            const SESSIONS = await base('sessions/data.json');
+            const session = SESSIONS?.id(atob(req.cookie.sid as string));
             const message = session.maxAge ? { username: session.username } : {};
-            // !session.maxAge &&
-            res.setHeader('Set-Cookie', 'sid=; max-age=0; path=/');
+
+            res.cookie({ sid: '', 'max-age': 0, path: '/' });
             res.end(JSON.stringify(message));
-        } catch (err) {
+        } catch (err: any & Error) {
             console.log('logoutERR: ', err);
             res.error(401, err);
         }
-    else
-        res.error(400, 'cookie not provided', {
-            'Set-Cookie': 'sid=; max-age=0; path=/',
-        });
+    else {
+        res.cookie({ sid: '', 'max-age': 0, path: '/' });
+        res.error(400, 'cookie not provided');
+    }
 }

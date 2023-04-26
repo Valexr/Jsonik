@@ -28,10 +28,14 @@ export type Req = {
     extname: string
     exists: boolean
     session: Record<string, any>
+    cookie?: Record<string, string | number | boolean>
+    token?: string
 } & IncomingMessage & { base?: Base }
 
 export type Res = {
     body: InputType
+    cookie: (value: Record<string, string | number | boolean>) => void
+    token: (value: string) => void
     send: <T>(message: T | string | string[] | Body) => void
     error: (code: number | undefined, message: string, headers?: OutgoingHttpHeaders) => void
 } & ServerResponse

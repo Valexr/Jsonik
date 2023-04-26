@@ -1,12 +1,13 @@
 {
-    ".htm": "text/html",
-    ".html": "text/html",
+    "default": "application/octet-stream",
+    ".htm": "text/html; charset=UTF-8",
+    ".html": "text/html; charset=UTF-8",
     ".jpg": "image/jpeg",
     ".jpeg": "image/jpeg",
     ".gif": "image/gif",
     ".png": "image/png",
     ".svg": "image/svg+xml",
-    ".js": "text/javascript",
+    ".js": "application/javascript",
     ".json": "application/json",
     ".css": "text/css",
     ".ico": "image/x-icon"

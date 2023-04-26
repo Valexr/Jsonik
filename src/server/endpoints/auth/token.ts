@@ -1,11 +1,10 @@
 import jwt, { type GetPublicKeyOrSecret, type Secret } from 'jsonwebtoken';
-import cookie from 'cookie';
 import type { Next, Req, Res } from '$server/http/types.js';
 
 export function token(req: Req, res: Res, next: Next) {
-    if (req.headers.authorization) {
+    if (req.token) {
         try {
-            const token = req.headers.authorization.split(' ')[1];
+            const token = req.token;
             const verified = jwt.verify(token, process.env.JWT_SECRET as Secret | GetPublicKeyOrSecret);
             console.log('token: ', verified);
             next();
@@ -20,10 +19,10 @@ export function token(req: Req, res: Res, next: Next) {
             }
             console.log('tokenERR: ', err.message, err.expiredAt);
         }
-    } else if (req.headers.cookie) {
+    } else if (req.cookie) {
         try {
-            const cookies = cookie.parse(req.headers.cookie);
-            if (cookies.sid && cookies.sid.length) next();
+            const { sid } = req.cookie;
+            if (sid && typeof sid === 'string' && sid.length) next();
             else res.error(400, 'cookie invalid');
         } catch (err) {
             console.log('tokenERR:', err);

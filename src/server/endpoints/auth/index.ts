@@ -1,5 +1,5 @@
 import os from 'os';
-import { cookies } from '$server/endpoints/auth/cookies.js';
+import { cookie } from '$server/endpoints/auth/cookie.js';
 import { token } from '$server/endpoints/auth/token.js';
 import { login } from '$server/endpoints/auth/login.js';
 import { logout } from '$server/endpoints/auth/logout.js';
@@ -9,7 +9,7 @@ import type { App } from '$server/http/types.js';
 console.log('mac: ', os.networkInterfaces())
 
 export function auth(app: App) {
-    app.get('/cookie', cookies);
+    app.get('/cookie', cookie);
     app.get('/token', token);
     app.post('/login', login);
     app.post('/logout', logout);
