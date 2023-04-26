@@ -10,7 +10,6 @@ export async function db(path: string) {
     const [folder] = path.split('/')
     await checkdir(folder)
     dbs[path] ||= new Low(new JSONFile(path), {});
-    console.log(dbs)
     return dbs[path];
 }
 

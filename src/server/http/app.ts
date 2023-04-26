@@ -2,18 +2,18 @@ import http from 'node:http';
 import { pattern } from './pattern.js';
 import type { Mw, App, Req, Res, Next } from './types.js';
 
-type Obj = {
+type Parsed = {
     method: http.IncomingMessage['method']
     pattern: string,
     exact: boolean,
-    middlewares: Mw[]
+    middlewares: Array<Mw>
 }
 
 export function create(): App {
     const middlewares: Mw[] = [];
 
     function app(pattern = '') {
-        const methods = new Proxy<object>({}, {
+        return new Proxy<App>({} as App, {
             get(_, name: string) {
                 if (name === 'list') return () => middlewares;
                 if (name === 'sub') return function () {
@@ -21,32 +21,29 @@ export function create(): App {
                     const parentPattern = pattern + args.shift();
                     args.forEach(fn => fn(app(parentPattern)));
                 };
-
-                return function (): object {
-                    execute(parse(Array.from(arguments), name, pattern));
-                    return methods;
+                return function () {
+                    add(parse(Array.from(arguments), name, pattern));
                 };
             }
         });
-        return methods;
     }
-    return app() as App;
+    return app();
 
-    function execute(parsed: Obj) {
+    function add(parsed: Parsed) {
         for (const mw of parsed.middlewares) {
-            middlewares.push(function (req: Req, res: Res, next: Next) {
+            middlewares.push(async function (req: Req, res: Res, next: Next) {
                 if (parsed.method && parsed.method !== req.method) return next();
                 if (!!parsed.pattern) {
                     const match = pattern(parsed.pattern, req.path);
                     if (!match || (parsed.exact && !match.exact)) return next();
-                    req.params = match.params as Record<string, string>;
+                    req.params = match?.params as Record<string, string>;
                 }
-                mw(req, res, next);
+                await mw(req, res, next);
             });
         }
     }
 
-    function parse(args: Array<Mw>, name: string, pattern = '') {
+    function parse(args: Mw[], name: string, pattern = '') {
         const subpattern = typeof args[0] === 'string' ? args.shift() : '';
         return {
             method: name === 'use' ? '' : name.toUpperCase(),
@@ -58,14 +55,14 @@ export function create(): App {
 }
 
 export function run(mws: Mw[], req: Req, res: Res) {
-    mws.push((req, res) => res.end(res.body || ''));
-    const next = (err?: any & Error): void =>
-        err ? error(err, req, res, next)
+    const next = (err?: any & Error): void => {
+        err ? onError(err, req, res, next)
             : mws.shift()?.(req, res, next)
+    }
     next();
 }
 
-function error(err: any & Error, req: Req, res: Res, next: Next) {
+function onError(err: any & Error, req: Req, res: Res, next: Next) {
     const code = (res.statusCode = err.code || err.status || err.statusCode || 500);
     if (typeof err === 'string' || Buffer.isBuffer(err)) res.end(err);
     else res.end(err.message || http.STATUS_CODES[code]);

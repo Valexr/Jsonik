@@ -8,13 +8,12 @@ export function start(options: Options) {
 
     const server = http.createServer((req, res) => {
         const mws: Mw[] = [
-            url(), json(), send(), error(), session(),
+            url, json, send, error, session,
             ...app.list(),
-            ...(options.serve ? [file(options), statik()] : []),
-            ...(options.compress ? [compress()] : []),
+            ...(options.serve ? [file(options), statik] : []),
             ...(options.cache ? [cache(options)] : []),
+            ...(options.compress ? [compress] : []),
         ];
-
         run(mws, req as Req, res as Res);
     })
 

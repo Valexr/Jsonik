@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store'
 import { cacheable } from './cacheable.js';
 import { del, get, patch, post, put } from "$client/api/methods.js";
+import { uniq } from '$client/utils/index.js';
 
 export type Files = { files: string[], folders: string[], folder: string }
 
@@ -14,7 +15,7 @@ function createFiles() {
         },
         async add(folder = '', file?: File, name?: string) {
             file = await post(`/files/${folder}/${name || file?.name}`, file);
-            update(state => state?.concat(String(file)))
+            update(state => uniq(state.concat(String(file))))
         },
         async move(from = '', file: string, to = '') {
             file = await put(`/files/${from}/${to}?file=${encodeURI(file)}`);

@@ -1,6 +1,7 @@
 import type { InputType } from 'zlib';
 import type { OutgoingHttpHeaders, ServerResponse, IncomingMessage } from 'http';
-import { Base } from '$types/server.js';
+import type { ParsedUrlQuery } from 'node:querystring';
+import type { Base } from '$types/server.js';
 
 export type Options = {
     port: number
@@ -20,7 +21,7 @@ export type Req = {
     hostname: string
     port: string
     search: string
-    query: { [key: string]: string }
+    query: ParsedUrlQuery
     params: { [key: string]: string; }
     body: any
     file: string
@@ -37,7 +38,7 @@ export type Res = {
 
 export type Next = (err?: any & Error) => void
 
-export type Mw = ((req: Req, res: Res, next: Next) => void)
+export type Mw = ((req: Req, res: Res, next: Next) => void | Promise<void>)
 
 export type App = {
     list: () => Mw[];

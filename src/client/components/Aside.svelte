@@ -55,7 +55,12 @@
         <Form method="POST" bind:valid on:submit on:reset on:input>
             <header>
                 <slot name="header" />
-                <button type="reset" id="close" class="action" on:click={close}>
+                <button
+                    type="reset"
+                    id="close"
+                    class="action link"
+                    on:click={close}
+                >
                     <Icon />
                 </button>
             </header>

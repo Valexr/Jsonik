@@ -5,7 +5,7 @@ import type { Next, Req, Res } from "$server/http/types.js";
 
 export async function connect(req: Req, res: Res, next: Next) {
     try {
-        console.log(req.path)
+        // console.log(req.path)
         const folder = req.path.split('/')[3]
         // console.log((await readdir('files', { withFileTypes: true })).map(de => de.isDirectory() ? de.name : ''))
         const data = await readdir(folder)
@@ -16,8 +16,10 @@ export async function connect(req: Req, res: Res, next: Next) {
         Object.assign(req.session, { files })
 
         if (req.method === 'GET' && !files.includes(file)) {
-            const err = new HttpNotFound('Collection not found')
-            next(err)
+            // const err = new HttpNotFound('Collection not found')
+            // next(err)
+            res.error(404, 'Collection not found')
+            // throw Error('Collection not found')
         } else {
             req.base = await base(`${folder}/${file}.json`, table);
             next();

@@ -1,4 +1,5 @@
 import type { App } from '$server/http/types.js';
+import { last } from '$server/middlewares/log.js';
 
 export function schemas(app: App) {
 
@@ -17,6 +18,7 @@ export function schemas(app: App) {
             next();
         }
     });
+    app.use(last)
 
     // app.put(async (req, res, next) => { });
     // app.patch(async (req, res, next) => { });

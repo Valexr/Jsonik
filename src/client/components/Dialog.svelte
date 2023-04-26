@@ -81,7 +81,7 @@
         <header class="cols" class:justify-end={!$$slots.header}>
             <slot name="header" />
             {#if !img}
-                <button id="close" class="action" type="reset">
+                <button type="reset" id="close" class="action link">
                     <Icon />
                 </button>
             {/if}

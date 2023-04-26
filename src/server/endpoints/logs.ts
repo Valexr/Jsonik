@@ -12,7 +12,7 @@ export function logs(app: App) {
             if (Object.values(req.query).some(v => v)) {
                 const { q, page, limit } = req.query
                 const items = req.query.q
-                    ? req.base?.search(q)
+                    ? req.base?.search(String(q))
                     : req.base?.match(req.query);
                 const index = Number(page) - 1
                 const start = index ? index * Number(limit) : index

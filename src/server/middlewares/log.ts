@@ -33,5 +33,11 @@ export async function log(req: Req, res: Res, next: Next) {
 
     Object.assign(req.session, { statusCode })
     await LOGS?.prepend({ id, method, status: statusCode, url, ip: remoteAddress, referer })
+    // console.log('LOG', req.method)
     next();
+}
+
+export function last(req: Req, res: Res, next: Next) {
+    console.log('LAST', req.method)
+    next()
 }

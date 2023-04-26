@@ -9,7 +9,8 @@ dialog {
     min-inline-size: 20em;
     animation-name: from-top;
     animation-duration: 450ms;
-    animation-fill-mode: both;
+    /* animation-fill-mode: backwards; */
+    /* animation-direction: reverse; */
     will-change: transform;
     display: none;
     overflow: hidden;
@@ -72,6 +73,8 @@ dialog[loading] {
 }
 
 dialog[open] {
+    /* animation-fill-mode: forwards; */
+    /* animation-direction: normal; */
     pointer-events: auto;
     display: flex;
 }

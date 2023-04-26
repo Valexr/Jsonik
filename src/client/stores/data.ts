@@ -45,7 +45,7 @@ function createRecords() {
             }
         },
         async set(file: string, record: Item) {
-            const records = await post(`/data/${file}/records`, JSON.stringify(record), {
+            const records = await post<Item[]>(`/data/${file}/records`, JSON.stringify(record), {
                 headers: { 'Content-Type': 'application/json' }
             })
             set(records)

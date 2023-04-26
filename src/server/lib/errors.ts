@@ -41,7 +41,7 @@ class HttpNotFound extends HttpError {
     }
 }
 
-class HttpInternalServerError extends HttpError {
+class HttpInternalServer extends HttpError {
     constructor(message = 'Internal server error', data: any) {
         super({
             message,
@@ -56,6 +56,6 @@ export {
     HttpError,
     HttpBadRequest,
     HttpNotFound,
-    HttpInternalServerError,
+    HttpInternalServer,
     HttpResponseCodes
 }
