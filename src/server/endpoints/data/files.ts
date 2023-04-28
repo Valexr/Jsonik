@@ -1,11 +1,14 @@
-import { readdir, rename, rm, readFile } from "fs/promises";
+import { readdir, rename, rm } from "fs/promises";
 import { base } from "$server/lib/db";
-// import { checkdir } from "$server/lib/utils";
+import { checkdir } from "$server/lib/utils";
 import { App } from "$server/http/types";
 
 export function files(app: App) {
 
     app.get(async (req, res, next) => {
+
+        await checkdir('data')
+
         try {
             const data = await readdir('data')
             const files = data.map(f => f.replace(/\..+$/, '')).filter(Boolean)
