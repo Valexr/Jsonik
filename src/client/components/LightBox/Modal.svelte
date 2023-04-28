@@ -38,7 +38,7 @@
 >
     <figure>
         <img
-            src="/api/v1/files/{collection}/{filename.join('-')}"
+            src="/api/files/{collection}/{filename.join('-')}"
             alt={filename.join("-")}
         />
     </figure>

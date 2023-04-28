@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import { redirect } from 'svelte-pathfinder';
 import type { Session } from '$types/client.js';
 
-const base = '/api/v1/auth';
+const base = '/api/auth';
 
 export const session = writable<Partial<Session>>({});
 

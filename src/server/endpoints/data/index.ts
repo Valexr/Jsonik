@@ -1,9 +1,9 @@
-import { files } from './files.js';
-import { schemas } from './schemas.js';
-import { records } from './records.js';
-import { connect } from '$server/middlewares/connect.js';
+import { files } from './files';
+import { schemas } from './schemas';
+import { records } from './records';
+import { connect } from '$server/middlewares/connect';
 
-import type { App } from '$server/http/types.js';
+import type { App } from '$server/http/types';
 
 export function data(app: App) {
     app.use('/:file?/:table', connect);

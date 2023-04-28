@@ -18,10 +18,10 @@
 
     function createURL(file: Image) {
         const { collection, name } = file;
-        return `/api/v1/files/${collection}/${name}`;
+        return `/api/files/${collection}/${name}`;
         // return file instanceof File
         //     ? URL.createObjectURL(file)
-        //     : `/api/v1/files/${collection}/${name}`;
+        //     : `/api/files/${collection}/${name}`;
     }
 
     async function deleteFile() {

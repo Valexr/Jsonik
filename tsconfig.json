@@ -18,7 +18,7 @@
         "esModuleInterop": true,
         "isolatedModules": true,
         "resolveJsonModule": true,
-        "moduleResolution": "nodenext",
+        "moduleResolution": "Node",
         "verbatimModuleSyntax": false,
         // "preserveValueImports": true,
         // "importsNotUsedAsValues": "error",

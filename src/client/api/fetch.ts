@@ -1,7 +1,7 @@
 // import { get } from 'svelte/store';
 // import { session } from './auth';
 
-const base = '/api/v1';
+const base = '/api';
 // const access = get(session).access
 
 export default async function <T>(url: RequestInfo, { ...options }: RequestInit, body?: BodyInit): Promise<any & T> {
@@ -10,7 +10,7 @@ export default async function <T>(url: RequestInfo, { ...options }: RequestInit,
         const res = await fetch(base + url, {
             ...options,
             headers: {
-                Authorization: 'Baerer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlF1aW5jeSBMYXJzb24iLCJpYXQiOjE1MTYyMzkwMjJ9.OGVhYzBjZDM2M2FkOTc4ZGY4MjNmZWM4MWZhNWE5MjI4ZWNkN2M1MTZmY2JmNTFjODZkNzg1ZDM0N2U0NmMwMA==',
+                Authorization: 'Baerer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjJ9.OWQ0MjQ0NWY5MWUxMmVjYzRjYTg0OGVlNTQ1ZjUwY2U1YTYzN2E5YmFkOWQ5ZjRiN2ZhZDY0MGM1ZGJlMzI5Ng==',
             },
             credentials: 'include',
             body: body,

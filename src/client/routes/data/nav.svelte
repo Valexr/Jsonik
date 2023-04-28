@@ -1,10 +1,10 @@
 <script lang="ts" context="module">
-    import { collections } from "$client/stores/data.js";
+    import { path, paramable } from "svelte-pathfinder";
+    import { collections } from "$client/stores/data";
+    import { scrollIntoView } from "$client/utils/actions";
     import Await from "$client/components/Await.svelte";
     import Icon from "$client/components/Icon.svelte";
     import File from "./nav/file.svelte";
-    import { path, paramable } from "svelte-pathfinder";
-    import { scrollIntoView } from "$client/utils/actions.js";
 </script>
 
 <script lang="ts">

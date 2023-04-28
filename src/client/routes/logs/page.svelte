@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
     import { fragment, query } from "svelte-pathfinder";
-    import { get } from "$client/api/methods.js";
-    import { logs } from "$client/stores/logs.js";
-    import { date } from "$client/utils/time.js";
+    import { get } from "$client/api/methods";
+    import { logs } from "$client/stores/logs";
+    import { date } from "$client/utils/time";
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Table from "$client/components/Table.svelte";
@@ -23,6 +23,7 @@
         {#if $logs.length}
             {@const thead = Object.keys($logs?.at(-1) || {})
                 .slice(1)
+                .filter((n) => n !== "message")
                 .map((k) => ({ name: k }))}
             {@const tbody = $logs}
             <Table data={{ thead, tbody }} current={getRecord} />

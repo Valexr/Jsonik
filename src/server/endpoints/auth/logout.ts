@@ -1,6 +1,6 @@
-import { base } from '$server/lib/db.js';
-import { atob } from '$server/lib/utils.js';
-import type { Next, Req, Res } from '$server/http/types.js';
+import { base } from '$server/lib/db';
+import { atob } from '$server/lib/crypto';
+import type { Next, Req, Res } from '$server/http/types';
 
 export async function logout(req: Req, res: Res, next: Next) {
     if (req.cookie)

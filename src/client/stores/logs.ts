@@ -1,8 +1,5 @@
-import { derived, writable } from 'svelte/store'
-import { del, get, post, put, patch } from "$client/api/methods.js";
-import { uniq } from '$client/utils/index.js';
-import { getable } from './getable.js';
-import { cacheable } from './cacheable.js';
+import { del, get, post, put, patch } from "$client/api/methods";
+import { getable } from './getable';
 import type { Params } from 'svelte-pathfinder';
 
 export type Item = Record<string, any>

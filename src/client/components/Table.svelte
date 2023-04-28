@@ -141,7 +141,6 @@
                                     {@html tr[td.name]}
                                 {:else  -->
                                 {#if td.type === "file"}
-                                    <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
                                     <ul
                                         role="listbox"
                                         class="cols col-fit align-center justify-start nowrap"
@@ -181,15 +180,3 @@
         </slot>
     </tfoot>
 </table>
-
-<style>
-    /* a {
-        width: 3rem;
-        height: 3rem;
-        border-radius: var(--border-radius-sm);
-        display: inline-block;
-        color: transparent;
-        background-size: cover;
-        overflow: hidden;
-    } */
-</style>

@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import { fragment, paramable, path, redirect } from "svelte-pathfinder";
-    import { files } from "$client/stores/files.js";
-    import { collections, records } from "$client/stores/data.js";
+    import { files } from "$client/stores/files";
+    import { collections, records } from "$client/stores/data";
     import Dialog from "$client/components/Dialog.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Input from "./input.svelte";
@@ -41,7 +41,7 @@
 <a
     draggable="false"
     href="#file-{encodeURI(file)}"
-    style="background-image: url('/api/v1/files/{$route.folder || ''}/{file}')"
+    style="background-image: url('/api/files/{$route.folder || ''}/{file}')"
 />
 <label>
     <slot>
@@ -58,10 +58,7 @@
 >
     {#if [".svg", ".jpg", ".jpeg", ".png", ".gif", ".dng"].some( (ext) => file.includes(ext) )}
         <figure>
-            <img
-                src={`/api/v1/files/${$route.folder || ""}/${file}`}
-                alt={file}
-            />
+            <img src={`/api/files/${$route.folder || ""}/${file}`} alt={file} />
         </figure>
     {/if}
     <nav slot="footer" class="cols col-fit nowrap">

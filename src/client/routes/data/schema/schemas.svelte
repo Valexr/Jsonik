@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import Icon from "$client/components/Icon.svelte";
-    import { schemas } from "$client/stores/data.js";
-    import { SCHEMAS, type Schema } from "$client/stores/schemas.js";
+    import { schemas } from "$client/stores/data";
+    import { SCHEMAS, type Schema } from "$client/stores/schemas";
 </script>
 
 <script lang="ts">

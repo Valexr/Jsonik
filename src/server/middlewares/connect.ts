@@ -1,12 +1,12 @@
 import { readdir } from "node:fs/promises";
-import { base } from "$server/lib/db.js";
-import { HttpNotFound } from '$server/lib/errors.js';
-import type { Next, Req, Res } from "$server/http/types.js";
+import { base } from "$server/lib/db";
+import { HttpNotFound } from '$server/lib/errors';
+import type { Next, Req, Res } from "$server/http/types";
 
 export async function connect(req: Req, res: Res, next: Next) {
     try {
-        // console.log(req.path)
-        const folder = req.path.split('/')[3]
+        console.log(req.path, req.params)
+        const [_, api, folder] = req.path.split('/')
         // console.log((await readdir('files', { withFileTypes: true })).map(de => de.isDirectory() ? de.name : ''))
         const data = await readdir(folder)
         // const jsons = data.filter(f => f.includes('.json'))

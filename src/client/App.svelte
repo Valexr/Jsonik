@@ -4,7 +4,7 @@
     import Footer from "$client/views/Footer.svelte";
     import Router from "$client/components/Router.svelte";
     import Toaster from "$client/components/Toaster/Toaster.svelte";
-    import type { Name, Repository } from "$types/client.js";
+    import type { Name, Repository } from "$types/client";
 </script>
 
 <script lang="ts">

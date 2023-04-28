@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { schemas, schemaInvalID } from "$client/stores/data.js";
+    import { schemas, schemaInvalID } from "$client/stores/data";
     import Await from "$client/components/Await.svelte";
     import Details from "$client/components/Details.svelte";
     import Icon from "$client/components/Icon.svelte";

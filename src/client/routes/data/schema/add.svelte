@@ -1,10 +1,6 @@
 <script lang="ts" context="module">
     import { goto } from "svelte-pathfinder";
-    import {
-        collections,
-        schemas,
-        schemaInvalID,
-    } from "$client/stores/data.js";
+    import { collections, schemas, schemaInvalID } from "$client/stores/data";
     import Form from "$client/components/Form.svelte";
     import Fields from "./fields.svelte";
 </script>

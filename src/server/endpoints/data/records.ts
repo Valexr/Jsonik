@@ -1,10 +1,10 @@
-import type { App } from '$server/http/types.js';
+import type { App } from '$server/http/types';
 
 export function records(app: App) {
 
     app.get((req, res, next) => {
         if (Object.keys(req.query).length) {
-            const records = req.query.q ? req.base?.search(req.query.q) : req.base?.match(req.query)
+            const records = req.query.q ? req.base?.search(String(req.query.q)) : req.base?.match(req.query)
             // req.query.id ? req.base?.id(+req.query.id) : req.base?.match(req.query);
             res.send(records);
         } else {

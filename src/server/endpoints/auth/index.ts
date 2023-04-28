@@ -1,10 +1,10 @@
 import os from 'os';
-import { cookie } from '$server/endpoints/auth/cookie.js';
-import { token } from '$server/endpoints/auth/token.js';
-import { login } from '$server/endpoints/auth/login.js';
-import { logout } from '$server/endpoints/auth/logout.js';
-import { refresh } from '$server/endpoints/auth/refresh.js';
-import type { App } from '$server/http/types.js';
+import { cookie } from '$server/endpoints/auth/cookie';
+import { token } from '$server/endpoints/auth/token';
+import { login } from '$server/endpoints/auth/login';
+import { logout } from '$server/endpoints/auth/logout';
+import { refresh } from '$server/endpoints/auth/refresh';
+import type { App } from '$server/http/types';
 
 console.log('mac: ', os.networkInterfaces())
 

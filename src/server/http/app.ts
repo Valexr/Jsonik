@@ -1,6 +1,6 @@
 import http from 'node:http';
-import { pattern } from './pattern.js';
-import type { Mw, App, Req, Res, Next } from './types.js';
+import { pattern } from './pattern';
+import type { Mw, App, Req, Res, Next } from './types';
 
 type Parsed = {
     method: http.IncomingMessage['method']

@@ -1,8 +1,8 @@
 import { readdir, rename, rm } from 'fs/promises';
-import DB from '$server/lib/db.js';
-import type { App, Next, Req, Res } from '$server/http/types.js';
-import type { Base } from '$types/server.js';
-import { checkdir } from '$server/lib/utils.js';
+import DB from '$server/lib/db';
+import type { App, Next, Req, Res } from '$server/http/types';
+import type { Base } from '$types/server';
+import { checkdir } from '$server/lib/utils';
 
 let base: Base | undefined
 

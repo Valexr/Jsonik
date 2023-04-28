@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { query } from "svelte-pathfinder";
-    import { logs } from "$client/stores/logs.js";
+    import { logs } from "$client/stores/logs";
     import Await from "$client/components/Await.svelte";
     import Paginator from "$client/components/Paginator.svelte";
 </script>

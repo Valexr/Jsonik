@@ -1,7 +1,7 @@
 import { createVerify } from 'crypto'
-import { HMACSHA256, btoa, atob } from '$server/lib/crypto.js'
+import { HMACSHA256, btoa, atob } from '$server/lib/crypto'
 
-function sign(claims: Record<string, string | number>, secret?: string, options?: Record<string, string | undefined>) {
+function sign(claims: Record<string, string | number | boolean>, secret?: string, options?: Record<string, string | undefined>) {
     const header = {
         "alg": "HS256",
         "typ": "JWT"

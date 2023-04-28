@@ -1,5 +1,5 @@
-import { connect } from '$server/middlewares/connect.js';
-import type { App } from '$server/http/types.js';
+import { connect } from '$server/middlewares/connect';
+import type { App } from '$server/http/types';
 
 export function logs(app: App) {
     const pattern = '/:file?/:table?'

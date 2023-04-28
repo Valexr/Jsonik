@@ -1,4 +1,4 @@
-import type { Next, Req, Res } from '../http/types.js';
+import type { Next, Req, Res } from '$server/http/types';
 
 type Listener = (event: string) => boolean
 

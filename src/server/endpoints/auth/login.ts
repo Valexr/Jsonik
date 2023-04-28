@@ -1,7 +1,6 @@
-import { base } from '$server/lib/db.js';
-import { btoa } from '$server/lib/crypto.js';
-import { matchPassword, UUID } from '$server/lib/crypto.js';
-import type { Next, Req, Res } from '$server/http/types.js';
+import { base } from '$server/lib/db';
+import { matchPassword, UUID, btoa } from '$server/lib/crypto';
+import type { Next, Req, Res } from '$server/http/types';
 
 export async function login(req: Req, res: Res, next: Next) {
     try {

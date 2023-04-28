@@ -1,4 +1,4 @@
-import type { App } from '$server/http/types.js';
+import type { App } from '$server/http/types';
 
 export function schemas(app: App) {
 

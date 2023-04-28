@@ -1,6 +1,9 @@
 <script lang="ts" context="module">
     import { fragment, query } from "svelte-pathfinder";
-    import { schemas, records, type Item } from "$client/stores/data.js";
+    import { schemas, records, type Item } from "$client/stores/data";
+    import { files } from "$client/stores/files";
+    import { date } from "$client/utils/time";
+
     import Await from "$client/components/Await.svelte";
     import Aside from "$client/components/Aside.svelte";
     import Icon from "$client/components/Icon.svelte";
@@ -13,9 +16,7 @@
     import Json from "./record/json.svelte";
     import Markdown from "./record/markdown.svelte";
 
-    import { date } from "$client/utils/time.js";
-    import { files } from "$client/stores/files.js";
-    import { Schema } from "$client/stores/schemas.js";
+    import type { Schema } from "$client/stores/schemas";
 </script>
 
 <script lang="ts">

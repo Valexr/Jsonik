@@ -1,8 +1,8 @@
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
-import { omatch, osome, group, checkdir } from '$server/lib/utils.js';
-import type { Base } from '$types/server.js';
-import type { Item, Key } from '$client/stores/data.js';
+import { omatch, osome, group, checkdir } from '$server/lib/utils';
+import type { Base } from '$types/server';
+import type { Item, Key } from '$client/stores/data';
 
 const dbs: { [file: string]: Low<any> } = {};
 

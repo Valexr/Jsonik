@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
     // import { media } from "@slidy/media";
+    import { pattern, path } from "svelte-pathfinder";
+    import { routes, page } from "$client/routes/index";
     import Icon from "$client/components/Icon.svelte";
     import Details from "$client/components/Details.svelte";
-    import { pattern, path } from "svelte-pathfinder";
-    import { routes, page } from "$client/routes/index.js";
 </script>
 
 <script lang="ts">

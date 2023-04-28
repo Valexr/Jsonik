@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import { fragment, path, redirect } from "svelte-pathfinder";
-    import { folders, files } from "$client/stores/files.js";
-    import { collections, records } from "$client/stores/data.js";
+    import { folders, files } from "$client/stores/files";
+    import { collections, records } from "$client/stores/data";
     import Icon from "$client/components/Icon.svelte";
     import Input from "./input.svelte";
 </script>

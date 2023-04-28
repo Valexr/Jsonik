@@ -1,7 +1,7 @@
 import { readdir, rename, rm, readFile } from "fs/promises";
-import { base } from "$server/lib/db.js";
-import { checkdir } from "$server/lib/utils.js";
-import { App } from "$server/http/types.js";
+import { base } from "$server/lib/db";
+// import { checkdir } from "$server/lib/utils";
+import { App } from "$server/http/types";
 
 export function files(app: App) {
 

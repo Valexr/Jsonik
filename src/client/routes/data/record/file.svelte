@@ -1,10 +1,10 @@
 <script lang="ts" context="module">
-    import { files } from "$client/stores/files.js";
-    import { toast } from "$client/components/Toaster/toast.js";
+    import { files } from "$client/stores/files";
+    import { toast } from "$client/components/Toaster/toast";
     import Icon from "$client/components/Icon.svelte";
     import Await from "$client/components/Await.svelte";
     import LightBox from "$client/components/LightBox.svelte";
-    import type { InputEvent } from "$types/client.js";
+    import type { InputEvent } from "$types/client";
 
     export type FileOpts = {
         maxFiles: number;

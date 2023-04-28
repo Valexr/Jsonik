@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
     import { fragment, query, paramable } from "svelte-pathfinder";
-    import { schemas, records, type Item } from "$client/stores/data.js";
-    import { files } from "$client/stores/files.js";
-    import { s } from "$client/utils/index.js";
+    import { schemas, records, type Item } from "$client/stores/data";
+    import { files } from "$client/stores/files";
+    import { s } from "$client/utils/index";
 
     import Await from "$client/components/Await.svelte";
     import Table from "$client/components/Table.svelte";

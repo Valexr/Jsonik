@@ -4,7 +4,7 @@ import zlib from 'zlib';
 import mime from './mime.json';
 import qs from 'node:querystring';
 import { createReadStream } from 'node:fs';
-import type { Next, Options, Req, Res } from "./types.js";
+import type { Next, Options, Req, Res } from "./types";
 import type { OutgoingHttpHeaders } from 'http';
 
 export function url(req: Req, res: Res, next: Next) {
@@ -91,7 +91,8 @@ export async function cookie(req: Req, res: Res, next: Next) {
 
 export async function token(req: Req, res: Res, next: Next) {
     if (req.headers.authorization) {
-        req.token = req.headers.authorization?.split(' ')[1]
+        const [baerer, token] = req.headers.authorization.split(' ')
+        req.token = baerer ? token : undefined
     }
     res.token = (token: string) => {
         res.setHeader('Authorization', `Baerer ${token}`);

@@ -1,12 +1,12 @@
 <script lang="ts" context="module">
     import { path, fragment } from "svelte-pathfinder";
-    import { files } from "$client/stores/files.js";
-    import { s } from "$client/utils/index.js";
+    import { files } from "$client/stores/files";
+    import { s } from "$client/utils/index";
     import Form from "$client/components/Form.svelte";
     import Dialog from "$client/components/Dialog.svelte";
     import Table from "$client/components/Table.svelte";
     import Icon from "$client/components/Icon.svelte";
-    import type { InputEvent } from "$types/client.js";
+    import type { InputEvent } from "$types/client";
 </script>
 
 <script lang="ts">

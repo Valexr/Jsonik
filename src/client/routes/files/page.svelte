@@ -6,15 +6,15 @@
         fragment,
         paramable,
     } from "svelte-pathfinder";
-    import { files } from "$client/stores/files.js";
-    import { selection } from "$client/utils/selection.js";
-    import { s } from "$client/utils/index.js";
+    import { files } from "$client/stores/files";
+    import { collections, records } from "$client/stores/data";
+    import { selection } from "$client/utils/selection";
+    import { s } from "$client/utils/index";
     import Await from "$client/components/Await.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Toast from "$client/components/Toaster/Toast.svelte";
     import File from "./file.svelte";
     import Upload from "./upload.svelte";
-    import { collections, records } from "$client/stores/data.js";
 </script>
 
 <script lang="ts">

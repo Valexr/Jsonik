@@ -1,14 +1,18 @@
-import { jwt } from '$server/lib/jwt.js'
-import type { Next, Req, Res } from '$server/http/types.js';
+import { jwt } from '$server/lib/jwt'
+import type { Next, Req, Res } from '$server/http/types';
 
 export function token(req: Req, res: Res, next: Next) {
     const token = jwt.sign({
-        sub: "1234567890",
-        name: "Quincy Larson",
-        iat: 1516239022
+        iss: 'jsonik', // (issuer),
+        sub: 1234567890, // (subject)
+        aud: 'domain', // (audience)
+        name: "John Doe",
+        admin: true,
+        iat: 1516239022,
+        exp: 12312312312, // (expiration time)
     }, 'secret', {})
-    const verified = jwt.verify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlF1aW5jeSBMYXJzb24iLCJpYXQiOjE1MTYyMzkwMjJ9.OGVhYzBjZDM2M2FkOTc4ZGY4MjNmZWM4MWZhNWE5MjI4ZWNkN2M1MTZmY2JmNTFjODZkNzg1ZDM0N2U0NmMwMA==', 'secret')
-    console.log(token, verified)
+    const verified = jwt.verify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjJ9.OWQ0MjQ0NWY5MWUxMmVjYzRjYTg0OGVlNTQ1ZjUwY2U1YTYzN2E5YmFkOWQ5ZjRiN2ZhZDY0MGM1ZGJlMzI5Ng==', 'secret')
+    console.log('T:', token, verified)
     if (req.token) {
         try {
             const token = req.token;

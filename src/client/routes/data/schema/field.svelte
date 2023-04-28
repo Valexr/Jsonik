@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-    import { schemas, schemaNames } from "$client/stores/data.js";
-    import { SCHEMAS, type Schema } from "$client/stores/schemas.js";
+    import { schemas, schemaNames } from "$client/stores/data";
+    import { SCHEMAS, type Schema } from "$client/stores/schemas";
 
     import Form from "$client/components/Form.svelte";
     import Icon from "$client/components/Icon.svelte";

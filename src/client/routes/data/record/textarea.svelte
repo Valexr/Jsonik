@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { expand } from "$client/utils/actions.js";
+    import { expand } from "$client/utils/actions";
     import Icon from "$client/components/Icon.svelte";
 </script>
 

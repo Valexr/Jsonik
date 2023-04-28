@@ -1,11 +1,11 @@
 <script lang="ts" context="module">
     import { fragment, path, goto } from "svelte-pathfinder";
-    import { folders, files } from "$client/stores/files.js";
+    import { folders, files } from "$client/stores/files";
+    import { scrollIntoView } from "$client/utils/actions";
     import Await from "$client/components/Await.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Input from "./input.svelte";
     import Folder from "./folder.svelte";
-    import { scrollIntoView } from "$client/utils/actions.js";
 </script>
 
 <script lang="ts">

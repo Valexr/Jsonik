@@ -1,9 +1,9 @@
 import { derived, writable } from 'svelte/store'
-import { del, get, post, put, patch } from "$client/api/methods.js";
-import { uniq } from '$client/utils/index.js';
-import { getable } from './getable.js';
-import { cacheable } from './cacheable.js';
-import type { Schema } from './schemas.js';
+import { del, get, post, put, patch } from "$client/api/methods";
+import { uniq } from '$client/utils';
+import { getable } from './getable';
+import { cacheable } from './cacheable';
+import type { Schema } from './schemas';
 
 export type Item = Record<string, any>
 export type Key = Record<string, string>

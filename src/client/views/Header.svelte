@@ -3,7 +3,7 @@
     import Logo from "$client/components/Logo.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Menu from "$client/views/Menu.svelte";
-    import type { Repository } from "$types/client.js";
+    import type { Repository } from "$types/client";
 </script>
 
 <script lang="ts">

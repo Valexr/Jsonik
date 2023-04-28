@@ -6,7 +6,7 @@
         records,
         schemasKeys,
         schemaInvalID,
-    } from "$client/stores/data.js";
+    } from "$client/stores/data";
     import Dialog from "$client/components/Dialog.svelte";
     import Fields from "./fields.svelte";
 </script>

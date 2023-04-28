@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { path } from "svelte-pathfinder";
-    import { schemas } from "$client/stores/data.js";
+    import { schemas } from "$client/stores/data";
     import Icon from "$client/components/Icon.svelte";
     import Search from "$client/components/Search.svelte";
 </script>
