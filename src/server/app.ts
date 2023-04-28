@@ -5,7 +5,7 @@ import { logs } from '$server/endpoints/logs.js';
 import { log } from '$server/middlewares/log.js';
 // import { auth } from '$server/endpoints/auth/index.js';
 // import { cookie } from '$server/endpoints/auth/cookie.js';
-// import { token } from '$server/endpoints/auth/token.js';
+import { token } from '$server/endpoints/auth/token.js';
 import type { App, Options } from '$server/http/types.js';
 import { HttpBadRequest, HttpNotFound, HttpInternalServer, HttpResponseCodes } from './lib/errors.js';
 

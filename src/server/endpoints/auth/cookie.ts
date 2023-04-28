@@ -1,5 +1,5 @@
 import { base } from '$server/lib/db.js';
-import { atob } from '$server/lib/utils.js';
+import { atob } from '$server/lib/crypto.js';
 import type { Next, Req, Res } from '$server/http/types.js';
 
 export async function cookie(req: Req, res: Res, next: Next) {

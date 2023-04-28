@@ -1,5 +1,5 @@
 import { base } from '$server/lib/db.js';
-import { btoa } from '$server/lib/utils.js';
+import { btoa } from '$server/lib/crypto.js';
 import { matchPassword, UUID } from '$server/lib/crypto.js';
 import type { Next, Req, Res } from '$server/http/types.js';
 

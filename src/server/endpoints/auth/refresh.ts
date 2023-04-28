@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import { jwt } from '$server/lib/jwt.js';
 import { base } from '$server/lib/db.js';
 import { hashPassword } from '$server/lib/crypto.js';
 import type { Next, Req, Res } from '$server/http/types.js';

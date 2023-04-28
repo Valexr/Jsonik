@@ -62,6 +62,10 @@ nav.cols {
     padding: 0;
 }
 
+nav.cols :is([role=button]):is([aria-disabled="true"]):not(.box) {
+    padding: 0;
+}
+
 menu {
     --cols-gap: var(--gap-sm) !important;
     padding: 0;

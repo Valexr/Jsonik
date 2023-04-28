@@ -127,13 +127,6 @@ export function group(arr: Record<string, any>[], keys: string[]) {
 //     return filters;
 // }
 
-export function btoa(text: string) {
-    return Buffer.from(text, 'binary').toString('base64');
-}
-
-export function atob(base64: string) {
-    return Buffer.from(base64, 'base64').toString('binary');
-}
 
 export async function checkdir(path: string) {
     try {

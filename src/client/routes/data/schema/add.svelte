@@ -38,7 +38,7 @@
         pattern="(?!^{$collections.join('$|^')}$)[\w|\-]+"
     />
     <nav class="cols">
-        <button type="reset" class="link">Cancel</button>
+        <!-- <button type="reset" class="link">Cancel</button> -->
         <button
             type="submit"
             class="success"

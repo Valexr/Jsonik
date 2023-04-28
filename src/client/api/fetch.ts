@@ -9,6 +9,9 @@ export default async function <T>(url: RequestInfo, { ...options }: RequestInit,
     try {
         const res = await fetch(base + url, {
             ...options,
+            headers: {
+                Authorization: 'Baerer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlF1aW5jeSBMYXJzb24iLCJpYXQiOjE1MTYyMzkwMjJ9.OGVhYzBjZDM2M2FkOTc4ZGY4MjNmZWM4MWZhNWE5MjI4ZWNkN2M1MTZmY2JmNTFjODZkNzg1ZDM0N2U0NmMwMA==',
+            },
             credentials: 'include',
             body: body,
         });

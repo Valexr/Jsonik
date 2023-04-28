@@ -92,10 +92,6 @@ summary {
     cursor: auto;
 }
 
-:is(button, [role=button], [type="file"]::file-selector-button):is(:disabled, [aria-disabled="true"], [aria-busy="true"]):not(.box) {
-    padding: 0;
-}
-
 [type="file"]::file-selector-button {
     margin-right: var(--gap);
     font-size: small;

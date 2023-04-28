@@ -96,6 +96,7 @@ export async function token(req: Req, res: Res, next: Next) {
     res.token = (token: string) => {
         res.setHeader('Authorization', `Baerer ${token}`);
     }
+    next()
 }
 
 export function session(req: Req, res: Res, next: Next) {
