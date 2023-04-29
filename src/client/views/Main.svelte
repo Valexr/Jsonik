@@ -2,6 +2,7 @@
     import { paramable } from "svelte-pathfinder";
     import DataNav from "$client/routes/data/nav.svelte";
     import FilesNav from "$client/routes/files/nav.svelte";
+    import UsersNav from "$client/routes/users/nav.svelte";
     import LogsNav from "$client/routes/logs/nav.svelte";
 </script>
 
@@ -14,6 +15,8 @@
         <DataNav />
     {:else if $route.path === "files"}
         <FilesNav />
+    {:else if $route.path === "users"}
+        <UsersNav />
     {:else if $route.path === "logs"}
         <LogsNav />
     {/if}

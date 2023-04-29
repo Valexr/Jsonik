@@ -5,7 +5,6 @@ import mime from './mime.json';
 import qs from 'node:querystring';
 import { createReadStream } from 'node:fs';
 import type { Next, Options, Req, Res } from "./types";
-import type { OutgoingHttpHeaders } from 'http';
 
 export function url(req: Req, res: Res, next: Next) {
     const parts = new URL(req.url, `http://${req.headers.host}`);
@@ -134,7 +133,7 @@ export function file(options: Options) {
 
 export async function statik(req: Req, res: Res, next: Next) {
     if (req.method === 'GET') {
-        if (!req.exists) res.error(404, 'Not found');
+        if (!req.exists) return res.error(404, 'Not found');
 
         const ext = mime[req.extname as keyof typeof mime]
         if (ext) res.setHeader('Content-Type', ext);

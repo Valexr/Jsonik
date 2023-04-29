@@ -42,7 +42,7 @@ export type Res = {
 
 export type Next = (err?: any & Error) => void
 
-export type Mw = ((req: Req, res: Res, next: Next) => void | Promise<void>)
+export type Mw = ((req: Req, res: Res, next: Next) => Res | void | Promise<void>)
 
 export type App = {
     list: () => Mw[];

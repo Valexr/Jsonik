@@ -1,5 +1,4 @@
 {
-    "default": "application/octet-stream",
     ".htm": "text/html; charset=UTF-8",
     ".html": "text/html; charset=UTF-8",
     ".jpg": "image/jpeg",

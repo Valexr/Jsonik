@@ -6,7 +6,7 @@ import { logout } from '$server/endpoints/auth/logout';
 import { refresh } from '$server/endpoints/auth/refresh';
 import type { App } from '$server/http/types';
 
-console.log('mac: ', os.networkInterfaces())
+// console.log('mac: ', os.networkInterfaces())
 
 export function auth(app: App) {
     app.get('/cookie', cookie);

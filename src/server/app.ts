@@ -3,7 +3,7 @@ import { data } from '$server/endpoints/data/index';
 import { files } from '$server/endpoints/files';
 import { logs } from '$server/endpoints/logs';
 import { log } from '$server/middlewares/log';
-// import { auth } from '$server/endpoints/auth/index';
+import { auth } from '$server/endpoints/auth/index';
 // import { cookie } from '$server/endpoints/auth/cookie';
 import { token } from '$server/endpoints/auth/token';
 import type { App, Options } from '$server/http/types';
@@ -24,7 +24,7 @@ export const app = server(options)
 
 app.sub('/api', (app: App) => {
     app.use(log);
-    // app.sub('/auth', auth);
+    app.sub('/auth', auth);
     // app.use(cookie);
     // app.use(token);
     app.sub('/data', data);

@@ -28,7 +28,7 @@ export const routes: Page[] = [
         props: { title: 'Files', icon: 'hard-drive', menu: '/files' },
     },
     {
-        match: '/users',
+        match: '/users/:role?',
         component: () => import('./users/page.svelte'),
         props: { title: 'Users', icon: 'users', menu: '/users' },
     },

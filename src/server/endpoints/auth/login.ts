@@ -4,10 +4,11 @@ import type { Next, Req, Res } from '$server/http/types';
 
 export async function login(req: Req, res: Res, next: Next) {
     try {
-        const { username, password, remember } = req.body;
+        const { email, password, remember } = req.body;
 
         const USERS = await base('users/data.json');
-        const user = USERS?.find({ username });
+        const user = USERS?.find({ email });
+        console.log(user)
         if (!user) res.error(400, 'User not found');
 
         const pass = matchPassword(password, user.password);
@@ -20,7 +21,7 @@ export async function login(req: Req, res: Res, next: Next) {
             id: sessionid,
             userid: user.id,
             role: user.role,
-            username,
+            email,
             remember,
             ...(remember && { maxAge: 31536000 }),
             ip,
@@ -30,14 +31,14 @@ export async function login(req: Req, res: Res, next: Next) {
         };
         const client = {
             userid: session.userid,
-            username: session.username,
+            email: session.email,
             role: session.role,
             exp: session.exp,
             ...(remember && { maxAge: 31536000 }),
         };
 
         const SESSIONS = await base('sessions/data.json');
-        await SESSIONS?.replace({ username }, session);
+        await SESSIONS?.replace({ email }, session);
 
         res.cookie({
             sid: btoa(sessionid),

@@ -5,7 +5,7 @@ import type { Next, Req, Res } from "$server/http/types";
 
 export async function connect(req: Req, res: Res, next: Next) {
     try {
-        console.log(req.path, req.params)
+        // console.log(req.path, req.params)
         const [_, api, folder] = req.path.split('/')
         // console.log((await readdir('files', { withFileTypes: true })).map(de => de.isDirectory() ? de.name : ''))
         const data = await readdir(folder)

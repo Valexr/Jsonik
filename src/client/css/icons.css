@@ -224,3 +224,8 @@
     mask-image: url(../svg/feather/arrow-right.svg);
     -webkit-mask-image: url(../svg/feather/arrow-right.svg);
 }
+
+.icon-user-plus {
+    mask-image: url(../svg/feather/user-plus.svg);
+    -webkit-mask-image: url(../svg/feather/user-plus.svg);
+}
