@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import Icon from "./Icon.svelte";
     import { date } from "$client/utils/time.js";
-    import LightBox from "$client/components/LightBox.svelte";
+    import LBThumb from "$client/components/LightBox/Thumb.svelte";
     import type { InputEvent } from "$types/client.js";
     import type { Item } from "$client/stores/data.js";
     import type { Schema } from "$client/stores/schemas.js";
@@ -148,7 +148,9 @@
                                         {#if tr[td.name]?.length}
                                             {#each tr[td.name] as file (file)}
                                                 <li>
-                                                    <LightBox {file} />
+                                                    <LBThumb
+                                                        filename={file.name}
+                                                    />
                                                 </li>
                                             {/each}
                                         {/if}

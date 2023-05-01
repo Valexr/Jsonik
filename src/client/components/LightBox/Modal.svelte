@@ -1,27 +1,27 @@
 <script lang="ts" context="module">
-    import { fragment } from "svelte-pathfinder";
+    import { fragment, paramable } from "svelte-pathfinder";
     import { records } from "$client/stores/data.js";
     import { files } from "$client/stores/files.js";
     import Dialog from "$client/components/Dialog.svelte";
     import Icon from "$client/components/Icon.svelte";
 
-    type Image = File & {
-        collection: string;
-        name: string;
-        record: string;
-        field: string;
-    };
+    type Route = { folder: string; collection: string };
 </script>
 
 <script lang="ts">
-    // export let collection: string;
-    // export let filename: Image;
+    const route = paramable<Route>("/:folder/:collection");
 
-    $: [collection, ...filename] = $fragment.replace("#", "").split("-");
-    $: console.log(collection, filename);
+    $: [_, filename] = $fragment.split("#file-");
+
+    function createURL(filename: string) {
+        if (filename) {
+            return `/api/files/${$route.collection}/${filename}`;
+        }
+    }
+
     async function deleteFile() {
-        await records.deleteFiles(collection, [filename.join("-")]);
-        await files.delete(collection, [filename.join("-")]);
+        await records.deleteFiles($route.collection, [filename]);
+        await files.delete($route.collection, [filename]);
     }
 
     function close() {
@@ -32,22 +32,19 @@
 <Dialog
     on:close={close}
     on:submit={deleteFile}
-    open={$fragment === `#${collection}-${filename.join("-")}`}
+    open={$fragment === `#file-${filename}`}
     from="center"
     img
 >
     <figure>
-        <img
-            src="/api/files/{collection}/{filename.join('-')}"
-            alt={filename.join("-")}
-        />
+        <img src={createURL(filename)} alt={filename} />
     </figure>
     <nav class="cols col-fit align-center nowrap" slot="footer">
-        <span class="scroll-x">{filename.join("-")}</span>
-        <button type="submit" class="box text-error">
+        <span class="scroll-x">{filename}</span>
+        <button type="submit" class="box link text-error">
             <Icon icon="trash" />
         </button>
-        <button type="reset" class="box">
+        <button type="reset" class="box link" on:click|stopPropagation>
             <Icon />
         </button>
     </nav>

@@ -3,7 +3,7 @@
     import { toast } from "$client/components/Toaster/toast";
     import Icon from "$client/components/Icon.svelte";
     import Await from "$client/components/Await.svelte";
-    import LightBox from "$client/components/LightBox.svelte";
+    import LBThumb from "$client/components/LightBox/Thumb.svelte";
     import type { InputEvent } from "$types/client";
 
     export type FileOpts = {
@@ -93,7 +93,7 @@
         <ul role="listbox">
             {#each value as file (file)}
                 <li class="cols col-fit align-center">
-                    <LightBox {file} />
+                    <LBThumb filename={file.name} />
                     <span class="scroll-x">{file.name}</span>
                     <button
                         id={file.name}

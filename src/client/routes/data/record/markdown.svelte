@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { marked } from "marked";
+    // import { marked } from "marked";
     import Code from "$client/components/Code.svelte";
     import Icon from "$client/components/Icon.svelte";
 </script>
@@ -18,7 +18,7 @@
     <textarea class="hidden" {name} {required} value={output} />
     <small><Icon {icon} /> {name}</small>
     <Code invalid={required && !output} input={value} bind:output />
-    {#if output}
+    <!-- {#if output}
         {@html marked.parse(output)}
-    {/if}
+    {/if} -->
 </label>

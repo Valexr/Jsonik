@@ -2,7 +2,6 @@ import { build, context } from 'esbuild';
 import svelte from 'esbuild-svelte';
 import preprocess from 'svelte-preprocess';
 import rm from './env/rm.js';
-import log from './env/log.js';
 import meta from './env/meta.js';
 import copy from './env/copy.js';
 import eslint from './env/eslint.js';
@@ -51,7 +50,6 @@ const clientOptions = {
     sourcemap: DEV && 'inline',
     entryPoints: ['src/client/app.ts'],
     outdir: 'app/client/build',
-    // loader: { '.svg': 'file' },
     legalComments: "none",
     metafile: !DEV,
     mainFields: ['svelte', 'module', 'main'],

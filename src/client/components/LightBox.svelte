@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
-    import { fragment } from "svelte-pathfinder";
-    import Dialog from "$client/components/Dialog.svelte";
-    import Icon from "$client/components/Icon.svelte";
-    import { records } from "$client/stores/data.js";
+    import { fragment, paramable } from "svelte-pathfinder";
     import { files } from "$client/stores/files.js";
+    import { records } from "$client/stores/data.js";
+    import Icon from "$client/components/Icon.svelte";
+    import Dialog from "$client/components/Dialog.svelte";
 
     type Image = File & {
         collection: string;
@@ -15,6 +15,11 @@
 
 <script lang="ts">
     export let file: Image;
+
+    const route = paramable("/:folder/:collection");
+    const [_, filename] = $fragment.split("#file-");
+
+    $: console.log($route.collection, filename);
 
     function createURL(file: Image) {
         const { collection, name } = file;

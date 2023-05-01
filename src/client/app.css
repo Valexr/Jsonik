@@ -1,14 +1,14 @@
-@import 'css/theme.css';
-@import 'css/base.css';
-@import 'css/typo.css';
-@import 'css/colors.css';
-@import 'css/table.css';
-@import 'css/layouts.css';
-@import 'css/aside.css';
-@import 'css/forms.css';
-@import 'css/dialog.css';
-@import 'css/details.css';
-@import 'css/buttons.css';
-/* @import 'css/icons.css'; */
-@import 'css/toaster.css';
-@import 'css/utils.css';
+@import 'styles/theme.css';
+@import 'styles/base.css';
+@import 'styles/typo.css';
+@import 'styles/colors.css';
+@import 'styles/table.css';
+@import 'styles/layouts.css';
+@import 'styles/aside.css';
+@import 'styles/forms.css';
+@import 'styles/dialog.css';
+@import 'styles/details.css';
+@import 'styles/buttons.css';
+/* @import 'styles/icons.css'; */
+@import 'styles/toaster.css';
+@import 'styles/utils.css';
