@@ -125,7 +125,7 @@
 
         {#if activeTab === "Form"}
             <label>
-                <small><Icon icon="number" /> ID</small>
+                <small><Icon icon="hash" /> ID</small>
                 <input
                     name="id"
                     type="text"

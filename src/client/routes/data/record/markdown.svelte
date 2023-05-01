@@ -5,6 +5,7 @@
 </script>
 
 <script lang="ts">
+    export let icon: string;
     export let name: string;
     export let required: boolean;
     export let value: any;
@@ -15,7 +16,7 @@
 
 <label>
     <textarea class="hidden" {name} {required} value={output} />
-    <small><Icon icon="markdown" color="gray" /> {name}</small>
+    <small><Icon {icon} /> {name}</small>
     <Code invalid={required && !output} input={value} bind:output />
     {#if output}
         {@html marked.parse(output)}

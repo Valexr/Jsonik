@@ -89,7 +89,7 @@
     back
 >
     <svelte:fragment slot="summary">
-        <Icon icon={field.type} color="gray" />
+        <Icon icon={field.icon} color="gray" />
         <input
             required
             type="text"

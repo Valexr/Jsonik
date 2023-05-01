@@ -17,7 +17,7 @@
 
 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
 <ul role="listbox" class="cols">
-    {#each SCHEMAS as { type }, i}
+    {#each SCHEMAS as { type, icon }, i}
         <li>
             <button
                 id={String(i)}
@@ -25,7 +25,7 @@
                 class="block link outline"
                 on:click={addField}
             >
-                <Icon icon={type} color="gray" />
+                <Icon {icon} color="gray" />
                 {type}
             </button>
         </li>

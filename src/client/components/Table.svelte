@@ -68,7 +68,7 @@
                     {#if timeable}
                         <th role="button" id="id" class="link" on:click={sort}>
                             <span>
-                                <Icon icon="date" /> created
+                                <Icon icon="calendar" /> created
                                 {#if "id" in sorted}
                                     <Icon icon="arrow-{sorted.id}" />
                                 {/if}
@@ -84,7 +84,7 @@
                         >
                             <span>
                                 {#if th.type && th.name}
-                                    <Icon icon={th.type} />
+                                    <Icon icon={th.icon} />
                                 {/if}
                                 {th.name || th}
                                 {#if String(th.name || th) in sorted}
@@ -105,7 +105,7 @@
                             on:click={sort}
                         >
                             <span>
-                                <Icon icon="date" color="gray" /> updated
+                                <Icon icon="calendar" /> updated
                                 {#if "updated" in sorted}
                                     <Icon icon="arrow-{sorted.updated}" />
                                 {/if}

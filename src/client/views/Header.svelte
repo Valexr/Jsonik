@@ -14,6 +14,6 @@
     <Logo {repository} />
     <Menu />
     <a href="/" role="button" class="link action">
-        <Icon icon="power" size="125x" />
+        <Icon icon="power" size={20} />
     </a>
 </header>

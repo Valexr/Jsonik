@@ -65,7 +65,7 @@
             class="box outline pos-sticky"
             draggable="false"
         >
-            <Icon icon="plus" size="125x" />
+            <Icon icon="plus" size={20} />
         </a>
         <a
             href="/users"

@@ -35,7 +35,7 @@ export const routes: Page[] = [
     {
         match: '/logs',
         component: () => import('./logs/page.svelte'),
-        props: { title: 'Logs', icon: 'time', menu: '/logs' },
+        props: { title: 'Logs', icon: 'clock', menu: '/logs' },
     },
     {
         match: '/settings',

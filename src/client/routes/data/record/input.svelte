@@ -3,6 +3,7 @@
 </script>
 
 <script lang="ts">
+    export let icon: string;
     export let type: string;
     export let name: string;
     export let required: boolean;
@@ -18,6 +19,6 @@
 </script>
 
 <label>
-    <small><Icon icon={type} color="gray" /> {name}</small>
+    <small><Icon {icon} /> {name}</small>
     <input {type} {name} {required} {...clean(opts)} value={clean(value)} />
 </label>

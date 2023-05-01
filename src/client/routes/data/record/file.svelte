@@ -14,6 +14,7 @@
 </script>
 
 <script lang="ts">
+    export let icon: string;
     export let name: string;
     export let required: boolean;
     export let opts: FileOpts;
@@ -87,7 +88,7 @@
 </script>
 
 <label data-note={dataNote()} for="">
-    <small><Icon icon="file" color="gray" /> {name}</small>
+    <small><Icon {icon} /> {name}</small>
     {#if value.length}
         <ul role="listbox">
             {#each value as file (file)}

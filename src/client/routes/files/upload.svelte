@@ -51,7 +51,7 @@
             class="block outline link dashed"
             use:drop
         >
-            <Icon icon="file-plus" size="3x" />
+            <Icon icon="file-plus" size={54} />
             <input
                 type="file"
                 name="files"

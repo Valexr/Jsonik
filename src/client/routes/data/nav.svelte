@@ -24,7 +24,7 @@
                 class="pos-sticky box"
                 aria-disabled={!$route.file}
             >
-                <Icon icon="plus-square" size="125x" />
+                <Icon icon="plus-square" size={20} />
             </a>
         {/if}
         {#each $collections as collection}

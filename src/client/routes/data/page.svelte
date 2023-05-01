@@ -97,7 +97,7 @@
 
     {#if $schemas.length}
         <nav id="addRecord" class="text-center pos-sticky">
-            <a tabindex="0" href="?record=add" role="button">
+            <a tabindex="0" href="?record=add" role="button" draggable="false">
                 <Icon icon="plus" /> Add record
             </a>
         </nav>

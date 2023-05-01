@@ -3,6 +3,7 @@
 </script>
 
 <script lang="ts">
+    export let icon: string;
     export let name: string;
     export let required: boolean;
     export let opts: any;
@@ -10,7 +11,7 @@
 </script>
 
 <label>
-    <small><Icon icon="select" color="gray" /> {name}</small>
+    <small><Icon {icon} /> {name}</small>
     {#if opts.size > 1}
         <select {name} multiple size={opts.size} {required} bind:value>
             {#each opts?.options?.split(",") as option}

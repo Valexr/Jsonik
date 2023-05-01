@@ -68,6 +68,21 @@
                 bind:valid
             />
         {/each}
+        <nav>
+            <Details
+                bind:open
+                disabled={!valid || !isNaN(Number($schemaInvalID))}
+                class="block clear"
+                back={open}
+                button
+            >
+                <svelte:fragment slot="summary">
+                    <Icon icon="plus" />
+                    New field
+                </svelte:fragment>
+                <Schemas bind:open />
+            </Details>
+        </nav>
     {:else if activeTab === "Rules"}
         <fieldset class="cols column">
             <label>
@@ -92,22 +107,6 @@
             </label>
         </fieldset>
     {/if}
-
-    <nav>
-        <Details
-            bind:open
-            disabled={!valid || !isNaN(Number($schemaInvalID))}
-            class="block clear"
-            back={open}
-            button
-        >
-            <svelte:fragment slot="summary">
-                <Icon icon="plus" />
-                New field
-            </svelte:fragment>
-            <Schemas bind:open />
-        </Details>
-    </nav>
 </fieldset>
 
 <style>

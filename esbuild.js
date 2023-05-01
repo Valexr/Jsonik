@@ -42,7 +42,7 @@ const serverOptions = {
     define: {
         'process.env.NODE_ENV': DEV ? '"dev"' : '"prod"'
     },
-    logLevel: 'info'
+    logLevel: 'info',
 };
 
 const clientOptions = {
@@ -51,7 +51,7 @@ const clientOptions = {
     sourcemap: DEV && 'inline',
     entryPoints: ['src/client/app.ts'],
     outdir: 'app/client/build',
-    loader: { '.svg': 'file' },
+    // loader: { '.svg': 'file' },
     legalComments: "none",
     metafile: !DEV,
     mainFields: ['svelte', 'module', 'main'],

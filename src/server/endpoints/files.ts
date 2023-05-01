@@ -34,11 +34,11 @@ export function files(app: App) {
         await checkdir(`files/${folder}`)
 
         if (file && file.includes('.')) {
-            uploadFile(req, `files/${folder}/${file}`)
-            // const stream = createWriteStream(`files/${folder}/${file}`);
-            // stream.on("open", () => req.pipe(stream));
-            // stream.on('close', async () => res.send(file))
-            // stream.on('error', (e) => res.error(422, e.message))
+            // uploadFile(req, `files/${folder}/${file}`)
+            const stream = createWriteStream(`files/${folder}/${file}`);
+            stream.on("open", () => req.pipe(stream));
+            stream.on('close', async () => res.send(file))
+            stream.on('error', (e) => res.error(422, e.message))
         } else {
             res.send(folder)
         }

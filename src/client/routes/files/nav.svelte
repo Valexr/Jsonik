@@ -64,7 +64,7 @@
             class="box outline pos-sticky"
             draggable="false"
         >
-            <Icon icon="folder-plus" size="125x" />
+            <Icon icon="folder-plus" size={20} />
         </a>
         <a
             href="/files"
