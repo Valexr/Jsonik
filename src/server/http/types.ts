@@ -1,6 +1,6 @@
 import type { InputType } from 'zlib';
 import type { OutgoingHttpHeaders, ServerResponse, IncomingMessage } from 'http';
-import type { ParsedUrlQuery } from 'node:querystring';
+import type { ParsedUrlQuery } from 'querystring';
 import type { Base } from '$types/server.js';
 
 export type Options = {

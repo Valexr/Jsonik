@@ -1,4 +1,4 @@
-import http from 'node:http';
+import http from 'http';
 import { pattern } from './pattern';
 import type { Mw, App, Req, Res, Next } from './types';
 

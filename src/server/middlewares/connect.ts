@@ -1,4 +1,4 @@
-import { readdir } from "node:fs/promises";
+import { readdir } from "fs/promises";
 import { base } from "$server/lib/db";
 import { HttpNotFound } from '$server/lib/errors';
 import type { Next, Req, Res } from "$server/http/types";

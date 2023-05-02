@@ -1,5 +1,5 @@
 // import assert from 'assert';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'fs/promises';
 // export const slug = (...args: (string | number)[]): string => {
 export function slugify({ ...args }) {
     return args

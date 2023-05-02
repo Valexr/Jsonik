@@ -2,8 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import zlib from 'zlib';
 import mime from './mime.json';
-import qs from 'node:querystring';
-import { createReadStream } from 'node:fs';
+import qs from 'querystring';
+import { createReadStream } from 'fs';
 import type { Next, Options, Req, Res } from "./types";
 
 export function url(req: Req, res: Res, next: Next) {

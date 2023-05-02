@@ -1,4 +1,4 @@
-import http from 'node:http';
+import http from 'http';
 import { create, run } from './app'
 import { url, json, send, error, cookie, token, file, session, statik, compress, cache } from './mws'
 import type { Options, Mw, Req, Res } from './types';
