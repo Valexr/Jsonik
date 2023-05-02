@@ -1,11 +1,5 @@
 <script lang="ts" context="module">
-    import {
-        path,
-        redirect,
-        query,
-        fragment,
-        paramable,
-    } from "svelte-pathfinder";
+    import { redirect, fragment, paramable } from "svelte-pathfinder";
     import { files } from "$client/stores/files";
     import { collections, records } from "$client/stores/data";
     import { selection } from "$client/utils/selection";
@@ -21,6 +15,7 @@
     let selected: string[] = [];
 
     const route = paramable<{ folder: string }>("/files/:folder?");
+    const promise = files.get($route.folder);
 
     async function deleteFiles() {
         if ($collections.includes($route.folder)) {
@@ -57,12 +52,7 @@
         match,
     }}
 >
-    <Await
-        promise={files.get($route.folder)}
-        on:error={() => redirect("/files")}
-        notify
-    >
-        <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
+    <Await {promise} on:error={() => redirect("/files")} notify>
         <ul role="listbox" class="grid">
             <li><Upload /></li>
             {#each $files?.sort((a, b) => a.localeCompare(b)) as file (file)}

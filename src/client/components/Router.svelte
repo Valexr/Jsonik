@@ -16,9 +16,6 @@
     <title>{name} - {$page.props.title}</title>
 </svelte:head>
 
-<!-- #key hack for global $path -->
-{#key $path}
-    {#await $page.component() then { default: Route }}
-        <Route />
-    {/await}
-{/key}
+{#await $page.component() then { default: Route }}
+    <Route />
+{/await}

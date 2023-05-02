@@ -147,7 +147,7 @@ function scrollIntoView(node: HTMLElement, path: string) {
     const update = (path: string) => {
         const selectors = `a[href^="/${path}"][aria-disabled="true"]`;
         const anchor = node.querySelector(selectors);
-        anchor?.scrollIntoView({ behavior: "auto", inline: "center" });
+        anchor?.scrollIntoView({ behavior: 'smooth', inline: 'center' });
     };
     update(path);
     return {

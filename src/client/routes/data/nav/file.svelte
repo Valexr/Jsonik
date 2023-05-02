@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { path, redirect } from "svelte-pathfinder";
-    import { collections, schemas, records } from "$client/stores/data";
+    import { collections } from "$client/stores/data";
     import { folders } from "$client/stores/files";
     import Icon from "$client/components/Icon.svelte";
 </script>
