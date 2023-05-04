@@ -39,7 +39,6 @@
         "url": "https://github.com/Valexr/jsonik.git"
     },
     "devDependencies": {
-        "@tsconfig/svelte": "^4.0.1",
         "@types/eslint": "^8.37.0",
         "@types/marked": "^4.3.0",
         "@types/node": "^18.16.3",

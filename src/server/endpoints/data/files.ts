@@ -1,7 +1,7 @@
 import { readdir, rename, rm } from "fs/promises";
 import { base } from "$server/lib/db";
 import { checkdir } from "$server/lib/utils";
-import { App } from "$server/http/types";
+import type { App } from "$server/http/types";
 
 export function files(app: App) {
 
