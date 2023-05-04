@@ -7,7 +7,7 @@
     import Await from "$client/components/Await.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Toast from "$client/components/Toaster/Toast.svelte";
-    import File from "./file.svelte";
+    // import File from "./file.svelte";
     import Upload from "./upload.svelte";
 </script>
 
@@ -26,6 +26,10 @@
     }
     function match(els: Element[]) {
         selected = Array.from(els, ({ id }) => id);
+    }
+
+    function createURL(filename: string) {
+        return `url('/api/files/${$route.folder || ""}/${filename}')`;
     }
 </script>
 
@@ -55,19 +59,26 @@
     <Await {promise} on:error={() => redirect("/files")} notify>
         <ul role="listbox" class="grid">
             <li><Upload /></li>
-            {#each $files?.sort((a, b) => a.localeCompare(b)) as file (file)}
+            {#each $files?.sort( (a, b) => a.localeCompare(b) ) as filename (filename)}
                 <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
-                <li role="button" class="box" id={file}>
-                    <File {file}>
+                <li role="button" class="box" id={filename}>
+                    <a
+                        draggable="false"
+                        href="#file-{encodeURI(filename)}"
+                        style="background-image: {createURL(filename)}"
+                    >
+                        {filename}
+                    </a>
+                    <label>
                         <input
                             type="checkbox"
-                            value={file}
+                            value={filename}
                             bind:group={selected}
                         />&nbsp
                         <small class="text-ellepsis">
-                            {file}
+                            {filename}
                         </small>
-                    </File>
+                    </label>
                 </li>
             {/each}
         </ul>
@@ -88,6 +99,21 @@
         justify-content: space-between;
         padding: 0;
         gap: 0;
+    }
+    ul[role="listbox"] li a {
+        flex: auto;
+        width: 100%;
+        color: transparent;
+        background-size: cover;
+    }
+    ul[role="listbox"] li label {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        flex-wrap: nowrap;
+        width: 100%;
+        margin: 0;
+        padding: 0 var(--gap-sm);
     }
     [type="checkbox"] {
         flex: 0 0 auto;

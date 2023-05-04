@@ -30,7 +30,7 @@
             "@typescript-eslint/no-explicit-any": "off",
             "prefer-rest-params": "off"
         },
-        "eslintIgnore": [
+        "ignorePatterns": [
             "**/node_modules/**"
         ]
     },

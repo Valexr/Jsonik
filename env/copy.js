@@ -5,8 +5,8 @@ export default function copy(paths = []) {
         name: 'copy',
         setup(build) {
             build.onEnd(async (end) => {
-                for await (const [from, to] of paths) {
-                    cp(from, to, {
+                for (const [from, to] of paths) {
+                    await cp(from, to, {
                         recursive: true,
                         force: true,
                         dereference: true,

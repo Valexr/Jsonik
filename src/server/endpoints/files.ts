@@ -122,4 +122,4 @@ function uploadFile(req: Req, filePath: string) {
             reject(err);
         });
     });
-};
+}

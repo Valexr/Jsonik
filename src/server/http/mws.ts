@@ -67,6 +67,14 @@ export function error(req: Req, res: Res, next: Next) {
     next();
 }
 
+export function cors(req: Req, res: Res, next: Next) {
+    // res.cors = (code = 200, headers: Record<string, string>) => {
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Credentials', 'true')
+    // res.end()
+    next()
+}
+
 export async function cookie(req: Req, res: Res, next: Next) {
     if (req.headers.cookie) {
         req.cookie = parse(req.headers.cookie)

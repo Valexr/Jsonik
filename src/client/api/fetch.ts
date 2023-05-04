@@ -10,6 +10,7 @@ export default async function <T>(url: RequestInfo, { ...options }: RequestInit,
         const res = await fetch(base + url, {
             ...options,
             // headers: {
+            // 'Access-Control-Allow-Origin': '*'
             //     Authorization: 'Baerer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjJ9.OWQ0MjQ0NWY5MWUxMmVjYzRjYTg0OGVlNTQ1ZjUwY2U1YTYzN2E5YmFkOWQ5ZjRiN2ZhZDY0MGM1ZGJlMzI5Ng==',
             // },
             credentials: 'include',

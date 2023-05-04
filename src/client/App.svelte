@@ -4,7 +4,7 @@
     import Footer from "$client/views/Footer.svelte";
     import Router from "$client/components/Router.svelte";
     import Toaster from "$client/components/Toaster/Toaster.svelte";
-    import LBModal from "$client/components/LightBox/Modal.svelte";
+    import LightBox from "$client/components/LightBox/Modal.svelte";
     import type { Name, Repository } from "$types/client";
 </script>
 
@@ -18,7 +18,7 @@
     <Router {name} />
 </Main>
 <Footer />
-<LBModal />
+<LightBox />
 <Toaster />
 
 <style>

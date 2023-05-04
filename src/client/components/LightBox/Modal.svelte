@@ -15,7 +15,7 @@
 
     function createURL(filename: string) {
         if (filename) {
-            return `/api/files/${$route.collection}/${filename}`;
+            return `/api/files/${$route.collection || ""}/${filename}`;
         }
     }
 

@@ -61,7 +61,7 @@ const clientOptions = {
             ['src/client/app.html', 'app/client/index.html'],
             ['src/client/assets', 'app/client'],
         ]),
-        ...(DEV ? [change] : [])
+        ...(DEV ? [change] : []),
     ],
     inject: DEV ? ['./env/lr.js'] : [],
     logLevel: 'info'
