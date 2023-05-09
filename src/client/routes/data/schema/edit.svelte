@@ -27,7 +27,8 @@
 
         await records.upkeys(newName, $schemasKeys);
         schemas.cleanup();
-        await schemas.set(newName, $schemas);
+        if (collection) schemas.update(newName, $schemas);
+        else await schemas.set(newName, $schemas);
         goto(`/data/${newName}`);
     }
 </script>

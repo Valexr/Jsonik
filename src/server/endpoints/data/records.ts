@@ -1,14 +1,21 @@
+import { base } from '$server/lib/base';
+import { upKeys } from '$server/lib/utils';
 import type { App } from '$server/http/types';
 
 export function records(app: App) {
 
+    app.use(async (req, res, next) => {
+        const { file } = req.params
+        req.base = await base(`data/${file}/records.json`)
+        next()
+    });
+
     app.get((req, res, next) => {
         if (Object.keys(req.query).length) {
-            const records = req.query.q ? req.base?.search(String(req.query.q)) : req.base?.match(req.query)
-            // req.query.id ? req.base?.id(+req.query.id) : req.base?.match(req.query);
+            const records = req.base.data
             res.send(records);
         } else {
-            const { records } = req.base?.data
+            const records = req.base.data
             res.send(records);
         }
     });
@@ -17,9 +24,7 @@ export function records(app: App) {
         try {
             const record = req.body
             const id = record.id || Date.now()
-            await req.base?.prepend({ ...record, id, updated: id });
-
-            const { records } = req.base?.data
+            const records = await req.base.insert({ ...record, id, updated: id }, 0)
             res.send(records);
         } catch (err) {
             console.log('recordsPOST: ', err);
@@ -28,10 +33,10 @@ export function records(app: App) {
     });
 
     app.put(async (req, res, next) => {
-        const records = req.body.map((r: Record<string, any>) => ({ ...r, updated: Date.now() }));
         try {
-            const updated = await req.base?.upRecords(records);
-            res.send(updated);
+            const record = { ...req.body, updated: Date.now() };
+            const records = await req.base.update({ id: record.id }, record)
+            res.send(records);
         } catch (err) {
             console.log('recordsPUT: ', err);
             next();
@@ -41,7 +46,7 @@ export function records(app: App) {
     app.patch(async (req, res, next) => {
         const keys = req.body
         try {
-            const records = await req.base?.upKeys(keys)
+            const records = await req.base.update({}, (doc) => upKeys(doc, keys))
             res.send(records)
         } catch (e) {
             console.log('recordsPATCH: ', e);
@@ -52,7 +57,7 @@ export function records(app: App) {
     app.delete(async (req, res, next) => {
         try {
             const IDs = req.body
-            const records = await req.base?.deleteIDs(IDs)
+            const records = await req.base.delete(({ id }) => IDs.includes(id))
             res.send(records)
         } catch (err) {
             console.log('recordsDELETE: ', err);

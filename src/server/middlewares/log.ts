@@ -1,8 +1,19 @@
-import { base } from '$server/lib/db'
+import { base } from '$server/lib/base'
 import type { Next, Req, Res } from "$server/http/types";
 
+export interface Log {
+    id: number
+    method?: string,
+    url: string,
+    status: number,
+    message: string,
+    ip?: string,
+    referer?: string
+}
+
+const LOGS = await base<Log>('logs/data.json');
+
 export async function log(req: Req, res: Res, next: Next) {
-    const LOGS = await base('logs/data.json');
     const { method, url, socket: { remoteAddress }, headers: { referer } } = req
 
     res.on('finish', register)
@@ -16,7 +27,7 @@ export async function log(req: Req, res: Res, next: Next) {
             status: statusCode, message: statusMessage,
             ip: remoteAddress, referer
         }
-        await LOGS?.prepend(log)
+        await LOGS.insert([log], 0)
     }
 
     next();

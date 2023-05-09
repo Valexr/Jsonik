@@ -12,11 +12,11 @@
     });
 </script>
 
-<Await promise={logs.getTotal()} let:result>
-    <Paginator
-        total={result.length}
-        bind:limit={$query.limit}
-        bind:active={$query.page}
-        spread={3}
-    />
-</Await>
+<!-- <Await promise={logs.getTotal()} let:result> -->
+<Paginator
+    total={$logs.total}
+    bind:limit={$query.limit}
+    bind:active={$query.page}
+    spread={3}
+/>
+<!-- </Await> -->

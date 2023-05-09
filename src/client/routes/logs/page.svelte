@@ -20,12 +20,12 @@
 
 <Await promise={logs.get($query)} notify>
     <section class="scroll-x">
-        {#if $logs.length}
-            {@const thead = Object.keys($logs?.at(-1) || {})
+        {#if $logs.docs.length}
+            {@const thead = Object.keys($logs?.docs.at(-1) || {})
                 .slice(1)
                 .filter((n) => n !== "message")
                 .map((k) => ({ name: k }))}
-            {@const tbody = $logs}
+            {@const tbody = $logs.docs}
             <Table data={{ thead, tbody }} current={getRecord} />
         {/if}
     </section>

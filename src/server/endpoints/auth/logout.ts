@@ -1,4 +1,4 @@
-import { base } from '$server/lib/db';
+import { base } from '$server/lib/base';
 import { atob } from '$server/lib/crypto';
 import type { Next, Req, Res } from '$server/http/types';
 
@@ -6,7 +6,7 @@ export async function logout(req: Req, res: Res, next: Next) {
     if (req.cookie)
         try {
             const SESSIONS = await base('sessions/data.json');
-            const session = SESSIONS?.id(atob(req.cookie.sid as string));
+            const [session] = SESSIONS.find({ id: atob(req.cookie.sid as string) });
             const message = session.maxAge ? { username: session.username } : {};
 
             res.cookie({ sid: '', 'max-age': 0, path: '/' });

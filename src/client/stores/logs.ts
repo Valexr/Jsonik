@@ -2,10 +2,10 @@ import { del, get, post, put, patch } from "$client/api/methods";
 import { getable } from './getable';
 import type { Params } from 'svelte-pathfinder';
 
-export type Item = Record<string, any>
+export type Log = { docs: Record<string, any>[], total: number }
 
 function createLogs() {
-    const { set, subscribe, update, get: getStore } = getable<Item[]>([])
+    const { set, subscribe, update, get: getStore } = getable<Log>({ docs: [], total: 0 })
     return {
         update,
         subscribe,
@@ -17,7 +17,7 @@ function createLogs() {
         async getTotal() {
             return await get('/logs/data/items')
         },
-        getID: (id: number) => getStore().find(l => l.id === id)
+        getID: (id: number) => getStore().docs.find(l => l.id === id)
         // async rename(file: string, name: string) {
         //     name = await patch(`/data/files/${file}?name=${name}`);
         //     update(state => uniq(state.map(f => (f === file ? name : f))))

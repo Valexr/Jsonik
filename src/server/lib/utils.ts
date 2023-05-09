@@ -1,4 +1,5 @@
 // import assert from 'assert';
+import { dirname } from 'path'
 import { mkdir, readFile, writeFile } from 'fs/promises';
 // export const slug = (...args: (string | number)[]): string => {
 export function slugify({ ...args }) {
@@ -66,12 +67,12 @@ function adiff(a: string[], b: string[], same = true, bool = true) {
 }
 
 export function osome(o: object, q: string) {
-    if (o && q) {
-        const oa = Object.values(o);
-        const qa = q.includes(',') ? q.split(',') : q.split(' ');
-        const compare = (o: object, q: string) => JSON.stringify(o).toLowerCase().includes(q.toLowerCase());
-        return q.includes(',') ? qa.some((q) => compare(oa, q.trim())) : qa.every((q) => compare(o, q));
-    }
+    // if (o && q) {
+    const oa = Object.values(o);
+    const qa = q.includes(',') ? q.split(',') : q.split(' ');
+    const compare = (o: object, q: string) => JSON.stringify(o).toLowerCase().includes(q.toLowerCase());
+    return q.includes(',') ? qa.some((q) => compare(oa, q.trim())) : qa.every((q) => compare(o, q));
+    // }
 }
 
 export function group(arr: Record<string, any>[], keys: string[]) {
@@ -84,6 +85,26 @@ export function group(arr: Record<string, any>[], keys: string[]) {
         }
         return storage;
     }, {});
+}
+
+export function upKeys(item: Record<string, any>, keys: Record<string, string>) {
+    const { id, updated } = item
+    const mapper = ([k, v]: [string, string]) => ({ [v]: item[k] || '' })
+    const entries = Object.entries(keys).map(mapper)
+    return Object.assign({ id }, ...entries, { updated })
+}
+
+export function compare(doc: Record<string, any>, query: Record<string, any>) {
+    const tmp = { ...doc, ...query }
+    return JSON.stringify(doc) === JSON.stringify(tmp)
+}
+
+export function match(doc: Record<string, any>, query: Record<string, any>) {
+    return Object.entries(query).every(([k, v]) => doc[k] === v)
+}
+
+export function isFunction(target: unknown): target is (...args: any) => any {
+    return typeof target === 'function';
 }
 
 // export async function filters(q) {
@@ -130,7 +151,7 @@ export function group(arr: Record<string, any>[], keys: string[]) {
 
 export async function checkdir(path: string) {
     try {
-        await mkdir(path, { recursive: true });
+        await mkdir(dirname(path), { recursive: true });
     } catch (e) {
         console.error(e)
     }

@@ -4,19 +4,21 @@ aside {
     position: fixed;
     inset: 0;
     z-index: 100;
-    background: var(--active);
+    /* background: var(--active); */
     min-width: 35em;
 }
 
-aside.open::before {
-    /* content: ''; */
-    display: block;
+aside::after {
+    content: '';
     position: fixed;
     z-index: -1;
-    inset: 0;
-    backdrop-filter: blur(1em);
-    background-color: var(--back);
-    opacity: 0.75;
+    inset: inherit;
+    width: 1000rem;
+    height: 1000rem;
+    /* transition: backdrop-filter 450ms; */
+    /* backdrop-filter: blur(0.25rem); */
+    /* -webkit-backdrop-filter: blur(0.25rem); */
+    background: var(--backdrop);
 }
 
 aside :is(header, footer) {
@@ -30,6 +32,7 @@ aside form {
     flex-flow: column nowrap;
     align-items: stretch;
     min-width: inherit;
+    background: var(--active);
 }
 
 aside form label small {

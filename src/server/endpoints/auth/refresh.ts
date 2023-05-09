@@ -1,5 +1,5 @@
 import { jwt } from '$server/lib/jwt';
-import { base } from '$server/lib/db';
+import { base } from '$server/lib/base';
 import { hashPassword } from '$server/lib/crypto';
 import type { Next, Req, Res } from '$server/http/types';
 
@@ -11,7 +11,7 @@ export async function refresh(req: Req, res: Res, next: Next) {
 
             if (verified) {
                 const USERS = await base('users/data.json');
-                const user = USERS?.id(verified.userid);
+                const [user] = USERS.find({ id: verified.userid });
 
                 // req.cookies = cookie.parse(req.headers.cookie || '');
                 // const access = req.cookies.sid

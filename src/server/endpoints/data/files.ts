@@ -1,5 +1,5 @@
 import { readdir, rename, rm } from "fs/promises";
-import { base } from "$server/lib/db";
+import { base } from "$server/lib/base";
 import { checkdir } from "$server/lib/utils";
 import type { App } from "$server/http/types";
 
@@ -35,7 +35,7 @@ export function files(app: App) {
         const { file } = req.params
         try {
             const db = await base(`data/${file}.json`)
-            await db?.clear()
+            await db.delete()
             await rm(`data/${file}.json`)
             res.send(file)
         } catch (e) {

@@ -30,6 +30,14 @@
         const form = aside.firstChild as HTMLFormElement;
         form.onsubmit = () => close();
         form.onreset = () => close();
+
+        aside.onclick = (e) => {
+            e.stopPropagation();
+            const { nodeName } = e.target as HTMLElement;
+            if (nodeName === "ASIDE") {
+                close();
+            }
+        };
     }
 </script>
 
@@ -47,7 +55,6 @@
             y: aside.offsetHeight * Y,
             opacity: 1,
         }}
-        use:clickOutside={close}
         use:keyEscape={close}
         use:closeAction
         use:focusTrap

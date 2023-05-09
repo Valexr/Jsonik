@@ -6,11 +6,11 @@
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
 
-    export let total: number = 10;
-    export let limit: number = 10;
-    export let limits: number[] = [10, 20, 30, 40, 50, 100];
-    export let active: number = 1;
-    export let spread: number = 3;
+    export let total = 10;
+    export let limit = 10;
+    export let limits = [10, 20, 30, 40, 50, 100];
+    export let active = 1;
+    export let spread = 3;
 
     const prev = () => (active > 1 && active--, dispatch("prev", active));
     const cur = (i: number) => ((active = i), dispatch("current", i));

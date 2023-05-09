@@ -1,4 +1,4 @@
-import { base } from '$server/lib/db';
+import { base } from '$server/lib/base';
 import { matchPassword, UUID, btoa } from '$server/lib/crypto';
 import type { Next, Req, Res } from '$server/http/types';
 
@@ -7,7 +7,7 @@ export async function login(req: Req, res: Res, next: Next) {
         const { email, password, remember } = req.body;
 
         const USERS = await base('users/data.json');
-        const user = USERS?.find({ email });
+        const [user] = USERS.find({ email });
         console.log(user)
         if (!user) res.error(400, 'User not found');
 
@@ -38,7 +38,7 @@ export async function login(req: Req, res: Res, next: Next) {
         };
 
         const SESSIONS = await base('sessions/data.json');
-        await SESSIONS?.replace({ email }, session);
+        await SESSIONS.update({ email }, session);
 
         res.cookie({
             sid: btoa(sessionid),

@@ -50,8 +50,8 @@ function createRecords() {
             })
             set(records)
         },
-        async update(file: string, records: Item[]) {
-            const updated = await put(`/data/${file}/records`, JSON.stringify(records), {
+        async update(file: string, record: Item) {
+            const updated = await put(`/data/${file}/records`, JSON.stringify(record), {
                 headers: { 'Content-Type': 'application/json' }
             })
             update(() => updated)
@@ -92,7 +92,6 @@ function createSchemas() {
     const { set, subscribe, update, get: getValue } = getable<Schema[]>([])
 
     return {
-        update,
         subscribe,
         async get(file = '') {
             try {
@@ -107,8 +106,14 @@ function createSchemas() {
             await post(`/data/${file}/schemas`, JSON.stringify(schemas), {
                 headers: { 'Content-Type': 'application/json' }
             })
-            update(state => schemas)
+            // update(state => schemas)
             collections.update(state => uniq(state.concat(file)))
+        },
+        async update(file: string, schemas: Schema[]) {
+            await put(`/data/${file}/schemas`, JSON.stringify(schemas), {
+                headers: { 'Content-Type': 'application/json' }
+            })
+            // update(state => schemas)
         },
         add: (schema: Schema[]) => update(state => state.concat(schema)),
         invalidate: (id?: number) => update((state) =>

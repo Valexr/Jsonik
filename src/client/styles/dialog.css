@@ -80,9 +80,9 @@ dialog[open] {
 }
 
 dialog[open]::backdrop {
-    /* backdrop-filter: blur(0.25em); */
-    /* -webkit-backdrop-filter: blur(0.25em); */
-    /* background-color: var(--backdrop); */
+    backdrop-filter: blur(0.25em);
+    -webkit-backdrop-filter: blur(0.25em);
+    background-color: var(--backdrop);
 }
 
 dialog::backdrop {

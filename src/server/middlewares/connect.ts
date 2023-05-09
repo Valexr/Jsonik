@@ -1,6 +1,7 @@
 import { readdir } from "fs/promises";
-import { base } from "$server/lib/db";
+import { base } from "$server/lib/base";
 import { HttpNotFound } from '$server/lib/errors';
+import { Database } from '$server/db/database'
 import type { Next, Req, Res } from "$server/http/types";
 
 export async function connect(req: Req, res: Res, next: Next) {
@@ -20,7 +21,8 @@ export async function connect(req: Req, res: Res, next: Next) {
             // next(err)
             res.error(404, 'Collection not found')
         } else {
-            req.base = await base(`${folder}/${file}.json`, table);
+            // req.base = await base(`${folder}/${file}.json`, table);
+            // req.db = new Database(`${folder}/${file}/${table}.json`)
             next();
         }
     } catch (e) {

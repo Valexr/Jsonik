@@ -1,4 +1,4 @@
-import { base } from '$server/lib/db';
+import { base } from '$server/lib/base';
 import { atob } from '$server/lib/crypto';
 import type { Next, Req, Res } from '$server/http/types';
 
@@ -10,7 +10,7 @@ export async function cookie(req: Req, res: Res, next: Next) {
 
             if (req.cookie.sid) {
                 const SESSIONS = await base('sessions/data.json');
-                const session = SESSIONS?.id(atob(req.cookie.sid as string))
+                const [session] = SESSIONS.find({ id: atob(req.cookie.sid as string) })
 
                 if (session.id) {
                     const verified = ip?.localeCompare(session.ip) === 0 && ua?.normalize() === session.ua.normalize();
