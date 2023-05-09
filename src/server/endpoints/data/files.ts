@@ -1,5 +1,4 @@
 import { readdir, rename, rm } from "fs/promises";
-import { base } from "$server/lib/base";
 import { checkdir } from "$server/lib/utils";
 import type { App } from "$server/http/types";
 
@@ -34,9 +33,7 @@ export function files(app: App) {
     app.delete(async (req, res, next) => {
         const { file } = req.params
         try {
-            const db = await base(`data/${file}.json`)
-            await db.delete()
-            await rm(`data/${file}.json`)
+            await rm(`data/${file}`, { recursive: true })
             res.send(file)
         } catch (e) {
             console.error(e)
