@@ -24,7 +24,7 @@ export function records(app: App) {
         try {
             const record = req.body
             const id = record.id || Date.now()
-            const records = await req.base.insert({ ...record, id, updated: id }, 0)
+            const records = await req.base.insert([{ ...record, id, updated: id }], 0)
             res.send(records);
         } catch (err) {
             console.log('recordsPOST: ', err);
@@ -35,7 +35,7 @@ export function records(app: App) {
     app.put(async (req, res, next) => {
         try {
             const record = { ...req.body, updated: Date.now() };
-            const records = await req.base.update({ id: record.id }, record)
+            const records = await req.base.update({ id: record.id }, [record])
             res.send(records);
         } catch (err) {
             console.log('recordsPUT: ', err);

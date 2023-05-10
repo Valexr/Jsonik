@@ -4,7 +4,7 @@
     import LBThumb from "$client/components/LightBox/Thumb.svelte";
     import type { InputEvent } from "$types/client.js";
     import type { Item } from "$client/stores/data.js";
-    import type { Schema } from "$client/stores/schemas.js";
+    import type { Schema } from "$types/server";
 
     type Table = {
         thead?: Array<Partial<Schema>>;

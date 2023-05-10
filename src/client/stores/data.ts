@@ -3,7 +3,7 @@ import { del, get, post, put, patch } from "$client/api/methods";
 import { uniq } from '$client/utils';
 import { getable } from './getable';
 import { cacheable } from './cacheable';
-import type { Schema } from './schemas';
+import type { Schema } from '$types/server';
 
 export type Item = Record<string, any>
 export type Key = Record<string, string>

@@ -1,10 +1,11 @@
 <script lang="ts" context="module">
     import { schemas, schemaNames } from "$client/stores/data";
-    import { SCHEMAS, type Schema } from "$client/stores/schemas";
+    import { SCHEMAS } from "$client/stores/schemas";
 
     import Form from "$client/components/Form.svelte";
     import Icon from "$client/components/Icon.svelte";
     import Details from "$client/components/Details.svelte";
+    import type { Schema } from "$types/server";
 
     export type SelectEvent = Event & {
         currentTarget: EventTarget & HTMLSelectElement;

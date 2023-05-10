@@ -1,6 +1,6 @@
 import { base } from '$server/lib/base';
 import type { App } from '$server/http/types';
-import type { Schema } from '$client/stores/schemas';
+import type { Schema } from '$types/server';
 
 export function schemas(app: App) {
 

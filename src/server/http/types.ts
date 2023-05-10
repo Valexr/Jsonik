@@ -22,7 +22,7 @@ export type Req = {
     hostname: string
     port: string
     search: string
-    query: Partial<ParsedUrlQuery>
+    query: ParsedUrlQuery
     params: { [key: string]: string; }
     body: any
     file: string

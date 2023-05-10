@@ -1,5 +1,5 @@
-import { del, get, post, put, patch } from "$client/api/methods";
 import { getable } from './getable';
+import { del, get, post, put, patch } from "$client/api/methods";
 import type { Params } from 'svelte-pathfinder';
 
 export type Log = { docs: Record<string, any>[], total: number }

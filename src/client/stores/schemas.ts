@@ -1,14 +1,4 @@
-export type Schema = {
-    id: number,
-    type: string,
-    name: string,
-    opts: Record<string, string | number | boolean>,
-    valid?: boolean,
-    required?: boolean
-    prevName?: string,
-} & Record<string, any>;
-
-export const SCHEMAS: Partial<Schema>[] = [
+export const SCHEMAS = [
     {
         type: 'text',
         icon: 'type',

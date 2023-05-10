@@ -15,8 +15,6 @@
     import InputFile from "./record/file.svelte";
     import Json from "./record/json.svelte";
     import Markdown from "./record/markdown.svelte";
-
-    import type { Schema } from "$client/stores/schemas";
 </script>
 
 <script lang="ts">
