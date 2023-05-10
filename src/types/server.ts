@@ -1,5 +1,3 @@
-import type { Low } from "lowdb";
-
 export type Doc = Record<string, any>
 export type Query = Doc | ((doc: Doc, i: number) => boolean)
 export type Update<T> = Doc[] | ((doc: Doc, i: number) => Doc & T)

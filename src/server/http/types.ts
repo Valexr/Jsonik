@@ -2,7 +2,6 @@ import type { InputType } from 'zlib';
 import type { OutgoingHttpHeaders, ServerResponse, IncomingMessage } from 'http';
 import type { ParsedUrlQuery } from 'querystring';
 import type { Base } from '$types/server.js';
-import type { Database } from '$server/db/database';
 
 export type Options = {
     port: number
@@ -31,7 +30,7 @@ export type Req = {
     session: Record<string, any>
     cookie?: Record<string, string | number | boolean>
     token?: string
-} & IncomingMessage & { base: Base<any> } & { db: Database }
+} & IncomingMessage & { base: Base<any> }
 
 export type Res = {
     body: InputType

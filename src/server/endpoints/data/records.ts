@@ -22,9 +22,9 @@ export function records(app: App) {
 
     app.post(async (req, res, next) => {
         try {
-            const record = req.body
-            const id = record.id || Date.now()
-            const records = await req.base.insert([{ ...record, id, updated: id }], 0)
+            const id = req.body.id || Date.now()
+            const record = { ...req.body, id, updated: id }
+            const records = await req.base.insert([record], 0)
             res.send(records);
         } catch (err) {
             console.log('recordsPOST: ', err);
