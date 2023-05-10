@@ -7,7 +7,7 @@ import { auth } from '$server/endpoints/auth/index';
 // import { cookie } from '$server/endpoints/auth/cookie';
 import { token } from '$server/endpoints/auth/token';
 import type { App, Options } from '$server/http/types';
-// import { HttpBadRequest, HttpNotFound, HttpInternalServer, HttpResponseCodes } from './lib/errors';
+// import { HttpBadRequest, HttpNotFound, HttpInternalServer, HttpResponseCodes } from '$server/lib/errors';
 
 const DEV = process.env.NODE_ENV === 'dev';
 
