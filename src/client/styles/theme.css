@@ -1,9 +1,9 @@
 :root {
     --color: hsl(210, 15%, 15%);
-    --surface: hsl(210, 15%, 95%);
-    --hover: hsl(210, 15%, 90%);
-    --active: hsl(210, 15%, 85%);
-    --back: hsl(210, 15%, 80%);
+    --surface: hsl(210, 15%, 100%);
+    --hover: hsl(210, 15%, 95%);
+    --active: hsl(210, 15%, 90%);
+    --back: hsl(210, 15%, 85%);
     --gray: hsl(210, 15%, 50%);
     --backdrop: hsla(210, 15%, 80%, 50%);
 
