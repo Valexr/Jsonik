@@ -22,7 +22,7 @@ export function files(app: App) {
         const { file } = req.params
         const { name } = req.query
         try {
-            await rename(`data/${file}.json`, `data/${name}.json`)
+            await rename(`data/${file}`, `data/${name}`)
             res.send(name)
         } catch (e) {
             console.error(e)
