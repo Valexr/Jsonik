@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import Icon from "$client/components/Icon.svelte";
-    import type { Repository } from "$types/client.js";
+    import type { Repository } from "$types/client";
 </script>
 
 <script lang="ts">

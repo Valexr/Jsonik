@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { createEventDispatcher } from "svelte";
-    import { focusTrap, keyEscape } from "$client/utils/actions.js";
+    import { focusTrap, keyEscape } from "$client/utils/actions";
     import Icon from "./Icon.svelte";
     import Form from "./Form.svelte";
     export type DialogSize = "sm" | "md" | "lg" | "fs" | "";

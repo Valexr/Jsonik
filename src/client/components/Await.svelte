@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { createEventDispatcher } from "svelte";
-    import { toast } from "$client/components/Toaster/index.js";
+    import { toast } from "$client/components/Toaster";
 </script>
 
 <script lang="ts">

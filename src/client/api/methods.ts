@@ -1,4 +1,4 @@
-import fetch from './fetch.js';
+import fetch from './fetch';
 
 async function get(url: string, options?: RequestInit) {
     return fetch(url, { method: 'GET', ...options });

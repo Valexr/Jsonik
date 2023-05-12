@@ -6,7 +6,7 @@
         clickOutside,
         focusTrap,
         keyEscape,
-    } from "$client/utils/actions.js";
+    } from "$client/utils/actions";
     import Form from "$client/components/Form.svelte";
     import Icon from "$client/components/Icon.svelte";
 </script>

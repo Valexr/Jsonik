@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
     import Icon from "./Icon.svelte";
-    import { date } from "$client/utils/time.js";
+    import { date } from "$client/utils/time";
     import LBThumb from "$client/components/LightBox/Thumb.svelte";
-    import type { InputEvent } from "$types/client.js";
-    import type { Item } from "$client/stores/data.js";
+    import type { InputEvent } from "$types/client";
+    import type { Item } from "$client/stores/data";
     import type { Schema } from "$types/server";
 
     type Table = {

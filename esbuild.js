@@ -3,10 +3,8 @@ import svelte from 'esbuild-svelte';
 import preprocess from 'svelte-preprocess';
 import rm from './env/rm.js';
 import meta from './env/meta.js';
-import copy from './env/copy.js';
 import eslint from './env/eslint.js';
 import nodemon from './env/nodemon.js';
-import change from './env/change.js';
 import html from './env/html.js';
 
 const DEV = process.argv.includes('--dev');
@@ -52,12 +50,13 @@ const clientOptions = {
     ...options,
     entryPoints: ['src/client/app.ts'],
     outdir: 'app/client/build',
-    inject: DEV ? ['./env/lr.js'] : [],
+    inject: DEV ? ['./env/reload.js'] : [],
     write: false,
-    plugins: [
-        svelte(svelteOptions),
-        html()
-    ],
+    plugins: [svelte(svelteOptions), html()],
+    loader: {
+        '.ico': 'dataurl',
+        '.png': 'dataurl'
+    }
 };
 
 await rm(['app/app.mjs']);

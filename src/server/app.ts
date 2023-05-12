@@ -6,21 +6,17 @@ import { log } from '$server/middlewares/log';
 import { auth } from '$server/endpoints/auth/index';
 // import { cookie } from '$server/endpoints/auth/cookie';
 import { token } from '$server/endpoints/auth/token';
-import type { App, Options } from '$server/http/types';
+import type { App } from '$server/http/types';
 // import { HttpBadRequest, HttpNotFound, HttpInternalServer, HttpResponseCodes } from '$server/lib/errors';
 
 const DEV = process.env.NODE_ENV === 'dev';
 
-const options: Partial<Options> = {
+export const app = server({
     host: '0.0.0.0',
     port: DEV ? 8080 : 8888,
     cache: DEV ? 0 : 3600,
-    compress: !DEV,
-    serve: 'client',
-    spa: true,
-}
-
-export const app = server(options)
+    compress: !DEV
+})
 
 app.sub('/api', (app: App) => {
     app.use(log);

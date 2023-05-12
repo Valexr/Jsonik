@@ -139,7 +139,8 @@ export function file(options: Options) {
 }
 
 export function html(req: Req, res: Res, next: Next) {
-    if (req.method === 'GET' && req.file.includes('index.html')) {
+    console.log('html', req.path, !/api|\./.test(req.path))
+    if (req.method === 'GET' && !/api|\./.test(req.path)) {
         res.send(client, 'text/html')
     } else next()
 }
@@ -151,23 +152,25 @@ export async function statik(req: Req, res: Res, next: Next) {
         const ext = mime[req.extname as keyof typeof mime]
         if (ext) res.setHeader('Content-Type', ext);
 
-        // const stream = createReadStream(req.file)
-        // stream.on('error', (e) => res.error(422, e.message))
-        // stream.pipe(res)
+        const stream = createReadStream(req.file)
+        stream.on('error', (e) => res.error(422, e.message))
+        stream.pipe(res)
     }
 }
 
-export function compress(req: Req, res: Res, next: () => void) {
-    if (res.body && req.headers['accept-encoding']) {
-        if (req.headers['accept-encoding'].includes('br')) {
-            res.setHeader('Content-Encoding', 'br');
-            res.body = zlib.brotliCompressSync(res.body);
-        } else if (req.headers['accept-encoding'].includes('gzip')) {
-            res.setHeader('Content-Encoding', 'gzip');
-            res.body = zlib.gzipSync(res.body);
+export function compress(options: Options) {
+    return function (req: Req, res: Res, next: Next) {
+        if (options.compress && res.body && req.headers['accept-encoding']) {
+            if (req.headers['accept-encoding'].includes('br')) {
+                res.setHeader('Content-Encoding', 'br');
+                res.body = zlib.brotliCompressSync(res.body);
+            } else if (req.headers['accept-encoding'].includes('gzip')) {
+                res.setHeader('Content-Encoding', 'gzip');
+                res.body = zlib.gzipSync(res.body);
+            }
         }
+        next();
     }
-    next();
 }
 
 export function cache(options: Options) {

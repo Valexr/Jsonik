@@ -61,7 +61,6 @@ export async function base<T>(path: string): Promise<Base<T>> {
         },
         async update(query, update) {
             const found = find(query)
-            console.log(found, update)
             base.data = found.map((doc, i) =>
                 isFunction(update) ? update(doc, i) : Object.assign(doc, update));
             await base.write();
