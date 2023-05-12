@@ -8,7 +8,7 @@ export default function (path) {
     return {
         name: 'nodemon',
         setup(build) {
-            build.onEnd(result => {
+            build.onEnd(async () => {
                 if (child) child.kill();
                 child = fork(join(CWD, path), [], { cwd: join(CWD, dirname(path)) });
             });

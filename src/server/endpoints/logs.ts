@@ -2,13 +2,12 @@ import { base } from '$server/lib/base';
 import type { App } from '$server/http/types';
 import type { Log } from '$server/middlewares/log';
 
-const LOGS = await base<Log>('logs/data.json')
 
 export function logs(app: App) {
 
     app.get(async (req, res, next) => {
         if (Object.values(req.query).some(v => v)) {
-            await LOGS.get()
+            const LOGS = await base<Log>('logs/data.json')
             const { q, page, limit } = req.query
             const items = LOGS.find((doc, i) => search(doc, String(q)))
             const index = Number(page) - 1

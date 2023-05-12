@@ -1,6 +1,6 @@
 import http from 'http';
 import { create, run } from './app'
-import { url, json, send, error, cors, cookie, token, file, session, statik, compress, cache } from './mws'
+import { url, json, send, error, cors, cookie, token, session, file, html, statik, compress, cache } from './mws'
 import type { Options, Mw, Req, Res } from './types';
 
 export function start(options: Options) {
@@ -10,7 +10,7 @@ export function start(options: Options) {
         const mws: Mw[] = [
             url, json, send, error, cors, cookie, token, session,
             ...app.list(),
-            ...(options.serve ? [file(options), statik] : []),
+            ...(options.serve ? [file(options), html, statik] : []),
             ...(options.cache ? [cache(options)] : []),
             ...(options.compress ? [compress] : []),
         ];

@@ -37,7 +37,7 @@ export type Res = {
     cookie: (value: Record<string, string | number | boolean>) => void
     token: (value: string) => void
     cors: (code: number, headers: Record<string, string>) => void
-    send: <T>(message: T | string | string[] | Body) => void
+    send: <T>(message: T | string | string[] | Body, mime?: string) => void
     error: (code: number | undefined, message: string, headers?: OutgoingHttpHeaders) => void
 } & ServerResponse
 

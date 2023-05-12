@@ -7,12 +7,13 @@ import copy from './env/copy.js';
 import eslint from './env/eslint.js';
 import nodemon from './env/nodemon.js';
 import change from './env/change.js';
+import html from './env/html.js';
 
 const DEV = process.argv.includes('--dev');
 
 const svelteOptions = {
     compilerOptions: {
-        dev: DEV
+        dev: DEV,
     },
     preprocess: [
         preprocess({
@@ -22,18 +23,22 @@ const svelteOptions = {
     ]
 };
 
-const serverOptions = {
+const options = {
     bundle: true,
     minify: !DEV,
     sourcemap: DEV && 'inline',
-    platform: 'node',
     target: "esnext",
     format: 'esm',
-    treeShaking: true,
-    entryPoints: [DEV ? 'src/server/dev.ts' : 'src/server/app.ts'],
-    outfile: 'app/app.mjs',
     legalComments: 'none',
     metafile: !DEV,
+    logLevel: 'info',
+};
+
+const serverOptions = {
+    ...options,
+    platform: 'node',
+    entryPoints: ['src/server/app.ts'],
+    outfile: 'app/app.mjs',
     plugins: [
         // eslint(),
         ...(DEV ? [nodemon('app/app.mjs')] : [])
@@ -41,43 +46,30 @@ const serverOptions = {
     define: {
         'process.env.NODE_ENV': DEV ? '"dev"' : '"prod"'
     },
-    logLevel: 'info',
 };
 
 const clientOptions = {
-    bundle: true,
-    minify: !DEV,
-    sourcemap: DEV && 'inline',
+    ...options,
     entryPoints: ['src/client/app.ts'],
     outdir: 'app/client/build',
-    legalComments: "none",
-    metafile: !DEV,
-    mainFields: ['svelte', 'module', 'main'],
-    target: "esnext",
-    format: 'esm',
+    inject: DEV ? ['./env/lr.js'] : [],
+    write: false,
     plugins: [
         svelte(svelteOptions),
-        copy([
-            ['src/client/app.html', 'app/client/index.html'],
-            ['src/client/assets', 'app/client'],
-        ]),
-        ...(DEV ? [change] : []),
+        html()
     ],
-    inject: DEV ? ['./env/lr.js'] : [],
-    logLevel: 'info'
 };
 
-await rm(['app/client', 'app/app.mjs']);
+await rm(['app/app.mjs']);
 
 if (DEV) {
     const client = await context(clientOptions);
     const server = await context(serverOptions);
 
     await client.watch();
-    await client.rebuild();
-
     await server.watch();
-    await server.rebuild();;
+
+    await server.serve({ servedir: 'app' });
 
     function cleanup() {
         client.dispose();
@@ -88,9 +80,9 @@ if (DEV) {
     process.on("exit", cleanup);
 
 } else {
-    const server = await build(serverOptions);
     const client = await build(clientOptions);
+    const server = await build(serverOptions);
 
-    await meta(server, 'server');
     await meta(client, 'client');
+    await meta(server, 'server');
 }

@@ -14,5 +14,5 @@
     stroke-linecap="round"
     stroke-linejoin="round"
 >
-    <use href="/sprite.svg#{icon}" />
+    <use href="#{icon}" />
 </svg>

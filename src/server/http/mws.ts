@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import zlib from 'zlib';
 import mime from './mime.json';
+import client from './client.json'
 import qs from 'querystring';
 import { createReadStream } from 'fs';
 import type { Next, Options, Req, Res } from "./types";
@@ -42,8 +43,7 @@ export function json(req: Req, res: Res, next: Next) {
 }
 
 export function send(req: Req, res: Res, next: Next) {
-    res.send = function (message) {
-        let mime = 'text/plain';
+    res.send = function (message, mime = 'text/plain') {
         if (typeof message === 'object') {
             message = JSON.stringify(message);
             mime = 'application/json'
@@ -134,9 +134,14 @@ export function file(options: Options) {
                 } while (dir !== '.')
             }
         }
-
         next();
     }
+}
+
+export function html(req: Req, res: Res, next: Next) {
+    if (req.method === 'GET' && req.file.includes('index.html')) {
+        res.send(client, 'text/html')
+    } else next()
 }
 
 export async function statik(req: Req, res: Res, next: Next) {
@@ -146,9 +151,9 @@ export async function statik(req: Req, res: Res, next: Next) {
         const ext = mime[req.extname as keyof typeof mime]
         if (ext) res.setHeader('Content-Type', ext);
 
-        const stream = createReadStream(req.file)
-        stream.on('error', (e) => res.error(422, e.message))
-        stream.pipe(res)
+        // const stream = createReadStream(req.file)
+        // stream.on('error', (e) => res.error(422, e.message))
+        // stream.pipe(res)
     }
 }
 

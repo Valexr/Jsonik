@@ -188,17 +188,3 @@ dialog {
 html:has(dialog[open]) {
     overflow: hidden;
 }
-
-@supports not selector(::backdrop) {
-
-    body::before {
-        box-sizing: border-box;
-        content: "⚠️ Your browser doesn't support ::backdrop";
-        display: block;
-        max-width: 72rem;
-        margin: auto;
-        color: #f44336;
-        font-weight: bold;
-        padding: 2rem 2rem 0;
-    }
-}

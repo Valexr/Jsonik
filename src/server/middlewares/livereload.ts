@@ -10,8 +10,9 @@ export function reload(event: string) {
     }
 }
 
-export function livereload(req: Req, res: Res, next: Next) {
+export async function livereload(req: Req, res: Res, next: Next) {
     if (req.url === '/livereload') {
+
         const listener = (event: string) => {
             return res.write(`event: ${event}\ndata: ${event}ed\n\n`)
         }
@@ -19,6 +20,7 @@ export function livereload(req: Req, res: Res, next: Next) {
         listeners.add(listener);
 
         res.writeHead(200, {
+            "Access-Control-Allow-Origin": "*",
             'Content-Type': 'text/event-stream',
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive',
@@ -26,6 +28,7 @@ export function livereload(req: Req, res: Res, next: Next) {
 
         res.on('close', () => listeners.delete(listener));
         res.write('data: connected\n\n')
+
     } else if (req.url === '/change') {
         reload('change');
         next();
