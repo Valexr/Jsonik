@@ -1,12 +1,12 @@
 import { readdir, rename, rm } from "fs/promises";
-import { checkdir } from "$server/lib/utils";
+import { checkpath } from "$server/lib/utils";
 import type { App } from "$server/http/types";
 
 export function files(app: App) {
 
     app.get(async (req, res, next) => {
 
-        await checkdir('data')
+        await checkpath('data')
 
         try {
             const data = await readdir('data')

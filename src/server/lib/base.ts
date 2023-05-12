@@ -1,6 +1,6 @@
 import { Low, type Adapter } from 'lowdb';
 import { TextFile } from 'lowdb/node';
-import { checkdir, match, isFunction } from '$server/lib/utils';
+import { checkpath, match, isFunction } from '$server/lib/utils';
 import type { Base, Doc, Query } from '$types/server';
 
 class JSONFile<T> implements Adapter<T> {
@@ -25,7 +25,8 @@ class JSONFile<T> implements Adapter<T> {
 }
 
 export async function db<T>(path: string) {
-    await checkdir(path)
+    console.log('db', path)
+    await checkpath(path)
     return new Low<Array<T & Doc>>(new JSONFile(path), []);
 }
 

@@ -1,4 +1,4 @@
-import { dirname } from 'path'
+import { dirname, extname } from 'path'
 import { mkdir, readFile, writeFile } from 'fs/promises';
 
 export function compare(doc: Record<string, any>, query: Record<string, any>) {
@@ -14,9 +14,10 @@ export function isFunction(target: unknown): target is (...args: any) => any {
     return typeof target === 'function';
 }
 
-export async function checkdir(path: string) {
+export async function checkpath(path: string) {
     try {
-        await mkdir(dirname(path), { recursive: true });
+        path = !!extname(path) ? dirname(path) : path
+        await mkdir(path, { recursive: true });
     } catch (e) {
         console.error(e)
     }

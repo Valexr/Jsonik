@@ -1,6 +1,6 @@
 import { createReadStream, createWriteStream } from "fs";
 import { readdir, rm, rename, writeFile } from "fs/promises";
-import { checkdir } from "$server/lib/utils";
+import { checkpath } from "$server/lib/utils";
 import type { App, Req } from "$server/http/types";
 
 export function files(app: App) {
@@ -9,7 +9,7 @@ export function files(app: App) {
     app.get(pattern, async (req, res) => {
         const { folder, file } = req.params
 
-        await checkdir('files')
+        await checkpath('files')
 
         if (file) {
             const stream = createReadStream(`files/${folder}/${file}`)
@@ -31,7 +31,7 @@ export function files(app: App) {
     app.post(pattern, async (req, res, next) => {
         const { folder, file } = req.params
 
-        await checkdir(`files/${folder}`)
+        await checkpath(`files/${folder}`)
 
         if (file && file.includes('.')) {
             // uploadFile(req, `files/${folder}/${file}`)
