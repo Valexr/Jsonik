@@ -7,8 +7,8 @@ function createRoles() {
     return {
         update,
         subscribe,
-        async login(creds: {}) {
-            const user = await post<{}>(`/auth/login`, JSON.stringify(creds), {
+        async login(creds: object) {
+            const user = await post<object>(`/auth/login`, JSON.stringify(creds), {
                 headers: {
                     'Content-Type': 'application/json',
                 }

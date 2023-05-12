@@ -44,7 +44,7 @@ export function selection(container: HTMLElement, {
         ctx.y1 = e.pageY;
         ctx.y2 = e.pageY;
         reCalc();
-    };
+    }
 
     function onMouseMove(e: MouseEvent) {
         if (state.disabled || !state.mouseDown) return;
@@ -75,13 +75,13 @@ export function selection(container: HTMLElement, {
                 }
             });
         }
-    };
+    }
 
     function onMouseUp() {
         if (!rect.hidden) rect.hidden = true;
         if (state.moving) match(selectedElements)
         cleanUp();
-    };
+    }
 
     if (!disabled) {
         container.addEventListener('mousedown', onMouseDown);
