@@ -1,5 +1,5 @@
 import { dirname, extname } from 'path'
-import { mkdir, readFile, writeFile } from 'fs/promises';
+import { mkdir } from 'fs/promises';
 
 export function compare(doc: Record<string, any>, query: Record<string, any>) {
     const tmp = { ...doc, ...query }
@@ -20,15 +20,6 @@ export async function checkpath(path: string) {
         await mkdir(path, { recursive: true });
     } catch (e) {
         console.error(e)
-    }
-}
-export async function checkfile(path: string) {
-    try {
-        const data = await readFile(path, { encoding: 'utf8' });
-        return data
-    } catch (e) {
-        console.error(e)
-        await writeFile(path, []);
     }
 }
 

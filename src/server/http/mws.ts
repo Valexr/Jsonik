@@ -139,7 +139,6 @@ export function file(options: Options) {
 }
 
 export function html(req: Req, res: Res, next: Next) {
-    // console.log('html', req.path, !/api|\./.test(req.path))
     if (req.method === 'GET' && !path.extname(req.path)) {
         res.send(client, 'text/html')
     } else next()
