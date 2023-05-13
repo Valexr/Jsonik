@@ -44,18 +44,7 @@ function uniq(array?: any[]) {
     return Array.from(new Set(array))
 }
 
-function typed(o: Record<string, any>) {
-    return Object.entries(o).reduce<Record<string, any>>((a, [k, v]) => {
-        a[k] =
-            (v && Number(v)) || ["true", "false"].includes(v)
-                ? Boolean(v)
-                : v;
-        return a;
-    }, {});
-}
-
 export { deferred, switchTimeout, decimal, delay, s, listen, uniq }
-
 
 function removeFileFromFileList(fileList: FileList, name: string) {
     const DT = new DataTransfer();
@@ -65,4 +54,14 @@ function removeFileFromFileList(fileList: FileList, name: string) {
         }
     }
     return DT.files;
+}
+
+function typed(o: Record<string, any>) {
+    return Object.entries(o).reduce<Record<string, any>>((a, [k, v]) => {
+        a[k] =
+            (v && Number(v)) || ["true", "false"].includes(v)
+                ? Boolean(v)
+                : v;
+        return a;
+    }, {});
 }

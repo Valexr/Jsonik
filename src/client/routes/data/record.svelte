@@ -18,7 +18,7 @@
 </script>
 
 <script lang="ts">
-    export let collection: string = "";
+    export let collection = "";
     export let active: Item | undefined = undefined;
     export let open = false;
     export let close = () => query.set("");

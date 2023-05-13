@@ -1,11 +1,11 @@
 import { server } from '$server/http/index';
-import { data } from '$server/endpoints/data/index';
-import { files } from '$server/endpoints/files';
-import { logs } from '$server/endpoints/logs';
 import { log } from '$server/middlewares/log';
 import { auth } from '$server/endpoints/auth/index';
 import { cookie } from '$server/endpoints/auth/cookie';
 import { token } from '$server/endpoints/auth/token';
+import { data } from '$server/endpoints/data/index';
+import { files } from '$server/endpoints/files';
+import { logs } from '$server/endpoints/logs';
 import type { App } from '$server/http/types';
 
 const DEV = process.env.NODE_ENV === 'dev';

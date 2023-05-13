@@ -18,7 +18,8 @@
     <textarea class="hidden" {name} {required} value={output} />
     <small><Icon {icon} /> {name}</small>
     <Code invalid={required && !output} input={value} bind:output />
-    {#if output}
+    <!-- tmp md preview -->
+    <!-- {#if output}
         {@html marked.parse(output)}
-    {/if}
+    {/if} -->
 </label>

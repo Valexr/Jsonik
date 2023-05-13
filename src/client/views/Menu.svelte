@@ -24,7 +24,6 @@
         </svelte:fragment>
 
         {#if $path[0]}
-            <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
             <ul role="listbox">
                 {#each routes.filter((r) => r.props.menu) as { match, props: { title, menu, icon } }}
                     <li class:active={$pattern(match)}>

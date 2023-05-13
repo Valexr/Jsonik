@@ -13,7 +13,7 @@
 </script>
 
 <script lang="ts">
-    export let id: string = "";
+    export let id = "";
     export let role = "";
     export let top = false;
     export let open = false;

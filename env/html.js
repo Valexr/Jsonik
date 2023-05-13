@@ -47,9 +47,9 @@ export default function html(opts) {
                 let html = await readFile(options.in, { encoding: 'utf8' });
                 let sprite = await readFile(options.sprite, { encoding: 'utf8' });
 
-                const usedIcons = options.icons.join('"|');
-                const regexp = new RegExp(`(<symbol id="(?!${usedIcons}")(.|\n)*?symbol>)`, 'g');
-                sprite = sprite.replace(regexp, '').replace(/>\s+</g, '><');
+                const used = options.icons.join('"|');
+                const unused = new RegExp(`(<symbol id="(?!${used}")(.|\n)*?symbol>)`, 'g');
+                sprite = sprite.replace(unused, '').replace(/>\s+</g, '><');
 
                 const [js, css] = result.outputFiles;
 

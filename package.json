@@ -3,21 +3,42 @@
     "version": "0.1.0",
     "private": true,
     "type": "module",
+    "engines": {
+        "node": ">=16"
+    },
     "scripts": {
         "build": "node esbuild",
         "dev": "node esbuild --dev",
         "start": "cd app && node app.mjs",
         "check": "svelte-check --tsconfig ./tsconfig.json",
-        "lint": "eslint './src/**/*.{js,ts}'"
+        "lint": "eslint './src/**/*.{js,ts,svelte}'"
     },
     "eslintConfig": {
         "extends": [
-            "plugin:@typescript-eslint/recommended"
+            "plugin:@typescript-eslint/recommended",
+            "plugin:svelte/recommended"
         ],
         "plugins": [
             "@typescript-eslint"
         ],
         "parser": "@typescript-eslint/parser",
+        "parserOptions": {
+            "project": "tsconfig.json",
+            "extraFileExtensions": [
+                ".svelte"
+            ]
+        },
+        "overrides": [
+            {
+                "files": [
+                    "*.svelte"
+                ],
+                "parser": "svelte-eslint-parser",
+                "parserOptions": {
+                    "parser": "@typescript-eslint/parser"
+                }
+            }
+        ],
         "root": true,
         "env": {
             "node": true
@@ -33,6 +54,10 @@
             "**/node_modules/**"
         ]
     },
+    "author": {
+        "name": "Valexr",
+        "email": "valexr@gmail.com"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/Valexr/jsonik.git"
@@ -47,6 +72,7 @@
         "esbuild": "^0.17.19",
         "esbuild-svelte": "^0.7.3",
         "eslint": "^8.40.0",
+        "eslint-plugin-svelte": "^2.28.0",
         "lowdb": "^6.0.1",
         "marked": "^5.0.2",
         "svelte": "^3.59.1",

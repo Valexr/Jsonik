@@ -27,15 +27,15 @@
     export let type = toastItem.type || "initial";
     export let timeout = toastItem.timeout || 0;
     export let closable = toastItem.closable ?? true;
-    export let reverse: boolean = toastItem.reverse || false;
-    export let visible: boolean = true;
-    export let draggable: boolean = false;
+    export let reverse = toastItem.reverse || false;
+    export let visible = true;
+    export let draggable = false;
 
-    let init: number = reverse ? 1 : 0,
-        next: number = reverse ? 0 : 1,
-        start: number = Date.now(),
-        remaining: number = timeout,
-        options: Options = { duration: remaining };
+    let init = reverse ? 1 : 0;
+    let next = reverse ? 0 : 1;
+    let start = Date.now();
+    let remaining = timeout;
+    let options: Options = { duration: remaining };
 
     const defaults: Options = { delay: 0, duration: 0, easing: linear };
     const progress: Tweened<number> = tweened(init, { ...defaults });

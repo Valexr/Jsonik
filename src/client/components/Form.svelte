@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-    export let id: string = "";
+    export let id = "";
     export let size: Size = "";
     export let method = "GET";
     export let action = "";

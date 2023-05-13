@@ -20,7 +20,7 @@ export function start(options: Options) {
 
     server.on('listening', () => {
         const time = new Date().toLocaleTimeString(undefined, { hour12: false });
-        console.log(`${time} Server on http://${options.host}:${options.port}`)
+        console.dir(`${time} Jsonik on http://${options.host}:${options.port}`)
     })
 
     server.on('error', (e) => {

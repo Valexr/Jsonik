@@ -14,7 +14,7 @@
 </script>
 
 <script lang="ts">
-    export let id: string = "";
+    export let id = "";
     export let open: boolean;
     export let field: Schema;
     export let valid = false;
