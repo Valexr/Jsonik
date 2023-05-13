@@ -1,10 +1,6 @@
-<svg id="sprite"
-    xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" id="sprite">
     <defs>
-        <style>
-            #sprite { display: none; }
-            #sprite:target { display: inline; }
-        </style>
+        <style>#sprite{display:none}#sprite:target{display:inline}</style>
         <symbol id="activity" viewBox="0 0 24 24">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
         </symbol>

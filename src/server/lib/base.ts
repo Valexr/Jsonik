@@ -25,7 +25,6 @@ class JSONFile<T> implements Adapter<T> {
 }
 
 export async function db<T>(path: string) {
-    console.log('db', path)
     await checkpath(path)
     return new Low<Array<T & Doc>>(new JSONFile(path), []);
 }
