@@ -32,20 +32,6 @@ const options = {
     logLevel: 'info',
 };
 
-const serverOptions = {
-    ...options,
-    platform: 'node',
-    entryPoints: ['src/server/app.ts'],
-    outfile: 'app/app.mjs',
-    plugins: [
-        // eslint(),
-        ...(DEV ? [nodemon('app/app.mjs')] : [])
-    ],
-    define: {
-        'process.env.NODE_ENV': DEV ? '"dev"' : '"prod"'
-    },
-};
-
 const clientOptions = {
     ...options,
     entryPoints: ['src/client/app.ts'],
@@ -59,7 +45,21 @@ const clientOptions = {
     }
 };
 
-await rm(['app/app.mjs']);
+const serverOptions = {
+    ...options,
+    platform: 'node',
+    entryPoints: ['src/server/app.ts'],
+    outfile: 'app/app.js',
+    plugins: [
+        // eslint(),
+        ...(DEV ? [nodemon('app/app.js')] : [])
+    ],
+    define: {
+        'process.env.NODE_ENV': DEV ? '"dev"' : '"prod"'
+    },
+};
+
+await rm(['app/app.js']);
 
 if (DEV) {
     const client = await context(clientOptions);

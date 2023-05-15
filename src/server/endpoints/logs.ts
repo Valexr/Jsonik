@@ -5,11 +5,15 @@ import type { Log } from '$server/middlewares/log';
 
 export function logs(app: App) {
 
+    app.use(async (req, res, next) => {
+        req.base = await base<Log>('logs/data.json')
+        next()
+    })
+
     app.get(async (req, res, next) => {
         if (Object.values(req.query).some(v => v)) {
-            const LOGS = await base<Log>('logs/data.json')
             const { q, page, limit } = req.query
-            const items = LOGS.find((doc, i) => search(doc, String(q)))
+            const items = req.base.find((doc, i) => search(doc, String(q)))
             const index = Number(page) - 1
             const start = index * Number(limit)
             const end = start + Number(limit)

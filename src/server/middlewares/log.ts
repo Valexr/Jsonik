@@ -13,7 +13,7 @@ export interface Log {
 
 const LOGS = await base<Log>('logs/data.json');
 
-export async function log(req: Req, res: Res, next: Next) {
+export function log(req: Req, res: Res, next: Next) {
     const { method, url, socket: { remoteAddress }, headers: { referer } } = req
 
     res.on('finish', register)

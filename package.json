@@ -9,7 +9,7 @@
     "scripts": {
         "build": "node esbuild",
         "dev": "node esbuild --dev",
-        "start": "cd app && node app.mjs",
+        "start": "cd app && node app.js",
         "check": "svelte-check --tsconfig ./tsconfig.json",
         "lint": "eslint './src/**/*.{js,ts,svelte}'"
     },
