@@ -11,10 +11,10 @@ export interface Log {
     referer?: string
 }
 
-const LOGS = await base<Log>('logs/data.json');
 
-export function log(req: Req, res: Res, next: Next) {
+export async function log(req: Req, res: Res, next: Next) {
     const { method, url, socket: { remoteAddress }, headers: { referer } } = req
+    const LOGS = await base<Log>('logs/data.json');
 
     res.on('finish', register)
 

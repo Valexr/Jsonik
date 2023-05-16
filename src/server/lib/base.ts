@@ -1,38 +1,24 @@
-import { Low, type Adapter } from 'lowdb';
-import { TextFile } from 'lowdb/node';
-import { checkpath, match, isFunction } from '$server/lib/utils';
+import { readFile, writeFile } from "fs/promises"
+import { checkpath, match, isFunction, checkfile } from '$server/lib/utils';
 import type { Base, Doc, Query } from '$types/server';
-
-class JSONFile<T> implements Adapter<T> {
-    #adapter: TextFile
-
-    constructor(filename: string) {
-        this.#adapter = new TextFile(filename)
-    }
-
-    async read(): Promise<T | null> {
-        const data = await this.#adapter.read()
-        if (data === null) {
-            return null
-        } else {
-            return JSON.parse(data) as T
-        }
-    }
-
-    write(obj: T): Promise<void> {
-        return this.#adapter.write(JSON.stringify(obj, null, 2))
-    }
-}
 
 export async function db<T>(path: string) {
     await checkpath(path)
-    return new Low<Array<T & Doc>>(new JSONFile(path), []);
+
+    const read = async () => JSON.parse(await checkfile(path) || '[]')
+    const data: Array<T & Doc> = await read()
+
+    return {
+        data, read,
+        write() {
+            return writeFile(path, JSON.stringify(this.data, null, '\t'), 'utf8')
+        }
+    }
 }
 
 export async function base<T>(path: string): Promise<Base<T>> {
 
     const base = await db<T>(path);
-    await base.read();
 
     function find(query?: Query) {
         if (!query || !Reflect.ownKeys(query).length) return base.data

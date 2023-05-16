@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from "fs";
-import { readdir, rm, rename, writeFile } from "fs/promises";
+import { readdir, rm, rename } from "fs/promises";
 import { checkpath } from "$server/lib/utils";
 import type { App, Req } from "$server/http/types";
 

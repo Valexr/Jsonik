@@ -25,7 +25,6 @@ const options = {
     bundle: true,
     minify: !DEV,
     sourcemap: DEV && 'inline',
-    target: "esnext",
     format: 'esm',
     legalComments: 'none',
     metafile: !DEV,
