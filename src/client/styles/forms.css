@@ -229,7 +229,7 @@ textarea {
 }
 
 .invalid,
-:not(button, [type=search]):invalid,
+:not(button):invalid,
 :out-of-range {
     border-color: var(--error);
 }

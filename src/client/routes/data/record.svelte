@@ -63,7 +63,7 @@
     function submitRecord(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const entries = Object.fromEntries(data);
-        console.log(data, entries);
+        // console.log(data, entries);
 
         const record: Record<string, any> = {};
 

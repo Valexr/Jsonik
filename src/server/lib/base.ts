@@ -47,10 +47,11 @@ export async function base<T>(path: string): Promise<Base<T>> {
         },
         async update(query, update) {
             const found = find(query)
-            base.data = base.data.map((doc, i) => {
-                const ix = found.findIndex((f) => match(doc, f));
-                return (ix > -1) ? isFunction(update) ? update(doc, i) : Object.assign(doc, update) : doc;
+            const updated = found.map((doc, i) => {
+                // const ix = found.findIndex((f) => match(doc, f));
+                return isFunction(update) ? update(doc, i) : Object.assign(doc, update);
             })
+            Object.assign(base.data, updated)
             await base.write()
             return base.data;
         },
@@ -61,7 +62,7 @@ export async function base<T>(path: string): Promise<Base<T>> {
             return base.data
         },
         async set(docs) {
-            base.data = docs
+            Object.assign(base.data, docs)
             await base.write()
             return base.data
         },

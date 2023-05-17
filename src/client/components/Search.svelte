@@ -16,6 +16,7 @@
                 list="items"
                 type="search"
                 placeholder="search"
+                pattern="^[\w|\-|:]+$"
                 class:collapsed={collapsed && !value}
             />
             <!-- <datalist id="items">
