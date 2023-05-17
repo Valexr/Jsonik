@@ -133,9 +133,9 @@ function createSchemas() {
     }
 }
 export const schemas = createSchemas()
-export const schemaInvalID = derived(schemas, $schemas => $schemas?.find((s) => !s.valid)?.id)
-export const schemaNames = derived(schemas, $schemas => $schemas?.map(({ name }) => name))
-export const schemasKeys = derived(schemas, $schemas => $schemas?.reduce<Key>((a, { prevName, name }) => {
+export const schemaInvalID = derived(schemas, $schemas => $schemas.find((s) => !s.valid)?.id)
+export const schemaNames = derived(schemas, $schemas => $schemas.map(({ name }) => name))
+export const schemasKeys = derived(schemas, $schemas => $schemas.reduce<Key>((a, { prevName, name }) => {
     a[prevName || name] = name;
     return a;
 }, {}))

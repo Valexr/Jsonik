@@ -26,7 +26,6 @@ export async function checkpath(path: string) {
 export async function checkfile(path: string) {
     try {
         return await readFile(path, 'utf8');
-        // return data
     } catch (e) {
         await writeFile(path, [], 'utf8');
     }

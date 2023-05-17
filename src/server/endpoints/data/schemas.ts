@@ -27,8 +27,8 @@ export function schemas(app: App) {
 
     app.put(async (req, res, next) => {
         const schemas = await req.base.set(req.body)
-        // const schemas = await req.base.upsert((doc) => req.body.find(({ id }: Schema) => doc.id === id), req.body)
-        // await req.base.update({}, (doc) => schemas.find(({ id }: Schema) => doc.id === id))
+        // const schemas = await req.base.upsert({}, req.body)
+        // await req.base.update({}, (doc) => req.body.find(({ id }: Schema) => doc.id === id))
         res.send(schemas);
     });
     // app.patch(async (req, res, next) => { });

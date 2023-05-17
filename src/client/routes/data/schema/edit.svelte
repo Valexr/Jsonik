@@ -17,7 +17,7 @@
 
     let valid = true;
 
-    async function editSchema(e: SubmitEvent) {
+    async function updateSchema(e: SubmitEvent) {
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const newName = String(data.get("collectionName"));
 
@@ -33,7 +33,7 @@
     }
 </script>
 
-<Dialog {open} on:submit={editSchema} on:close bind:valid>
+<Dialog {open} on:submit={updateSchema} on:close bind:valid>
     <h3 slot="header">Edit collection</h3>
     <Fields bind:valid {collection} pattern="^[\w|\-]+$" />
     <nav slot="footer">

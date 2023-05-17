@@ -26,10 +26,12 @@
 <fieldset class="cols">
     <label>
         <small>Name</small>
+        <!-- svelte-ignore a11y-autofocus -->
         <input
             type="text"
             name="collectionName"
             placeholder="collection name"
+            autofocus={true}
             {pattern}
             value={collection}
             required

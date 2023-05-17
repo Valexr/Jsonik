@@ -1,24 +1,24 @@
-import { readFile, writeFile } from "fs/promises"
+import { writeFile } from "fs/promises"
 import { checkpath, match, isFunction, checkfile } from '$server/lib/utils';
-import type { Base, Doc, Query } from '$types/server';
+import type { Base, Db, Query } from '$types/server';
 
-export async function db<T>(path: string) {
-    await checkpath(path)
-
-    const read = async () => JSON.parse(await checkfile(path) || '[]')
-    const data: Array<T & Doc> = await read()
-
+export function db<T>(path: string): Db<T> {
     return {
-        data, read,
-        write() {
-            return writeFile(path, JSON.stringify(this.data, null, '\t'), 'utf8')
+        data: [],
+        async read() {
+            await checkpath(path)
+            this.data = JSON.parse(await checkfile(path) || '[]')
+        },
+        async write() {
+            await writeFile(path, JSON.stringify(this.data, null, '\t'), 'utf8')
         }
     }
 }
 
 export async function base<T>(path: string): Promise<Base<T>> {
 
-    const base = await db<T>(path);
+    const base = db<T>(path);
+    await base.read()
 
     function find(query?: Query) {
         if (!query || !Reflect.ownKeys(query).length) return base.data
@@ -47,9 +47,11 @@ export async function base<T>(path: string): Promise<Base<T>> {
         },
         async update(query, update) {
             const found = find(query)
-            base.data = found.map((doc, i) =>
-                isFunction(update) ? update(doc, i) : Object.assign(doc, update));
-            await base.write();
+            base.data = base.data.map((doc, i) => {
+                const ix = found.findIndex((f) => match(doc, f));
+                return (ix > -1) ? isFunction(update) ? update(doc, i) : Object.assign(doc, update) : doc;
+            })
+            await base.write()
             return base.data;
         },
         async delete(query) {

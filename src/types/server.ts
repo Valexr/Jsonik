@@ -2,6 +2,12 @@ export type Doc = Record<string, any>
 export type Query = Doc | ((doc: Doc, i: number) => boolean)
 export type Update<T> = Doc[] | ((doc: Doc, i: number) => Doc & T)
 
+export type Db<T> = {
+    data: (T & Doc)[];
+    read: () => Promise<void>;
+    write: () => Promise<void>;
+}
+
 export type Base<T> = {
     data: Array<T & Doc>;
     find: (query?: Query) => (T & Doc)[],

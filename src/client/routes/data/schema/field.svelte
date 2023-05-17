@@ -19,7 +19,7 @@
     export let field: Schema;
     export let valid = false;
 
-    const prevName = field.name;
+    let prevName = field.name;
 
     function attributes(input: HTMLInputElement, opt: Record<string, any>) {
         const { type, name, value } = opt;
@@ -49,6 +49,7 @@
         }
 
         Object.assign(field, { prevName, required, opts });
+        prevName = field.name;
         schemas.save(field);
     }
     function del() {
