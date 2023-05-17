@@ -8,6 +8,7 @@ import nodemon from './env/nodemon.js';
 import html from './env/html.js';
 
 const DEV = process.argv.includes('--dev');
+const APP = 'app/app.cjs';
 
 const svelteOptions = {
     compilerOptions: {
@@ -25,7 +26,6 @@ const options = {
     bundle: true,
     minify: !DEV,
     sourcemap: DEV && 'inline',
-    format: 'esm',
     legalComments: 'none',
     metafile: !DEV,
     logLevel: 'info',
@@ -48,17 +48,17 @@ const serverOptions = {
     ...options,
     platform: 'node',
     entryPoints: ['src/server/app.ts'],
-    outfile: 'app/app.js',
+    outfile: APP,
     plugins: [
         // eslint(),
-        ...(DEV ? [nodemon('app/app.js')] : [])
+        ...(DEV ? [nodemon(APP)] : [])
     ],
     define: {
         'process.env.NODE_ENV': DEV ? '"dev"' : '"prod"'
     },
 };
 
-await rm(['app/app.js']);
+await rm([APP]);
 
 if (DEV) {
     const client = await context(clientOptions);

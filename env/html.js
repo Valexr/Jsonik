@@ -54,7 +54,7 @@ export default function html(opts) {
                 const [js, css] = result.outputFiles;
 
                 function replacer(k, v) {
-                    return v.replace('</head>', () => `<script type="module">\n${js.text}</script>\n</head>`)
+                    return v.replace('</body>', () => `<script>\n${js.text}</script>\n</body>`)
                         .replace('</head>', () => `<style>\n${css.text}</style>\n</head>`)
                         .replace('<body>', () => `<body>\n${icons}\n`)
                         .replace(/>\s+</g, '><');
