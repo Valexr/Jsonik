@@ -29,9 +29,9 @@
             <Table data={{ thead, tbody }} current={getRecord} />
         {/if}
     </section>
-</Await>
 
-<Aside open={$fragment === `#log-${fragmentID}`} right>
-    <h3 slot="header">Record {fragmentID}</h3>
-    <Code input={JSON.stringify(logs.getID(fragmentID), null, 2)} />
-</Aside>
+    <Aside open={$fragment === `#log-${fragmentID}`} right>
+        <h3 slot="header">Record {fragmentID}</h3>
+        <Code input={JSON.stringify(logs.getID(fragmentID), null, 2)} />
+    </Aside>
+</Await>

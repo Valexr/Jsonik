@@ -11,15 +11,8 @@ const DEV = process.argv.includes('--dev');
 const APP = 'app/app.cjs';
 
 const svelteOptions = {
-    compilerOptions: {
-        dev: DEV,
-    },
-    preprocess: [
-        preprocess({
-            sourceMap: DEV,
-            typescript: true,
-        }),
-    ]
+    compilerOptions: { dev: DEV },
+    preprocess: preprocess()
 };
 
 const options = {
