@@ -1,9 +1,9 @@
-import { server } from '$server/http/index';
+import { server } from '$server/http';
 import { log } from '$server/middlewares/log';
-import { auth } from '$server/endpoints/auth/index';
+import { auth } from '$server/endpoints/auth';
 import { cookie } from '$server/endpoints/auth/cookie';
 import { token } from '$server/endpoints/auth/token';
-import { data } from '$server/endpoints/data/index';
+import { data } from '$server/endpoints/data';
 import { files } from '$server/endpoints/files';
 import { logs } from '$server/endpoints/logs';
 import type { App } from '$server/http/types';
@@ -28,3 +28,10 @@ app.sub('/api', (app: App) => {
     app.sub('/files', files);
     app.sub('/logs', logs);
 });
+
+// HEAD   = count
+// GET    = select
+// POST   = insert
+// PUT    = upsert
+// PATCH  = update
+// DELETE = delete

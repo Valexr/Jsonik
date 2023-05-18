@@ -49,10 +49,7 @@ const serverOptions = {
     platform: 'node',
     entryPoints: [DEV ? 'src/server/dev.ts' : 'src/server/app.ts'],
     outfile: APP,
-    plugins: [
-        // eslint(),
-        ...(DEV ? [nodemon(APP)] : [])
-    ],
+    plugins: DEV ? [nodemon(APP)] : [],
     define: {
         'process.env.NODE_ENV': DEV ? '"dev"' : '"prod"'
     },

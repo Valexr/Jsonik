@@ -9,9 +9,10 @@ export function start(options: Options) {
     const server = http.createServer((req, res) => {
         const mws: Mw[] = [
             url, send, error, json, cors, cookie, token, session,
-            ...app.list(), html,
+            ...app.list(),
             cache(options),
             compress(options),
+            html,
         ];
         run(mws, req as Req, res as Res);
     })

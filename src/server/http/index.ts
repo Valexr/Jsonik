@@ -7,8 +7,8 @@ export function server(options: Partial<Options>) {
         port: 8000,
         index: 'index.html',
         serve: 'public',
-        compress: false,
         spa: false,
+        compress: false,
         cache: 0,
     }, options))
 }

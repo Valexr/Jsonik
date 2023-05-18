@@ -174,7 +174,6 @@ export function compress(options: Options) {
 
 export function cache(options: Options) {
     return function (req: Req, res: Res, next: Next) {
-        if (typeof options.cache !== 'number') options.cache = 31536000;
         res.setHeader('Cache-Control', 'max-age=' + options.cache);
         next();
     }

@@ -8,10 +8,9 @@ export type Options = {
     host: string
     serve: string
     index: string
+    spa: boolean,
     compress: boolean,
     cache: number,
-    spa: boolean,
-    watch?: () => void,
 }
 
 export type Req = {
@@ -49,6 +48,8 @@ export type App = {
     list: () => Mw[];
     sub: (pattern: string, mw: Mw | ((app: App) => void)) => void;
     use: (pattern: string | Mw, mw?: Mw) => void;
+    options: (pattern: string | Mw, mw?: Mw) => void;
+    head: (pattern: string | Mw, mw?: Mw) => void;
     get: (pattern: string | Mw, mw?: Mw) => void;
     post: (pattern: string | Mw, mw?: Mw) => void;
     put: (pattern: string | Mw, mw?: Mw) => void;
