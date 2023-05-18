@@ -12,7 +12,7 @@ const DEV = process.env.NODE_ENV === 'dev';
 const PORT = process.env.PORT || 8080
 const CACHE = process.env.CACHE || 0
 
-const app = server({
+export const app = server({
     host: '0.0.0.0',
     port: Number(PORT),
     cache: Number(CACHE),

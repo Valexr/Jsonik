@@ -47,7 +47,7 @@ const clientOptions = {
 const serverOptions = {
     ...options,
     platform: 'node',
-    entryPoints: ['src/server/app.ts'],
+    entryPoints: [DEV ? 'src/server/dev.ts' : 'src/server/app.ts'],
     outfile: APP,
     plugins: [
         // eslint(),

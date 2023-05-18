@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { fragment, paramable } from "svelte-pathfinder";
-    import { records } from "$client/stores/data";
+    import { records, collections } from "$client/stores/data";
     import { files } from "$client/stores/files";
     import Dialog from "$client/components/Dialog.svelte";
     import Icon from "$client/components/Icon.svelte";
@@ -20,7 +20,9 @@
     }
 
     async function deleteFile() {
-        await records.deleteFiles($route.collection, [filename]);
+        if ($collections.includes($route.collection)) {
+            await records.deleteFiles($route.collection, [filename]);
+        }
         await files.delete($route.collection, [filename]);
     }
 
