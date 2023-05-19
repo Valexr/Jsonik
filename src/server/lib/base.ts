@@ -1,5 +1,4 @@
-import { writeFile } from "fs/promises"
-import { checkpath, match, isFunction, checkfile } from '$server/lib/utils';
+import { checkpath, match, isFunction, readfile, writefile } from '$server/lib/utils';
 import type { Base, Db, Query } from '$types/server';
 
 export function db<T>(path: string): Db<T> {
@@ -7,10 +6,10 @@ export function db<T>(path: string): Db<T> {
         data: [],
         async read() {
             await checkpath(path)
-            this.data = JSON.parse(await checkfile(path) || '[]')
+            this.data = JSON.parse(await readfile(path))
         },
         async write() {
-            await writeFile(path, JSON.stringify(this.data, null, '\t'), 'utf8')
+            await writefile(path, this.data)
         }
     }
 }

@@ -2,7 +2,6 @@ import { base } from '$server/lib/base';
 import type { App } from '$server/http/types';
 import type { Log } from '$server/middlewares/log';
 
-
 export function logs(app: App) {
 
     app.use(async (req, res, next) => {
@@ -10,7 +9,7 @@ export function logs(app: App) {
         next()
     })
 
-    app.get(async (req, res, next) => {
+    app.get((req, res, next) => {
         if (Object.values(req.query).some(v => v)) {
             const { q, page, limit } = req.query
             const items = req.base.find((doc, i) => search(doc, String(q)))

@@ -6,7 +6,7 @@ import type { App, Req } from "$server/http/types";
 export function files(app: App) {
     const pattern = '/:folder?/:file?'
 
-    app.get(pattern, async (req, res) => {
+    app.get(pattern, async (req, res, next) => {
         const { folder, file } = req.params
 
         await checkpath('files')
@@ -59,7 +59,7 @@ export function files(app: App) {
         }
     })
 
-    app.put('/:from?/:to?', async (req, res) => {
+    app.put('/:from?/:to?', (req, res) => {
         const { from, to } = req.params
         const file = req.query.file
         try {
