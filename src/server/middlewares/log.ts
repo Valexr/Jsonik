@@ -19,9 +19,9 @@ export async function log(req: Req, res: Res, next: Next) {
 
     LOGS ||= await base<Log>('logs/data.json');
 
-    res.on('finish', register)
+    res.on('finish', async () => await register())
 
-    async function register() {
+    async function register(): Promise<void> {
         res.off('finish', register)
         const { statusCode, statusMessage } = res
         const log = {

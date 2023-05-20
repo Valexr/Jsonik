@@ -21,6 +21,12 @@
         // setTimeout(() => (e.currentTarget.value = ""));
     }
 
+    // const es = new EventSource("/stream");
+    // es.addEventListener("progress", (e) => {
+    //     console.log(e.data);
+    //     es.close();
+    // });
+
     async function uploadFiles(e: SubmitEvent) {
         const promises = Array.from(fileList || [], (file) =>
             files.add(`${$path[1] || ""}`, file)

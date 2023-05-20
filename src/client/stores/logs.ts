@@ -11,11 +11,11 @@ function createLogs() {
         subscribe,
         async get(query?: Params) {
             const { q, limit, page } = query || {}
-            const logs = await get(`/logs/data/items?q=${q || ''}&limit=${limit || ''}&page=${page || ''}`)
+            const logs = await get(`/logs/data?q=${q || ''}&limit=${limit || ''}&page=${page || ''}`)
             set(logs)
         },
         async getTotal() {
-            return await get('/logs/data/items')
+            return await get('/logs/data')
         },
         getID: (id: number) => getStore().docs.find(l => l.id === id)
         // async rename(file: string, name: string) {

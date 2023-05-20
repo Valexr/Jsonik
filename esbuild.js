@@ -40,7 +40,7 @@ const clientOptions = {
 const serverOptions = {
     ...options,
     platform: 'node',
-    entryPoints: [DEV ? 'src/server/dev.ts' : 'src/server/app.ts'],
+    entryPoints: ['src/server/app.ts'],
     outfile: APP,
     plugins: DEV ? [nodemon(APP)] : [],
     define: {
@@ -56,8 +56,6 @@ if (DEV) {
 
     await client.watch();
     await server.watch();
-
-    await server.serve({ servedir: 'app' });
 
     function cleanup() {
         client.dispose();

@@ -1,4 +1,4 @@
 import { app } from '$server/app'
-import { proxy } from '$server/middlewares/proxy';
+import { livereload } from '$server/middlewares/livereload';
 
-app.use(proxy)
+app.use(livereload)

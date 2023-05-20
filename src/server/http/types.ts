@@ -38,6 +38,7 @@ export type Res = {
     cors: (code: number, headers: Record<string, string>) => void
     send: <T>(message: T | string | string[] | Body, mime?: string) => void
     error: (code: number | undefined, message: string, headers?: OutgoingHttpHeaders) => void
+    sse: (event: string | undefined, message: string) => void
 } & ServerResponse
 
 export type Next = (err?: any & Error) => void

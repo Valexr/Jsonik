@@ -1,7 +1,7 @@
 import { createReadStream, createWriteStream } from "fs";
 import { readdir, rm, rename } from "fs/promises";
 import { checkpath } from "$server/lib/utils";
-import type { App, Req } from "$server/http/types";
+import type { App, Req, Res } from "$server/http/types";
 
 export function files(app: App) {
     const pattern = '/:folder?/:file?'
@@ -34,11 +34,13 @@ export function files(app: App) {
         await checkpath(`files/${folder}`)
 
         if (file && file.includes('.')) {
-            // uploadFile(req, `files/${folder}/${file}`)
+            // const filePath = await uploadFile(req, res, `files/${folder}/${file}`)
+            // res.send(file)
             const stream = createWriteStream(`files/${folder}/${file}`);
             stream.on("open", () => req.pipe(stream));
             stream.on('close', async () => res.send(file))
             stream.on('error', (e) => res.error(422, e.message))
+            next()
         } else {
             res.send(folder)
         }
@@ -91,7 +93,7 @@ export function files(app: App) {
 }
 
 
-function uploadFile(req: Req, filePath: string) {
+function uploadFile(req: Req, res: Res, filePath: string) {
     return new Promise((resolve, reject) => {
         const stream = createWriteStream(filePath);
         // With the open - event, data will start being written
@@ -107,6 +109,7 @@ function uploadFile(req: Req, filePath: string) {
             const written = stream.bytesWritten
             const total = Number(req.headers['content-length'])
             const pWritten = ((written / total) * 100).toFixed();
+            res.sse('progress', pWritten)
             console.log(`Processing  ...  ${pWritten}% done`);
         });
 

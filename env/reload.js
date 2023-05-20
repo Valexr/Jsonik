@@ -1,10 +1,5 @@
-const es = new EventSource('/esbuild');
+const es = new EventSource('/stream');
 
-es.onerror = () => location.reload(true);
+es.onerror = () => setTimeout(() => location.reload(true), 100);
 es.onmessage = console.log;
 es.onopen = console.log;
-
-es.addEventListener('change', () => {
-    setTimeout(() => location.reload(true), 100);
-});
-

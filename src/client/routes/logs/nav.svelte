@@ -5,7 +5,10 @@
 </script>
 
 <script lang="ts">
-    query.set({ limit: 100, page: 1 });
+    query.set({
+        limit: $query.limit || 100,
+        page: $query.page || 1,
+    });
 </script>
 
 <Paginator

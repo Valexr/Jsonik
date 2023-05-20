@@ -1,6 +1,11 @@
 import http from 'http';
 import { create, run } from './app'
-import { url, json, send, error, cors, cookie, token, session, html, compress, cache } from './mws'
+import { html } from './mws/html'
+import { stream, sse } from './mws/sse';
+import { url, json, } from './mws/parse';
+import { compress, cache } from './mws/opt'
+import { cors, cookie, token } from './mws/auth';
+import { send, error, session } from './mws/transport';
 import type { Options, Mw, Req, Res } from './types';
 
 export function start(options: Options) {
@@ -8,7 +13,7 @@ export function start(options: Options) {
 
     const server = http.createServer((req, res) => {
         const mws: Mw[] = [
-            url, send, error, json, cors, cookie, token, session,
+            url, json, send, error, stream, sse, cors, cookie, token, session,
             ...app.list(),
             cache(options),
             compress(options),

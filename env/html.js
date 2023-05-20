@@ -35,7 +35,7 @@ const icons = [
 export default function html(opts) {
     const options = {
         in: './src/client/assets/app.html',
-        out: './src/server/http/client.json',
+        out: './src/server/http/mws/client.json',
         sprite: './src/client/assets/sprite.svg',
         icons,
         ...opts

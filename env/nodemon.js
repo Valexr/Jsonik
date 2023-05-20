@@ -4,12 +4,12 @@ import { fork } from "node:child_process";
 const CWD = process.cwd();
 
 export default function (path) {
-    let child;
     return {
         name: 'nodemon',
         setup(build) {
-            build.onEnd(async () => {
-                if (child) child.kill();
+            let child;
+            build.onEnd(() => {
+                if (child) child.kill('SIGINT');
                 child = fork(join(CWD, path), [], { cwd: join(CWD, dirname(path)) });
             });
         },
