@@ -1,5 +1,5 @@
 import { dirname, extname } from 'path'
-import { mkdir, readFile, writeFile, open } from 'fs/promises';
+import { mkdir, readFile, writeFile } from 'fs/promises';
 
 export function compare(doc: Record<string, any>, query: Record<string, any>) {
     const tmp = { ...doc, ...query }

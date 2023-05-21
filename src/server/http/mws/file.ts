@@ -1,15 +1,8 @@
 import { stat } from 'fs/promises';
 import { createReadStream } from 'fs';
 import { join, extname, dirname } from 'path';
-import mime from '../mime.json';
-import client from '../client.json'
+import mime from './mime.json';
 import type { Next, Options, Req, Res } from "../types";
-
-export function html(req: Req, res: Res, next: Next) {
-    if (req.method === 'GET' && !extname(req.path) && req.headers.accept !== 'text/event-stream') {
-        res.send(client, 'text/html')
-    } else next()
-}
 
 export function file(options: Options) {
     return async function (req: Req, res: Res, next: Next) {

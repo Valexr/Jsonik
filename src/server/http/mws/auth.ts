@@ -1,3 +1,4 @@
+import { parse, stringify } from "$server/lib/cookie";
 import type { Next, Req, Res } from "../types";
 
 export function cors(req: Req, res: Res, next: Next) {
@@ -14,17 +15,6 @@ export async function cookie(req: Req, res: Res, next: Next) {
     }
     res.cookie = (value: Record<string, string | number | boolean>) => {
         res.setHeader('Set-Cookie', stringify(value));
-    }
-
-    function parse(str: string): Record<string, string | number | boolean> {
-        const entries = str.split(/;\s?/).map(v => decodeURIComponent(v).split(/=(.+)/))
-        return Object.fromEntries(entries)
-    }
-
-    function stringify(cookies: Record<string, string | number | boolean>) {
-        return Object.entries(cookies)
-            .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
-            .join('; ');
     }
     next()
 }
