@@ -73,7 +73,7 @@
         "codejar": "^3.7.0",
         "esbuild": "^0.17.19",
         "esbuild-svelte": "^0.7.3",
-        "eslint": "^8.40.0",
+        "eslint": "^8.41.0",
         "eslint-plugin-svelte": "^2.28.0",
         "marked": "^5.0.2",
         "svelte": "^3.59.1",
