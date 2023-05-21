@@ -1,4 +1,3 @@
-// var date = new Date(2017, 11, 31, 23, 59, 59);
 export const format = new Intl.DateTimeFormat(
     locale(),
     {
@@ -33,5 +32,3 @@ function locale() {
     return (navigator.languages && navigator.languages.length)
         ? navigator.languages[0] : navigator.language;
 }
-
-// console.log(format.format(date))

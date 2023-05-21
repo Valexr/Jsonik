@@ -1,5 +1,4 @@
 <script lang="ts" context="module">
-    // import { media } from "@slidy/media";
     import { pattern, path } from "svelte-pathfinder";
     import { routes, page } from "$client/routes/index";
     import Icon from "$client/components/Icon.svelte";
@@ -8,7 +7,6 @@
 
 <script lang="ts">
     let open = false;
-    // console.log($path);
 </script>
 
 <menu>
