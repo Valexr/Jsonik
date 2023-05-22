@@ -13,7 +13,7 @@ export function start(options: Options) {
 
     const server = http.createServer((req, res) => {
         const mws: Mw[] = [
-            url, json, send, error, stream, sse, cors, cookie, token, session,
+            url, json, send, error, session, stream, sse, cors, cookie, token,
             ...app.list(),
             cache(options),
             compress(options),
