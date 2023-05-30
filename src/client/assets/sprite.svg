@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" id="sprite">
+<svg id="sprite">
     <defs>
         <style>#sprite{display:none}#sprite:target{display:inline}</style>
         <symbol id="activity" viewBox="0 0 24 24">

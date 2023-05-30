@@ -19,6 +19,7 @@ const icons = [
     "hard-drive",
     "hash",
     "image",
+    "key",
     "link",
     "list",
     "move",
