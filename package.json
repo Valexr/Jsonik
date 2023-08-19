@@ -71,7 +71,7 @@
         "@typescript-eslint/eslint-plugin": "^6.4.0",
         "@typescript-eslint/parser": "^6.4.0",
         "codejar": "^3.7.0",
-        "esbuild": "^0.18.20",
+        "esbuild": "^0.19.2",
         "esbuild-svelte": "^0.7.4",
         "eslint": "^8.47.0",
         "eslint-plugin-svelte": "^2.32.4",
