@@ -1,38 +1,23 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "$server/*": [
-                "src/server/*"
-            ],
-            "$client/*": [
-                "src/client/*"
-            ],
-            "$types/*": [
-                "src/types/*"
-            ]
-        },
-        "strict": true,
-        "sourceMap": true,
-        "skipLibCheck": true,
-        "esModuleInterop": true,
-        "isolatedModules": true,
-        "resolveJsonModule": true,
-        "moduleResolution": "Node",
-        "verbatimModuleSyntax": true,
-        "lib": [
-            "DOM",
-            "ESNext",
-            "DOM.Iterable"
-        ],
-        "module": "ESNext",
-        "target": "ESNext",
-        "types": [
-            "svelte",
-            "Node"
-        ]
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "$server/*": ["src/server/*"],
+      "$client/*": ["src/client/*"],
+      "$types/*": ["src/types/*"]
     },
-    "include": [
-        "src/**/*"
-    ],
+    "strict": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "Node",
+    "verbatimModuleSyntax": true,
+    "lib": ["DOM", "ESNext", "DOM.Iterable"],
+    "module": "ESNext",
+    "target": "ESNext",
+    "types": ["svelte", "Node"]
+  },
+  "include": ["src/**/*"]
 }
