@@ -4,6 +4,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <article class="{layer} cols col-fit nowrap align-center" {id} on:click>
     <slot />
     <nav class="cols align-center">
