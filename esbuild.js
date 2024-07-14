@@ -1,6 +1,6 @@
 import { build, context } from 'esbuild';
 import svelte from 'esbuild-svelte';
-import preprocess from 'svelte-preprocess';
+import { sveltePreprocess } from 'svelte-preprocess';
 import rm from './env/rm.js';
 import meta from './env/meta.js';
 import eslint from './env/eslint.js';
@@ -12,7 +12,7 @@ const APP = 'app/app.cjs';
 
 const svelteOptions = {
     compilerOptions: { dev: DEV },
-    preprocess: preprocess()
+    preprocess: sveltePreprocess()
 };
 
 const options = {
