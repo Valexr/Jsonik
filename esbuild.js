@@ -34,7 +34,8 @@ const clientOptions = {
     loader: {
         '.ico': 'dataurl',
         '.png': 'dataurl'
-    }
+    },
+    conditions: ['svelte']
 };
 
 const serverOptions = {
