@@ -58,9 +58,9 @@ if (DEV) {
     await client.watch();
     await server.watch();
 
-    function cleanup() {
-        client.dispose();
-        server.dispose();
+    async function cleanup() {
+        await client.dispose();
+        await server.dispose();
     }
 
     process.on('SIGTERM', cleanup);
