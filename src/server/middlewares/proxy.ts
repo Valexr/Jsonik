@@ -1,4 +1,4 @@
-import { request } from 'http';
+import { request } from 'node:http';
 import type { Next, Req, Res } from '$server/http/types';
 
 export function proxy(req: Req, res: Res, next: Next) {

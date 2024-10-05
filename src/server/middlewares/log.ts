@@ -1,5 +1,5 @@
 import { base } from '$server/lib/base'
-import type { Next, Req, Res } from "$server/http/types";
+import type { Next, Req, Res } from '$server/http/types'
 import type { Base } from '$types/server';
 
 export interface Log {
