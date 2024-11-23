@@ -4,3 +4,4 @@ app
 *-lock.*
 server.json
 client.json
+.DS_store
