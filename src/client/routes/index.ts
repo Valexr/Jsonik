@@ -51,5 +51,5 @@ export const routes: Page[] = [
 
 export const page: Readable<Page> = derived(pattern, ($pattern, set) => {
     const route = routes.find(({ match }) => $pattern(match))
-    set(route as Page)
+    if (route) set(route)
 });

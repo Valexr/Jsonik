@@ -18,7 +18,7 @@ const svelteOptions = {
 const options = {
     bundle: true,
     minify: !DEV,
-    // sourcemap: DEV && 'inline',
+    sourcemap: DEV && 'inline',
     legalComments: 'none',
     metafile: !DEV,
     logLevel: 'info',
