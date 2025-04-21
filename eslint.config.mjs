@@ -12,48 +12,60 @@ const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
     baseDirectory: __dirname,
     recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
+    allConfig: js.configs.all,
 });
 
-export default [{
-    ignores: ["**/node_modules/**/*"],
-}, ...compat.extends("plugin:@typescript-eslint/recommended", "plugin:svelte/recommended"), {
-    plugins: {
-        "@typescript-eslint": typescriptEslint,
+export default [
+    {
+        ignores: ["**/node_modules/**/*"],
     },
-
-    languageOptions: {
-        globals: {
-            ...globals.node,
+    ...compat.extends(
+        "plugin:@typescript-eslint/recommended",
+        "plugin:svelte/recommended",
+    ),
+    {
+        plugins: {
+            "@typescript-eslint": typescriptEslint,
         },
 
-        parser: tsParser,
-        ecmaVersion: 5,
-        sourceType: "commonjs",
+        languageOptions: {
+            globals: {
+                ...globals.node,
+            },
 
-        parserOptions: {
-            project: "tsconfig.json",
-            extraFileExtensions: [".svelte"],
+            parser: tsParser,
+            ecmaVersion: 5,
+            sourceType: "commonjs",
+
+            parserOptions: {
+                project: "tsconfig.json",
+                extraFileExtensions: [".svelte"],
+            },
+        },
+
+        rules: {
+            semi: 0,
+            "no-underscore-dangle": 0,
+            "import/prefer-default-export": 0,
+            "@typescript-eslint/no-explicit-any": "off",
+            "prefer-rest-params": "off",
         },
     },
+    {
+        files: ["**/*.svelte"],
 
-    rules: {
-        semi: 0,
-        "no-underscore-dangle": 0,
-        "import/prefer-default-export": 0,
-        "@typescript-eslint/no-explicit-any": "off",
-        "prefer-rest-params": "off",
-    },
-}, {
-    files: ["**/*.svelte"],
+        languageOptions: {
+            parser: parser,
+            ecmaVersion: 5,
+            sourceType: "script",
 
-    languageOptions: {
-        parser: parser,
-        ecmaVersion: 5,
-        sourceType: "script",
-
-        parserOptions: {
-            parser: "@typescript-eslint/parser",
+            parserOptions: {
+                parser: "@typescript-eslint/parser",
+            },
         },
     },
-}];
+    {
+        files: ["**/*.js"],
+        extends: [tseslint.configs.disableTypeChecked],
+    },
+];
