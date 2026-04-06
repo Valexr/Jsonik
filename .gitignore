@@ -1,7 +1,7 @@
 node_modules
 app
 
-*-lock.*
+*lock*
 server.json
 client.json
 .DS_store
