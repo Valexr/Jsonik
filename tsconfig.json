@@ -1,10 +1,9 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
         "paths": {
-            "$server/*": ["src/server/*"],
-            "$client/*": ["src/client/*"],
-            "$types/*": ["src/types/*"]
+            "$server/*": ["./src/server/*"],
+            "$client/*": ["./src/client/*"],
+            "$types/*": ["./src/types/*"]
         },
         "allowJs": true,
         "strict": true,
@@ -13,7 +12,6 @@
         "esModuleInterop": true,
         "isolatedModules": true,
         "resolveJsonModule": true,
-        "moduleResolution": "Node",
         "verbatimModuleSyntax": true,
         "lib": ["DOM", "ESNext", "DOM.Iterable"],
         "module": "ESNext",
